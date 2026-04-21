@@ -1,4 +1,3 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import { ArrowRight, Brain, Database, Cpu, Network, Code, BarChart3, ChevronRight, LineChart, Target, Zap, Users, Mail, Linkedin, Instagram, Youtube } from "lucide-react";
@@ -69,9 +68,6 @@ function IsoCertModal({ onClose }: { onClose: () => void }) {
 }
 
 export default function Home() {
-  // The userAuth hooks provides authentication state
-  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
   const [showIsoCert, setShowIsoCert] = useState(false);
 
   const fadeIn = {
