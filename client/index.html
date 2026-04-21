@@ -35,9 +35,6 @@
     b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
     s.parentNode.insertBefore(b, s);})(window.lintrk);
     </script>
-    <noscript>
-    <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9108033&fmt=gif" />
-    </noscript>
     <!-- End LinkedIn Insight Tag -->
     
     <meta charset="UTF-8" />
@@ -239,13 +236,13 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZKSN8CT"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    
+
+    <!-- LinkedIn Insight Tag (noscript) -->
+    <noscript><img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9108033&fmt=gif" /></noscript>
+    <!-- End LinkedIn Insight Tag (noscript) -->
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
   </body>
 
 </html>

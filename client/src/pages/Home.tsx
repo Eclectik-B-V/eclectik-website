@@ -14,7 +14,8 @@ import ServicesOverview from "@/components/ServicesOverview";
 import AINews from "@/components/AINews";
 import FAQ from "@/components/FAQ";
 import { Helmet } from "react-helmet-async";
-import { trackCTAClick } from "@/lib/tracking";
+import { toast } from "sonner";
+import { trackCTAClick, trackNewsletterSignup } from "@/lib/tracking";
 
 // Use local worker served from public directory to avoid CSP issues
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
@@ -69,6 +70,41 @@ function IsoCertModal({ onClose }: { onClose: () => void }) {
 
 export default function Home() {
   const [showIsoCert, setShowIsoCert] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) {
+      toast.error("Please enter your email");
+      return;
+    }
+    if (!newsletterConsent) {
+      toast.error("Please agree to receive news from Eclectik");
+      return;
+    }
+    setNewsletterSubmitting(true);
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: newsletterEmail }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Subscription failed");
+      }
+      trackNewsletterSignup(newsletterEmail);
+      toast.success("Subscribed! Check your inbox for confirmation.");
+      setNewsletterEmail("");
+      setNewsletterConsent(false);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Subscription failed. Please try again.");
+    } finally {
+      setNewsletterSubmitting(false);
+    }
+  };
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -442,30 +478,39 @@ export default function Home() {
                 Subscribe to Eclectik's newsletter and get the insights that matter.
               </p>
 
-              <form className="space-y-8 mb-16">
+              <form className="space-y-8 mb-16" onSubmit={handleNewsletterSubmit}>
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium text-muted-foreground">
                     Email*
                   </label>
                   <div className="relative">
-                    <Input 
-                      type="email" 
-                      id="email" 
-                      placeholder="your@email.com" 
+                    <Input
+                      type="email"
+                      id="email"
+                      required
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                      placeholder="your@email.com"
                       className="bg-transparent border-0 border-b border-white/20 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-primary transition-colors"
                     />
-                    <Button 
-                      type="submit" 
-                      variant="ghost" 
+                    <Button
+                      type="submit"
+                      variant="ghost"
+                      disabled={newsletterSubmitting}
                       className="absolute right-0 top-1/2 -translate-y-1/2 hover:bg-transparent hover:text-primary p-0 flex items-center gap-2 font-medium"
                     >
-                      Submit <ArrowRight className="w-4 h-4" />
+                      {newsletterSubmitting ? "Sending..." : "Submit"} <ArrowRight className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Checkbox id="consent" className="mt-1 border-white/20 data-[state=checked]:bg-primary data-[state=checked]:border-primary" />
+                  <Checkbox
+                    id="consent"
+                    checked={newsletterConsent}
+                    onCheckedChange={(v) => setNewsletterConsent(v === true)}
+                    className="mt-1 border-white/20 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                  />
                   <div className="grid gap-1.5 leading-none">
                     <label
                       htmlFor="consent"

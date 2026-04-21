@@ -5,7 +5,6 @@ import Layout from "@/components/Layout";
 import { ArrowRight, Linkedin, Instagram, Youtube, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Document, Page, pdfjs } from "react-pdf";
@@ -80,10 +79,37 @@ export default function Contact() {
     consent: false,
   });
 
-  const submitMutation = trpc.contact.submit.useMutation({
-    onSuccess: () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.consent) {
+      toast.error("Please agree to the terms and conditions");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          company: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to send message");
+      }
+
       toast.success("Message sent successfully! We'll get back to you soon.");
-      // Reset form
       setFormData({
         firstName: "",
         lastName: "",
@@ -93,26 +119,11 @@ export default function Contact() {
         message: "",
         consent: false,
       });
-    },
-    onError: (error) => {
-      toast.error(error.message || "Failed to send message. Please try again.");
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formData.consent) {
-      toast.error("Please agree to the terms and conditions");
-      return;
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    submitMutation.mutate({
-      name: `${formData.firstName} ${formData.lastName}`,
-      email: formData.email,
-      company: formData.company,
-      message: formData.message || "No message provided",
-    });
   };
 
   const fadeIn = {
@@ -275,10 +286,10 @@ export default function Contact() {
                   <Button 
                     type="submit" 
                     size="lg"
-                    disabled={submitMutation.isPending}
+                    disabled={isSubmitting}
                     className="bg-primary hover:bg-primary/90 text-background font-bold px-8 rounded-full"
                   >
-                    {submitMutation.isPending ? "Sending..." : "Send Message"} <ArrowRight className="ml-2 w-4 h-4" />
+                    {isSubmitting ? "Sending..." : "Send Message"} <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </div>
               </form>
