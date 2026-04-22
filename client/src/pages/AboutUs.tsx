@@ -102,7 +102,7 @@ export default function AboutUs() {
               <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 to-purple-500/20 p-1">
                 <div className="w-full h-full bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden relative">
                   <img 
-                    src="https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/about-team-photo_66ff0fd3.jpg" 
+                    src="/images/about-team-photo.jpg" 
                     alt="Eclectik Team Collaboration" 
                     className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500"
                   />

@@ -43,7 +43,7 @@ export default function HRTechServices() {
           className="absolute right-[-10%] top-[15%] w-[55%] h-[70%] hidden lg:block"
         >
           <img 
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/Maincomposite_green1_7bc7e553.png" 
+            src="/images/Maincomposite_green1.png" 
             alt="Eclectik HR Tech Services" 
             className="w-full h-full object-contain opacity-60"
           />

@@ -196,7 +196,7 @@ export default function ChangeManagement() {
         {/* CTA Section */}
         <section className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-primary/10" />
-          <div className="absolute inset-0 bg-[url('https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/change-management-bg_de9a9c2f.jpg')] opacity-10 bg-cover bg-center mix-blend-overlay" />
+          <div className="absolute inset-0 bg-[url('/images/change-management-bg.jpg')] opacity-10 bg-cover bg-center mix-blend-overlay" />
           
           <div className="container relative z-10 text-center">
             <h2 className="text-4xl md:text-6xl font-bold mb-8">Let us Help You Spark Your Next Movement</h2>

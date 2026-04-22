@@ -167,31 +167,31 @@ export default function Home() {
       title: "Data & AI Strategy",
       description: "Our artificial intelligence strategies aren't about keeping up with your competition. We operationalize data and AI opportunities to make you the pacesetter.",
       icon: <Brain className="w-8 h-8 text-primary" />,
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/service-strategy_68db6fa6.jpg"
+      image: "/images/service-strategy.jpg"
     },
     {
       title: "Customized AI",
       description: "We build bespoke AI solutions tailored to your specific business challenges, leveraging cutting-edge models and architectures.",
       icon: <Code className="w-8 h-8 text-secondary" />,
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/service-genai_94c25342.jpg"
+      image: "/images/service-genai.jpg"
     },
     {
       title: "Data Management",
       description: "Build a solid foundation for your AI initiatives with robust data governance, quality, and architecture frameworks.",
       icon: <Database className="w-8 h-8 text-accent" />,
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/change-management-bg_de9a9c2f.jpg"
+      image: "/images/change-management-bg.jpg"
     },
     {
       title: "ML Ops",
       description: "Streamline your machine learning lifecycle from development to deployment and monitoring with industry-standard MLOps practices.",
       icon: <Cpu className="w-8 h-8 text-chart-3" />,
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/change-management-bg_de9a9c2f.jpg"
+      image: "/images/change-management-bg.jpg"
     },
     {
       title: "Generative AI",
       description: "Unlock new creative and productive potentials with state-of-the-art Generative AI implementation and fine-tuning.",
       icon: <Network className="w-8 h-8 text-chart-4" />,
-      image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/service-genai_94c25342.jpg"
+      image: "/images/service-genai.jpg"
     }
   ];
 
@@ -254,7 +254,7 @@ export default function Home() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/hero-abstract-ai_208990fe.png" 
+            src="/images/hero-abstract-ai.png" 
             alt="AI Neural Network Background" 
             className="w-full h-full object-cover opacity-80"
           />
@@ -389,7 +389,7 @@ export default function Home() {
       <section className="py-32 relative overflow-hidden bg-white/5">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/hero-abstract-ai_208990fe.png" 
+            src="/images/hero-abstract-ai.png" 
             alt="AI Neural Network Background" 
             className="w-full h-full object-cover opacity-30"
           />

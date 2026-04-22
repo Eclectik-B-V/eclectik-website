@@ -18,7 +18,7 @@ export default function ExecutiveCoaching() {
         <div className="absolute top-0 right-0 w-1/2 h-full opacity-100 pointer-events-none hidden lg:block">
           <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/20 to-background z-10"></div>
           <img 
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/consulting-hero-composite_22481fd8.png" 
+            src="/images/consulting-hero-composite.png" 
             alt="Executive Coaching" 
             className="w-full h-full object-cover object-left"
           />
