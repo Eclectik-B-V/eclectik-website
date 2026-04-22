@@ -63,7 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       >
         <div className="container flex items-center justify-between">
           <Link href="/" className="flex items-center group">
-            <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/logo-eclectik-white_e0d1e195.png" alt="Eclectik - Insights that accelerate AI Transformation" className="h-16 w-auto" />
+            <img src="/images/eclectik-logo-white.svg" alt="Eclectik - Insights that accelerate AI Transformation" className="h-16 w-auto" />
           </Link>
 
           {/* Desktop Nav */}
@@ -142,7 +142,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-16">
             <div className="space-y-6 lg:col-span-1">
               <div className="flex items-center">
-                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663219425815/2CVJJmcYxQipBBghkzRACY/logo-eclectik-white_e0d1e195.png" alt="Eclectik" className="h-10 w-auto" />
+                <img src="/images/eclectik-logo-white.svg" alt="Eclectik" className="h-10 w-auto" />
               </div>
               <p className="text-muted-foreground max-w-xs">
                 We combine objective workplace telemetry with subjective sentiment analysis to operationalize AI transformation from Copilot ROI modeling to change activation and sustained adoption.

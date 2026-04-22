@@ -213,8 +213,8 @@ export default function Home() {
             "@type": "Organization",
             "name": "Eclectik",
             "alternateName": "Eclectik AI Transformation",
-            "url": "https://www.eclectik-insights.co",
-            "logo": "https://www.eclectik-insights.co/images/logo-combined.png",
+            "url": "https://www.eclectik.co",
+            "logo": "https://www.eclectik.co/images/eclectik-logo-dark.svg",
             "description": "Eclectik operationalizes Workplace Signals end-to-end, combining objective telemetry with subjective sentiment to build actionable AI transformation roadmaps.",
             "contactPoint": {
               "@type": "ContactPoint",
@@ -235,9 +235,9 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "ProfessionalService",
             "name": "Eclectik AI Transformation Consulting",
-            "image": "https://www.eclectik-insights.co/images/logo-combined.png",
+            "image": "https://www.eclectik.co/images/eclectik-logo-dark.svg",
             "description": "AI transformation consulting services including Copilot ROI modeling, change activation, and sustained adoption through workplace signals analysis.",
-            "url": "https://www.eclectik-insights.co",
+            "url": "https://www.eclectik.co",
             "serviceType": [
               "AI Transformation Consulting",
               "Microsoft Copilot Implementation",
