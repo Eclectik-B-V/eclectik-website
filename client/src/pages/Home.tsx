@@ -20,7 +20,7 @@ import { trackCTAClick, trackNewsletterSignup } from "@/lib/tracking";
 // Use local worker served from public directory to avoid CSP issues
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
-const ISO_CERT_URL = "/api/iso-certificate";
+const ISO_CERT_URL = "/documents/iso-27001-certificate.pdf";
 
 function IsoCertModal({ onClose }: { onClose: () => void }) {
   const [numPages, setNumPages] = useState<number>(0);
@@ -330,15 +330,6 @@ export default function Home() {
             className="focus:outline-none relative group cursor-pointer"
             title="View ISO 27001 certificate"
           >
-            {/* Subtle rotating shiny ring */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-[-4px] rounded-full"
-              style={{
-                background: "conic-gradient(from 0deg, transparent 0%, transparent 60%, rgba(76,201,240,0.4) 75%, rgba(255,255,255,0.6) 80%, rgba(76,201,240,0.4) 85%, transparent 100%)",
-              }}
-            />
             {/* Gentle pulse glow */}
             <motion.div
               animate={{ opacity: [0.15, 0.35, 0.15], scale: [1, 1.08, 1] }}
@@ -347,9 +338,9 @@ export default function Home() {
               style={{ background: "radial-gradient(circle, rgba(76,201,240,0.25) 0%, transparent 70%)" }}
             />
             <motion.img
-              src="/images/iso-logo-final.png"
-              alt="ISO 27001 Certified"
-              className="relative h-20 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+              src="/images/brand-compliance-logo-final.png"
+              alt="Brand Compliance Certified"
+              className="relative h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
               initial={{ scale: 1.4 }}
               animate={{ scale: [1.4, 0.88, 1.04, 0.97, 1] }}
               transition={{ delay: 1.2, duration: 0.55, times: [0, 0.4, 0.65, 0.82, 1], ease: "easeOut" }}
@@ -555,7 +546,7 @@ export default function Home() {
                 <div className="space-y-4">
                   <h3 className="text-sm uppercase tracking-widest text-muted-foreground">Certifications</h3>
                   <div className="flex gap-8 items-center flex-wrap">
-                    <img src="/images/iso-logo-final.png" alt="ISO Certified" className="h-24 w-auto opacity-90 hover:opacity-100 transition-opacity" />
+                    <img src="/images/brand-compliance-logo-final.png" alt="Brand Compliance Certified" className="h-12 w-auto opacity-90 hover:opacity-100 transition-opacity" />
                     <img src="/images/white-microsoft-startups-logo-final.png" alt="Microsoft for Startups Founders Hub" className="h-24 w-auto opacity-90 hover:opacity-100 transition-opacity" />
                   </div>
                 </div>

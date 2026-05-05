@@ -14,7 +14,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 // Use local worker served from public directory to avoid CSP issues
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
-const ISO_CERT_URL = "/api/iso-certificate";
+const ISO_CERT_URL = "/documents/iso-27001-certificate.pdf";
 
 // ISO Certificate Modal
 function IsoCertModal({ onClose }: { onClose: () => void }) {
@@ -324,7 +324,7 @@ export default function Contact() {
                   <h3 className="text-sm uppercase tracking-widest text-muted-foreground">Certifications</h3>
                   <div className="flex gap-8 items-center flex-wrap">
                     <button onClick={() => setShowIsoCert(true)} className="focus:outline-none flex flex-col items-center gap-2 group" title="Bekijk ISO 27001 certificaat">
-                       <img src="/images/iso-logo-final.png" alt="ISO Certified" className="h-24 w-auto opacity-90 group-hover:opacity-100 transition-opacity cursor-pointer" />
+                       <img src="/images/brand-compliance-logo-final.png" alt="Brand Compliance Certified" className="h-12 w-auto opacity-90 group-hover:opacity-100 transition-opacity cursor-pointer" />
                        <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors tracking-wide">Click to see certificate</span>
                      </button>
                     <img src="/images/white-microsoft-startups-logo-final.png" alt="Microsoft for Startups Founders Hub" className="h-24 w-auto opacity-90 hover:opacity-100 transition-opacity" />
