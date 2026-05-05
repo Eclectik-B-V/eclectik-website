@@ -3,11 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
+  const [footerEmail, setFooterEmail] = useState("");
+  const [footerSubmitting, setFooterSubmitting] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +23,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
+
+  const handleFooterSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (footerSubmitting) return;
+    setFooterSubmitting(true);
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: footerEmail }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Subscription failed");
+      }
+      toast.success("Thanks for subscribing!");
+      setFooterEmail("");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Subscription failed");
+    } finally {
+      setFooterSubmitting(false);
+    }
+  };
 
   const navLinks = [
     { name: "Consulting", href: "/consulting" },
@@ -183,16 +209,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="font-heading font-bold text-lg mb-6">Stay Updated</h4>
               <p className="text-muted-foreground mb-4">Get the latest AI insights delivered to your inbox.</p>
-              <div className="flex gap-2">
-                <input 
-                  type="email" 
-                  placeholder="Your email" 
+              <form onSubmit={handleFooterSubscribe} className="flex gap-2">
+                <input
+                  type="email"
+                  required
+                  value={footerEmail}
+                  onChange={(e) => setFooterEmail(e.target.value)}
+                  placeholder="Your email"
                   className="bg-white/5 border border-white/10 rounded-md px-4 py-2 w-full focus:outline-none focus:border-primary transition-colors"
                 />
-                <Button size="icon" className="shrink-0">
+                <Button type="submit" size="icon" className="shrink-0" disabled={footerSubmitting}>
                   <ArrowRight className="w-4 h-4" />
                 </Button>
-              </div>
+              </form>
             </div>
           </div>
           
