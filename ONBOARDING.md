@@ -181,5 +181,3 @@ pnpm build            # production build sanity check
 
 Repo + `git log` is the authoritative history. Commit messages document the
 why behind every migration step.
-
-<!-- deploy-pipeline-test: 20260518-142800 -->
