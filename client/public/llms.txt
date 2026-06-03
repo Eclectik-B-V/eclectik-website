@@ -1,0 +1,48 @@
+# Eclectik
+
+> Boutique AI-transformation consultancy that operationalizes Workplace Signals end-to-end — combining objective telemetry with subjective sentiment to build actionable roadmaps that deliver measurable business impact.
+
+Eclectik helps enterprises move from "what if we adopt AI?" to "we can — here is the ROI, here is the rollout, and here is how we measure impact." We connect collaboration data, Microsoft Copilot usage, and Viva engagement signals to business outcomes, then activate the change through training, executive coaching, and packaged Microsoft licenses with service-level commitments. ISO 27001 certified.
+
+Trusted partners include Alex Lee, EFTA, IMC, Almirall, TD Industries, Warburtons, Westfalen, Breitling, and Pepkor.
+
+## Services
+
+- [Consulting](https://www.eclectik.co/consulting): Operationalize Workplace Signals. We combine objective telemetry with subjective signals to build actionable AI-transformation roadmaps that deliver measurable impact.
+- [Training](https://www.eclectik.co/training): Interpretation and change activation. We upskill leaders, managers, and HR teams to interpret signals confidently and activate change consistently.
+- [Solutions](https://www.eclectik.co/solutions): Licenses and packaged offerings. Eclectik bundles Microsoft Viva and Copilot licenses with onboarding, analytics accelerators, and service-level commitments.
+- [HR Tech Services](https://www.eclectik.co/hrtechservices): Comprehensive HR technology consulting across the employee-experience stack.
+
+## HR Tech service areas
+
+- [Customer Success](https://www.eclectik.co/services/customer-success)
+- [People Science](https://www.eclectik.co/services/people-science)
+- [Change Management](https://www.eclectik.co/services/change-management)
+- [People Success Academy](https://www.eclectik.co/training/people-success-academy)
+- [Training & Enablement](https://www.eclectik.co/training/enablement)
+- [Executive Coaching](https://www.eclectik.co/training/executive-coaching)
+
+## Case studies
+
+- [Copilot ROI Impact](https://www.eclectik.co/case-studies/copilot-impact): Modeling AI value with real collaboration telemetry and Copilot usage to predict ROI/TCO and guide rollout.
+- [Copilot Adoption](https://www.eclectik.co/case-studies/copilot-adoption): Driving sustained Microsoft Copilot adoption at enterprise scale.
+- [Glint & Insights](https://www.eclectik.co/case-studies/glint-insights): Connecting engagement sentiment to observable behavior changes — cycle time, rework, focus time.
+- [AKKODiS Power Platform](https://www.eclectik.co/case-studies/akkodis-power-platform): Power Platform transformation case.
+- [Microsoft Viva Transformation](https://www.eclectik.co/case-studies/microsoft-viva-transformation): End-to-end Microsoft Viva implementation and adoption.
+
+## Company
+
+- [About Us](https://www.eclectik.co/about-us)
+- [Sectors](https://www.eclectik.co/sectors): Industries we serve.
+- [Careers](https://www.eclectik.co/careers)
+- [Contact](https://www.eclectik.co/contact)
+
+## Resources
+
+- [White Papers](https://www.eclectik.co/resources/white-papers): Research and frameworks on Workplace Signals, Copilot ROI, and HR technology.
+- [Sitemap](https://www.eclectik.co/sitemap.xml)
+
+## Optional
+
+- [Privacy Policy](https://www.eclectik.co/privacy-policy)
+- [Terms of Service](https://www.eclectik.co/terms-of-service)
