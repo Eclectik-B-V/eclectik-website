@@ -11,6 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [footerEmail, setFooterEmail] = useState("");
   const [footerSubmitting, setFooterSubmitting] = useState(false);
+  const [footerConsent, setFooterConsent] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,34 +48,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const navLinks = [
-    { name: "Consulting", href: "/consulting" },
-    { name: "Training", href: "/training" },
-    { name: "Solutions", href: "/solutions" },
-    { 
-      name: "Resources", 
-      href: "#",
-      dropdown: [
-        { name: "Case Study: Copilot ROI", href: "/case-studies/copilot-impact" },
-        { name: "Case Study: Copilot Adoption", href: "/case-studies/copilot-adoption" },
-        { name: "Case Study: Glint & Insights", href: "/case-studies/glint-insights" },
-        { name: "Case Study: AKKODiS Power Platform", href: "/case-studies/akkodis-power-platform" },
-        { name: "Case Study: Microsoft Viva Transformation", href: "/case-studies/microsoft-viva-transformation" },
-        { name: "White Papers", href: "/resources/white-papers" },
-      ]
-    },
-    { 
-      name: "HR Tech Services", 
-      href: "/hrtechservices",
-      dropdown: [
-        { name: "Customer Success", href: "/services/customer-success" },
-        { name: "People Science", href: "/services/people-science" },
-        { name: "Change Management", href: "/services/change-management" },
-        { name: "People Success Academy", href: "/training/people-success-academy" },
-        { name: "Training & Enablement", href: "/training/enablement" },
-        { name: "Executive Coaching", href: "/training/executive-coaching" },
-      ]
-    },
+  const navLinks: { name: string; href: string; dropdown?: { name: string; href: string }[] }[] = [
+    { name: "Benchmark", href: "/benchmark" },
+    { name: "Insights", href: "/insights" },
+    { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -118,6 +95,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               )
             ))}
             {/* Login/Logout Button - Temporarily disabled due to OAuth platform issues */}
+            <Link href="/scorecard">
+              <Button className="bg-primary text-background hover:bg-primary/90 font-semibold">
+                Take the scorecard
+              </Button>
+            </Link>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -154,6 +136,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
           )
         ))}
+        <Link href="/scorecard">
+          <Button className="bg-primary text-background hover:bg-primary/90 font-semibold">
+            Take the scorecard
+          </Button>
+        </Link>
         {/* Mobile Auth Button - Temporarily disabled due to OAuth platform issues */}
       </div>
 
@@ -165,68 +152,77 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Footer */}
       <footer className="bg-black border-t border-white/10 pt-20 pb-10">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-16">
-            <div className="space-y-6 lg:col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <div className="space-y-6">
               <div className="flex items-center">
                 <img src="/images/eclectik-logo-white-photo.svg" alt="Eclectik" className="h-14 w-auto" />
               </div>
               <p className="text-muted-foreground max-w-xs">
-                We combine objective workplace telemetry with subjective sentiment analysis to operationalize AI transformation from Copilot ROI modeling to change activation and sustained adoption.
+                The independent authority on whether AI transformation is working. Proof of value
+                in the P&amp;L, proof of change in the workforce.
               </p>
             </div>
-            
-            <div className="lg:pl-8">
-              <h4 className="font-heading font-bold text-lg mb-6">Services</h4>
-              <ul className="space-y-4">
-                <li><Link href="/consulting" className="text-muted-foreground hover:text-primary transition-colors">Consulting</Link></li>
-                <li><Link href="/training" className="text-muted-foreground hover:text-primary transition-colors">Training</Link></li>
-                <li><Link href="/solutions" className="text-muted-foreground hover:text-primary transition-colors">Solutions</Link></li>
-              </ul>
-            </div>
 
-            <div className="lg:pl-4">
-              <h4 className="font-heading font-bold text-lg mb-6">HR Tech Services</h4>
-              <ul className="space-y-4">
-                <li><Link href="/services/customer-success" className="text-muted-foreground hover:text-primary transition-colors">Customer Success</Link></li>
-                <li><Link href="/services/people-science" className="text-muted-foreground hover:text-primary transition-colors">People Science</Link></li>
-                <li><Link href="/services/change-management" className="text-muted-foreground hover:text-primary transition-colors">Change Management</Link></li>
-                <li><Link href="/training/people-success-academy" className="text-muted-foreground hover:text-primary transition-colors">People Success Academy</Link></li>
-                <li><Link href="/training/enablement" className="text-muted-foreground hover:text-primary transition-colors">Training & Enablement</Link></li>
-                <li><Link href="/training/executive-coaching" className="text-muted-foreground hover:text-primary transition-colors">Executive Coaching</Link></li>
-              </ul>
-            </div>
-            
-            <div>
+            <div className="lg:pl-8">
               <h4 className="font-heading font-bold text-lg mb-6">Company</h4>
               <ul className="space-y-4">
-                <li><Link href="/about-us" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
+                <li><Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">About</Link></li>
+                <li><Link href="/insights" className="text-muted-foreground hover:text-primary transition-colors">Insights</Link></li>
                 <li><Link href="/careers" className="text-muted-foreground hover:text-primary transition-colors">Careers</Link></li>
-                <li><Link href="/resources/white-papers" className="text-muted-foreground hover:text-primary transition-colors">Resources</Link></li>
                 <li><Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
               </ul>
             </div>
-            
+
             <div>
-              <h4 className="font-heading font-bold text-lg mb-6">Stay Updated</h4>
-              <p className="text-muted-foreground mb-4">Get the latest AI insights delivered to your inbox.</p>
-              <form onSubmit={handleFooterSubscribe} className="flex gap-2">
-                <input
-                  type="email"
-                  required
-                  value={footerEmail}
-                  onChange={(e) => setFooterEmail(e.target.value)}
-                  placeholder="Your email"
-                  className="bg-white/5 border border-white/10 rounded-md px-4 py-2 w-full focus:outline-none focus:border-primary transition-colors"
-                />
-                <Button type="submit" size="icon" className="shrink-0" disabled={footerSubmitting}>
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
+              <h4 className="font-heading font-bold text-lg mb-6">Trust</h4>
+              <ul className="space-y-4">
+                <li>
+                  <a
+                    href="/documents/iso-27001-certificate.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    ISO 27001
+                  </a>
+                </li>
+                <li><Link href="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">Privacy policy</Link></li>
+                <li><Link href="/terms-of-service" className="text-muted-foreground hover:text-primary transition-colors">Terms of service</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-heading font-bold text-lg mb-6">Stay updated</h4>
+              <p className="text-muted-foreground mb-4">Evidence on AI transformation, monthly.</p>
+              <form onSubmit={handleFooterSubscribe} className="space-y-3">
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    required
+                    value={footerEmail}
+                    onChange={(e) => setFooterEmail(e.target.value)}
+                    placeholder="Your email"
+                    className="bg-white/5 border border-white/10 rounded-md px-4 py-2 w-full focus:outline-none focus:border-primary transition-colors"
+                  />
+                  <Button type="submit" size="icon" className="shrink-0" disabled={footerSubmitting || !footerConsent}>
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </div>
+                <label className="flex items-start gap-2 text-xs text-muted-foreground cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={footerConsent}
+                    onChange={(e) => setFooterConsent(e.target.checked)}
+                    className="mt-0.5 accent-[#65C1D6]"
+                  />
+                  <span>I agree to receive the Eclectik newsletter. Unsubscribe anytime.</span>
+                </label>
               </form>
             </div>
           </div>
           
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-            <p>&copy; 2025 Eclectik Data & AI Consultancy. All rights reserved.</p>
+            <p>&copy; 2026 Eclectik B.V. All rights reserved.</p>
             <div className="flex gap-6">
               <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
               <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
