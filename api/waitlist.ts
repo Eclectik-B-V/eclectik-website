@@ -107,22 +107,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: "Signup failed" });
     }
 
-    // Confirmation to the subscriber — best-effort
-    const confirmation = await resend.emails.send({
-      from,
-      to: data.email,
-      subject: "You're on the Eclectik benchmark waiting list",
-      html: `
-        <p>Hi ${escapeHtml(data.name)},</p>
-        <p>You're on the waiting list for the Eclectik AI transformation benchmark.
-        We run around twelve audits a year and the waiting list hears first when
-        September seats open.</p>
-        <p>You'll only receive benchmark updates — unsubscribe anytime.</p>
-        <p>— Eclectik</p>
-      `,
-    });
-    if (confirmation.error) {
-      console.error("Resend confirmation error:", confirmation.error);
+    // Confirmation to the subscriber — best-effort, must never fail the request
+    try {
+      const confirmation = await resend.emails.send({
+        from,
+        to: data.email,
+        subject: "You're on the Eclectik benchmark waiting list",
+        html: `
+          <p>Hi ${escapeHtml(data.name)},</p>
+          <p>You're on the waiting list for the Eclectik AI transformation benchmark.
+          We run around twelve audits a year and the waiting list hears first when
+          September seats open.</p>
+          <p>You'll only receive benchmark updates — unsubscribe anytime.</p>
+          <p>— Eclectik</p>
+        `,
+      });
+      if (confirmation.error) {
+        console.error("Resend confirmation error:", confirmation.error);
+      }
+    } catch (err) {
+      console.error("Resend confirmation error:", err);
     }
 
     return res.status(200).json({ ok: true });
