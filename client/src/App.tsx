@@ -4,7 +4,7 @@ import { initAttribution } from "@/lib/tracking";
 import ScrollToTop from "@/components/ScrollToTop";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "@/pages/Home";
@@ -31,13 +31,19 @@ import HRTechServices from "@/pages/HRTechServices";
 import Sectors from "./pages/Sectors";
 import WhitePapers from "./pages/WhitePapers";
 import Careers from "./pages/Careers";
+import Benchmark from "@/pages/Benchmark";
+import Insights from "@/pages/Insights";
+import Scorecard from "@/pages/Scorecard";
+import ProofOfValue from "@/pages/ProofOfValue";
+import ProofOfChange from "@/pages/ProofOfChange";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/about-us" component={AboutUs} />
+      <Route path="/about" component={AboutUs} />
+      <Route path="/about-us">{() => <Redirect to="/about" />}</Route>
       <Route path={"/consulting"} component={Consulting} />
       <Route path={"/training"} component={Training} />
       <Route path="/solutions" component={Solutions} />
@@ -61,6 +67,11 @@ function Router() {
       <Route path="/resources/white-papers" component={WhitePapers} />
       <Route path="/white-papers" component={WhitePapers} />
       <Route path="/careers" component={Careers} />
+      <Route path="/benchmark" component={Benchmark} />
+      <Route path="/insights" component={Insights} />
+      <Route path="/scorecard" component={Scorecard} />
+      <Route path="/proof-of-value" component={ProofOfValue} />
+      <Route path="/proof-of-change" component={ProofOfChange} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
