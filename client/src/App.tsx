@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
+import { initAttribution } from "@/lib/tracking";
 import ScrollToTop from "@/components/ScrollToTop";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -72,6 +74,10 @@ function Router() {
 // - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
 function App() {
+  useEffect(() => {
+    initAttribution();
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider

@@ -144,3 +144,52 @@ export function trackServiceView(serviceName: string) {
     event_label: serviceName
   });
 }
+
+/**
+ * Attribution: capture ?src= from the URL on page load, persist for the
+ * session, include in form submissions and funnel events. No cookies.
+ */
+const ATTRIBUTION_KEY = "eclectik_src";
+
+export function initAttribution() {
+  if (typeof window === "undefined") return;
+  try {
+    const src = new URLSearchParams(window.location.search).get("src");
+    if (src) {
+      sessionStorage.setItem(ATTRIBUTION_KEY, src.slice(0, 100));
+    }
+  } catch {
+    // sessionStorage unavailable (private mode edge cases) — attribution is best-effort
+  }
+}
+
+export function getAttribution(): string | undefined {
+  if (typeof window === "undefined") return undefined;
+  try {
+    return sessionStorage.getItem(ATTRIBUTION_KEY) || undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Track a visitor choosing one of the two doors on Home
+ */
+export function trackDoorSelected(door: "value" | "change") {
+  trackEvent("door_selected", {
+    event_category: "engagement",
+    door,
+    src: getAttribution(),
+  });
+}
+
+/**
+ * Track a successful benchmark waiting-list signup
+ */
+export function trackWaitlistJoined() {
+  trackEvent("waitlist_joined", {
+    event_category: "conversion",
+    src: getAttribution(),
+  });
+  trackLinkedInConversion();
+}
