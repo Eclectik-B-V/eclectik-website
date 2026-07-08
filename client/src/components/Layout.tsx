@@ -51,6 +51,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navLinks: { name: string; href: string; dropdown?: { name: string; href: string }[] }[] = [
     { name: "Benchmark", href: "/benchmark" },
     { name: "Insights", href: "/insights" },
+    {
+      name: "HR Tech Services",
+      href: "/hrtechservices",
+      dropdown: [
+        { name: "Customer Success", href: "/services/customer-success" },
+        { name: "People Science", href: "/services/people-science" },
+        { name: "Change Management", href: "/services/change-management" },
+        { name: "People Success Academy", href: "/training/people-success-academy" },
+        { name: "Training & Enablement", href: "/training/enablement" },
+        { name: "Executive Coaching", href: "/training/executive-coaching" },
+      ],
+    },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
@@ -152,7 +164,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Footer */}
       <footer className="bg-black border-t border-white/10 pt-20 pb-10">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-16">
             <div className="space-y-6">
               <div className="flex items-center">
                 <img src="/images/eclectik-logo-white-photo.svg" alt="Eclectik" className="h-14 w-auto" />
@@ -170,6 +182,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <li><Link href="/insights" className="text-muted-foreground hover:text-primary transition-colors">Insights</Link></li>
                 <li><Link href="/careers" className="text-muted-foreground hover:text-primary transition-colors">Careers</Link></li>
                 <li><Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-heading font-bold text-lg mb-6">HR Tech Services</h4>
+              <ul className="space-y-4">
+                <li><Link href="/hrtechservices" className="text-muted-foreground hover:text-primary transition-colors">HR Tech Services</Link></li>
+                <li><Link href="/services/customer-success" className="text-muted-foreground hover:text-primary transition-colors">Customer Success</Link></li>
+                <li><Link href="/services/people-science" className="text-muted-foreground hover:text-primary transition-colors">People Science</Link></li>
+                <li><Link href="/services/change-management" className="text-muted-foreground hover:text-primary transition-colors">Change Management</Link></li>
               </ul>
             </div>
 
