@@ -18,11 +18,19 @@ niet gedupliceerd. Deze spec legt de technische invulling en de afwijkingen vast
    Marco's spec wordt niet overgenomen.
 4. **Generieke `form_responses`-tabel** i.p.v. scorecard-specifiek: latere
    formulieren zijn een nieuwe `form_type`, geen nieuwe tabel.
-5. **E-mail is verplicht** om het resultaat te zien (afwijking van §9 van
-   Marco's spec, dat e-mail optioneel maakte voor de on-screen samenvatting).
-   Elke afgeronde scorecard levert dus een marketing lead op. Let op voor
-   Marco's review: de funneltargets uit §10 (≥50% e-mailconversie op
-   completes) verschuiven hiermee naar de completion-rate zelf.
+5. **Teaser eerst, werkmail voor het volledige resultaat** (herzien 9 juli;
+   verving het eerdere besluit "e-mail verplicht om íets te zien"). Na de
+   laatste vraag verschijnt direct een licht teaser-resultaat: de Evidence
+   Readiness Index + het kwadrant. De volledige uitslag (drie deelscores,
+   gap-bullets, geroute CTA) vereist een wérkmailadres — gratis providers
+   (gmail, hotmail e.d.) worden geweigerd. Dit schuift terug richting Marco's
+   §9, met twee verschillen: e-mail blijft verplicht voor het volledige
+   resultaat, en het moet een werkmail zijn. Let op voor Marco's review: niet
+   elke complete levert meer een lead op; het funneltarget ≥50%
+   e-mailconversie op completes (§10) is meetbaar als `sc_email_submitted` /
+   `sc_completed`. Afhakers na de teaser laten alleen analytics-events na —
+   er is geen anonieme opslag (bewuste keuze, houdt het CRM-intake ongewijzigd;
+   de weekstats bevatten dus alleen completes mét e-mail).
 
 ## Architectuur
 
@@ -71,23 +79,34 @@ Browser (SPA)                    Website (Vercel fn)          CRM (Vercel fn + S
 - Vraagvolgorde per deur conform §11; één vraag per scherm, progressbar,
   terugknop, radio's met uitgeschreven anchors, "don't know" altijd eerste optie.
 - Voortgang in sessionStorage (reload-bestendig binnen de sessie); geen login.
-- P1–P3 als laatste, daarna de e-mailstap, daarna het resultaat.
+- P1–P3 als laatste, daarna direct de resultaatpagina (teaser + inline
+  e-mailgate). Herladen met 23 complete antwoorden → terug op de teaser,
+  niet op de laatste vraag.
 
-### E-mailstap (gate — e-mail verplicht, besluit 5)
-- Na P1–P3 en vóór het resultaat: e-mail invullen is verplicht om de uitslag
-  te zien ("Where do we send your report?" + resultaat direct op het scherm;
-  het PDF-rapport zelf is fase 2 — geen belofte van een directe bijlage).
-- Consent-checkbox, standaard uit: "Send me the monthly insights letter",
-  los van de rapportlevering. Doel + bewaartermijn in één regel op deze stap.
-- Submissiegedrag: één call bij afronden, altijd mét e-mail → response-rij én
-  marketing lead in dezelfde intake. Geen tweestapsflow.
-
-### Resultaatpagina
-- Drie score-dials (Value/Change/Readiness), kleur per band; kwadrantkaart met
-  de EN-teksten uit §5; 2–3 gap-bullets; geroute CTA volgens §4 (waarbij de
-  benchmark-route naar `/benchmark#waitlist` linkt); readiness-overlayregel
-  indien readiness < 40. Bestaande site-tokens en componenten (glassmorphism
-  cards, primary/secondary accenten per deur binnen het bestaande palet).
+### Resultaatpagina: teaser + inline e-mailgate (besluit 5, herzien)
+- **Teaser (direct zichtbaar, geen e-mail nodig):** Evidence Readiness
+  Index-dial (kleur per band) + kwadrantkaart met de EN-teksten uit §5
+  (verbatim). Een echt, licht resultaat — geen vervaagde preview van de rest.
+- **Formulierkaart direct onder de teaser:** "Fill out your work email for
+  the full report" — werkmailveld, consent-checkbox standaard uit ("Send me
+  the monthly insights letter", los van de rapportlevering), doel +
+  bewaartermijn in één regel, plus de regel dat de volledige uitslag direct
+  op het scherm verschijnt (het PDF-rapport zelf is fase 2 — geen belofte
+  van een directe bijlage).
+- **Werkmail-validatie:** geëxporteerde functie in `shared/` (blokkadelijst
+  van gratis providers: gmail, googlemail, hotmail, outlook, live, yahoo,
+  icloud, proton, gmx, en de gangbare NL-consumentendomeinen) met
+  vitest-tests; toegepast client-side (foutmelding "Please use your work
+  email") én server-side in de zod-validatie van `api/scorecard.ts`
+  (relatieve import — het `@shared`-alias werkt niet in Vercel functions).
+- **Na geldige e-mail:** één POST (payload ongewijzigd, dus het CRM-intake
+  blijft onaangeraakt), daarna verschijnt de volledige weergave: drie
+  deelscore-dials (Value/Change/Readiness), 2–3 gap-bullets, geroute CTA
+  volgens §4 (benchmark-route → `/benchmark#waitlist`),
+  readiness-overlayregel indien readiness < 40. CRM onbereikbaar → volledige
+  resultaat tóch tonen (zelfde degradatie als de waitlist).
+- Bestaande site-tokens en componenten (glassmorphism cards,
+  primary/secondary accenten per deur binnen het bestaande palet).
 
 ### API: `api/scorecard.ts`
 - Valideert (zod, zoals api/waitlist.ts), berekent niets zelf behalve
@@ -152,8 +171,10 @@ definitieve gap-regels (Marco/Manish), NL-versie, publicatie van aggregaten.
 ## Definition of done (fase 1)
 - Test op beide deuren → juiste vraagvolgorde, scores kloppen met §3
   (unit-tests + handmatige steekproef)
-- Resultaat is niet bereikbaar zonder e-mail; afronden mét e-mail → rij in
-  `form_responses` + marketing lead met `scorecard_completed`-activiteit
+- Na afronden is de teaser (index + kwadrant) direct zichtbaar; deelscores,
+  gaps en CTA zijn niet bereikbaar zonder geldig werkmailadres (gratis
+  providers geweigerd, client- én server-side); invullen mét werkmail → rij
+  in `form_responses` + marketing lead met `scorecard_completed`-activiteit
   zichtbaar in Marketing → Leads (alleen samenvatting, geen ruwe antwoorden)
 - Route assessment of index ≥ 70 → notificatiemail bij Marco
 - `scorecard_weekly_stats` geeft data terug

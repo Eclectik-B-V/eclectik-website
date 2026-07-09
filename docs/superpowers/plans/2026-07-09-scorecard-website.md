@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** The `/scorecard` self-assessment: two doors, 20+3 questions one-per-screen, client-side scoring for an instant result, mandatory email gate, result page with dials/quadrant/gaps/routed CTA, submission proxied to the CRM intake.
+**Goal:** The `/scorecard` self-assessment: two doors, 20+3 questions one-per-screen, client-side scoring for an instant result, a result page that shows a light teaser (index + quadrant) straight away and asks for a work email to reveal the full result (dials/gaps/routed CTA), submission proxied to the CRM intake.
 
-**Architecture:** A typed question bank + pure scoring functions in `shared/scorecard.ts` (mirrors the CRM's `api/_lib/scorecard-lib.js`, bank v1.0). The page `client/src/pages/Scorecard.tsx` is a phase machine (door → questions → profile → email → result) with sessionStorage persistence. `api/scorecard.ts` validates with zod and proxies to `${CRM_BASE_URL}/api/scorecard-intake` with the shared secret (same graceful-degradation idiom as `api/waitlist.ts`).
+**Architecture:** A typed question bank + pure scoring functions in `shared/scorecard.ts` (mirrors the CRM's `api/_lib/scorecard-lib.js`, bank v1.0). The page `client/src/pages/Scorecard.tsx` is a phase machine (door → questions → profile → result-with-inline-email-gate) with sessionStorage persistence. `api/scorecard.ts` validates with zod (incl. work-email check from `shared/work-email.ts`) and proxies to `${CRM_BASE_URL}/api/scorecard-intake` with the shared secret (same graceful-degradation idiom as `api/waitlist.ts`).
 
 **Tech Stack:** Vite 7 + React 19 + TS, wouter, framer-motion, Tailwind 4 (existing tokens only), zod, vitest (new devDependency), Vercel functions.
 
@@ -627,14 +627,49 @@ git commit -m "feat: scorecard flow — deuren, 23 vragen, verplichte e-mailgate
 
 ---
 
-### Task 4: Result page
+### Task 4: Result page — teaser + inline e-mailgate (besluit 5 herzien)
+
+Spec: `docs/superpowers/specs/2026-07-09-scorecard-fase1-design.md`, sectie
+"Resultaatpagina: teaser + inline e-mailgate". Na de laatste vraag toont de
+resultaatpagina direct de teaser (Evidence Readiness Index-dial + kwadrantkaart);
+daaronder een formulierkaart "Fill out your work email for the full report".
+Pas na een geldig wérkmailadres (gratis providers geweigerd) volgt de POST en
+verschijnen deelscores, gaps en de geroute CTA. Het aparte e-mailscherm
+(`EmailGate.tsx`) vervalt.
 
 **Files:**
+- Create: `shared/work-email.ts` + test `shared/work-email.test.ts` (TDD)
 - Create: `client/src/components/scorecard/ScoreDial.tsx`
 - Create: `client/src/components/scorecard/ResultView.tsx`
-- Modify: `client/src/pages/Scorecard.tsx` (replace the `<pre>` with `<ResultView …/>`)
+- Delete: `client/src/components/scorecard/EmailGate.tsx`
+- Modify: `client/src/pages/Scorecard.tsx` (fase `"email"` vervalt; submit wordt unlock)
+- Modify: `shared/scorecard.ts` (interne `band`-helper exporteren t.b.v. de index-dial)
+- Modify: `api/scorecard.ts` (werkmail-check in de zod-validatie)
 
-- [ ] **Step 1: `ScoreDial.tsx`** — SVG arc dial (spec: dials, not gauges-with-needles), colour by band using existing tokens:
+- [ ] **Step 1: TDD `shared/work-email.ts`** — eerst `shared/work-email.test.ts`
+  schrijven, `pnpm test` → FAIL, dan implementeren, dan PASS. Gedrag van
+  `isWorkEmail(email: string): boolean`:
+  - `true` voor geldige zakelijke adressen: `marco@eclectik.co`, `jan.de.vries@client-name.com`
+  - `false` voor gratis providers (case-insensitief, dus ook `User@GMAIL.COM`):
+    gmail.com, googlemail.com, hotmail.com/.nl/.co.uk/.fr/.de, outlook.com/.de,
+    live.com/.nl, msn.com, yahoo.com/.co.uk, ymail.com, icloud.com, me.com,
+    mac.com, aol.com, proton.me, protonmail.com, pm.me, gmx.com/.de/.net,
+    mail.com, yandex.com/.ru, zoho.com — plus NL-consumentendomeinen:
+    ziggo.nl, kpnmail.nl, home.nl, xs4all.nl, hetnet.nl, planet.nl, upcmail.nl,
+    chello.nl, casema.nl, telfort.nl, online.nl, freedom.nl
+  - `false` voor ongeldige vormen: `foo`, `a@b`, lege string
+
+```ts
+// shared/work-email.ts — gedeeld door het formulier (client) en api/scorecard.ts (server).
+const FREE_EMAIL_DOMAINS = new Set([/* lijst hierboven */]);
+
+export function isWorkEmail(email: string): boolean {
+  const m = /^[^\s@]+@([^\s@]+\.[^\s@]+)$/.exec(email.trim().toLowerCase());
+  return m !== null && !FREE_EMAIL_DOMAINS.has(m[1]);
+}
+```
+
+- [ ] **Step 2: `ScoreDial.tsx`** — SVG arc dial (spec: dials, not gauges-with-needles), colour by band using existing tokens:
 
 ```tsx
 import type { Band } from "@shared/scorecard";
@@ -662,9 +697,15 @@ export default function ScoreDial({ label, score, band }: { label: string; score
 }
 ```
 
-- [ ] **Step 2: `ResultView.tsx`** — dials → quadrant card (copy VERBATIM from Marco's spec §5) → gap bullets → routed CTA → readiness overlay:
+- [ ] **Step 3: `ResultView.tsx`** — teaser (index-dial + kwadrantkaart, copy
+  VERBATIM uit Marco's spec §5) altijd zichtbaar; daaronder de e-mailkaart
+  zolang `unlocked` false is, anders de volledige weergave (drie deelscore-dials
+  → gap bullets → geroute CTA → readiness overlay). De interne `band`-helper in
+  `shared/scorecard.ts` wordt geëxporteerd voor de kleur van de index-dial
+  (mini-wijziging, geen gedragsverandering — bestaande tests blijven groen):
 
 ```tsx
+import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -701,72 +742,166 @@ const ROUTE_CTA: Record<ScorecardResult["route"], { label: string; href: string;
   workshop: { label: "Book a half-day diagnostic workshop", href: "/contact" },
 };
 
-export default function ResultView({ result, answers }: { result: ScorecardResult; answers: Answers }) {
+interface Props {
+  result: ScorecardResult;
+  answers: Answers;
+  unlocked: boolean;      // true zodra een geldige werkmail is ingestuurd
+  submitting: boolean;
+  onUnlock: (email: string, consent: boolean) => void;
+}
+
+function EmailUnlockCard({ submitting, onUnlock }: Pick<Props, "submitting" | "onUnlock">) {
+  const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [touched, setTouched] = useState(false);
+  const valid = isWorkEmail(email);
+  return (
+    <div className="bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
+      <h2 className="text-xl font-heading font-semibold text-white mb-3">
+        Fill out your work email for the full report
+      </h2>
+      <p className="text-sm text-muted-foreground mb-6">
+        Your full results — three dimension scores, your biggest gaps and the next
+        step that fits — appear straight away on this page. We use your email to
+        deliver your report and keep it no longer than needed for that purpose.
+      </p>
+      <form onSubmit={(e) => { e.preventDefault(); setTouched(true); if (valid && !submitting) onUnlock(email.trim(), consent); }}
+        className="space-y-4" noValidate>
+        <input
+          type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+          placeholder="Work email" aria-invalid={touched && !valid}
+          className="w-full bg-background border border-white/10 rounded-md px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+        />
+        {touched && !valid && (
+          <p className="text-sm text-secondary" role="alert">Please use your work email.</p>
+        )}
+        <label className="flex items-start gap-2 text-sm text-muted-foreground cursor-pointer">
+          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1" />
+          <span>Send me the monthly insights letter. Unsubscribe anytime.</span>
+        </label>
+        <Button type="submit" disabled={submitting}
+          className="w-full bg-secondary text-white hover:bg-secondary/90 font-semibold">
+          {submitting ? "One moment…" : <>Get my full report <ArrowRight className="ml-2 w-4 h-4" /></>}
+        </Button>
+      </form>
+    </div>
+  );
+}
+
+export default function ResultView({ result, answers, unlocked, submitting, onUnlock }: Props) {
   const cta = ROUTE_CTA[result.route];
   const quad = QUADRANT_COPY[result.quadrant];
   return (
     <div className="max-w-3xl mx-auto">
+      {/* Teaser — altijd zichtbaar, geen e-mail nodig */}
       <p className="text-primary text-xs tracking-wider uppercase font-semibold text-center mb-3">
         Your evidence readiness profile
       </p>
       <h1 className="text-3xl md:text-4xl font-heading font-bold text-white text-center mb-10">
         Evidence Readiness Index: {result.scores.index}
       </h1>
-      <div className="flex justify-center gap-8 md:gap-14 mb-12">
-        <ScoreDial label="Value" score={result.scores.value} band={result.bands.value} />
-        <ScoreDial label="Change" score={result.scores.change} band={result.bands.change} />
-        <ScoreDial label="Readiness" score={result.scores.readiness} band={result.bands.readiness} />
+      <div className="flex justify-center mb-12">
+        <ScoreDial label="Evidence Readiness Index" score={result.scores.index} band={band(result.scores.index)} />
       </div>
-      <div className="bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 mb-8">
+      <div className="bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 mb-10">
         <h2 className="text-xl font-heading font-semibold text-white mb-3">{quad.title}</h2>
         <p className="text-muted-foreground">{quad.body}</p>
       </div>
-      <div className="mb-10">
-        <h3 className="text-sm tracking-wider uppercase text-muted-foreground font-semibold mb-4">
-          Your biggest gaps
-        </h3>
-        <ul className="space-y-3">
-          {gapBullets(answers).map((g) => (
-            <li key={g.id} className="flex gap-3 text-muted-foreground">
-              <span className="text-secondary mt-1">•</span><span>{g.text}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="text-center">
-        <Link href={cta.href} onClick={() => trackScorecard("sc_cta_clicked", { route: result.route })}>
-          <Button size="lg" className="bg-secondary text-white hover:bg-secondary/90 font-semibold">
-            {cta.label} <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
-        </Link>
-        {cta.note && <p className="text-sm text-muted-foreground mt-3">{cta.note}</p>}
-        {result.readinessOverlay && (
-          <p className="text-sm text-muted-foreground mt-6">
-            First step is your data foundation — exactly what our data-lab phase does.
-          </p>
-        )}
-        <p className="text-xs text-muted-foreground mt-8">Your full report arrives by email within a few days.</p>
-      </div>
+
+      {!unlocked ? (
+        <EmailUnlockCard submitting={submitting} onUnlock={onUnlock} />
+      ) : (
+        <>
+          <div className="flex justify-center gap-8 md:gap-14 mb-12">
+            <ScoreDial label="Value" score={result.scores.value} band={result.bands.value} />
+            <ScoreDial label="Change" score={result.scores.change} band={result.bands.change} />
+            <ScoreDial label="Readiness" score={result.scores.readiness} band={result.bands.readiness} />
+          </div>
+          <div className="mb-10">
+            <h3 className="text-sm tracking-wider uppercase text-muted-foreground font-semibold mb-4">
+              Your biggest gaps
+            </h3>
+            <ul className="space-y-3">
+              {gapBullets(answers).map((g) => (
+                <li key={g.id} className="flex gap-3 text-muted-foreground">
+                  <span className="text-secondary mt-1">•</span><span>{g.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="text-center">
+            <Link href={cta.href} onClick={() => trackScorecard("sc_cta_clicked", { route: result.route })}>
+              <Button size="lg" className="bg-secondary text-white hover:bg-secondary/90 font-semibold">
+                {cta.label} <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+            {cta.note && <p className="text-sm text-muted-foreground mt-3">{cta.note}</p>}
+            {result.readinessOverlay && (
+              <p className="text-sm text-muted-foreground mt-6">
+                First step is your data foundation — exactly what our data-lab phase does.
+              </p>
+            )}
+            <p className="text-xs text-muted-foreground mt-8">Your full report arrives by email within a few days.</p>
+          </div>
+        </>
+      )}
     </div>
   );
 }
 ```
 
-- [ ] **Step 3: Wire into `Scorecard.tsx`** — replace the `<pre>…</pre>` line with:
+Imports bovenaan aanvullen met `import { band } from "@shared/scorecard";` en
+`import { isWorkEmail } from "@shared/work-email";` (en `useState`). NB: de
+copyregel "no unlock" uit de reporegels geldt voor zichtbare site-copy —
+`unlocked`/`onUnlock` als code-identifiers zijn prima, in teksten niet.
 
-```tsx
-        {phase === "result" && result && <ResultView result={result} answers={answers} />}
+- [ ] **Step 4: Herschrijf de fasemachine in `Scorecard.tsx`** — fase `"email"`
+  vervalt, `EmailGate` import/gebruik weg, bestand `EmailGate.tsx` verwijderen
+  (`git rm`):
+  - `type Phase = "door" | "questions" | "result"`; nieuwe state
+    `const [unlocked, setUnlocked] = useState(false);`
+  - In `answer()`: is de laatste vraag beantwoord → `save({ door, answers: next, step })`
+    (expliciet, zodat een reload op de teaser terugkomt), `trackScorecard("sc_completed", { door })`,
+    `setResult(computeScorecard(next))`, `setPhase("result")`. Geen POST hier.
+  - Init bij mount: als `saved` bestaat en `validateAnswers(saved.answers)`
+    slaagt → direct `phase "result"` met berekend resultaat (teaser), anders
+    zoals nu verder bij de opgeslagen vraag.
+  - `submit(email, consent)` wordt de `onUnlock`-callback: guard
+    `isWorkEmail(email)` (defensief, het formulier checkt al), POST naar
+    `/api/scorecard` (payload ongewijzigd), `trackScorecard("sc_email_submitted", { route: result.route })`,
+    `setUnlocked(true)`, `save(null)`. CRM/fetch-fout → tóch tonen (zelfde
+    catch als nu). NOTE: `answers` blijft in memory voor `gapBullets` — dat
+    blijft zo.
+  - Render: `{phase === "result" && result && <ResultView result={result} answers={answers} unlocked={unlocked} submitting={submitting} onUnlock={submit} />}`
+
+- [ ] **Step 5: Werkmail-check in `api/scorecard.ts`** — relatieve import
+  (het `@shared`-alias werkt niet in Vercel functions; Vercel bundelt relatieve
+  imports wel mee):
+
+```ts
+import { isWorkEmail } from "../shared/work-email";
+// in BodySchema:
+  email: z.string().trim().email().max(200).refine(isWorkEmail, "work email required"),
 ```
 
-plus `import ResultView from "@/components/scorecard/ResultView";`. NOTE: `save(null)` wipes sessionStorage but `answers` state must stay in memory for gapBullets — it already does.
+- [ ] **Step 6: Verify in browser** — complete run met gemengde antwoorden:
+  - Na de laatste vraag direct de teaser: index-dial + kwadrantkaart zichtbaar,
+    deelscores/gaps/CTA NIET aanwezig in de DOM; network tab: nog géén POST.
+  - `test@gmail.com` → foutmelding "Please use your work email.", geen POST.
+  - Werkmail → POST `/api/scorecard` (payload: alle 23 antwoorden + src) en de
+    volledige weergave verschijnt: drie dials met juiste kleuren (inspect CSS),
+    kwadrantcopy klopt met het berekende kwadrant, 3 gap-bullets, CTA klopt met
+    de route (test een assessment-case via P3='<6 months'), overlayregel bij
+    readiness < 40, benchmark-CTA navigeert naar `/benchmark#waitlist`.
+  - Reload ná afronden maar vóór e-mail → weer op de teaser; reload ná e-mail →
+    sessionStorage leeg → deurkeuzescherm.
+  - Zero console errors. `pnpm check`, `pnpm test`, `pnpm build` green.
 
-- [ ] **Step 4: Verify in browser** — complete a run with mixed answers: dials render with correct colours (inspect CSS), quadrant copy matches the computed quadrant, 3 gap bullets show, CTA matches the route (test an assessment case via P3='<6 months'), overlay line appears when readiness < 40, benchmark CTA navigates to `/benchmark#waitlist`. Zero console errors. `pnpm check`, `pnpm test`, `pnpm build` green.
-
-- [ ] **Step 5: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
-git add client/src/components/scorecard client/src/pages/Scorecard.tsx
-git commit -m "feat: scorecard resultaatpagina — dials, kwadrant, gaps, geroute CTA"
+git add -A shared client/src/components/scorecard client/src/pages/Scorecard.tsx api/scorecard.ts
+git commit -m "feat: scorecard resultaat — teaser + werkmail-gate voor volledig rapport (besluit 5 herzien)"
 ```
 
 ---
@@ -786,10 +921,10 @@ git commit -m "feat: scorecard resultaatpagina — dials, kwadrant, gaps, gerout
 - [ ] Full browser pass on dev: both doors end-to-end, reload-resume mid-flow, mobile viewport (375px), no console errors, all existing routes still render.
 - [ ] `pnpm check` && `pnpm test` && `pnpm build` all green.
 - [ ] ASK OLIVIER, then push `h2-2026-redesign` → review-site deploy.
-- [ ] Live e2e (CRM side must be deployed first — see CRM plan Task 6): complete a scorecard on https://eclectik-website-h2.vercel.app/scorecard?src=li-sc-e2e with a test email → `{ok:true, stored:true}`; `form_responses` row (computed scores match client display); marketing lead activity `scorecard_completed` without raw answers; assessment-route test triggers Marco-notify; cleanup test rows afterwards.
+- [ ] Live e2e (CRM side must be deployed first — see CRM plan Task 6): complete a scorecard on https://eclectik-website-h2.vercel.app/scorecard?src=li-sc-e2e with a test email on a WORK domain (bijv. e2e-test@eclectik.co — gratis providers worden geweigerd) → `{ok:true, stored:true}`; `form_responses` row (computed scores match client display); marketing lead activity `scorecard_completed` without raw answers; assessment-route test triggers Marco-notify; cleanup test rows afterwards.
 
 ## Self-review notes
 
-- Spec coverage: bank+engine+tests (T1), events §10 + proxy (T2), flow/gate incl. besluit 5 (T3), result §5 incl. overlay + verbatim quadrant copy (T4), entries + "10-question" copy bug (T5), DoD checks (T6). PDF/mails/NL: fase 2, uit scope.
+- Spec coverage: bank+engine+tests (T1), events §10 + proxy (T2), flow (T3), result §5 incl. teaser + werkmail-gate (besluit 5 herzien), overlay + verbatim quadrant copy (T4), entries + "10-question" copy bug (T5), DoD checks (T6). PDF/mails/NL: fase 2, uit scope.
 - Type consistency: `Answers`/`Door`/`ScorecardResult`/`computeScorecard`/`gapBullets`/`questionOrder` are defined in T1 and used with identical signatures in T3/T4; payload matches `api/scorecard.ts` zod schema and the CRM contract.
 - The `.max(5)` in the zod schema is safe: only range questions have index 5 and per-question range validation happens server-side in the CRM.
