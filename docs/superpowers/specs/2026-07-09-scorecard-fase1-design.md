@@ -18,6 +18,11 @@ niet gedupliceerd. Deze spec legt de technische invulling en de afwijkingen vast
    Marco's spec wordt niet overgenomen.
 4. **Generieke `form_responses`-tabel** i.p.v. scorecard-specifiek: latere
    formulieren zijn een nieuwe `form_type`, geen nieuwe tabel.
+5. **E-mail is verplicht** om het resultaat te zien (afwijking van §9 van
+   Marco's spec, dat e-mail optioneel maakte voor de on-screen samenvatting).
+   Elke afgeronde scorecard levert dus een marketing lead op. Let op voor
+   Marco's review: de funneltargets uit §10 (≥50% e-mailconversie op
+   completes) verschuiven hiermee naar de completion-rate zelf.
 
 ## Architectuur
 
@@ -68,16 +73,14 @@ Browser (SPA)                    Website (Vercel fn)          CRM (Vercel fn + S
 - Voortgang in sessionStorage (reload-bestendig binnen de sessie); geen login.
 - P1–P3 als laatste, daarna de e-mailstap, daarna het resultaat.
 
-### E-mailstap (gate conform §1/§9, aangepast aan fase 1)
-- E-mail optioneel: zonder e-mail → resultaat op het scherm; mét e-mail →
-  zelfde resultaat + "je volledige rapport volgt per e-mail" (het rapport zelf
-  is fase 2 — geen belofte van een directe bijlage).
+### E-mailstap (gate — e-mail verplicht, besluit 5)
+- Na P1–P3 en vóór het resultaat: e-mail invullen is verplicht om de uitslag
+  te zien ("Where do we send your report?" + resultaat direct op het scherm;
+  het PDF-rapport zelf is fase 2 — geen belofte van een directe bijlage).
 - Consent-checkbox, standaard uit: "Send me the monthly insights letter",
   los van de rapportlevering. Doel + bewaartermijn in één regel op deze stap.
-- Submissiegedrag: bij afronden van de vragen wordt de response al opgeslagen
-  (e-mail leeg). Vult de bezoeker daarna e-mail in, dan volgt een tweede call
-  met het `response_id` dat de rij aanvult én pas dan de marketing lead
-  aanmaakt. Zonder e-mail dus wél statistiek, geen lead.
+- Submissiegedrag: één call bij afronden, altijd mét e-mail → response-rij én
+  marketing lead in dezelfde intake. Geen tweestapsflow.
 
 ### Resultaatpagina
 - Drie score-dials (Value/Change/Readiness), kleur per band; kwadrantkaart met
@@ -106,7 +109,8 @@ Browser (SPA)                    Website (Vercel fn)          CRM (Vercel fn + S
 create table public.form_responses (
   id           uuid primary key default gen_random_uuid(),
   form_type    text not null,            -- 'scorecard' (later: andere formulieren)
-  email        text,                     -- null tot de gate gepasseerd is
+  email        text,                     -- scorecard vult dit altijd (besluit 5);
+                                         -- kolom blijft nullable voor toekomstige form_types
   consent      boolean not null default false,
   entry_meta   jsonb,                    -- deur, utm/src, user-agent-klasse
   answers      jsonb not null,           -- ruwe antwoorden {"V1":3, ...} + P1..P3
@@ -120,15 +124,13 @@ create index idx_form_responses_type_created on public.form_responses(form_type,
 
 ### Endpoint `api/scorecard-intake.js`
 - Guard: `requireWebhookSecret(req, res, 'WEBSITE_WEBHOOK_SECRET')` (bestaand).
-- Twee modi:
-  1. **Nieuwe response** (bij afronden vragen): valideer antwoorden tegen de
-     vragenbank-ids, herbereken scores server-side (zelfde regels als §3,
-     geport naar een klein `api/_lib/scorecard-lib.js` met vitest-tests),
-     sla op in `form_responses`, retourneer `{ok, response_id}`.
-  2. **E-mail toevoegen** (`response_id` + email + consent): update de rij; maak
-     dán de marketing lead aan via de bestaande logica (vind-of-maak op e-mail,
-     activiteit `scorecard_completed` met payload = scores + banden + kwadrant
-     + route + deur — géén ruwe antwoorden) en verstuur de notificatie.
+- Eén modus (e-mail zit altijd in de payload, besluit 5): valideer e-mail +
+  antwoorden tegen de vragenbank-ids, herbereken scores server-side (zelfde
+  regels als §3, geport naar een klein `api/_lib/scorecard-lib.js` met
+  vitest-tests), sla op in `form_responses`, maak de marketing lead aan via de
+  bestaande logica (vind-of-maak op e-mail, activiteit `scorecard_completed`
+  met payload = scores + banden + kwadrant + route + deur — géén ruwe
+  antwoorden) en verstuur de notificatie. Retourneer `{ok:true}`.
 - Notificatie (fase 1, simpel): mail naar Marco via Resend wanneer route =
   `assessment` of index ≥ 70. Weekly digest en List-C/contact-matching → fase 2.
 
@@ -150,9 +152,9 @@ definitieve gap-regels (Marco/Manish), NL-versie, publicatie van aggregaten.
 ## Definition of done (fase 1)
 - Test op beide deuren → juiste vraagvolgorde, scores kloppen met §3
   (unit-tests + handmatige steekproef)
-- Afronden zonder e-mail → rij in `form_responses` (email null), géén lead
-- E-mail toevoegen → rij aangevuld + marketing lead met `scorecard_completed`-
-  activiteit zichtbaar in Marketing → Leads (alleen samenvatting, geen antwoorden)
+- Resultaat is niet bereikbaar zonder e-mail; afronden mét e-mail → rij in
+  `form_responses` + marketing lead met `scorecard_completed`-activiteit
+  zichtbaar in Marketing → Leads (alleen samenvatting, geen ruwe antwoorden)
 - Route assessment of index ≥ 70 → notificatiemail bij Marco
 - `scorecard_weekly_stats` geeft data terug
 - Verkeerde secret → 401; live site (main) onaangetast
