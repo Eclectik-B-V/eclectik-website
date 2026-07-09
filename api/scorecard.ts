@@ -1,11 +1,14 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
+// Relative import: Vercel functions bundle relative imports; the @shared alias
+// is a Vite/tsconfig-path construct that does not apply here.
+import { isWorkEmail } from "../shared/work-email";
 
 // 20 scored ids + P1..P3; values are 0-based option indexes. Detailed
 // validation (per-question ranges) happens in the CRM intake, which also
 // recomputes all scores from these raw answers.
 const BodySchema = z.object({
-  email: z.string().trim().email().max(200),
+  email: z.string().trim().email().max(200).refine(isWorkEmail, "work email required"),
   consent: z.boolean(),
   door: z.enum(["value", "change"]),
   answers: z.record(z.string().regex(/^(V[1-8]|C[1-8]|R[1-4]|P[1-3])$/), z.number().int().min(0).max(5)),

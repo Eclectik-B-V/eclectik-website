@@ -78,7 +78,7 @@ export interface ScorecardResult {
   profile: { role: string; orgSize: string; renewalWindow: string };
 }
 
-const band = (x: number): Band => (x < 40 ? "blind_spot" : x < 70 ? "partial_view" : "evidence_led");
+export const band = (x: number): Band => (x < 40 ? "blind_spot" : x < 70 ? "partial_view" : "evidence_led");
 const mean = (b: Block, a: Answers) => {
   const qs = byBlock(b);
   return qs.reduce((s, q) => s + answerScore(q, a[q.id]), 0) / qs.length;

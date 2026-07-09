@@ -3,15 +3,16 @@ import Layout from "@/components/Layout";
 import { Helmet } from "react-helmet-async";
 import DoorChooser from "@/components/scorecard/DoorChooser";
 import QuestionScreen from "@/components/scorecard/QuestionScreen";
-import EmailGate from "@/components/scorecard/EmailGate";
+import ResultView from "@/components/scorecard/ResultView";
 import {
   PROFILE_QUESTIONS, questionOrder, validateAnswers, computeScorecard,
   type Answers, type Door, type ScorecardResult,
 } from "@shared/scorecard";
+import { isWorkEmail } from "@shared/work-email";
 import { getAttribution, trackScorecard, trackDoorSelected } from "@/lib/tracking";
 
 const STORAGE_KEY = "eclectik_scorecard_v1";
-type Phase = "door" | "questions" | "email" | "result";
+type Phase = "door" | "questions" | "result";
 interface Saved { door: Door; answers: Answers; step: number }
 
 function loadSaved(): Saved | null {
@@ -33,13 +34,20 @@ export default function Scorecard() {
     return d === "value" || d === "change" ? d : null;
   }, []);
   const saved = useMemo(loadSaved, []);
+  // Volledig ingevulde opgeslagen sessie → direct de teaser (resultaatfase).
+  const savedComplete = saved !== null && validateAnswers(saved.answers);
 
   const [door, setDoor] = useState<Door | null>(saved?.door ?? urlDoor);
   const [answers, setAnswers] = useState<Answers>(saved?.answers ?? {});
   const [step, setStep] = useState(saved?.step ?? 0);      // 0-based over items[]
-  const [phase, setPhase] = useState<Phase>(door ? "questions" : "door");
+  const [phase, setPhase] = useState<Phase>(
+    savedComplete ? "result" : door ? "questions" : "door",
+  );
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState<ScorecardResult | null>(null);
+  const [unlocked, setUnlocked] = useState(false);
+  const [result, setResult] = useState<ScorecardResult | null>(
+    savedComplete ? computeScorecard(saved.answers) : null,
+  );
 
   // 23 items: 20 scored (volgorde per deur) + P1..P3 als laatste
   const items = useMemo(() => {
@@ -72,8 +80,11 @@ export default function Scorecard() {
     trackScorecard("sc_q_answered", { id: item.id });
     if (step + 1 < items.length) setStep(step + 1);
     else {
+      // Expliciet opslaan zodat een reload op de teaser terugkomt.
+      if (door) save({ door, answers: next, step });
       trackScorecard("sc_completed", { door });
-      setPhase("email");
+      setResult(computeScorecard(next));
+      setPhase("result");
     }
   };
 
@@ -82,10 +93,10 @@ export default function Scorecard() {
     else { setPhase("door"); setDoor(null); }
   };
 
+  // Unlock: geldige werkmail → POST, daarna deelscores/gaps/CTA tonen.
   const submit = async (email: string, consent: boolean) => {
-    if (!door || !validateAnswers(answers)) return;
+    if (!door || !result || !isWorkEmail(email)) return;
     setSubmitting(true);
-    const computed = computeScorecard(answers);           // instant, client-side
     try {
       await fetch("/api/scorecard", {
         method: "POST",
@@ -93,9 +104,8 @@ export default function Scorecard() {
         body: JSON.stringify({ email, consent, door, answers, src: getAttribution() }),
       });
     } catch { /* resultaat toch tonen; opslag is server-side gelogd */ }
-    trackScorecard("sc_email_submitted", { route: computed.route });
-    setResult(computed);
-    setPhase("result");
+    trackScorecard("sc_email_submitted", { route: result.route });
+    setUnlocked(true);
     setSubmitting(false);
     save(null);
   };
@@ -116,11 +126,11 @@ export default function Scorecard() {
             onAnswer={answer} onBack={step === 0 && !urlDoor ? back : step > 0 ? back : undefined}
           />
         )}
-        {phase === "email" && (
-          <EmailGate submitting={submitting} onSubmit={submit} onBack={() => setPhase("questions")} />
-        )}
         {phase === "result" && result && (
-          <pre className="text-muted-foreground max-w-md mx-auto">{JSON.stringify(result, null, 2)}</pre>
+          <ResultView
+            result={result} answers={answers}
+            unlocked={unlocked} submitting={submitting} onUnlock={submit}
+          />
         )}
       </section>
     </Layout>
