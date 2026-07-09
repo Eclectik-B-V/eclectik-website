@@ -208,7 +208,7 @@ export default function Home() {
                   size="lg"
                   className="text-lg px-8 py-6 rounded-full border-white/20 hover:bg-white/10 backdrop-blur-sm transition-all"
                 >
-                  Take the 10-question scorecard
+                  Take the scorecard (3–4 min)
                 </Button>
               </Link>
             </motion.div>
