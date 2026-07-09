@@ -18,7 +18,10 @@ interface Saved { door: Door; answers: Answers; step: number }
 function loadSaved(): Saved | null {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Saved) : null;
+    if (!raw) return null;
+    const s = JSON.parse(raw) as Saved;
+    // Vormcontrole: kapotte opslag (bv. zonder answers-object) mag de render niet laten crashen.
+    return s && typeof s === "object" && s.answers && typeof s.answers === "object" ? s : null;
   } catch { return null; }
 }
 function save(state: Saved | null) {
@@ -35,18 +38,18 @@ export default function Scorecard() {
   }, []);
   const saved = useMemo(loadSaved, []);
   // Volledig ingevulde opgeslagen sessie → direct de teaser (resultaatfase).
-  const savedComplete = saved !== null && validateAnswers(saved.answers);
+  const savedComplete = useMemo(() => saved !== null && validateAnswers(saved.answers), [saved]);
 
   const [door, setDoor] = useState<Door | null>(saved?.door ?? urlDoor);
   const [answers, setAnswers] = useState<Answers>(saved?.answers ?? {});
   const [step, setStep] = useState(saved?.step ?? 0);      // 0-based over items[]
-  const [phase, setPhase] = useState<Phase>(
+  const [phase, setPhase] = useState<Phase>(() =>
     savedComplete ? "result" : door ? "questions" : "door",
   );
   const [submitting, setSubmitting] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
-  const [result, setResult] = useState<ScorecardResult | null>(
-    savedComplete ? computeScorecard(saved.answers) : null,
+  const [result, setResult] = useState<ScorecardResult | null>(() =>
+    savedComplete && saved ? computeScorecard(saved.answers) : null,
   );
 
   // 23 items: 20 scored (volgorde per deur) + P1..P3 als laatste
@@ -94,20 +97,28 @@ export default function Scorecard() {
   };
 
   // Unlock: geldige werkmail → POST, daarna deelscores/gaps/CTA tonen.
-  const submit = async (email: string, consent: boolean) => {
-    if (!door || !result || !isWorkEmail(email)) return;
+  // Retourneert false als de server het adres afwijst (4xx) → formulier toont de fout.
+  const submit = async (email: string, consent: boolean): Promise<boolean> => {
+    if (submitting) return false;
+    if (!door || !result || !isWorkEmail(email)) return false;
     setSubmitting(true);
     try {
-      await fetch("/api/scorecard", {
+      const r = await fetch("/api/scorecard", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, consent, door, answers, src: getAttribution() }),
       });
-    } catch { /* resultaat toch tonen; opslag is server-side gelogd */ }
+      if (r.status >= 400 && r.status < 500) {
+        // Validatie geweigerd (bv. zod-e-mailcheck): niet unlocken, geen event.
+        setSubmitting(false);
+        return false;
+      }
+    } catch { /* netwerkfout: resultaat toch tonen; opslag is server-side gelogd */ }
     trackScorecard("sc_email_submitted", { route: result.route });
     setUnlocked(true);
     setSubmitting(false);
     save(null);
+    return true;
   };
 
   return (

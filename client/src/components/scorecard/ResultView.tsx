@@ -41,14 +41,16 @@ interface Props {
   answers: Answers;
   unlocked: boolean;      // true zodra een geldige werkmail is ingestuurd
   submitting: boolean;
-  onUnlock: (email: string, consent: boolean) => void;
+  onUnlock: (email: string, consent: boolean) => Promise<boolean>; // false = server wees het adres af
 }
 
 function EmailUnlockCard({ submitting, onUnlock }: Pick<Props, "submitting" | "onUnlock">) {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [touched, setTouched] = useState(false);
+  const [rejected, setRejected] = useState(false); // server (4xx) wees het adres af
   const valid = isWorkEmail(email);
+  const showError = (touched && !valid) || rejected;
   return (
     <div className="bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
       <h2 className="text-xl font-heading font-semibold text-white mb-3">
@@ -59,15 +61,24 @@ function EmailUnlockCard({ submitting, onUnlock }: Pick<Props, "submitting" | "o
         step that fits — appear straight away on this page. We use your email to
         deliver your report and keep it no longer than needed for that purpose.
       </p>
-      <form onSubmit={(e) => { e.preventDefault(); setTouched(true); if (valid && !submitting) onUnlock(email.trim(), consent); }}
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setTouched(true);
+          if (!valid || submitting) return;
+          const ok = await onUnlock(email.trim(), consent);
+          if (!ok) setRejected(true);
+        }}
         className="space-y-4" noValidate>
         <input
-          type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-          placeholder="Work email" aria-invalid={touched && !valid}
+          type="email" required value={email}
+          onChange={(e) => { setEmail(e.target.value); setRejected(false); }}
+          placeholder="Work email" aria-invalid={showError}
+          aria-describedby={showError ? "work-email-error" : undefined}
           className="w-full bg-background border border-white/10 rounded-md px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
         />
-        {touched && !valid && (
-          <p className="text-sm text-secondary" role="alert">Please use your work email.</p>
+        {showError && (
+          <p id="work-email-error" className="text-sm text-secondary" role="alert">Please use your work email.</p>
         )}
         <label className="flex items-start gap-2 text-sm text-muted-foreground cursor-pointer">
           <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1" />
