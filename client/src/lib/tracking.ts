@@ -193,3 +193,15 @@ export function trackWaitlistJoined() {
   });
   trackLinkedInConversion();
 }
+
+/**
+ * Scorecard funnel events (spec §10): sc_start, sc_q_answered, sc_completed,
+ * sc_email_submitted, sc_cta_clicked.
+ */
+export function trackScorecard(
+  event: "sc_start" | "sc_q_answered" | "sc_completed" | "sc_email_submitted" | "sc_cta_clicked",
+  params?: Record<string, any>,
+) {
+  trackEvent(event, { event_category: "scorecard", src: getAttribution(), ...params });
+  if (event === "sc_email_submitted") trackLinkedInConversion();
+}
