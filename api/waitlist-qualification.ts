@@ -1,10 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
 import { z } from "zod";
-import { isWorkEmail } from "../shared/work-email";
+import { isWorkEmail } from "../shared/work-email.js";
 import {
   BANK_VERSION, WAITLIST_QUESTIONS, validateWaitlistAnswers,
-} from "../shared/waitlist-qualification";
+} from "../shared/waitlist-qualification.js";
 
 const BodySchema = z.object({
   email: z.string().trim().email().max(200).refine(isWorkEmail, "work email required"),

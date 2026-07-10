@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
 // Relative import: Vercel functions bundle relative imports; the @shared alias
 // is a Vite/tsconfig-path construct that does not apply here.
-import { isWorkEmail } from "../shared/work-email";
+import { isWorkEmail } from "../shared/work-email.js";
 
 // 20 scored ids + P1..P3; values are 0-based option indexes. Detailed
 // validation (per-question ranges) happens in the CRM intake, which also
