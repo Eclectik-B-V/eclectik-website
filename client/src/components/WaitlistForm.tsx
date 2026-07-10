@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { getAttribution, trackWaitlistJoined } from "@/lib/tracking";
+import {
+  getAttribution,
+  trackWaitlistJoined,
+  trackWaitlistQualification,
+} from "@/lib/tracking";
+import { isWorkEmail } from "@shared/work-email";
+import {
+  WAITLIST_QUESTIONS,
+  type WaitlistAnswers,
+  type WaitlistQuestion,
+} from "@shared/waitlist-qualification";
 
 const ROLE_OPTIONS = [
   "CFO / Finance leader",
@@ -29,7 +40,65 @@ const SECTOR_OPTIONS = [
 const inputClass =
   "w-full bg-white/5 border border-white/15 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors";
 
+const cardClass = "bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 space-y-4";
+
+type Phase = "form" | "questions" | "done";
+
+interface QuestionStepProps {
+  question: WaitlistQuestion;
+  index: number;
+  total: number;
+  selected?: string;
+  onSelect: (option: string) => void;
+  onBack?: () => void;
+}
+
+function QuestionStep({ question, index, total, selected, onSelect, onBack }: QuestionStepProps) {
+  return (
+    <div className={cardClass}>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              aria-label="Back to previous question"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+          )}
+          <h4 className="font-heading text-lg font-semibold text-white">Nearly there</h4>
+        </div>
+        <span className="text-sm text-muted-foreground" aria-label={`Question ${index + 1} of ${total}`}>
+          {index + 1}/{total}
+        </span>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Five quick questions to secure your place — 30 seconds.
+      </p>
+      <p className="text-sm font-medium text-foreground">{question.text}</p>
+      <div className="space-y-2">
+        {question.options.map((option) => (
+          <button
+            key={option}
+            type="button"
+            onClick={() => onSelect(option)}
+            aria-pressed={selected === option}
+            className={`w-full text-left bg-white/5 border rounded-md px-4 py-3 text-sm text-foreground transition-colors hover:border-primary focus:outline-none focus:border-primary ${
+              selected === option ? "border-primary" : "border-white/15"
+            }`}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function WaitlistForm() {
+  const [phase, setPhase] = useState<Phase>("form");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -37,6 +106,9 @@ export default function WaitlistForm() {
   const [sector, setSector] = useState("");
   const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState<WaitlistAnswers>({});
+  const completedRef = useRef(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +118,10 @@ export default function WaitlistForm() {
     }
     if (!role || !sector) {
       toast.error("Please select your role and sector");
+      return;
+    }
+    if (!isWorkEmail(email)) {
+      toast.error("Please use your work email");
       return;
     }
     setSubmitting(true);
@@ -67,14 +143,12 @@ export default function WaitlistForm() {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Signup failed");
       }
+      // Signup is secured; the card now moves into the qualification questions.
+      // Fields are intentionally not reset — the email is needed for the
+      // qualification POST after W5.
       trackWaitlistJoined();
-      toast.success("You're on the list — check your inbox for confirmation.");
-      setName("");
-      setEmail("");
-      setCompany("");
-      setRole("");
-      setSector("");
-      setConsent(false);
+      trackWaitlistQualification("wl_q_started");
+      setPhase("questions");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Signup failed. Please try again.");
     } finally {
@@ -82,11 +156,68 @@ export default function WaitlistForm() {
     }
   };
 
+  // After W5: fire completion tracking and a best-effort qualification POST.
+  // The confirmation always appears, even if the POST fails (spec decision 6) —
+  // the signup itself already happened in the form phase.
+  const completeQualification = (finalAnswers: WaitlistAnswers) => {
+    if (completedRef.current) return;
+    completedRef.current = true;
+    trackWaitlistQualification("wl_q_completed");
+    fetch("/api/waitlist-qualification", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, answers: finalAnswers, src: getAttribution() }),
+    })
+      .then((res) => {
+        if (!res.ok) console.error("Waitlist qualification POST failed:", res.status);
+      })
+      .catch((err) => {
+        console.error("Waitlist qualification POST failed:", err);
+      });
+    toast.success("You're on the list — check your inbox for confirmation.");
+    setPhase("done");
+  };
+
+  const handleAnswer = (id: string, option: string) => {
+    const next = { ...answers, [id]: option };
+    setAnswers(next);
+    trackWaitlistQualification("wl_q_answered", { id });
+    if (questionIndex < WAITLIST_QUESTIONS.length - 1) {
+      setQuestionIndex(questionIndex + 1);
+    } else {
+      completeQualification(next);
+    }
+  };
+
+  if (phase === "questions") {
+    const question = WAITLIST_QUESTIONS[questionIndex];
+    return (
+      <QuestionStep
+        question={question}
+        index={questionIndex}
+        total={WAITLIST_QUESTIONS.length}
+        selected={answers[question.id]}
+        onSelect={(option) => handleAnswer(question.id, option)}
+        onBack={questionIndex > 0 ? () => setQuestionIndex(questionIndex - 1) : undefined}
+      />
+    );
+  }
+
+  if (phase === "done") {
+    return (
+      <div className={cardClass}>
+        <h4 className="font-heading text-lg font-semibold text-white">
+          You're on the list — check your inbox for confirmation.
+        </h4>
+        <p className="text-xs text-muted-foreground">
+          No spam. Benchmark updates only — unsubscribe anytime.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 space-y-4"
-    >
+    <form onSubmit={handleSubmit} className={cardClass}>
       <h4 className="font-heading text-lg font-semibold text-white">Register your interest</h4>
       <input
         type="text"

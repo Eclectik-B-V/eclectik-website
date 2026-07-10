@@ -195,6 +195,17 @@ export function trackWaitlistJoined() {
 }
 
 /**
+ * Waitlist qualification funnel events: wl_q_started, wl_q_answered (id),
+ * wl_q_completed. waitlist_joined stays on the form submit itself.
+ */
+export function trackWaitlistQualification(
+  event: "wl_q_started" | "wl_q_answered" | "wl_q_completed",
+  params?: Record<string, any>,
+) {
+  trackEvent(event, params);
+}
+
+/**
  * Scorecard funnel events (spec §10): sc_start, sc_q_answered, sc_completed,
  * sc_email_submitted, sc_cta_clicked.
  */
