@@ -16,24 +16,26 @@ export default function QuestionScreen({ step, total, text, options, selected, o
       <div className="flex items-center gap-4 mb-8">
         {onBack ? (
           <button type="button" onClick={onBack} aria-label="Back"
-            className="text-muted-foreground hover:text-primary transition-colors">
+            className="text-ec-body hover:text-ec-navy transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </button>
         ) : <span className="w-5" />}
-        <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
-          <div className="h-full bg-primary transition-all duration-300" style={{ width: `${(step / total) * 100}%` }} />
+        <div className="flex-1 h-1.5 rounded-full bg-ec-line overflow-hidden">
+          <div className="h-full bg-ec-sky transition-all duration-300" style={{ width: `${(step / total) * 100}%` }} />
         </div>
-        <span className="text-xs text-muted-foreground tabular-nums">{step}/{total}</span>
+        <span className="text-xs text-ec-body tabular-nums">{step}/{total}</span>
       </div>
       <motion.div key={text} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
-        <h2 className="text-xl md:text-2xl font-heading font-semibold text-white mb-8">{text}</h2>
+        <h2 className="text-xl md:text-2xl font-heading font-semibold text-ec-navy mb-8">{text}</h2>
         <div className="flex flex-col gap-3" role="radiogroup" aria-label={text}>
           {options.map((label, i) => (
             <Button
               key={i} type="button" variant="outline" role="radio" aria-checked={selected === i}
               onClick={() => onAnswer(i)}
-              className={`justify-start text-left h-auto py-4 px-5 whitespace-normal border-white/10 bg-card hover:border-primary hover:bg-card ${
-                selected === i ? "border-primary text-primary" : "text-foreground"
+              className={`justify-start text-left h-auto py-4 px-5 whitespace-normal shadow-sm hover:border-ec-sky hover:bg-ec-cream ${
+                selected === i
+                  ? "border-ec-sky bg-ec-cream text-ec-navy"
+                  : "border-ec-line-3 bg-white text-ec-body-strong"
               }`}
             >
               {label}

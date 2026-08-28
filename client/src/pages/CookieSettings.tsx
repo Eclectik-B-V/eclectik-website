@@ -35,26 +35,26 @@ export default function CookieSettings() {
         <meta name="description" content="Manage your cookie preferences for the Eclectik website." />
       </Helmet>
       
-      <div className="bg-background pt-40 lg:pt-48 pb-20">
+      <div className="bg-white pt-14 pb-20 lg:pt-20 lg:pb-24">
         <div className="container max-w-3xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-white">Cookie Settings</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-ec-navy">Cookie Settings</h1>
+            <p className="text-lg leading-[1.6] text-ec-body max-w-2xl mx-auto">
               We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. You can manage your preferences below.
             </p>
           </div>
           
           <div className="space-y-6">
             {/* Essential Cookies */}
-            <Card className="bg-card/50 border-white/10 backdrop-blur-sm">
+            <Card className="bg-ec-surface border-ec-line shadow-none">
               <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
                 <div className="flex gap-4">
-                  <div className="mt-1 p-2 bg-primary/10 rounded-lg h-fit">
-                    <Shield className="w-6 h-6 text-primary" />
+                  <div className="mt-1 p-2 bg-ec-sky/20 rounded-lg h-fit">
+                    <Shield className="w-6 h-6 text-ec-sky-ink" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-white">Essential Cookies</CardTitle>
-                    <CardDescription className="text-muted-foreground mt-2">
+                    <CardTitle className="text-xl font-bold text-ec-navy">Essential Cookies</CardTitle>
+                    <CardDescription className="text-ec-body leading-[1.65] mt-2">
                       These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms.
                     </CardDescription>
                   </div>
@@ -64,15 +64,15 @@ export default function CookieSettings() {
             </Card>
 
             {/* Analytics Cookies */}
-            <Card className="bg-card/50 border-white/10 backdrop-blur-sm">
+            <Card className="bg-ec-surface border-ec-line shadow-none">
               <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
                 <div className="flex gap-4">
-                  <div className="mt-1 p-2 bg-blue-500/10 rounded-lg h-fit">
-                    <BarChart3 className="w-6 h-6 text-blue-500" />
+                  <div className="mt-1 p-2 bg-ec-teal/20 rounded-lg h-fit">
+                    <BarChart3 className="w-6 h-6 text-ec-teal-ink" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-white">Analytics Cookies</CardTitle>
-                    <CardDescription className="text-muted-foreground mt-2">
+                    <CardTitle className="text-xl font-bold text-ec-navy">Analytics Cookies</CardTitle>
+                    <CardDescription className="text-ec-body leading-[1.65] mt-2">
                       These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site.
                     </CardDescription>
                   </div>
@@ -85,15 +85,15 @@ export default function CookieSettings() {
             </Card>
 
             {/* Marketing Cookies */}
-            <Card className="bg-card/50 border-white/10 backdrop-blur-sm">
+            <Card className="bg-ec-surface border-ec-line shadow-none">
               <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
                 <div className="flex gap-4">
-                  <div className="mt-1 p-2 bg-purple-500/10 rounded-lg h-fit">
-                    <Megaphone className="w-6 h-6 text-purple-500" />
+                  <div className="mt-1 p-2 bg-ec-red/10 rounded-lg h-fit">
+                    <Megaphone className="w-6 h-6 text-ec-red" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-white">Marketing Cookies</CardTitle>
-                    <CardDescription className="text-muted-foreground mt-2">
+                    <CardTitle className="text-xl font-bold text-ec-navy">Marketing Cookies</CardTitle>
+                    <CardDescription className="text-ec-body leading-[1.65] mt-2">
                       These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites.
                     </CardDescription>
                   </div>
@@ -106,15 +106,15 @@ export default function CookieSettings() {
             </Card>
 
             {/* Functional Cookies */}
-            <Card className="bg-card/50 border-white/10 backdrop-blur-sm">
+            <Card className="bg-ec-surface border-ec-line shadow-none">
               <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
                 <div className="flex gap-4">
-                  <div className="mt-1 p-2 bg-green-500/10 rounded-lg h-fit">
-                    <Cookie className="w-6 h-6 text-green-500" />
+                  <div className="mt-1 p-2 bg-ec-yellow/25 rounded-lg h-fit">
+                    <Cookie className="w-6 h-6 text-ec-navy" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-white">Functional Cookies</CardTitle>
-                    <CardDescription className="text-muted-foreground mt-2">
+                    <CardTitle className="text-xl font-bold text-ec-navy">Functional Cookies</CardTitle>
+                    <CardDescription className="text-ec-body leading-[1.65] mt-2">
                       These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages.
                     </CardDescription>
                   </div>
@@ -127,7 +127,7 @@ export default function CookieSettings() {
             </Card>
 
             <div className="flex justify-end pt-6">
-              <Button size="lg" onClick={handleSave} className="px-8">
+              <Button size="lg" onClick={handleSave} className="rounded-full bg-ec-sky text-ec-navy font-bold px-8 hover:bg-[#54b4cb]">
                 Save Preferences
               </Button>
             </div>

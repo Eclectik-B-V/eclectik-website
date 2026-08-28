@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Plus Jakarta Sans", sans-serif;
-  --font-heading: "Outfit", sans-serif;
+  --font-sans: "Aptos", "Figtree", system-ui, sans-serif;
+  --font-heading: "Aptos", "Figtree", system-ui, sans-serif;
 
   /* Brand typeface for the 2026 design. Aptos is the brand book face (Microsoft,
      no open web licence); Figtree is the licensed web fallback. */
@@ -93,82 +93,51 @@
 }
 
 :root {
-  /* Ethereal Intelligence Theme - Dark Mode Default */
-  --background: oklch(0.15 0.05 265); /* Deep Midnight Blue */
-  --foreground: oklch(0.98 0.01 265); /* Soft White */
-  
-  --card: oklch(0.20 0.05 265 / 0.7); /* Glassmorphism Card */
-  --card-foreground: oklch(0.98 0.01 265);
-  
-  --popover: oklch(0.18 0.05 265);
-  --popover-foreground: oklch(0.98 0.01 265);
-  
-  --primary: #65C1D6; /* Light Blue */
-  --primary-foreground: #19273d;
-  
-  --secondary: #E02406; /* Red/Orange */
-  --secondary-foreground: #ffffff;
-  
-  --muted: oklch(0.25 0.05 265);
-  --muted-foreground: oklch(0.70 0.05 265);
-  
-  --accent: #53ACA2; /* Teal */
-  --accent-foreground: #ffffff;
-  
-  --destructive: oklch(0.6 0.25 25);
-  --destructive-foreground: oklch(0.98 0 0);
-  
-  --border: oklch(0.98 0.01 265 / 0.15);
-  --input: oklch(0.98 0.01 265 / 0.15);
-  --ring: oklch(0.75 0.15 220);
-  
-  --radius: 0.75rem;
-  
-  --chart-1: #65C1D6;
-  --chart-2: #E02406;
-  --chart-3: #53ACA2;
-  --chart-4: #E8AC0E;
-  --chart-5: #65C1D6;
-  
-  --sidebar: oklch(0.12 0.05 265);
-  --sidebar-foreground: oklch(0.98 0.01 265);
-  --sidebar-primary: oklch(0.75 0.15 220);
-  --sidebar-primary-foreground: oklch(0.15 0.05 265);
-  --sidebar-accent: oklch(0.25 0.05 265);
-  --sidebar-accent-foreground: oklch(0.98 0.01 265);
-  --sidebar-border: oklch(0.98 0.01 265 / 0.1);
-  --sidebar-ring: oklch(0.75 0.15 220);
-}
+  /* Eclectik 2026 — light theme, mapped onto the design handoff palette. */
+  --background: #ffffff;
+  --foreground: #19273d;
 
-.dark {
-  /* Same as root since we are dark-first */
-  --background: oklch(0.15 0.05 265);
-  --foreground: oklch(0.98 0.01 265);
-  --card: oklch(0.20 0.05 265 / 0.7);
-  --card-foreground: oklch(0.98 0.01 265);
-  --popover: oklch(0.18 0.05 265);
-  --popover-foreground: oklch(0.98 0.01 265);
-  --primary: #65C1D6;
+  --card: #ffffff;
+  --card-foreground: #19273d;
+
+  --popover: #ffffff;
+  --popover-foreground: #19273d;
+
+  --primary: #65C1D6; /* Logo light blue, the CTA colour */
   --primary-foreground: #19273d;
-  --secondary: #E02406;
+
+  --secondary: #D52F08; /* Red-orange */
   --secondary-foreground: #ffffff;
-  --muted: oklch(0.25 0.05 265);
-  --muted-foreground: oklch(0.70 0.05 265);
-  --accent: #53ACA2;
+
+  --muted: #F2F2F2;
+  --muted-foreground: #5A5F6B;
+
+  --accent: #39A99F; /* Teal */
   --accent-foreground: #ffffff;
-  --destructive: oklch(0.6 0.25 25);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.98 0.01 265 / 0.15);
-  --input: oklch(0.98 0.01 265 / 0.15);
-  --ring: oklch(0.75 0.15 220);
-  --sidebar: oklch(0.12 0.05 265);
-  --sidebar-foreground: oklch(0.98 0.01 265);
-  --sidebar-primary: oklch(0.75 0.15 220);
-  --sidebar-primary-foreground: oklch(0.15 0.05 265);
-  --sidebar-accent: oklch(0.25 0.05 265);
-  --sidebar-accent-foreground: oklch(0.98 0.01 265);
-  --sidebar-border: oklch(0.98 0.01 265 / 0.1);
-  --sidebar-ring: oklch(0.75 0.15 220);
+
+  --destructive: #D52F08;
+  --destructive-foreground: #ffffff;
+
+  --border: #ECEAE2;
+  --input: #E4E2DA;
+  --ring: #65C1D6;
+
+  --radius: 0.75rem;
+
+  --chart-1: #65C1D6;
+  --chart-2: #D52F08;
+  --chart-3: #39A99F;
+  --chart-4: #FFC000;
+  --chart-5: #3F9FB5;
+
+  --sidebar: #F2F2F2;
+  --sidebar-foreground: #19273d;
+  --sidebar-primary: #65C1D6;
+  --sidebar-primary-foreground: #19273d;
+  --sidebar-accent: #F6F3EC;
+  --sidebar-accent-foreground: #19273d;
+  --sidebar-border: #ECEAE2;
+  --sidebar-ring: #65C1D6;
 }
 
 @layer base {
@@ -223,20 +192,21 @@
     }
   }
   
-  /* Glassmorphism Utilities */
+  /* Card and emphasis utilities. These were glassmorphism on the old dark
+     theme; on the 2026 light theme they are plain bordered surfaces. */
   .glass {
-    @apply bg-card/30 backdrop-blur-md border border-white/10 shadow-lg;
+    @apply bg-white border border-ec-line-3 shadow-sm;
   }
-  
+
   .glass-hover {
-    @apply hover:bg-card/50 hover:border-white/20 transition-all duration-300;
+    @apply hover:shadow-[0_4px_14px_rgba(18,21,28,.12)] transition-shadow duration-300;
   }
-  
+
   .text-glow {
-    text-shadow: 0 0 20px var(--color-primary);
+    text-shadow: none;
   }
-  
+
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-white to-secondary;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-ec-navy to-ec-sky-ink;
   }
 }

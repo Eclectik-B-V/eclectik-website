@@ -7,10 +7,9 @@ import Layout from "@/components/Layout";
 export default function CaseStudyCopilot() {
   return (
     <Layout>
-    <div className="min-h-screen bg-background text-foreground pt-32 lg:pt-40">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
+      <section className="relative bg-ec-cream py-20 overflow-hidden">
         <div className="container relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -18,10 +17,10 @@ export default function CaseStudyCopilot() {
             transition={{ duration: 0.6 }}
             className="max-w-4xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-ec-line-3 text-ec-red text-sm font-medium mb-6">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ec-red opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-ec-red"></span>
               </span>
               Case Study
             </div>
@@ -49,10 +48,10 @@ export default function CaseStudyCopilot() {
                 transition={{ duration: 0.5 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Target className="w-8 h-8 text-primary" />
+                  <Target className="w-8 h-8 text-ec-sky-ink" />
                   The Challenge
                 </h2>
-                <div className="prose prose-invert max-w-none text-muted-foreground text-lg leading-relaxed">
+                <div className="prose max-w-none text-muted-foreground text-lg leading-relaxed">
                   <p className="mb-4">
                     In late 2024, a Fortune Global 500 staffing company implemented Microsoft Copilot365 to enhance their North American recruitment solutions business.
                   </p>
@@ -61,19 +60,19 @@ export default function CaseStudyCopilot() {
                   </p>
                   <ul className="list-none space-y-2 mt-4 ml-4">
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-ec-red mt-2.5 shrink-0" />
                       <span>Increase growth and gain competitive edge</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-ec-red mt-2.5 shrink-0" />
                       <span>Accelerate delivery and upgrade service quality</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-ec-red mt-2.5 shrink-0" />
                       <span>Streamline productivity and responsiveness</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-ec-red mt-2.5 shrink-0" />
                       <span>Improve data quality</span>
                     </li>
                   </ul>
@@ -88,10 +87,10 @@ export default function CaseStudyCopilot() {
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Zap className="w-8 h-8 text-primary" />
+                  <Zap className="w-8 h-8 text-ec-sky-ink" />
                   The Solution
                 </h2>
-                <div className="prose prose-invert max-w-none text-muted-foreground text-lg leading-relaxed">
+                <div className="prose max-w-none text-muted-foreground text-lg leading-relaxed">
                   <p>
                     Eclectik was asked to conduct an independent analysis applying its proprietary AI transformation methodology - <strong>Eclectik VIA™ Framework</strong>.
                   </p>
@@ -109,16 +108,16 @@ export default function CaseStudyCopilot() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <BarChart3 className="w-8 h-8 text-primary" />
+                  <BarChart3 className="w-8 h-8 text-ec-sky-ink" />
                   Key Findings & Impact
                 </h2>
                 
                 <div className="grid sm:grid-cols-2 gap-6 mb-8">
-                  <Card className="bg-primary/5 border-primary/20">
+                  <Card className="bg-ec-surface border-ec-line">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                          <DollarSign className="w-6 h-6 text-primary" />
+                        <div className="p-3 rounded-full bg-white">
+                          <DollarSign className="w-6 h-6 text-ec-sky-ink" />
                         </div>
                         <div className="text-3xl font-bold text-foreground">$250-$300</div>
                       </div>
@@ -128,11 +127,11 @@ export default function CaseStudyCopilot() {
                     </CardContent>
                   </Card>
                   
-                  <Card className="bg-primary/5 border-primary/20">
+                  <Card className="bg-ec-surface border-ec-line">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                          <Users className="w-6 h-6 text-primary" />
+                        <div className="p-3 rounded-full bg-white">
+                          <Users className="w-6 h-6 text-ec-sky-ink" />
                         </div>
                         <div className="text-3xl font-bold text-foreground">Low & New</div>
                       </div>
@@ -143,12 +142,12 @@ export default function CaseStudyCopilot() {
                   </Card>
                 </div>
 
-                <div className="bg-card/30 border border-border/50 rounded-xl p-8 backdrop-blur-sm">
+                <div className="bg-ec-surface border border-ec-line rounded-xl p-8">
                   <h3 className="text-xl font-semibold mb-4">For employees actively using Copilot, benefits included:</h3>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-green-500/10 mt-1">
-                        <TrendingUp className="w-4 h-4 text-green-500" />
+                      <div className="p-1 rounded-full bg-ec-teal/10 mt-1">
+                        <TrendingUp className="w-4 h-4 text-ec-teal-ink" />
                       </div>
                       <div>
                         <span className="font-medium text-foreground">Increased Activity</span>
@@ -156,8 +155,8 @@ export default function CaseStudyCopilot() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-blue-500/10 mt-1">
-                        <Network className="w-4 h-4 text-blue-500" />
+                      <div className="p-1 rounded-full bg-ec-sky/10 mt-1">
+                        <Network className="w-4 h-4 text-ec-sky-ink" />
                       </div>
                       <div>
                         <span className="font-medium text-foreground">Stronger Networks</span>
@@ -165,8 +164,8 @@ export default function CaseStudyCopilot() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-purple-500/10 mt-1">
-                        <DollarSign className="w-4 h-4 text-purple-500" />
+                      <div className="p-1 rounded-full bg-ec-navy/10 mt-1">
+                        <DollarSign className="w-4 h-4 text-ec-navy" />
                       </div>
                       <div>
                         <span className="font-medium text-foreground">Financial Contribution</span>
@@ -185,7 +184,7 @@ export default function CaseStudyCopilot() {
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <CheckCircle2 className="w-8 h-8 text-primary" />
+                  <CheckCircle2 className="w-8 h-8 text-ec-sky-ink" />
                   Recommendations
                 </h2>
                 <div className="space-y-4">
@@ -194,8 +193,8 @@ export default function CaseStudyCopilot() {
                     "Continually measure Copilot impact using leading indicators.",
                     "Accelerate Copilot adoption using precision selection techniques for subsequent cohorts as part of the rollout."
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-card/50 border border-border/50">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-bold shrink-0">
+                    <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-ec-surface border border-ec-line">
+                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-ec-navy text-white text-sm font-bold shrink-0">
                         {i + 1}
                       </span>
                       <p className="text-muted-foreground">{item}</p>
@@ -207,7 +206,7 @@ export default function CaseStudyCopilot() {
 
             {/* Right Column - Sidebar */}
             <div className="lg:col-span-1 space-y-8">
-              <Card className="bg-card/50 border-border/50 backdrop-blur-sm sticky top-24">
+              <Card className="bg-white border-ec-line sticky top-24">
                 <CardContent className="p-6 space-y-6">
                   <div>
                     <h3 className="text-lg font-bold mb-2">About Eclectik</h3>
@@ -216,15 +215,15 @@ export default function CaseStudyCopilot() {
                     </p>
                   </div>
                   
-                  <div className="border-t border-border/50 pt-6">
+                  <div className="border-t border-ec-line pt-6">
                     <h3 className="text-lg font-bold mb-2">Applied Signals</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       Through our Applied Signals expertise, we guide clients in using tools like Microsoft Copilot to surface hidden insights and empower more inclusive decision-making.
                     </p>
                   </div>
 
-                  <div className="bg-primary/10 rounded-lg p-4 mt-4">
-                    <h4 className="font-bold text-primary mb-2">Our Biggest Insight?</h4>
+                  <div className="bg-ec-cream rounded-lg p-4 mt-4">
+                    <h4 className="font-bold text-ec-red mb-2">Our Biggest Insight?</h4>
                     <p className="text-sm italic text-muted-foreground">
                       "Real change happens when people feel heard. By focusing on trust and inclusion, we help build stronger, more resilient employees, teams and organizations."
                     </p>

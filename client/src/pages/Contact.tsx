@@ -23,32 +23,32 @@ function IsoCertModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ec-navy/60 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="relative bg-[#1a1f2e] rounded-xl shadow-2xl w-[90vw] max-w-3xl flex flex-col overflow-hidden"
+        className="relative bg-white border border-ec-line-3 rounded-xl shadow-2xl w-[90vw] max-w-3xl flex flex-col overflow-hidden"
         style={{ maxHeight: '90vh' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 flex-shrink-0">
-          <h2 className="text-base font-semibold text-white">ISO 27001 Certificaat — Eclectik B.V.</h2>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-ec-line flex-shrink-0">
+          <h2 className="text-base font-semibold text-ec-navy">ISO 27001 Certificaat — Eclectik B.V.</h2>
           <button
             onClick={onClose}
-            className="text-muted-foreground hover:text-white transition-colors text-2xl leading-none ml-4"
+            className="text-ec-body hover:text-ec-navy transition-colors text-2xl leading-none ml-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
             aria-label="Sluiten"
           >
             ×
           </button>
         </div>
         {/* PDF Viewer */}
-        <div className="flex-1 overflow-y-auto flex flex-col items-center py-4 px-4">
+        <div className="flex-1 overflow-y-auto flex flex-col items-center py-4 px-4 bg-ec-surface">
           <Document
             file={ISO_CERT_URL}
             onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-            loading={<div className="text-white/50 py-20">Certificaat laden...</div>}
-            error={<div className="text-red-400 py-20">Kon het certificaat niet laden.</div>}
+            loading={<div className="text-ec-body py-20">Certificaat laden...</div>}
+            error={<div className="text-ec-red py-20">Kon het certificaat niet laden.</div>}
           >
             {Array.from(new Array(numPages), (_, i) => (
               <Page
@@ -139,18 +139,9 @@ export default function Contact() {
         <meta name="description" content="Get in touch with Eclectik. Subscribe to our newsletter for insights that matter or contact us directly to start your AI transformation." />
       </Helmet>
 
-      <section className="relative min-h-screen flex items-center pt-32 lg:pt-40 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-background" />
-          <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent" />
-          {/* Abstract shapes/beacon effect */}
-          <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-10">
-            <div className="absolute inset-0 border-[40px] border-primary rounded-full animate-pulse" style={{ animationDuration: '4s' }} />
-            <div className="absolute inset-[100px] border-[40px] border-secondary rounded-full animate-pulse" style={{ animationDuration: '4s', animationDelay: '1s' }} />
-            <div className="absolute inset-[200px] border-[40px] border-accent rounded-full animate-pulse" style={{ animationDuration: '4s', animationDelay: '2s' }} />
-          </div>
-        </div>
+      <section className="relative py-16 lg:py-24 overflow-hidden">
+        {/* Flat light canvas — the old beacon rings only read on the dark theme. */}
+        <div className="absolute inset-0 z-0 bg-white" />
 
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -162,12 +153,12 @@ export default function Contact() {
               variants={fadeIn}
               className="max-w-xl"
             >
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 text-white">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 text-ec-navy">
                 The information to <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">accelerate transformation.</span>
+                <span className="text-ec-red">accelerate transformation.</span>
               </h1>
-              
-              <p className="text-xl text-muted-foreground mb-12">
+
+              <p className="text-xl text-ec-body mb-12">
                 Leave your contact details and a message behind and we will contact you soon.
               </p>
 
@@ -184,7 +175,7 @@ export default function Contact() {
                       value={formData.firstName}
                       onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                       required
-                      className="bg-transparent border-0 border-b border-white/20 rounded-none px-0 py-4 text-lg focus-visible:ring-0 focus-visible:border-primary transition-colors"
+                      className="bg-white border-0 border-b border-ec-line-3 rounded-none px-0 py-4 text-lg text-ec-navy placeholder:text-ec-body-faint focus-visible:border-ec-sky focus-visible:ring-2 focus-visible:ring-ec-sky/40 transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
@@ -198,7 +189,7 @@ export default function Contact() {
                       value={formData.lastName}
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                       required
-                      className="bg-transparent border-0 border-b border-white/20 rounded-none px-0 py-4 text-lg focus-visible:ring-0 focus-visible:border-primary transition-colors"
+                      className="bg-white border-0 border-b border-ec-line-3 rounded-none px-0 py-4 text-lg text-ec-navy placeholder:text-ec-body-faint focus-visible:border-ec-sky focus-visible:ring-2 focus-visible:ring-ec-sky/40 transition-colors"
                     />
                   </div>
                 </div>
@@ -214,7 +205,7 @@ export default function Contact() {
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     required
-                    className="bg-transparent border-0 border-b border-white/20 rounded-none px-0 py-4 text-lg focus-visible:ring-0 focus-visible:border-primary transition-colors"
+                    className="bg-white border-0 border-b border-ec-line-3 rounded-none px-0 py-4 text-lg text-ec-navy placeholder:text-ec-body-faint focus-visible:border-ec-sky focus-visible:ring-2 focus-visible:ring-ec-sky/40 transition-colors"
                   />
                 </div>
 
@@ -230,7 +221,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
-                      className="bg-transparent border-0 border-b border-white/20 rounded-none px-0 py-4 text-lg focus-visible:ring-0 focus-visible:border-primary transition-colors"
+                      className="bg-white border-0 border-b border-ec-line-3 rounded-none px-0 py-4 text-lg text-ec-navy placeholder:text-ec-body-faint focus-visible:border-ec-sky focus-visible:ring-2 focus-visible:ring-ec-sky/40 transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
@@ -243,7 +234,7 @@ export default function Contact() {
                       placeholder="+1 (555) 000-0000" 
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="bg-transparent border-0 border-b border-white/20 rounded-none px-0 py-4 text-lg focus-visible:ring-0 focus-visible:border-primary transition-colors"
+                      className="bg-white border-0 border-b border-ec-line-3 rounded-none px-0 py-4 text-lg text-ec-navy placeholder:text-ec-body-faint focus-visible:border-ec-sky focus-visible:ring-2 focus-visible:ring-ec-sky/40 transition-colors"
                     />
                   </div>
                 </div>
@@ -258,7 +249,7 @@ export default function Contact() {
                     placeholder="How can we help you accelerate your AI transformation?" 
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-transparent border-0 border-b border-white/20 rounded-none px-0 py-4 text-lg focus-visible:ring-0 focus-visible:border-primary transition-colors resize-none focus:outline-none text-white placeholder:text-muted-foreground/50"
+                    className="w-full bg-white border-0 border-b border-ec-line-3 rounded-none px-0 py-4 text-lg text-ec-navy placeholder:text-ec-body-faint transition-colors resize-none focus:outline-none focus-visible:border-ec-sky focus-visible:ring-2 focus-visible:ring-ec-sky/40"
                   />
                 </div>
 
@@ -267,7 +258,7 @@ export default function Contact() {
                     id="consent" 
                     checked={formData.consent}
                     onCheckedChange={(checked) => setFormData({ ...formData, consent: checked as boolean })}
-                    className="mt-1 border-white/20 data-[state=checked]:bg-primary data-[state=checked]:border-primary" 
+                    className="mt-1 border-ec-line-3 data-[state=checked]:bg-ec-sky data-[state=checked]:border-ec-sky data-[state=checked]:text-ec-navy"
                   />
                   <div className="grid gap-1.5 leading-none">
                     <label
@@ -280,14 +271,14 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-center justify-between pt-4">
-                  <p className="text-xs text-muted-foreground/60 leading-relaxed max-w-xs">
-                    Protected by reCAPTCHA and the Google <a href="#" className="underline hover:text-primary">Privacy Policy</a> and <a href="#" className="underline hover:text-primary">Terms of Service</a> apply.
+                  <p className="text-xs text-ec-body-faint leading-relaxed max-w-xs">
+                    Protected by reCAPTCHA and the Google <a href="#" className="underline hover:text-ec-red">Privacy Policy</a> and <a href="#" className="underline hover:text-ec-red">Terms of Service</a> apply.
                   </p>
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     size="lg"
                     disabled={isSubmitting}
-                    className="bg-primary hover:bg-primary/90 text-background font-bold px-8 rounded-full"
+                    className="bg-ec-sky hover:bg-[#54b4cb] text-ec-navy font-bold px-8 rounded-full"
                   >
                     {isSubmitting ? "Sending..." : "Send Message"} <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -295,21 +286,21 @@ export default function Contact() {
               </form>
 
               <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-white">Get in touch.</h2>
-                
+                <h2 className="text-3xl font-bold text-ec-navy">Get in touch.</h2>
+
                 <div className="flex flex-col gap-4">
-                  <a href="mailto:info@eclectik.com" className="text-xl text-primary hover:text-white transition-colors inline-flex items-center gap-2 border-b border-primary/30 pb-1 w-fit">
+                  <a href="mailto:info@eclectik.com" className="text-xl font-semibold text-ec-red hover:text-ec-red-hover transition-colors inline-flex items-center gap-2 border-b border-ec-red/30 pb-1 w-fit">
                     <Mail className="w-5 h-5" /> info@eclectik.com
                   </a>
-                  
+
                   <div className="flex gap-6 mt-4">
-                    <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-white/10 hover:text-primary transition-all">
+                    <a href="#" className="p-3 rounded-full bg-ec-surface text-ec-navy hover:bg-ec-line hover:text-ec-sky-ink transition-all">
                       <Linkedin className="w-6 h-6" />
                     </a>
-                    <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-white/10 hover:text-secondary transition-all">
+                    <a href="#" className="p-3 rounded-full bg-ec-surface text-ec-navy hover:bg-ec-line hover:text-ec-red transition-all">
                       <Instagram className="w-6 h-6" />
                     </a>
-                    <a href="#" className="p-3 rounded-full bg-white/5 hover:bg-white/10 hover:text-accent transition-all">
+                    <a href="#" className="p-3 rounded-full bg-ec-surface text-ec-navy hover:bg-ec-line hover:text-ec-teal-ink transition-all">
                       <Youtube className="w-6 h-6" />
                     </a>
                   </div>
@@ -317,22 +308,24 @@ export default function Contact() {
               </div>
             </motion.div>
 
-            {/* Right Column: Certifications & Partners (Visual Balance) */}
-            <div className="hidden lg:flex flex-col justify-start pt-48 h-full min-h-[600px] pl-20 border-l border-white/5">
-              <div className="space-y-12 opacity-70">
+            {/* Right Column: Certifications & Partners (Visual Balance).
+                Navy panel on purpose: every partner and certification logo here is
+                white artwork, so it needs a dark surface to stay visible. */}
+            <div className="hidden lg:flex flex-col justify-start h-full min-h-[600px] rounded-2xl bg-ec-navy px-12 py-14">
+              <div className="space-y-12">
                 <div className="space-y-4">
-                  <h3 className="text-sm uppercase tracking-widest text-muted-foreground">Certifications</h3>
+                  <h3 className="text-sm uppercase tracking-widest text-ec-on-dark-caption">Certifications</h3>
                   <div className="flex gap-8 items-center flex-wrap">
-                    <button onClick={() => setShowIsoCert(true)} className="focus:outline-none flex flex-col items-center gap-2 group" title="Bekijk ISO 27001 certificaat">
+                    <button onClick={() => setShowIsoCert(true)} className="flex flex-col items-center gap-2 group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky" title="Bekijk ISO 27001 certificaat">
                        <img src="/images/brand-compliance-logo-final.png" alt="Brand Compliance Certified" className="h-12 w-auto opacity-90 group-hover:opacity-100 transition-opacity cursor-pointer" />
-                       <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors tracking-wide">Click to see certificate</span>
+                       <span className="text-xs text-ec-on-dark-caption group-hover:text-ec-sky transition-colors tracking-wide">Click to see certificate</span>
                      </button>
                     <img src="/images/white-microsoft-startups-logo-final.png" alt="Microsoft for Startups Founders Hub" className="h-24 w-auto opacity-90 hover:opacity-100 transition-opacity" />
                   </div>
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-sm uppercase tracking-widest text-muted-foreground">Partners</h3>
+                  <h3 className="text-sm uppercase tracking-widest text-ec-on-dark-caption">Partners</h3>
                   <div className="flex gap-6 items-center flex-wrap">
                     <img src="/images/microsoft-certified-white.png" alt="Microsoft Certified Partner" className="h-20 w-auto opacity-90 hover:opacity-100 transition-opacity" />
 
@@ -346,43 +339,43 @@ export default function Contact() {
                 </div>
 
                 <div className="space-y-4 pt-4">
-                  <h3 className="text-sm uppercase tracking-widest text-muted-foreground">Software/Platforms</h3>
+                  <h3 className="text-sm uppercase tracking-widest text-ec-on-dark-caption">Software/Platforms</h3>
                   <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6">
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/copilot.png" alt="Copilot" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">Copilot</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">Copilot</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/fabric.png" alt="Fabric" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">Fabric</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">Fabric</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/viva-insights.svg" alt="Viva Insights" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">Viva Insights</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">Viva Insights</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/viva-engage.svg" alt="Viva Engage" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">Viva Engage</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">Viva Engage</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/glint.svg" alt="Viva Glint" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">Viva Glint</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">Viva Glint</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/pulse.png" alt="Viva Pulse" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">Viva Pulse</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">Viva Pulse</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/onelake.png" alt="OneLake" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">OneLake</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">OneLake</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/data-factory.png" alt="Data Factory" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">Data Factory</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">Data Factory</span>
                     </div>
                     <div className="flex flex-col items-center gap-2 group">
                       <img src="/images/databases.png" alt="Databases" className="h-12 w-12 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-xs text-muted-foreground text-center">Databases</span>
+                      <span className="text-xs text-ec-on-dark-caption text-center">Databases</span>
                     </div>
                   </div>
                 </div>

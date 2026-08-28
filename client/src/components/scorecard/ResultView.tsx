@@ -52,11 +52,11 @@ function EmailUnlockCard({ submitting, onUnlock }: Pick<Props, "submitting" | "o
   const valid = isWorkEmail(email);
   const showError = (touched && !valid) || rejected;
   return (
-    <div className="bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
-      <h2 className="text-xl font-heading font-semibold text-white mb-3">
+    <div className="bg-ec-cream border border-ec-line-3 rounded-2xl p-8 max-w-md mx-auto">
+      <h2 className="text-xl font-heading font-semibold text-ec-navy mb-3">
         Fill out your work email for the full report
       </h2>
-      <p className="text-sm text-muted-foreground mb-6">
+      <p className="text-sm text-ec-body mb-6">
         Your full results — three dimension scores, your biggest gaps and the next
         step that fits — appear straight away on this page. We use your email to
         deliver your report and keep it no longer than needed for that purpose.
@@ -75,17 +75,17 @@ function EmailUnlockCard({ submitting, onUnlock }: Pick<Props, "submitting" | "o
           onChange={(e) => { setEmail(e.target.value); setRejected(false); }}
           placeholder="Work email" aria-invalid={showError}
           aria-describedby={showError ? "work-email-error" : undefined}
-          className="w-full bg-background border border-white/10 rounded-md px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+          className="w-full bg-white border border-ec-line-3 rounded-md px-4 py-3 text-ec-navy placeholder:text-ec-body-faint focus:outline-none focus:border-ec-sky focus-visible:ring-2 focus-visible:ring-ec-sky/40 aria-invalid:border-ec-red"
         />
         {showError && (
-          <p id="work-email-error" className="text-sm text-secondary" role="alert">Please use your work email.</p>
+          <p id="work-email-error" className="text-sm text-ec-red" role="alert">Please use your work email.</p>
         )}
-        <label className="flex items-start gap-2 text-sm text-muted-foreground cursor-pointer">
-          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1" />
+        <label className="flex items-start gap-2 text-sm text-ec-body cursor-pointer">
+          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 accent-ec-sky" />
           <span>Send me the monthly insights letter. Unsubscribe anytime.</span>
         </label>
         <Button type="submit" disabled={submitting}
-          className="w-full bg-secondary text-white hover:bg-secondary/90 font-semibold">
+          className="w-full bg-ec-sky text-ec-navy hover:bg-[#54b4cb] font-bold rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy">
           {submitting ? "One moment…" : <>Get my full report <ArrowRight className="ml-2 w-4 h-4" /></>}
         </Button>
       </form>
@@ -99,18 +99,18 @@ export default function ResultView({ result, answers, unlocked, submitting, onUn
   return (
     <div className="max-w-3xl mx-auto">
       {/* Teaser — altijd zichtbaar, geen e-mail nodig */}
-      <p className="text-primary text-xs tracking-wider uppercase font-semibold text-center mb-3">
+      <p className="text-ec-red text-xs tracking-[0.14em] uppercase font-bold text-center mb-3">
         Your evidence readiness profile
       </p>
-      <h1 className="text-3xl md:text-4xl font-heading font-bold text-white text-center mb-10">
+      <h1 className="text-3xl md:text-4xl font-heading font-bold text-ec-navy text-center mb-10">
         Evidence Readiness Index: {result.scores.index}
       </h1>
       <div className="flex justify-center mb-12">
         <ScoreDial label="Evidence Readiness Index" score={result.scores.index} band={band(result.scores.index)} />
       </div>
-      <div className="bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 mb-10">
-        <h2 className="text-xl font-heading font-semibold text-white mb-3">{quad.title}</h2>
-        <p className="text-muted-foreground">{quad.body}</p>
+      <div className="bg-ec-cream border border-ec-line-3 rounded-2xl p-8 mb-10">
+        <h2 className="text-xl font-heading font-semibold text-ec-navy mb-3">{quad.title}</h2>
+        <p className="text-ec-body">{quad.body}</p>
       </div>
 
       {!unlocked ? (
@@ -123,30 +123,30 @@ export default function ResultView({ result, answers, unlocked, submitting, onUn
             <ScoreDial label="Readiness" score={result.scores.readiness} band={result.bands.readiness} />
           </div>
           <div className="mb-10">
-            <h3 className="text-sm tracking-wider uppercase text-muted-foreground font-semibold mb-4">
+            <h3 className="text-sm tracking-[0.12em] uppercase text-ec-body font-bold mb-4">
               Your biggest gaps
             </h3>
             <ul className="space-y-3">
               {gapBullets(answers).map((g) => (
-                <li key={g.id} className="flex gap-3 text-muted-foreground">
-                  <span className="text-secondary mt-1">•</span><span>{g.text}</span>
+                <li key={g.id} className="flex gap-3 text-ec-body">
+                  <span className="text-ec-red mt-1">•</span><span>{g.text}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div className="text-center">
             <Link href={cta.href} onClick={() => trackScorecard("sc_cta_clicked", { route: result.route })}>
-              <Button size="lg" className="bg-secondary text-white hover:bg-secondary/90 font-semibold">
+              <Button size="lg" className="bg-ec-sky text-ec-navy hover:bg-[#54b4cb] font-bold rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy">
                 {cta.label} <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
-            {cta.note && <p className="text-sm text-muted-foreground mt-3">{cta.note}</p>}
+            {cta.note && <p className="text-sm text-ec-body mt-3">{cta.note}</p>}
             {result.readinessOverlay && (
-              <p className="text-sm text-muted-foreground mt-6">
+              <p className="text-sm text-ec-body mt-6">
                 First step is your data foundation — exactly what our data-lab phase does.
               </p>
             )}
-            <p className="text-xs text-muted-foreground mt-8">Your full report arrives by email within a few days.</p>
+            <p className="text-xs text-ec-body-faint mt-8">Your full report arrives by email within a few days.</p>
           </div>
         </>
       )}

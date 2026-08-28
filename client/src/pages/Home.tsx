@@ -209,7 +209,7 @@ export default function Home() {
         </script>
       </Helmet>
 
-      <SiteHeader />
+      <SiteHeader variant="overlay" />
 
       {/* HERO */}
       <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:block shell:min-h-0">

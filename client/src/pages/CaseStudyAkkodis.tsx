@@ -8,10 +8,9 @@ import { Link } from "wouter";
 export default function CaseStudyAkkodis() {
   return (
     <Layout>
-    <div className="min-h-screen bg-background text-foreground pt-32 lg:pt-40">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
+      <section className="relative bg-ec-cream py-20 overflow-hidden">
         <div className="container relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -19,10 +18,10 @@ export default function CaseStudyAkkodis() {
             transition={{ duration: 0.6 }}
             className="max-w-4xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-ec-line-3 text-ec-red text-sm font-medium mb-6">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ec-red opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-ec-red"></span>
               </span>
               Case Study
             </div>
@@ -33,9 +32,9 @@ export default function CaseStudyAkkodis() {
               How a 6,500-person engineering consultancy turned Japan's demographic challenge into a culture of innovation with Microsoft Power Platform and Copilot.
             </p>
             <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">Microsoft Power Platform</span>
-              <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">Microsoft 365 Copilot</span>
-              <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">Citizen Development</span>
+              <span className="px-4 py-2 rounded-full bg-white border border-ec-line-3 text-ec-body-strong text-sm font-medium">Microsoft Power Platform</span>
+              <span className="px-4 py-2 rounded-full bg-white border border-ec-line-3 text-ec-body-strong text-sm font-medium">Microsoft 365 Copilot</span>
+              <span className="px-4 py-2 rounded-full bg-white border border-ec-line-3 text-ec-body-strong text-sm font-medium">Citizen Development</span>
             </div>
           </motion.div>
         </div>
@@ -55,17 +54,17 @@ export default function CaseStudyAkkodis() {
                 transition={{ duration: 0.5 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Target className="w-8 h-8 text-primary" />
+                  <Target className="w-8 h-8 text-ec-sky-ink" />
                   The Challenge
                 </h2>
-                <div className="prose prose-invert max-w-none text-muted-foreground text-lg leading-relaxed">
+                <div className="prose max-w-none text-muted-foreground text-lg leading-relaxed">
                   <p className="mb-4">
                     AKKODiS Consulting, a leading technology and engineering consultancy with 6,500 employees across Japan, faced an urgent challenge: Japan's aging demographic and shrinking workforce meant they could no longer rely on traditional workforce growth to stay competitive.
                   </p>
                   <p className="mb-4">
                     With limited talent pools and the need to maintain productivity without increasing headcount, AKKODiS needed to fundamentally reimagine how work gets done—not just for their clients, but for their own organization first.
                   </p>
-                  <p className="italic border-l-4 border-primary pl-4 py-2 bg-primary/5">
+                  <p className="italic border-l-4 border-ec-red pl-4 py-2 bg-ec-cream text-ec-body-strong">
                     "With Japan's population declining, companies can no longer rely on traditional workforce growth to stay competitive. To maximize their potential and compete globally, they must raise labor productivity and empower more people to innovate."
                     <span className="block mt-2 text-sm not-italic">— Kenichiro Kawasaki, CEO, AKKODiS Consulting</span>
                   </p>
@@ -80,10 +79,10 @@ export default function CaseStudyAkkodis() {
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Zap className="w-8 h-8 text-primary" />
+                  <Zap className="w-8 h-8 text-ec-sky-ink" />
                   The Solution: Field-Led Transformation
                 </h2>
-                <div className="prose prose-invert max-w-none text-muted-foreground text-lg leading-relaxed">
+                <div className="prose max-w-none text-muted-foreground text-lg leading-relaxed">
                   <p className="mb-4">
                     Instead of a traditional top-down IT transformation, AKKODiS embraced a bold, field-led innovation model. They deployed Microsoft Power Platform, Microsoft 365 Copilot, and Copilot Studio across the entire organization, democratizing access to automation, app development, and AI-powered insights.
                   </p>
@@ -91,32 +90,32 @@ export default function CaseStudyAkkodis() {
                     The key insight: trust the people closest to the work to lead transformation. Field engineers and consultants who understand client challenges at the most practical level became the drivers of change.
                   </p>
                   
-                  <div className="bg-card/30 border border-border/50 rounded-xl p-6 my-6">
+                  <div className="bg-ec-surface border border-ec-line rounded-xl p-6 my-6">
                     <h3 className="text-xl font-semibold mb-4 text-foreground">Key Technologies Deployed:</h3>
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-primary mt-1 shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-ec-sky-ink mt-1 shrink-0" />
                         <div>
                           <div className="font-medium text-foreground">Power Apps</div>
                           <div className="text-sm">Low-code app development for everyone</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-primary mt-1 shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-ec-sky-ink mt-1 shrink-0" />
                         <div>
                           <div className="font-medium text-foreground">Power Automate</div>
                           <div className="text-sm">Workflow automation at scale</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-primary mt-1 shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-ec-sky-ink mt-1 shrink-0" />
                         <div>
                           <div className="font-medium text-foreground">Microsoft 365 Copilot</div>
                           <div className="text-sm">AI-powered productivity boost</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-primary mt-1 shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-ec-sky-ink mt-1 shrink-0" />
                         <div>
                           <div className="font-medium text-foreground">Copilot Studio</div>
                           <div className="text-sm">Custom AI agents and automation</div>
@@ -125,7 +124,7 @@ export default function CaseStudyAkkodis() {
                     </div>
                   </div>
 
-                  <p className="italic border-l-4 border-primary pl-4 py-2 bg-primary/5">
+                  <p className="italic border-l-4 border-ec-red pl-4 py-2 bg-ec-cream text-ec-body-strong">
                     "The field understands challenges at the most practical level. Transformation is most sustainable when it's driven by those who experience the work firsthand."
                     <span className="block mt-2 text-sm not-italic">— Kenichiro Kawasaki, CEO</span>
                   </p>
@@ -140,16 +139,16 @@ export default function CaseStudyAkkodis() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <TrendingUp className="w-8 h-8 text-primary" />
+                  <TrendingUp className="w-8 h-8 text-ec-sky-ink" />
                   Measurable Impact
                 </h2>
                 
                 <div className="grid sm:grid-cols-2 gap-6 mb-8">
-                  <Card className="bg-primary/5 border-primary/20">
+                  <Card className="bg-ec-surface border-ec-line">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                          <Clock className="w-6 h-6 text-primary" />
+                        <div className="p-3 rounded-full bg-white">
+                          <Clock className="w-6 h-6 text-ec-sky-ink" />
                         </div>
                         <div className="text-3xl font-bold text-foreground">15,800</div>
                       </div>
@@ -159,11 +158,11 @@ export default function CaseStudyAkkodis() {
                     </CardContent>
                   </Card>
                   
-                  <Card className="bg-primary/5 border-primary/20">
+                  <Card className="bg-ec-surface border-ec-line">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                          <DollarSign className="w-6 h-6 text-primary" />
+                        <div className="p-3 rounded-full bg-white">
+                          <DollarSign className="w-6 h-6 text-ec-sky-ink" />
                         </div>
                         <div className="text-3xl font-bold text-foreground">$380K</div>
                       </div>
@@ -173,11 +172,11 @@ export default function CaseStudyAkkodis() {
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-primary/5 border-primary/20">
+                  <Card className="bg-ec-surface border-ec-line">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                          <TrendingUp className="w-6 h-6 text-primary" />
+                        <div className="p-3 rounded-full bg-white">
+                          <TrendingUp className="w-6 h-6 text-ec-sky-ink" />
                         </div>
                         <div className="text-3xl font-bold text-foreground">18%</div>
                       </div>
@@ -187,11 +186,11 @@ export default function CaseStudyAkkodis() {
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-primary/5 border-primary/20">
+                  <Card className="bg-ec-surface border-ec-line">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                          <Award className="w-6 h-6 text-primary" />
+                        <div className="p-3 rounded-full bg-white">
+                          <Award className="w-6 h-6 text-ec-sky-ink" />
                         </div>
                         <div className="text-3xl font-bold text-foreground">+13 pts</div>
                       </div>
@@ -202,12 +201,12 @@ export default function CaseStudyAkkodis() {
                   </Card>
                 </div>
 
-                <div className="bg-card/30 border border-border/50 rounded-xl p-8 backdrop-blur-sm">
+                <div className="bg-ec-surface border border-ec-line rounded-xl p-8">
                   <h3 className="text-xl font-semibold mb-4 text-foreground">Real-World Use Cases:</h3>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-green-500/10 mt-1">
-                        <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      <div className="p-1 rounded-full bg-ec-teal/10 mt-1">
+                        <CheckCircle2 className="w-5 h-5 text-ec-teal-ink" />
                       </div>
                       <div>
                         <div className="font-medium text-foreground mb-1">Invoice Searchability</div>
@@ -215,8 +214,8 @@ export default function CaseStudyAkkodis() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-green-500/10 mt-1">
-                        <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      <div className="p-1 rounded-full bg-ec-teal/10 mt-1">
+                        <CheckCircle2 className="w-5 h-5 text-ec-teal-ink" />
                       </div>
                       <div>
                         <div className="font-medium text-foreground mb-1">Automated Budgeting Workflow</div>
@@ -224,8 +223,8 @@ export default function CaseStudyAkkodis() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-green-500/10 mt-1">
-                        <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      <div className="p-1 rounded-full bg-ec-teal/10 mt-1">
+                        <CheckCircle2 className="w-5 h-5 text-ec-teal-ink" />
                       </div>
                       <div>
                         <div className="font-medium text-foreground mb-1">Client Feedback App</div>
@@ -233,8 +232,8 @@ export default function CaseStudyAkkodis() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-green-500/10 mt-1">
-                        <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      <div className="p-1 rounded-full bg-ec-teal/10 mt-1">
+                        <CheckCircle2 className="w-5 h-5 text-ec-teal-ink" />
                       </div>
                       <div>
                         <div className="font-medium text-foreground mb-1">95% Active Copilot Usage</div>
@@ -253,10 +252,10 @@ export default function CaseStudyAkkodis() {
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Users className="w-8 h-8 text-primary" />
+                  <Users className="w-8 h-8 text-ec-sky-ink" />
                   The Real Transformation: Culture
                 </h2>
-                <div className="prose prose-invert max-w-none text-muted-foreground text-lg leading-relaxed">
+                <div className="prose max-w-none text-muted-foreground text-lg leading-relaxed">
                   <p className="mb-4">
                     Beyond the metrics, the most profound impact was cultural. Employees who had never coded before began designing applications and automating workflows. The shift from "IT-dependent transformation" to "everyone-driven innovation" created a culture of ownership.
                   </p>
@@ -264,7 +263,7 @@ export default function CaseStudyAkkodis() {
                     Senior employees turned deep expertise into digital solutions, while younger talent leveraged AI to automate and innovate faster. Everyone, from sales to HR, became active problem-solvers.
                   </p>
                   
-                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-xl p-6 my-6">
+                  <div className="bg-ec-cream border border-ec-line-2 rounded-xl p-6 my-6">
                     <p className="text-lg italic text-foreground mb-2">
                       "It's not just engineers driving change anymore. Everyone, from sales to HR, is building solutions to everyday challenges. It's changed our culture from one of 'IT-dependent transformation' to 'everyone-driven innovation.'"
                     </p>
@@ -285,11 +284,11 @@ export default function CaseStudyAkkodis() {
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
                 <h2 className="text-3xl font-bold mb-6">What's Next</h2>
-                <div className="prose prose-invert max-w-none text-muted-foreground text-lg leading-relaxed">
+                <div className="prose max-w-none text-muted-foreground text-lg leading-relaxed">
                   <p className="mb-4">
                     With low-code and AI tools embedded across the company, AKKODiS is now exploring agent-based AI to automate low-risk decisions and deepen its citizen-developer community.
                   </p>
-                  <p className="italic border-l-4 border-primary pl-4 py-2 bg-primary/5">
+                  <p className="italic border-l-4 border-ec-red pl-4 py-2 bg-ec-cream text-ec-body-strong">
                     "Our goal is to create a responsible AI ecosystem where human judgment, ethical oversight, and technology work hand in hand."
                     <span className="block mt-2 text-sm not-italic">— Kenichiro Kawasaki, CEO</span>
                   </p>
@@ -308,7 +307,7 @@ export default function CaseStudyAkkodis() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="bg-card/50 border border-border rounded-xl p-6 backdrop-blur-sm sticky top-32"
+                className="bg-white border border-ec-line rounded-xl p-6 sticky top-24"
               >
                 <h3 className="text-lg font-semibold mb-4 text-foreground">Company Profile</h3>
                 <div className="space-y-4 text-sm">
@@ -334,7 +333,7 @@ export default function CaseStudyAkkodis() {
                       href="https://www.microsoft.com/en/customers/story/25896-akkodis-consulting-microsoft-power-platform" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-primary hover:underline inline-flex items-center gap-1"
+                      className="text-ec-red hover:text-ec-red-hover inline-flex items-center gap-1"
                     >
                       Microsoft Customer Story
                       <ArrowRight className="w-3 h-3" />
@@ -342,14 +341,14 @@ export default function CaseStudyAkkodis() {
                   </div>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-border">
+                <div className="mt-6 pt-6 border-t border-ec-line">
                   <h4 className="font-semibold mb-3 text-foreground">Technologies Used</h4>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">Power Platform</span>
-                    <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">Copilot</span>
-                    <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">Power Apps</span>
-                    <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">Power Automate</span>
-                    <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">Copilot Studio</span>
+                    <span className="px-3 py-1 rounded-full bg-ec-surface text-ec-body-strong text-xs font-medium">Power Platform</span>
+                    <span className="px-3 py-1 rounded-full bg-ec-surface text-ec-body-strong text-xs font-medium">Copilot</span>
+                    <span className="px-3 py-1 rounded-full bg-ec-surface text-ec-body-strong text-xs font-medium">Power Apps</span>
+                    <span className="px-3 py-1 rounded-full bg-ec-surface text-ec-body-strong text-xs font-medium">Power Automate</span>
+                    <span className="px-3 py-1 rounded-full bg-ec-surface text-ec-body-strong text-xs font-medium">Copilot Studio</span>
                   </div>
                 </div>
               </motion.div>
@@ -359,9 +358,8 @@ export default function CaseStudyAkkodis() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
-        <div className="container relative z-10">
+      <section className="py-20 bg-ec-navy text-ec-on-dark">
+        <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -372,7 +370,7 @@ export default function CaseStudyAkkodis() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to Transform Your Organization?
             </h2>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-xl text-ec-on-dark-muted mb-8">
               Learn how Eclectik can help you operationalize AI transformation and build a culture of innovation—from the field up.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
@@ -383,7 +381,7 @@ export default function CaseStudyAkkodis() {
                 </Button>
               </Link>
               <Link href="/white-papers">
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" className="border-ec-navy-line-2 text-ec-on-dark hover:bg-white/10 hover:text-white">
                   Explore Resources
                 </Button>
               </Link>

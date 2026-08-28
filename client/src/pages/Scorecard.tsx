@@ -127,7 +127,7 @@ export default function Scorecard() {
         <title>AI Transformation Scorecard | Eclectik</title>
         <meta name="description" content="Free 3–4 minute self-assessment: how evidence-led is your AI transformation? Three scores, your readiness profile and the next step that fits." />
       </Helmet>
-      <section className="min-h-screen pt-40 pb-24 px-4">
+      <section className="min-h-screen bg-white pt-16 lg:pt-20 pb-24 px-4">
         {phase === "door" && <DoorChooser onSelect={startDoor} />}
         {phase === "questions" && door && items[step] && (
           <QuestionScreen

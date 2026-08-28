@@ -7,10 +7,9 @@ import Layout from "@/components/Layout";
 export default function CaseStudyGlint() {
   return (
     <Layout>
-    <div className="min-h-screen bg-background text-foreground pt-32 lg:pt-40">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
+      <section className="relative bg-ec-cream py-20 overflow-hidden">
         <div className="container relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -18,10 +17,10 @@ export default function CaseStudyGlint() {
             transition={{ duration: 0.6 }}
             className="max-w-4xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-ec-line-3 text-ec-red text-sm font-medium mb-6">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ec-red opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-ec-red"></span>
               </span>
               Case Study
             </div>
@@ -49,17 +48,17 @@ export default function CaseStudyGlint() {
                 transition={{ duration: 0.5 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Target className="w-8 h-8 text-primary" />
+                  <Target className="w-8 h-8 text-ec-sky-ink" />
                   The Challenge
                 </h2>
-                <div className="mb-8 rounded-xl overflow-hidden border border-border/50 shadow-lg">
+                <div className="mb-8 rounded-xl overflow-hidden border border-ec-line shadow-sm">
                   <img 
                     src="/images/glint-manager-report.png" 
                     alt="Viva Glint Manager Report Dashboard" 
                     className="w-full h-auto object-cover"
                   />
                 </div>
-                <div className="prose prose-invert max-w-none text-muted-foreground text-lg leading-relaxed">
+                <div className="prose max-w-none text-muted-foreground text-lg leading-relaxed">
                   <p className="mb-4">
                     For a global business operating in a hybrid world, keeping a finger on the pulse of organizational culture can be a challenge. Sage needed a way to maintain their people-focused, supportive workplace culture across a distributed workforce.
                   </p>
@@ -68,15 +67,15 @@ export default function CaseStudyGlint() {
                   </p>
                   <ul className="list-none space-y-2 mt-4 ml-4">
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-ec-red mt-2.5 shrink-0" />
                       <span>Gain real-time insights into employee sentiment</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-ec-red mt-2.5 shrink-0" />
                       <span>Understand workplace behaviors in a hybrid environment</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-ec-red mt-2.5 shrink-0" />
                       <span>Improve employee retention and engagement</span>
                     </li>
                   </ul>
@@ -91,17 +90,17 @@ export default function CaseStudyGlint() {
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Zap className="w-8 h-8 text-primary" />
+                  <Zap className="w-8 h-8 text-ec-sky-ink" />
                   The Solution
                 </h2>
-                <div className="mb-8 rounded-xl overflow-hidden border border-border/50 shadow-lg">
+                <div className="mb-8 rounded-xl overflow-hidden border border-ec-line shadow-sm">
                   <img 
                     src="/images/glint-copilot-dashboard.png" 
                     alt="Viva Glint Copilot Integration" 
                     className="w-full h-auto object-cover"
                   />
                 </div>
-                <div className="prose prose-invert max-w-none text-muted-foreground text-lg leading-relaxed">
+                <div className="prose max-w-none text-muted-foreground text-lg leading-relaxed">
                   <p>
                     Sage implemented <strong>Microsoft Viva Glint</strong> and <strong>Viva Insights</strong> to create a comprehensive employee listening strategy.
                   </p>
@@ -119,10 +118,10 @@ export default function CaseStudyGlint() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <BarChart3 className="w-8 h-8 text-primary" />
+                  <BarChart3 className="w-8 h-8 text-ec-sky-ink" />
                   Key Findings & Impact
                 </h2>
-                <div className="mb-8 rounded-xl overflow-hidden border border-border/50 shadow-lg">
+                <div className="mb-8 rounded-xl overflow-hidden border border-ec-line shadow-sm">
                   <img 
                     src="/images/viva-insights-dashboard.jpg" 
                     alt="Viva Insights Dashboard" 
@@ -131,11 +130,11 @@ export default function CaseStudyGlint() {
                 </div>
                 
                 <div className="grid sm:grid-cols-2 gap-6 mb-8">
-                  <Card className="bg-primary/5 border-primary/20">
+                  <Card className="bg-ec-surface border-ec-line">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                          <TrendingUp className="w-6 h-6 text-primary" />
+                        <div className="p-3 rounded-full bg-white">
+                          <TrendingUp className="w-6 h-6 text-ec-sky-ink" />
                         </div>
                         <div className="text-3xl font-bold text-foreground">30%</div>
                       </div>
@@ -145,11 +144,11 @@ export default function CaseStudyGlint() {
                     </CardContent>
                   </Card>
                   
-                  <Card className="bg-primary/5 border-primary/20">
+                  <Card className="bg-ec-surface border-ec-line">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-full bg-primary/10">
-                          <MessageSquare className="w-6 h-6 text-primary" />
+                        <div className="p-3 rounded-full bg-white">
+                          <MessageSquare className="w-6 h-6 text-ec-sky-ink" />
                         </div>
                         <div className="text-3xl font-bold text-foreground">Real-time</div>
                       </div>
@@ -160,12 +159,12 @@ export default function CaseStudyGlint() {
                   </Card>
                 </div>
 
-                <div className="bg-card/30 border border-border/50 rounded-xl p-8 backdrop-blur-sm">
+                <div className="bg-ec-surface border border-ec-line rounded-xl p-8">
                   <h3 className="text-xl font-semibold mb-4">Key Benefits Realized:</h3>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-green-500/10 mt-1">
-                        <Heart className="w-4 h-4 text-green-500" />
+                      <div className="p-1 rounded-full bg-ec-teal/10 mt-1">
+                        <Heart className="w-4 h-4 text-ec-teal-ink" />
                       </div>
                       <div>
                         <span className="font-medium text-foreground">Enhanced Culture</span>
@@ -173,8 +172,8 @@ export default function CaseStudyGlint() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="p-1 rounded-full bg-blue-500/10 mt-1">
-                        <Users className="w-4 h-4 text-blue-500" />
+                      <div className="p-1 rounded-full bg-ec-sky/10 mt-1">
+                        <Users className="w-4 h-4 text-ec-sky-ink" />
                       </div>
                       <div>
                         <span className="font-medium text-foreground">Empowered Leaders</span>
@@ -193,7 +192,7 @@ export default function CaseStudyGlint() {
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <CheckCircle2 className="w-8 h-8 text-primary" />
+                  <CheckCircle2 className="w-8 h-8 text-ec-sky-ink" />
                   Key Takeaways
                 </h2>
                 <div className="space-y-4">
@@ -202,8 +201,8 @@ export default function CaseStudyGlint() {
                     "Combining sentiment data (surveys) with behavioral data (work patterns) provides a holistic view of the employee experience.",
                     "Data-driven insights empower leaders to take targeted actions that improve retention and engagement."
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-card/50 border border-border/50">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-sm font-bold shrink-0">
+                    <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-ec-surface border border-ec-line">
+                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-ec-navy text-white text-sm font-bold shrink-0">
                         {i + 1}
                       </span>
                       <p className="text-muted-foreground">{item}</p>
@@ -215,7 +214,7 @@ export default function CaseStudyGlint() {
 
             {/* Right Column - Sidebar */}
             <div className="lg:col-span-1 space-y-8">
-              <Card className="bg-card/50 border-border/50 backdrop-blur-sm sticky top-24">
+              <Card className="bg-white border-ec-line sticky top-24">
                 <CardContent className="p-6 space-y-6">
                   <div>
                     <h3 className="text-lg font-bold mb-2">About Sage</h3>
@@ -224,7 +223,7 @@ export default function CaseStudyGlint() {
                     </p>
                   </div>
                   
-                  <div className="border-t border-border/50 pt-6">
+                  <div className="border-t border-ec-line pt-6">
                     <h3 className="text-lg font-bold mb-2">Employee Listening</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       "We use Microsoft Viva Glint and Viva Insights to gain real-time insights into how employees are feeling and workplace behaviors. We understand the importance of listening to employees."
@@ -232,8 +231,8 @@ export default function CaseStudyGlint() {
                     <p className="text-xs text-muted-foreground mt-2 italic">- Sharon Oley, Customer Services Director, Sage</p>
                   </div>
 
-                  <div className="bg-primary/10 rounded-lg p-4 mt-4">
-                    <h4 className="font-bold text-primary mb-2">Why it Matters</h4>
+                  <div className="bg-ec-cream rounded-lg p-4 mt-4">
+                    <h4 className="font-bold text-ec-red mb-2">Why it Matters</h4>
                     <p className="text-sm italic text-muted-foreground">
                       "Key to that standout customer experience is a frontline workforce of engaged employees who buy into Sage’s people-focused, supportive workplace culture."
                     </p>

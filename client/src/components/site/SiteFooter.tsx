@@ -41,7 +41,7 @@ export default function SiteFooter() {
                   {link.name}
                 </Link>
               ))}
-              <a href="#hr-services" className={LINK_CLASS}>
+              <a href="/#hr-services" className={LINK_CLASS}>
                 HR Services
               </a>
               <Link href="/hrtechservices" className={LINK_CLASS}>

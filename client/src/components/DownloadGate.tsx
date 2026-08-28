@@ -80,7 +80,7 @@ export default function DownloadGate({
     <>
       <div onClick={handleOpen}>
         {trigger || (
-          <Button variant="outline" className="w-full gap-2">
+          <Button variant="outline" className="w-full gap-2 border-ec-line-3 text-ec-navy hover:bg-ec-surface hover:text-ec-navy">
             Download PDF <Download className="w-4 h-4" />
           </Button>
         )}
@@ -89,22 +89,22 @@ export default function DownloadGate({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{isExternal ? "Read Report" : "Download White Paper"}</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-ec-navy">{isExternal ? "Read Report" : "Download White Paper"}</DialogTitle>
+            <DialogDescription className="text-ec-body">
               {title}
             </DialogDescription>
           </DialogHeader>
 
           {step === 'prompt' && (
             <div className="space-y-4 py-4">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm leading-[1.6] text-ec-body">
                 Would you like to stay updated with our latest research and insights?
               </p>
               <div className="flex flex-col gap-3">
-                <Button onClick={() => setStep('form')} className="w-full">
+                <Button onClick={() => setStep('form')} className="w-full bg-ec-sky text-ec-navy font-semibold hover:bg-[#54b4cb]">
                   Yes, keep me informed
                 </Button>
-                <Button variant="ghost" onClick={handleDirectDownload} className="w-full">
+                <Button variant="ghost" onClick={handleDirectDownload} className="w-full text-ec-body hover:bg-ec-surface hover:text-ec-navy">
                   {isExternal ? "No thanks, just read report" : "No thanks, just download"}
                 </Button>
               </div>
@@ -135,10 +135,10 @@ export default function DownloadGate({
                 />
               </div>
               <DialogFooter className="pt-4">
-                <Button type="button" variant="ghost" onClick={() => setStep('prompt')}>
+                <Button type="button" variant="ghost" onClick={() => setStep('prompt')} className="text-ec-body hover:bg-ec-surface hover:text-ec-navy">
                   Back
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
+                <Button type="submit" disabled={isSubmitting} className="bg-ec-sky text-ec-navy font-semibold hover:bg-[#54b4cb]">
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />

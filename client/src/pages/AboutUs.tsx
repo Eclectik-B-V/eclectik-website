@@ -14,17 +14,17 @@ export default function AboutUs() {
 
   const values = [
     {
-      icon: <Users className="w-8 h-8 text-primary" />,
+      icon: <Users className="w-8 h-8 text-ec-sky-ink" />,
       title: "People-Centered",
       description: "We believe engagement and happiness are the foundations of strong, healthy, and enduring cultures."
     },
     {
-      icon: <BarChart3 className="w-8 h-8 text-primary" />,
+      icon: <BarChart3 className="w-8 h-8 text-ec-sky-ink" />,
       title: "Data-Driven",
       description: "We combine objective telemetry with subjective sentiment to build actionable roadmaps that deliver measurable impact."
     },
     {
-      icon: <Lightbulb className="w-8 h-8 text-primary" />,
+      icon: <Lightbulb className="w-8 h-8 text-ec-sky-ink" />,
       title: "Innovation-Led",
       description: "We combine objective workplace telemetry with subjective sentiment analysis to operationalize AI transformation—from Copilot ROI modeling to change activation and sustained adoption."
     }
@@ -33,8 +33,7 @@ export default function AboutUs() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background z-0" />
+      <section className="relative bg-ec-cream pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden">
         <div className="container relative z-10 px-4 mx-auto">
           <motion.div 
             initial="initial"
@@ -42,11 +41,11 @@ export default function AboutUs() {
             variants={fadeIn}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 font-heading tracking-tight">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 font-heading tracking-tight text-ec-navy">
               Insights that accelerate <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">AI Transformation</span>
+              <span className="text-ec-red">AI Transformation</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-ec-body mb-8 max-w-2xl mx-auto leading-relaxed">
               Eclectik is a boutique consultancy dedicated to operationalizing Workplace Signals end-to-end. We help organizations create healthier workplace cultures by turning employee feedback into meaningful action.
             </p>
           </motion.div>
@@ -54,7 +53,7 @@ export default function AboutUs() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-black/20">
+      <section className="py-20 bg-ec-surface">
         <div className="container px-4 mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -64,18 +63,18 @@ export default function AboutUs() {
               transition={{ duration: 0.6 }}
             >
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2 font-heading">
-                  <span className="text-primary">We Are</span>: A Boutique Consultancy
+                <h3 className="text-2xl font-bold mb-2 font-heading text-ec-navy">
+                  <span className="text-ec-red">We Are</span>: A Boutique Consultancy
                 </h3>
-                <p className="text-lg text-muted-foreground italic">
+                <p className="text-lg text-ec-body italic">
                   Specialized expertise with a personal touch.
                 </p>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">Our Mission</h2>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading text-ec-navy">Our Mission</h2>
+              <p className="text-lg text-ec-body mb-6 leading-relaxed">
                 Eclectik empowers organizations to build thriving, people-centered workplaces through exceptional employee listening solutions. We work across industries globally to spark conversations that shift mindsets and improve employee wellbeing.
               </p>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              <p className="text-lg text-ec-body mb-8 leading-relaxed">
                 Our proprietary <strong>Eclectik VIA™ Framework</strong> combines objective telemetry (like Viva Insights and Copilot dashboards) with subjective signals (such as Viva Glint drivers and narrative themes) to provide a holistic view of your organization's health and AI readiness.
               </p>
               <div className="flex flex-col gap-4">
@@ -86,8 +85,8 @@ export default function AboutUs() {
                   "Deliver measurable business impact"
                 ].map((item, index) => (
                   <div key={index} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
-                    <span className="text-foreground/90">{item}</span>
+                    <CheckCircle2 className="w-5 h-5 text-ec-sky-ink shrink-0" />
+                    <span className="text-ec-body-strong">{item}</span>
                   </div>
                 ))}
               </div>
@@ -99,14 +98,14 @@ export default function AboutUs() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 to-purple-500/20 p-1">
-                <div className="w-full h-full bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden relative">
-                  <img 
-                    src="/images/about-team-photo.jpg" 
-                    alt="Eclectik Team Collaboration" 
-                    className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500"
+              <div className="aspect-square rounded-2xl overflow-hidden bg-white border border-ec-line p-1">
+                <div className="w-full h-full bg-ec-navy rounded-xl overflow-hidden relative">
+                  <img
+                    src="/images/about-team-photo.jpg"
+                    alt="Eclectik Team Collaboration"
+                    className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ec-navy/60 via-transparent to-transparent" />
                   
                 </div>
               </div>
@@ -116,11 +115,11 @@ export default function AboutUs() {
       </section>
 
       {/* Values Section */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="container px-4 mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">Our Core Values</h2>
-            <p className="text-lg text-muted-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading text-ec-navy">Our Core Values</h2>
+            <p className="text-lg text-ec-body">
               We are driven by a commitment to excellence, innovation, and the belief that people are the heart of every successful transformation.
             </p>
           </div>
@@ -134,13 +133,13 @@ export default function AboutUs() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className="h-full bg-card/50 backdrop-blur-sm border-white/10 hover:border-primary/50 transition-colors">
+                <Card className="h-full bg-white border-ec-line hover:border-ec-sky transition-colors">
                   <CardContent className="p-8 text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 rounded-2xl bg-ec-surface flex items-center justify-center mx-auto mb-6">
                       {value.icon}
                     </div>
-                    <h3 className="text-xl font-bold mb-4">{value.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <h3 className="text-xl font-bold mb-4 text-ec-navy">{value.title}</h3>
+                    <p className="text-ec-body leading-relaxed">
                       {value.description}
                     </p>
                   </CardContent>
@@ -152,10 +151,10 @@ export default function AboutUs() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary/5 border-y border-white/5">
+      <section className="py-20 bg-ec-cream border-y border-ec-line">
         <div className="container px-4 mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">Ready to transform your organization?</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading text-ec-navy">Ready to transform your organization?</h2>
+          <p className="text-xl text-ec-body mb-8 max-w-2xl mx-auto">
             Join the forward-thinking companies that are leveraging Eclectik's expertise to build AI-native, people-first cultures.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

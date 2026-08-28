@@ -12,18 +12,28 @@ const PILL_BASE =
   "rounded-full font-bold whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky";
 
 /**
- * Header for the 2026 design. On desktop it sits over the hero video as a
- * transparent row; on mobile it is a solid navy bar that sticks to the top,
- * with a slide-down menu underneath it.
+ * Header for the 2026 design. The "overlay" variant sits over the homepage hero
+ * video as a transparent row; "solid" is the navy bar every other page gets.
+ * Below the shell breakpoint both variants collapse to the same sticky navy bar
+ * with a slide-down menu.
  */
-export default function SiteHeader() {
+export default function SiteHeader({
+  variant = "solid",
+}: {
+  variant?: "overlay" | "solid";
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
+
+  const desktopBar =
+    variant === "overlay"
+      ? "absolute inset-x-0 top-0 z-30"
+      : "sticky top-0 z-40 bg-ec-navy";
 
   return (
     <>
       {/* Desktop: transparent row layered over the hero video */}
-      <div className="hidden shell:flex absolute inset-x-0 top-0 z-30 items-center justify-between px-16 py-[26px]">
+      <div className={`hidden shell:flex ${desktopBar} items-center justify-between px-16 py-[26px]`}>
         <Link href="/" className="flex-none" aria-label="Eclectik, naar de homepage">
           <img
             src="/images/eclectik-logo-white-photo.svg"
@@ -42,7 +52,7 @@ export default function SiteHeader() {
             </Link>
           ))}
           <a
-            href="#hr-services"
+            href="/#hr-services"
             className="whitespace-nowrap hover:text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky"
           >
             HR Services
@@ -94,14 +104,14 @@ export default function SiteHeader() {
             className="bg-ec-navy border-t border-ec-navy-line px-5 pt-2 pb-[22px]"
           >
             <a
-              href="#proof"
+              href="/#proof"
               onClick={closeMenu}
               className="flex items-center justify-between py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
             >
               Proof of value &amp; change
             </a>
             <a
-              href="#hr-services"
+              href="/#hr-services"
               onClick={closeMenu}
               className="flex items-center justify-between gap-3 py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
             >
@@ -111,7 +121,7 @@ export default function SiteHeader() {
               </span>
             </a>
             <a
-              href="#benchmark"
+              href="/#benchmark"
               onClick={closeMenu}
               className="flex items-center justify-between py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
             >

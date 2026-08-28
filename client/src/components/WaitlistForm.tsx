@@ -38,9 +38,10 @@ const SECTOR_OPTIONS = [
 ];
 
 const inputClass =
-  "w-full bg-white/5 border border-white/15 rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors";
+  "w-full bg-white border border-ec-line-3 rounded-md px-4 py-3 text-sm text-ec-navy placeholder:text-ec-body-faint focus:outline-none focus:border-ec-sky focus-visible:ring-2 focus-visible:ring-ec-sky/40 transition-colors";
 
-const cardClass = "bg-card backdrop-blur-md border border-white/10 rounded-2xl p-8 space-y-4";
+const cardClass =
+  "bg-white border border-ec-line-3 rounded-2xl p-8 space-y-4 shadow-sm";
 
 type Phase = "form" | "questions" | "done";
 
@@ -63,21 +64,21 @@ function QuestionStep({ question, index, total, selected, onSelect, onBack }: Qu
               type="button"
               onClick={onBack}
               aria-label="Back to previous question"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-ec-body hover:text-ec-navy transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
           )}
-          <h4 className="font-heading text-lg font-semibold text-white">Nearly there</h4>
+          <h4 className="font-heading text-lg font-semibold text-ec-navy">Nearly there</h4>
         </div>
-        <span className="text-sm text-muted-foreground" aria-label={`Question ${index + 1} of ${total}`}>
+        <span className="text-sm text-ec-body" aria-label={`Question ${index + 1} of ${total}`}>
           {index + 1}/{total}
         </span>
       </div>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-ec-body">
         Five quick questions to secure your place — 30 seconds.
       </p>
-      <p className="text-sm font-medium text-foreground">{question.text}</p>
+      <p className="text-sm font-medium text-ec-navy">{question.text}</p>
       <div className="space-y-2">
         {question.options.map((option) => (
           <button
@@ -85,8 +86,8 @@ function QuestionStep({ question, index, total, selected, onSelect, onBack }: Qu
             type="button"
             onClick={() => onSelect(option)}
             aria-pressed={selected === option}
-            className={`w-full text-left bg-white/5 border rounded-md px-4 py-3 text-sm text-foreground transition-colors hover:border-primary focus:outline-none focus:border-primary ${
-              selected === option ? "border-primary" : "border-white/15"
+            className={`w-full text-left bg-white border rounded-md px-4 py-3 text-sm text-ec-body-strong transition-colors hover:border-ec-sky focus:outline-none focus-visible:ring-2 focus-visible:ring-ec-sky/40 ${
+              selected === option ? "border-ec-sky bg-ec-cream text-ec-navy" : "border-ec-line-3"
             }`}
           >
             {option}
@@ -206,10 +207,10 @@ export default function WaitlistForm() {
   if (phase === "done") {
     return (
       <div className={cardClass}>
-        <h4 className="font-heading text-lg font-semibold text-white">
+        <h4 className="font-heading text-lg font-semibold text-ec-navy">
           You're on the list — check your inbox for confirmation.
         </h4>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-ec-body">
           No spam. Benchmark updates only — unsubscribe anytime.
         </p>
       </div>
@@ -218,7 +219,7 @@ export default function WaitlistForm() {
 
   return (
     <form onSubmit={handleSubmit} className={cardClass}>
-      <h4 className="font-heading text-lg font-semibold text-white">Register your interest</h4>
+      <h4 className="font-heading text-lg font-semibold text-ec-navy">Register your interest</h4>
       <input
         type="text"
         required
@@ -257,7 +258,7 @@ export default function WaitlistForm() {
           Role
         </option>
         {ROLE_OPTIONS.map((r) => (
-          <option key={r} value={r} className="bg-background text-foreground">
+          <option key={r} value={r} className="bg-white text-ec-navy">
             {r}
           </option>
         ))}
@@ -273,12 +274,12 @@ export default function WaitlistForm() {
           Sector
         </option>
         {SECTOR_OPTIONS.map((s) => (
-          <option key={s} value={s} className="bg-background text-foreground">
+          <option key={s} value={s} className="bg-white text-ec-navy">
             {s}
           </option>
         ))}
       </select>
-      <label className="flex items-start gap-3 text-sm text-muted-foreground cursor-pointer">
+      <label className="flex items-start gap-3 text-sm text-ec-body cursor-pointer">
         <Checkbox
           checked={consent}
           onCheckedChange={(v) => setConsent(v === true)}
@@ -289,11 +290,11 @@ export default function WaitlistForm() {
       <Button
         type="submit"
         disabled={submitting}
-        className="w-full bg-secondary hover:bg-secondary/90 text-white font-semibold"
+        className="w-full bg-ec-sky hover:bg-[#54b4cb] text-ec-navy font-bold rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
       >
         {submitting ? "Joining…" : "Join the waiting list"}
       </Button>
-      <p className="text-xs text-muted-foreground text-center">
+      <p className="text-xs text-ec-body text-center">
         No spam. Benchmark updates only — unsubscribe anytime.
       </p>
     </form>
