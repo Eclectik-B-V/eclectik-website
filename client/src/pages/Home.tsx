@@ -1,115 +1,166 @@
-import { Button } from "@/components/ui/button";
-import Layout from "@/components/Layout";
-import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
+import { useEffect, useRef } from "react";
 import { Link } from "wouter";
-import WaitlistForm from "@/components/WaitlistForm";
 import { Helmet } from "react-helmet-async";
+import SiteHeader from "@/components/site/SiteHeader";
+import SiteFooter from "@/components/site/SiteFooter";
 import { trackCTAClick, trackDoorSelected } from "@/lib/tracking";
-import { POSITIONING_TAGLINE } from "@shared/const";
+import { POSITIONING_TAGLINE, POSITIONING_TAGLINE_SHORT } from "@shared/const";
 
-// Use local worker served from public directory to avoid CSP issues
-pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+const SECTION_PAD = "px-6 py-14 lg:px-16 lg:py-[104px]";
+const INNER = "mx-auto max-w-[1000px]";
+const EYEBROW =
+  "text-[13px] tracking-[0.14em] uppercase font-semibold text-ec-red mb-3.5";
+const PILL =
+  "rounded-full font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2";
 
-const ISO_CERT_URL = "/documents/iso-27001-certificate.pdf";
+/**
+ * Hero background video. Autoplays muted and loops, but some encodings stall on
+ * the final frame instead of looping, so a watchdog rewinds it. Paused entirely
+ * when the visitor asks for reduced motion.
+ */
+function HeroVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
 
-function IsoCertModal({ onClose }: { onClose: () => void }) {
-  const [numPages, setNumPages] = useState<number>(0);
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduced.matches) {
+      video.pause();
+      return;
+    }
+
+    const keepPlaying = () => {
+      if (video.duration && isFinite(video.duration) && video.currentTime >= video.duration - 0.05) {
+        video.currentTime = 0;
+      }
+      if (video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+    const rewind = () => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    };
+
+    video.addEventListener("ended", rewind);
+    const timer = window.setInterval(keepPlaying, 500);
+    keepPlaying();
+
+    return () => {
+      video.removeEventListener("ended", rewind);
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src="/videos/eclectik-hero.mp4"
+      autoPlay
+      loop
+      muted
+      playsInline
+      aria-hidden="true"
+      tabIndex={-1}
+      className="absolute inset-0 w-full h-full object-cover grayscale"
+    />
+  );
+}
+
+/** Placeholder for imagery the client still has to deliver. */
+function MediaPlaceholder({ label, className }: { label: string; className?: string }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-      onClick={onClose}
+      className={`bg-ec-placeholder grid place-items-center text-center text-ec-body-faint text-[13px] px-4 ${className ?? ""}`}
+      role="img"
+      aria-label={label}
     >
-      <div
-        className="relative bg-[#1a1f2e] rounded-xl shadow-2xl w-[90vw] max-w-3xl flex flex-col overflow-hidden"
-        style={{ maxHeight: "90vh" }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 flex-shrink-0">
-          <h2 className="text-base font-semibold text-white">ISO 27001 Certificaat — Eclectik B.V.</h2>
-          <button
-            onClick={onClose}
-            className="text-muted-foreground hover:text-white transition-colors text-2xl leading-none ml-4"
-            aria-label="Sluiten"
-          >
-            ×
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto flex flex-col items-center py-4 px-4">
-          <Document
-            file={ISO_CERT_URL}
-            onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-            loading={<div className="text-white/50 py-20">Certificaat laden...</div>}
-            error={<div className="text-red-400 py-20">Kon het certificaat niet laden.</div>}
-          >
-            {Array.from(new Array(numPages), (_, i) => (
-              <Page
-                key={i + 1}
-                pageNumber={i + 1}
-                width={Math.min(window.innerWidth * 0.8, 750)}
-                className="mb-4 shadow-lg"
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
-              />
-            ))}
-          </Document>
-        </div>
-      </div>
+      {label}
     </div>
   );
 }
 
-const PROOF_STATS = [
-  { num: "3×", label: "Leaders underestimate employee AI use — McKinsey" },
-  { num: "57%", label: "of employees hide their AI use from their employer — KPMG, n=48k" },
-  { num: "12%", label: "of CEOs can show AI delivered both cost and revenue benefit — PwC" },
-  { num: "42%", label: "of AI initiatives are abandoned before value — S&P Global" },
+/** The brand "bars" motif: three stacked rounded bars in descending width. */
+function Bars({ widths, height }: { widths: [number, number, number]; height: number }) {
+  const colours = ["bg-ec-sky", "bg-ec-teal", "bg-ec-yellow"];
+  return (
+    <div className="flex flex-col gap-1.5 flex-none" aria-hidden="true">
+      {widths.map((width, i) => (
+        <span
+          key={i}
+          className={`${colours[i]} rounded-[3px] block`}
+          style={{ width, height }}
+        />
+      ))}
+    </div>
+  );
+}
+
+const STATS = [
+  { figure: "3×", caption: "Leaders underestimate employee AI use (McKinsey)" },
+  { figure: "57%", caption: "of employees hide their AI use from their employer (KPMG, n=48k)" },
+  { figure: "12%", caption: "of CEOs can show AI delivered both cost and revenue benefit (PwC)" },
+  { figure: "42%", caption: "of AI initiatives are abandoned before value (S&P Global)" },
 ];
 
-const INSIGHT_TEASERS = [
+const INSIGHTS = [
   {
     category: "Evidence",
     title: "The measurement gap: why self-reported AI ROI misleads",
-    summary:
-      "74% report positive ROI among those who measure. The broader sample shows no EBIT impact. Both are true.",
+    body: "74% report positive ROI among those who measure. The broader sample shows no EBIT impact. Both are true, and that is the problem.",
   },
   {
     category: "Change",
-    title: "Shadow AI: what 57% of your workforce isn't telling you",
-    summary:
-      "Employees use AI three times more than leadership thinks — and more than half hide it.",
+    title: "Shadow AI: what 57% of your workforce isn’t telling you",
+    body: "Employees use AI three times more than leadership thinks, and more than half hide it.",
   },
   {
     category: "Value",
     title: "Works councils and AI adoption: the European wedge",
-    summary:
-      "Independent adoption evidence is co-determination currency. Why that matters for your rollout.",
+    body: "Independent adoption evidence is co-determination currency. Here is why that matters for your rollout.",
+  },
+];
+
+const HR_CARDS = [
+  {
+    id: "glint",
+    logoLabel: "Viva Glint",
+    badge: "Microsoft referral",
+    badgeClass: "text-ec-sky-ink",
+    title: "Glint Support",
+    body: "Programme design, survey architecture and manager enablement on Viva Glint, plus ongoing support and reporting for organisations that came to us through Microsoft.",
+    bullets: [
+      "Survey & cycle design",
+      "Manager dashboards and enablement",
+      "Managed reporting and action tracking",
+    ],
+    cta: "Go to Glint Support →",
+    ctaClass: "bg-ec-sky text-ec-navy hover:bg-[#54b4cb] focus-visible:outline-ec-navy",
+    href: "/hrtechservices",
+  },
+  {
+    id: "seer",
+    logoLabel: "Workvivo Seer",
+    badge: "Workvivo partner",
+    badgeClass: "text-ec-teal-ink",
+    title: "Seer Support",
+    body: "Implementation, migration and analytics on Workvivo Seer, for teams moving to Workvivo or getting more out of the listening data they already collect.",
+    bullets: [
+      "Implementation and migration",
+      "Analytics and insight reviews",
+      "Engagement design and support",
+    ],
+    cta: "Go to Seer Support →",
+    ctaClass: "bg-ec-teal text-white hover:bg-[#33968d] focus-visible:outline-ec-navy",
+    href: "/hrtechservices",
   },
 ];
 
 export default function Home() {
-  const [showIsoCert, setShowIsoCert] = useState(false);
-
-  const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 },
-  };
-
-  const staggerContainer = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
   return (
-    <Layout>
+    <div className="relative bg-white text-ec-navy font-brand font-light">
       <Helmet>
         <title>Eclectik | Independent AI Transformation Assurance</title>
 
@@ -123,7 +174,7 @@ export default function Home() {
             url: "https://www.eclectik.co",
             logo: "https://www.eclectik.co/images/eclectik-logo-dark.svg",
             description:
-              "Eclectik operationalizes Workplace Signals end-to-end, combining objective telemetry with subjective sentiment to build actionable AI transformation roadmaps.",
+              "Eclectik is an independent AI transformation assurance firm. We prove whether AI transformation delivers value in the P&L and change in the workforce.",
             contactPoint: {
               "@type": "ContactPoint",
               email: "info@eclectik.co",
@@ -142,14 +193,14 @@ export default function Home() {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ProfessionalService",
-            name: "Eclectik AI Transformation Consulting",
+            name: "Eclectik AI Transformation Assurance",
             image: "https://www.eclectik.co/images/eclectik-logo-dark.svg",
             description:
-              "AI transformation consulting services including Copilot ROI modeling, change activation, and sustained adoption through workplace signals analysis.",
+              "Independent assurance on AI transformation: proof of value in the P&L and proof of change in the workforce.",
             url: "https://www.eclectik.co",
             serviceType: [
-              "AI Transformation Consulting",
-              "Microsoft Copilot Implementation",
+              "AI Transformation Assurance",
+              "AI Value Measurement",
               "Workplace Analytics",
               "Change Management",
               "AI Training & Enablement",
@@ -158,221 +209,342 @@ export default function Home() {
         </script>
       </Helmet>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/images/hero-abstract-ai.png"
-            alt="AI Neural Network Background"
-            className="w-full h-full object-cover opacity-80"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/60 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-transparent to-background/90" />
-        </div>
+      <SiteHeader />
 
-        <div className="container relative z-10">
-          <motion.div initial="initial" animate="animate" variants={staggerContainer} className="max-w-4xl">
-            <motion.div variants={fadeIn} className="mb-6 flex items-center gap-3">
-              <div className="h-[1px] w-12 bg-primary" />
-              <span className="text-primary font-medium tracking-wider uppercase text-sm">
-                {POSITIONING_TAGLINE}
-              </span>
-            </motion.div>
+      {/* HERO */}
+      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:block shell:min-h-0">
+        <HeroVideo />
+        <div
+          className="absolute inset-0 shell:hidden"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(10,15,31,.45) 0%, rgba(10,15,31,.85) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 hidden shell:block"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(10,15,31,.5) 0%, rgba(10,15,31,.72) 100%)",
+          }}
+        />
 
-            <motion.h1
-              variants={fadeIn}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 text-white"
-            >
-              Is your AI transformation{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary">
-                actually working?
-              </span>
-            </motion.h1>
-
-            <motion.p variants={fadeIn} className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
-              We prove it — in the P&amp;L and in your people.
-            </motion.p>
-
-            <motion.div variants={fadeIn} className="flex flex-wrap gap-4">
-              <Link href="/benchmark#waitlist" onClick={() => trackCTAClick("Join waiting list", "Hero Section")}>
-                <Button
-                  size="lg"
-                  className="text-lg px-8 py-6 rounded-full bg-secondary hover:bg-secondary/90 text-white font-bold transition-all hover:scale-105"
-                >
-                  Join the benchmark waiting list <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-              <Link href="/scorecard" onClick={() => trackCTAClick("Take scorecard", "Hero Section")}>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="text-lg px-8 py-6 rounded-full border-white/20 hover:bg-white/10 backdrop-blur-sm transition-all"
-                >
-                  Take the scorecard (3–4 min)
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* ISO Stamp — top right, opens certificate modal */}
-        <motion.div
-          initial={{ opacity: 0, y: -120, scale: 1.4, rotate: -15 }}
-          animate={{ opacity: 1, y: 0, scale: 1, rotate: -8 }}
-          transition={{ delay: 1.2, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute top-24 right-8 z-20 hidden lg:block"
-        >
-          <button
-            onClick={() => setShowIsoCert(true)}
-            className="focus:outline-none relative group cursor-pointer"
-            title="View ISO 27001 certificate"
-          >
-            <motion.div
-              animate={{ opacity: [0.15, 0.35, 0.15], scale: [1, 1.08, 1] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 rounded-full"
-              style={{ background: "radial-gradient(circle, rgba(76,201,240,0.25) 0%, transparent 70%)" }}
-            />
-            <img
-              src="/images/brand-compliance-logo-final.png"
-              alt="Brand Compliance Certified"
-              className="relative h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
-            />
-          </button>
-        </motion.div>
-      </section>
-
-      {/* Two Doors */}
-      <section className="py-28">
-        <div className="container">
-          <div className="max-w-2xl mb-14">
-            <h2 className="text-4xl font-heading font-semibold text-white mb-4">
-              One question, two proofs
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              Partners deliver the transformation. We prove whether it works — with independent
-              evidence on both sides of the equation.
-            </p>
+        <div className={`relative ${INNER} w-full px-6 pb-11 shell:px-16 shell:pt-[158px] shell:pb-[104px] shell:text-center`}>
+          <div className="inline-flex items-center gap-2.5 text-[13px] tracking-[0.14em] uppercase text-ec-on-dark-eyebrow border border-ec-navy-line px-4 py-[7px] rounded-full mb-7">
+            <span className="w-[22px] h-px bg-ec-sky" aria-hidden="true" />
+            <span className="lg:hidden">{POSITIONING_TAGLINE_SHORT}</span>
+            <span className="hidden lg:inline">{POSITIONING_TAGLINE}</span>
           </div>
-          <div className="grid md:grid-cols-2 gap-7">
+          <h1 className="font-brand font-extrabold text-[40px] leading-[1.04] tracking-[-0.02em] mb-6 max-w-[820px] shell:text-[68px] shell:leading-[1.02] shell:mx-auto text-pretty">
+            Is your AI transformation <span className="text-ec-yellow">actually working?</span>
+          </h1>
+          <p className="text-[19px] leading-[1.55] text-ec-on-dark-muted max-w-[600px] mb-9 shell:text-[21px] shell:mx-auto">
+            We prove it. In the P&amp;L, and in your people.
+          </p>
+
+          {/* Desktop keeps its CTAs in the nav; mobile needs them here. */}
+          <div className="flex flex-col gap-2.5 shell:hidden">
             <Link
-              href="/proof-of-value"
-              onClick={() => trackDoorSelected("value")}
-              className="block bg-card backdrop-blur-md border border-white/10 rounded-2xl p-10 transition-all hover:-translate-y-1 hover:border-primary group"
+              href="/benchmark"
+              onClick={() => trackCTAClick("Join the benchmark waiting list", "hero")}
+              className={`${PILL} bg-ec-sky text-ec-navy text-center px-6 py-4 focus-visible:outline-ec-sky`}
             >
-              <span className="text-primary text-xs tracking-wider uppercase font-semibold block mb-4">
-                Proof of value · CFO &amp; CIO
-              </span>
-              <h3 className="text-2xl font-heading font-semibold text-white mb-3">
-                What is AI delivering in the P&amp;L?
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                ROI, TCO and adoption economics, modelled on your own licence, usage and
-                telemetry data. An independent value statement — before the next investment
-                decision, or after the last one.
-              </p>
-              <span className="text-primary font-semibold">Explore proof of value →</span>
+              Join the benchmark waiting list
             </Link>
-            <Link
-              href="/proof-of-change"
-              onClick={() => trackDoorSelected("change")}
-              className="block bg-card backdrop-blur-md border border-white/10 rounded-2xl p-10 transition-all hover:-translate-y-1 hover:border-accent group"
+            <a
+              href="#hr-services"
+              className={`${PILL} border border-ec-navy-line-2 text-ec-on-dark text-center px-6 py-4 focus-visible:outline-ec-sky`}
             >
-              <span className="text-accent text-xs tracking-wider uppercase font-semibold block mb-4">
-                Proof of change · Transformation leaders
-              </span>
-              <h3 className="text-2xl font-heading font-semibold text-white mb-3">
-                Is your workforce actually changing?
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                People science and expert interpretation of your listening data — whatever
-                instrument you run. We read the direction of travel and connect it to adoption
-                reality.
-              </p>
-              <span className="text-accent font-semibold">Explore proof of change →</span>
-            </Link>
+              Glint or Seer support?
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Proof Band */}
-      <section className="py-20 bg-white/5">
-        <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {PROOF_STATS.map((stat) => (
-              <div key={stat.num}>
-                <div className="font-heading text-5xl font-bold text-primary leading-none">
-                  {stat.num}
-                </div>
-                <div className="text-muted-foreground text-sm mt-3 leading-relaxed">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="text-center text-muted-foreground text-sm mt-11 opacity-75">
-            The measurement gap is real. Only independent evidence resolves it.
+      {/* YELLOW BAND */}
+      <section className="bg-ec-yellow px-6 py-12 lg:px-16 lg:py-[60px]">
+        <div className={INNER}>
+          <p className="font-extrabold text-[24px] leading-[1.15] text-ec-navy max-w-[760px] text-pretty lg:text-[clamp(26px,3vw,34px)] lg:leading-[1.1]">
+            Partners deliver the transformation. We prove whether it works.
           </p>
         </div>
       </section>
 
-      {/* Benchmark Prospectus Band */}
-      <section className="py-28">
-        <div className="container grid md:grid-cols-2 gap-14 items-center">
-          <div>
-            <span className="text-secondary text-sm tracking-wider uppercase font-semibold block mb-4">
-              The benchmark — opens September
-            </span>
-            <h2 className="text-4xl font-heading font-semibold text-white mb-5">
-              How does your AI transformation compare with your peers?
-            </h2>
-            <p className="text-muted-foreground text-lg mb-4">
-              Standardised KPIs, process-level measurement, peer comparison across
-              organisations — built on the same method we run inside leading enterprises
-              today.
-            </p>
-            <p className="border-l-2 border-secondary pl-5 text-foreground mb-6">
-              We run around twelve audits a year. Q3 is full. The waiting list hears first
-              when September seats open.
-            </p>
-            <Link href="/benchmark" className="text-primary font-semibold hover:underline">
-              Read the full benchmark prospectus →
-            </Link>
+      {/* SPECIALIST STATEMENT */}
+      <section className="bg-ec-navy px-6 py-12 lg:px-16 lg:py-[72px]">
+        <div className={`${INNER} flex items-start gap-5 lg:gap-7`}>
+          <div className="pt-2 lg:pt-3">
+            <Bars widths={[44, 24, 12]} height={5} />
           </div>
-          <WaitlistForm />
+          <p className="font-semibold text-[22px] leading-[1.28] text-ec-on-dark max-w-[760px] text-pretty lg:text-[clamp(24px,2.6vw,32px)]">
+            Proving dollar-value ROI on AI transformation takes rare expertise.{" "}
+            <span className="text-ec-yellow">That is what we specialize in.</span>
+          </p>
         </div>
       </section>
 
-      {/* Insights Teaser */}
-      <section className="py-28 bg-white/[0.03]">
-        <div className="container">
-          <div className="max-w-2xl mb-14">
-            <h2 className="text-4xl font-heading font-semibold text-white mb-4">Insights</h2>
-            <p className="text-muted-foreground text-lg">
-              Evidence, not opinions. One observation with a number, every month.
+      {/* TWO DOORS */}
+      <section id="proof" className={`bg-white scroll-mt-16 ${SECTION_PAD}`}>
+        <div className={INNER}>
+          <div className="max-w-[640px] mb-10 lg:mb-[52px]">
+            <p className={EYEBROW}>One question, two proofs</p>
+            <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-3.5 text-pretty lg:text-[50px] lg:leading-[1.02]">
+              Independent evidence, on both sides
+            </h2>
+            <p className="text-[17px] leading-[1.6] text-ec-body">
+              Partners deliver it. We prove whether it works.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {INSIGHT_TEASERS.map((item) => (
+
+          <div className="grid gap-7 md:grid-cols-2 md:gap-11">
+            <div className="border-t-[3px] border-ec-sky pt-7">
+              <p className="text-[12px] tracking-[0.12em] uppercase font-bold text-ec-sky-ink mb-3.5">
+                Proof of value · CFO &amp; CIO
+              </p>
+              <h3 className="font-brand tracking-normal font-semibold text-[21px] mb-3 lg:text-[24px]">
+                What is AI delivering in the P&amp;L?
+              </h3>
+              <p className="text-[15px] leading-[1.65] text-ec-body mb-5">
+                ROI, TCO and adoption economics, modelled on your own licence, usage and telemetry
+                data. An independent value statement, before the next investment decision or after
+                the last one.
+              </p>
               <Link
-                key={item.title}
-                href="/insights"
-                className="block bg-card border border-white/10 rounded-xl p-8 transition-all hover:-translate-y-1 hover:border-primary/50"
+                href="/proof-of-value"
+                onClick={() => trackDoorSelected("value")}
+                className="font-semibold text-ec-sky-ink hover:text-ec-navy transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
               >
-                <span className="text-accent text-xs tracking-wider uppercase font-semibold block mb-4">
-                  {item.category}
-                </span>
-                <h4 className="font-heading text-lg font-semibold text-white leading-snug mb-3">
-                  {item.title}
-                </h4>
-                <p className="text-muted-foreground text-sm">{item.summary}</p>
+                Explore proof of value →
+              </Link>
+            </div>
+
+            <div className="border-t-[3px] border-ec-teal pt-7">
+              <p className="text-[12px] tracking-[0.12em] uppercase font-bold text-ec-teal-ink mb-3.5">
+                Proof of change · Transformation leaders
+              </p>
+              <h3 className="font-brand tracking-normal font-semibold text-[21px] mb-3 lg:text-[24px]">
+                Is your workforce actually changing?
+              </h3>
+              <p className="text-[15px] leading-[1.65] text-ec-body mb-5">
+                People science and expert reading of your listening data, whatever instrument you
+                run. We read where things are heading and tie it back to real adoption.
+              </p>
+              <Link
+                href="/proof-of-change"
+                onClick={() => trackDoorSelected("change")}
+                className="font-semibold text-ec-teal-ink hover:text-ec-navy transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
+              >
+                Explore proof of change →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROOF BAND */}
+      <section
+        className="relative overflow-hidden text-ec-on-dark px-6 py-14 lg:px-16 lg:py-[100px]"
+        style={{
+          background: "radial-gradient(120% 100% at 80% 0%, #14204A 0%, #19273d 60%)",
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-50"
+          aria-hidden="true"
+          style={{
+            background:
+              "radial-gradient(50% 55% at 20% 30%, rgba(83,172,162,.18), transparent 70%)",
+          }}
+        />
+        <div className={`relative ${INNER}`}>
+          <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-10 max-w-[640px] text-pretty lg:text-[48px] lg:leading-none lg:mb-12">
+            The measurement gap is real
+          </h2>
+          <div className="grid grid-cols-2 gap-x-[18px] gap-y-[26px] lg:grid-cols-4 lg:gap-8">
+            {STATS.map((stat) => (
+              <div key={stat.figure}>
+                <div className="font-bold text-[40px] leading-none text-ec-sky lg:text-[56px]">
+                  {stat.figure}
+                </div>
+                <p className="text-[13px] leading-[1.45] text-ec-on-dark-caption mt-3 lg:text-sm lg:leading-[1.5]">
+                  {stat.caption}
+                </p>
+              </div>
+            ))}
+          </div>
+          <p className="text-[15px] text-ec-on-dark-faint mt-10">
+            Only independent evidence resolves it.
+          </p>
+        </div>
+      </section>
+
+      {/* BENCHMARK */}
+      <section id="benchmark" className={`bg-white scroll-mt-16 ${SECTION_PAD}`}>
+        <div className={`${INNER} grid gap-10 items-center lg:grid-cols-[1.05fr_0.95fr] lg:gap-14`}>
+          <div>
+            <p className={EYEBROW}>The benchmark, opens September</p>
+            <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-4 text-pretty lg:text-[44px] lg:leading-[1.03]">
+              How does your AI transformation compare with your peers?
+            </h2>
+            <p className="text-[16px] leading-[1.65] text-ec-body mb-5">
+              Standardised KPIs, process-level measurement and peer comparison across
+              organisations, built on the same method we run inside leading enterprises today.
+            </p>
+            <p className="border-l-[3px] border-ec-red pl-[18px] text-[16px] leading-[1.6] text-ec-body-strong mb-6">
+              We run about twelve audits a year and Q3 is full. The waiting list hears first when
+              September seats open.
+            </p>
+            <Link
+              href="/benchmark"
+              onClick={() => trackCTAClick("Read the full benchmark prospectus", "benchmark")}
+              className="font-semibold text-ec-red hover:text-ec-red-hover transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
+            >
+              Read the full benchmark prospectus →
+            </Link>
+          </div>
+          <MediaPlaceholder
+            label="Benchmark visual / dashboard"
+            className="w-full h-[200px] rounded-[14px] lg:h-[340px] lg:rounded-2xl"
+          />
+        </div>
+      </section>
+
+      {/* HR SERVICES — the two-click route for Microsoft and Workvivo referrals */}
+      <section id="hr-services" className={`bg-ec-surface scroll-mt-16 ${SECTION_PAD}`}>
+        <div className={INNER}>
+          <div className="max-w-[680px] mb-10 lg:mb-12">
+            <p className={EYEBROW}>HR Services</p>
+            <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-3.5 text-pretty lg:text-[clamp(34px,4vw,50px)] lg:leading-[1.02]">
+              Which platform do you run?
+            </h2>
+            <p className="text-[17px] leading-[1.6] text-ec-body">
+              Implementation, adoption and managed support for your listening platform, delivered
+              by the same team that runs our assurance work. Pick your platform to see what we do.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {HR_CARDS.map((card) => (
+              <div
+                key={card.id}
+                className="bg-white border border-ec-line-3 rounded-2xl p-6 flex flex-col lg:rounded-[18px] lg:p-[38px]"
+              >
+                <div className="flex items-center justify-between gap-4 mb-5">
+                  <MediaPlaceholder
+                    label={card.logoLabel}
+                    className="w-[124px] h-[42px] rounded-sm lg:w-[132px] lg:h-[38px]"
+                  />
+                  <span
+                    className={`text-[11px] tracking-[0.1em] uppercase font-bold whitespace-nowrap ${card.badgeClass}`}
+                  >
+                    {card.badge}
+                  </span>
+                </div>
+                <h3 className="font-brand tracking-normal font-bold text-[22px] mb-3 lg:text-[28px]">{card.title}</h3>
+                <p className="text-[15px] leading-[1.65] text-ec-body mb-5">{card.body}</p>
+                <div className="flex flex-col gap-[9px] text-sm text-ec-body-strong mb-6">
+                  {card.bullets.map((bullet) => (
+                    <span key={bullet}>{bullet}</span>
+                  ))}
+                </div>
+                <Link
+                  href={card.href}
+                  onClick={() => trackCTAClick(card.cta, "hr-services")}
+                  className={`${PILL} ${card.ctaClass} mt-auto block text-center px-7 py-3.5 text-[15px] sm:inline-block sm:self-start`}
+                >
+                  {card.cta}
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-[15px] leading-[1.6] text-ec-body mt-6">
+            Not sure which applies, or running something else?{" "}
+            <Link
+              href="/contact"
+              className="font-semibold text-ec-red hover:text-ec-red-hover transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
+            >
+              Talk to us about HR tech managed services →
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* INSIGHTS */}
+      <section className={`bg-ec-cream ${SECTION_PAD}`}>
+        <div className={INNER}>
+          <div className="max-w-[640px] mb-10 lg:mb-12">
+            <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-3 lg:text-[50px] lg:leading-none">
+              Evidence, not opinions.
+            </h2>
+            <p className="text-[17px] leading-[1.6] text-ec-body">
+              One observation with a number, every month.
+            </p>
+          </div>
+          <div className="grid gap-[22px] md:grid-cols-3">
+            {INSIGHTS.map((insight) => (
+              <Link
+                key={insight.title}
+                href="/insights"
+                className="bg-white border border-ec-line-2 rounded-[14px] p-[30px] block transition-shadow hover:shadow-[0_4px_14px_rgba(18,21,28,.12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
+              >
+                <p className="text-[12px] tracking-[0.12em] uppercase font-bold text-ec-teal mb-4">
+                  {insight.category}
+                </p>
+                <h3 className="font-brand tracking-normal font-semibold text-[18px] leading-[1.3] text-ec-navy mb-3">
+                  {insight.title}
+                </h3>
+                <p className="text-sm leading-[1.6] text-ec-body">{insight.body}</p>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {showIsoCert && <IsoCertModal onClose={() => setShowIsoCert(false)} />}
-    </Layout>
+      {/* CLOSING CTA */}
+      <section className="bg-ec-navy text-center px-6 py-16 lg:px-16 lg:py-[88px]">
+        <h2 className="font-brand tracking-normal font-extrabold text-[28px] text-white mb-4 text-pretty lg:text-[50px]">
+          Is your AI transformation actually working?
+        </h2>
+        <p className="text-[16px] text-ec-on-dark-caption mb-7 lg:text-[18px]">
+          Join the benchmark waiting list. September seats open to the list first.
+        </p>
+        <Link
+          href="/benchmark"
+          onClick={() => trackCTAClick("Join the benchmark waiting list", "closing-cta")}
+          className={`${PILL} bg-ec-sky text-ec-navy inline-block px-[34px] py-4 text-[16px] hover:bg-[#54b4cb] focus-visible:outline-ec-sky`}
+        >
+          Join the benchmark waiting list
+        </Link>
+      </section>
+
+      {/* Space for the sticky mobile bar so it never covers the footer */}
+      <div className="pb-[76px] shell:pb-0">
+        <SiteFooter />
+      </div>
+
+      {/* Sticky mobile CTA bar */}
+      <div
+        className="fixed inset-x-0 bottom-0 z-[38] shell:hidden bg-white/95 backdrop-blur-[8px] border-t border-ec-line px-5 pt-3"
+        style={{ paddingBottom: "calc(12px + env(safe-area-inset-bottom))" }}
+      >
+        <div className="flex gap-2.5">
+          <Link
+            href="/benchmark"
+            onClick={() => trackCTAClick("Waiting list", "sticky-bar")}
+            className={`${PILL} bg-ec-sky text-ec-navy flex-1 text-center py-3 text-sm focus-visible:outline-ec-navy`}
+          >
+            Waiting list
+          </Link>
+          <Link
+            href="/scorecard"
+            onClick={() => trackCTAClick("Scorecard", "sticky-bar")}
+            className={`${PILL} bg-ec-yellow text-ec-navy flex-1 text-center py-3 text-sm focus-visible:outline-ec-navy`}
+          >
+            Scorecard
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

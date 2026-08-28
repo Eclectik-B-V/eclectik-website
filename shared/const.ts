@@ -7,3 +7,6 @@ export const NOT_ADMIN_ERR_MSG = 'You do not have required permission (10002)';
 // H2 2026 positioning eyebrow — single source of truth.
 // Naming decision gated on the 15 Jul landing-page test; swap here only.
 export const POSITIONING_TAGLINE = "Independent AI transformation assurance";
+
+// Short variant for narrow viewports, where the full tagline wraps out of its pill.
+export const POSITIONING_TAGLINE_SHORT = "Independent assurance";

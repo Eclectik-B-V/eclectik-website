@@ -7,6 +7,42 @@
   --font-sans: "Plus Jakarta Sans", sans-serif;
   --font-heading: "Outfit", sans-serif;
 
+  /* Brand typeface for the 2026 design. Aptos is the brand book face (Microsoft,
+     no open web licence); Figtree is the licensed web fallback. */
+  --font-brand: "Aptos", "Figtree", system-ui, sans-serif;
+
+  /* The full desktop nav needs about 1160px before it wraps, so the site shell
+     switches to the compact header later than the regular lg breakpoint. */
+  --breakpoint-shell: 1180px;
+
+  /* Eclectik 2026 palette. Source: design handoff "Eclectik homepage version E". */
+  --color-ec-navy: #19273d;
+  --color-ec-navy-deep: #14204a;
+  --color-ec-navy-line: #26335c;
+  --color-ec-navy-line-2: #3a4770;
+  --color-ec-sky: #65c1d6;
+  --color-ec-sky-ink: #3f9fb5;
+  --color-ec-yellow: #ffc000;
+  --color-ec-teal: #39a99f;
+  --color-ec-teal-ink: #2f857c;
+  --color-ec-red: #d52f08;
+  --color-ec-red-hover: #b02606;
+  --color-ec-surface: #f2f2f2;
+  --color-ec-cream: #f6f3ec;
+  --color-ec-on-dark: #eaf0ff;
+  --color-ec-on-dark-muted: #b9c4de;
+  --color-ec-on-dark-caption: #9aa6c4;
+  --color-ec-on-dark-faint: #8fa0c8;
+  --color-ec-on-dark-nav: #c4cee6;
+  --color-ec-on-dark-eyebrow: #9fd8e4;
+  --color-ec-body: #5a5f6b;
+  --color-ec-body-strong: #3a3f4b;
+  --color-ec-body-faint: #7a7f8b;
+  --color-ec-line: #eceae2;
+  --color-ec-line-2: #eae7de;
+  --color-ec-line-3: #e4e2da;
+  --color-ec-placeholder: #e7e4db;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
