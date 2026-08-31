@@ -347,7 +347,7 @@ export default function Home() {
 
       {/* PROOF BAND */}
       <section
-        className="relative overflow-hidden text-ec-on-dark px-6 py-14 lg:px-16 lg:py-[100px]"
+        className="relative overflow-hidden text-ec-on-dark px-6 py-14 lg:px-16 lg:py-[80px]"
         style={{
           background: "radial-gradient(120% 100% at 80% 0%, #14204A 0%, #19273d 60%)",
         }}
@@ -361,7 +361,7 @@ export default function Home() {
           }}
         />
         <div className={`relative ${INNER}`}>
-          <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-10 max-w-[640px] text-pretty lg:text-[48px] lg:leading-none lg:mb-12">
+          <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-10 text-pretty lg:text-[48px] lg:leading-none lg:mb-12 lg:whitespace-nowrap">
             The measurement gap is real
           </h2>
           <div className="grid grid-cols-2 gap-x-[18px] gap-y-[26px] lg:grid-cols-4 lg:gap-8">
@@ -370,13 +370,13 @@ export default function Home() {
                 <div className="font-bold text-[40px] leading-none text-ec-sky lg:text-[56px]">
                   {stat.figure}
                 </div>
-                <p className="text-[13px] leading-[1.45] text-ec-on-dark-caption mt-3 lg:text-sm lg:leading-[1.5]">
+                <p className="text-[15px] leading-[1.5] text-ec-on-dark-caption mt-3 lg:text-[16px] lg:leading-[1.55]">
                   {stat.caption}
                 </p>
               </div>
             ))}
           </div>
-          <p className="text-[15px] text-ec-on-dark-faint mt-10">
+          <p className="font-brand tracking-normal font-semibold text-[30px] leading-[1.06] text-ec-on-dark-faint mt-12 text-pretty lg:text-[48px] lg:leading-none lg:mt-14">
             Only independent evidence resolves it.
           </p>
         </div>
