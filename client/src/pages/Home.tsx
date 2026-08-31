@@ -376,7 +376,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <p className="font-brand tracking-normal font-semibold text-[30px] leading-[1.06] text-ec-on-dark-faint mt-12 text-pretty lg:text-[48px] lg:leading-none lg:mt-14">
+          <p className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mt-12 text-pretty lg:text-[48px] lg:leading-none lg:mt-14">
             Only independent evidence resolves it.
           </p>
         </div>
