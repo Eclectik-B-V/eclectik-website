@@ -26,7 +26,7 @@ export default function Solutions() {
     {
       question: "What if we had an always-on culture radar during transformation?",
       answer: "We can with Culture & Change Signals (Glint lifecycle programs + Smart Alerts + exec reporting).",
-      icon: <Activity className="w-6 h-6 text-ec-teal" />
+      icon: <Activity className="w-6 h-6 text-ec-teal-ink" />
     },
     {
       question: "What if managers could act without HR hand-holding?",

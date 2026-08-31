@@ -3,7 +3,7 @@ import type { Band } from "@shared/scorecard";
 const BAND_CLASS: Record<Band, string> = {
   blind_spot: "text-ec-red",         // rood-oranje token
   partial_view: "text-ec-sky-ink",   // lichtblauw token, donkere variant voor wit
-  evidence_led: "text-ec-teal",      // groenblauw token
+  evidence_led: "text-ec-teal-ink",      // groenblauw token
 };
 
 export default function ScoreDial({ label, score, band }: { label: string; score: number; band: Band }) {

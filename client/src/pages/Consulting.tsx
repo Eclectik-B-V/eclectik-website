@@ -26,7 +26,7 @@ export default function Consulting() {
     {
       question: "What if we pinpointed productivity bottlenecks undermining transformation?",
       answer: "We can: surface friction (after-hours spikes, long meetings, handoff delays) and design targeted fixes.",
-      icon: <Zap className="w-6 h-6 text-ec-teal" />
+      icon: <Zap className="w-6 h-6 text-ec-teal-ink" />
     },
     {
       question: "What if we could forecast adoption trajectory for the next wave?",

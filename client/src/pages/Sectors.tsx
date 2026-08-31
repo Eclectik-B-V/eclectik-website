@@ -114,7 +114,7 @@ export default function Sectors() {
             <p className="text-xl text-ec-body max-w-2xl mx-auto mb-10">
               Our AI methodologies are adaptable across industries. Let's discuss how we can apply our "What if? We can." approach to your specific challenges.
             </p>
-            <Button size="lg" className="text-lg px-8 py-6 rounded-full bg-ec-teal hover:bg-ec-teal-ink text-white font-bold transition-all hover:scale-105">
+            <Button size="lg" className="text-lg px-8 py-6 rounded-full bg-ec-teal-ink hover:bg-[#276e67] text-white font-bold transition-all hover:scale-105">
               Contact us to discuss your needs <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </div>

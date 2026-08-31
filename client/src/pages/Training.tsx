@@ -26,7 +26,7 @@ export default function Training() {
     {
       question: "What if HR could operationalize smart alerts at scale?",
       answer: "We can: build triage playbooks for hotspots, bright spots, and cross-functional responses.",
-      icon: <Bell className="w-6 h-6 text-ec-teal" />
+      icon: <Bell className="w-6 h-6 text-ec-teal-ink" />
     },
     {
       question: "What if executives could read AI readiness in one page?",

@@ -153,7 +153,7 @@ const HR_CARDS = [
       "Engagement design and support",
     ],
     cta: "Go to Seer Support →",
-    ctaClass: "bg-ec-teal text-white hover:bg-[#33968d] focus-visible:outline-ec-navy",
+    ctaClass: "bg-ec-teal-ink text-white hover:bg-[#276e67] focus-visible:outline-ec-navy",
     href: "/hrtechservices",
   },
 ];
@@ -488,7 +488,7 @@ export default function Home() {
                 href="/insights"
                 className="bg-white border border-ec-line-2 rounded-[14px] p-[30px] block transition-shadow hover:shadow-[0_4px_14px_rgba(18,21,28,.12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
               >
-                <p className="text-[12px] tracking-[0.12em] uppercase font-bold text-ec-teal mb-4">
+                <p className="text-[12px] tracking-[0.12em] uppercase font-bold text-ec-teal-ink mb-4">
                   {insight.category}
                 </p>
                 <h3 className="font-brand tracking-normal font-semibold text-[18px] leading-[1.3] text-ec-navy mb-3">
