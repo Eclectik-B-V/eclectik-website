@@ -132,41 +132,6 @@ const INSIGHTS = [
   },
 ];
 
-const HR_CARDS = [
-  {
-    id: "glint",
-    logoLabel: "Viva Glint",
-    badge: "Microsoft referral",
-    badgeClass: "text-ec-sky-ink",
-    title: "Glint Support",
-    body: "Programme design, survey architecture and manager enablement on Viva Glint, plus ongoing support and reporting for organisations that came to us through Microsoft.",
-    bullets: [
-      "Survey & cycle design",
-      "Manager dashboards and enablement",
-      "Managed reporting and action tracking",
-    ],
-    cta: "Go to Glint Support →",
-    ctaClass: "bg-ec-sky text-ec-navy hover:bg-[#54b4cb] focus-visible:outline-ec-navy",
-    href: "/hrtechservices",
-  },
-  {
-    id: "seer",
-    logoLabel: "Workvivo Seer",
-    badge: "Workvivo partner",
-    badgeClass: "text-ec-teal-ink",
-    title: "Seer Support",
-    body: "Implementation, migration and analytics on Workvivo Seer, for teams moving to Workvivo or getting more out of the listening data they already collect.",
-    bullets: [
-      "Implementation and migration",
-      "Analytics and insight reviews",
-      "Engagement design and support",
-    ],
-    cta: "Go to Seer Support →",
-    ctaClass: "bg-ec-teal-ink text-white hover:bg-[#276e67] focus-visible:outline-ec-navy",
-    href: "/hrtechservices",
-  },
-];
-
 export default function Home() {
   return (
     <div className="relative bg-white text-ec-navy font-brand font-light">
@@ -260,12 +225,13 @@ export default function Home() {
             >
               Join the benchmark waiting list
             </Link>
-            <a
-              href="#hr-services"
+            <Link
+              href="/hrtechservices"
+              onClick={() => trackCTAClick("Glint or Seer support", "hero")}
               className={`${PILL} border border-ec-navy-line-2 text-ec-on-dark text-center px-6 py-4 focus-visible:outline-ec-sky`}
             >
               Glint or Seer support?
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -419,67 +385,6 @@ export default function Home() {
             label="Benchmark visual / dashboard"
             className="w-full h-[200px] rounded-[14px] lg:h-[340px] lg:rounded-2xl"
           />
-        </div>
-      </section>
-
-      {/* HR SERVICES — the two-click route for Microsoft and Workvivo referrals */}
-      <section id="hr-services" className={`bg-ec-surface scroll-mt-16 ${SECTION_PAD}`}>
-        <div className={INNER}>
-          <div className="max-w-[680px] mb-10 lg:mb-12">
-            <p className={EYEBROW}>HR Services</p>
-            <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-3.5 text-pretty lg:text-[clamp(34px,4vw,50px)] lg:leading-[1.02]">
-              Which platform do you run?
-            </h2>
-            <p className="text-[17px] leading-[1.6] text-ec-body">
-              Implementation, adoption and managed support for your listening platform, delivered
-              by the same team that runs our assurance work. Pick your platform to see what we do.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {HR_CARDS.map((card) => (
-              <div
-                key={card.id}
-                className="bg-white border border-ec-line-3 rounded-2xl p-6 flex flex-col lg:rounded-[18px] lg:p-[38px]"
-              >
-                <div className="flex items-center justify-between gap-4 mb-5">
-                  <MediaPlaceholder
-                    label={card.logoLabel}
-                    className="w-[124px] h-[42px] rounded-sm lg:w-[132px] lg:h-[38px]"
-                  />
-                  <span
-                    className={`text-[11px] tracking-[0.1em] uppercase font-bold whitespace-nowrap ${card.badgeClass}`}
-                  >
-                    {card.badge}
-                  </span>
-                </div>
-                <h3 className="font-brand tracking-normal font-bold text-[22px] mb-3 lg:text-[28px]">{card.title}</h3>
-                <p className="text-[15px] leading-[1.65] text-ec-body mb-5">{card.body}</p>
-                <div className="flex flex-col gap-[9px] text-sm text-ec-body-strong mb-6">
-                  {card.bullets.map((bullet) => (
-                    <span key={bullet}>{bullet}</span>
-                  ))}
-                </div>
-                <Link
-                  href={card.href}
-                  onClick={() => trackCTAClick(card.cta, "hr-services")}
-                  className={`${PILL} ${card.ctaClass} mt-auto block text-center px-7 py-3.5 text-[15px] sm:inline-block sm:self-start`}
-                >
-                  {card.cta}
-                </Link>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-[15px] leading-[1.6] text-ec-body mt-6">
-            Not sure which applies, or running something else?{" "}
-            <Link
-              href="/contact"
-              className="font-semibold text-ec-red hover:text-ec-red-hover transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
-            >
-              Talk to us about HR tech managed services →
-            </Link>
-          </p>
         </div>
       </section>
 

@@ -51,12 +51,12 @@ export default function SiteHeader({
               {link.name}
             </Link>
           ))}
-          <a
-            href="/#hr-services"
+          <Link
+            href="/hrtechservices"
             className="whitespace-nowrap hover:text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky"
           >
             HR Services
-          </a>
+          </Link>
           <Link
             href="/benchmark"
             onClick={() => trackCTAClick("Join the benchmark waiting list", "header")}
@@ -110,8 +110,8 @@ export default function SiteHeader({
             >
               Proof of value &amp; change
             </a>
-            <a
-              href="/#hr-services"
+            <Link
+              href="/hrtechservices"
               onClick={closeMenu}
               className="flex items-center justify-between gap-3 py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
             >
@@ -119,7 +119,7 @@ export default function SiteHeader({
               <span className="text-[11px] uppercase tracking-[0.1em] font-bold text-ec-sky">
                 Glint · Seer
               </span>
-            </a>
+            </Link>
             <a
               href="/#benchmark"
               onClick={closeMenu}
