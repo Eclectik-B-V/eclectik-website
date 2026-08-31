@@ -54,17 +54,19 @@ function HeroVideo() {
     };
   }, []);
 
+  // Grayscale is baked into the asset, so no CSS filter is needed here.
   return (
     <video
       ref={ref}
       src="/videos/eclectik-hero.mp4"
+      poster="/videos/eclectik-hero-poster.jpg"
       autoPlay
       loop
       muted
       playsInline
       aria-hidden="true"
       tabIndex={-1}
-      className="absolute inset-0 w-full h-full object-cover grayscale"
+      className="absolute inset-0 w-full h-full object-cover"
     />
   );
 }
