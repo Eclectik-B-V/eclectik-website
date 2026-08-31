@@ -263,15 +263,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* YELLOW BAND */}
-      <section className="bg-ec-yellow px-6 py-12 lg:px-16 lg:py-[60px]">
-        <div className={INNER}>
-          <p className="font-extrabold text-[24px] leading-[1.15] text-ec-navy max-w-[760px] text-pretty lg:text-[clamp(26px,3vw,34px)] lg:leading-[1.1]">
-            Partners deliver the transformation. We prove whether it works.
-          </p>
-        </div>
-      </section>
-
       {/* SPECIALIST STATEMENT */}
       <section className="bg-ec-navy px-6 py-12 lg:px-16 lg:py-[72px]">
         <div className={`${INNER} flex items-start gap-5 lg:gap-7`}>
@@ -376,6 +367,15 @@ export default function Home() {
           </div>
           <p className="text-[15px] text-ec-on-dark-faint mt-10">
             Only independent evidence resolves it.
+          </p>
+        </div>
+      </section>
+
+      {/* YELLOW BAND */}
+      <section className="bg-ec-yellow px-6 py-12 lg:px-16 lg:py-[60px]">
+        <div className={INNER}>
+          <p className="font-extrabold text-[24px] leading-[1.15] text-ec-navy max-w-[760px] text-pretty lg:text-[clamp(26px,3vw,34px)] lg:leading-[1.1]">
+            Partners deliver the transformation. We prove whether it works.
           </p>
         </div>
       </section>
