@@ -214,7 +214,7 @@ export default function Home() {
       <SiteHeader variant="overlay" />
 
       {/* HERO */}
-      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:items-center shell:min-h-[560px] shell:aspect-[16/9] shell:max-h-[900px]">
+      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:items-center shell:min-h-[560px] shell:h-[min(56.25vw,88vh)]">
         <HeroVideo />
         <div
           className="absolute inset-0 shell:hidden"
