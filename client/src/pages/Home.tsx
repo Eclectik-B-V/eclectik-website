@@ -212,7 +212,7 @@ export default function Home() {
       <SiteHeader variant="overlay" />
 
       {/* HERO */}
-      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:block shell:min-h-0">
+      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:items-center shell:min-h-[560px] shell:aspect-[16/9] shell:max-h-[900px]">
         <HeroVideo />
         <div
           className="absolute inset-0 shell:hidden"
@@ -229,8 +229,8 @@ export default function Home() {
           }}
         />
 
-        <div className={`relative ${INNER} w-full px-6 pb-11 shell:px-16 shell:pt-[158px] shell:pb-[104px] shell:text-center`}>
-          <div className="inline-flex items-center gap-2.5 text-[13px] tracking-[0.14em] uppercase text-ec-on-dark-eyebrow border border-ec-navy-line px-4 py-[7px] rounded-full mb-7">
+        <div className={`relative ${INNER} w-full px-6 pb-11 shell:px-16 shell:pt-[86px] shell:pb-0 shell:text-center`}>
+          <div className="inline-flex items-center gap-2.5 text-[15px] font-semibold tracking-[0.14em] uppercase text-ec-on-dark-eyebrow border border-ec-navy-line px-4 py-2 rounded-full mb-7">
             <span className="w-[22px] h-px bg-ec-sky" aria-hidden="true" />
             <span className="lg:hidden">{POSITIONING_TAGLINE_SHORT}</span>
             <span className="hidden lg:inline">{POSITIONING_TAGLINE}</span>
