@@ -11,9 +11,10 @@
      no open web licence); Figtree is the licensed web fallback. */
   --font-brand: "Aptos", "Figtree", system-ui, sans-serif;
 
-  /* The full desktop nav needs about 1160px before it wraps, so the site shell
-     switches to the compact header later than the regular lg breakpoint. */
-  --breakpoint-shell: 1180px;
+  /* Met het vergrote logo heeft de volledige nav ongeveer 1380px nodig voordat
+     hij op twee regels valt, dus schakelt de shell daaronder naar de compacte
+     header met hamburgermenu. */
+  --breakpoint-shell: 1400px;
 
   /* Eclectik 2026 palette. Source: design handoff "Eclectik homepage version E". */
   --color-ec-navy: #19273d;

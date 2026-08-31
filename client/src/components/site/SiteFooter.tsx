@@ -26,7 +26,7 @@ export default function SiteFooter() {
             <img
               src="/images/eclectik-logo-dark-photo.svg"
               alt="Eclectik"
-              className="h-10 w-auto block mb-3"
+              className="h-16 w-auto block mb-3"
             />
             <p className="text-sm text-ec-body-faint">
               Independent AI transformation assurance. ISO 27001 certified.

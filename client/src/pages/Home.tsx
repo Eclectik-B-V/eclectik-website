@@ -231,7 +231,7 @@ export default function Home() {
           }}
         />
 
-        <div className={`relative ${INNER} w-full px-6 pb-11 shell:px-16 shell:pt-[86px] shell:pb-0 shell:text-center`}>
+        <div className={`relative ${INNER} w-full px-6 pb-11 shell:px-16 shell:pt-[110px] shell:pb-0 shell:text-center`}>
           <div className="inline-flex items-center gap-2.5 text-[15px] font-semibold tracking-[0.14em] uppercase text-ec-on-dark-eyebrow border border-ec-navy-line px-4 py-2 rounded-full mb-7">
             <span className="w-[22px] h-px bg-ec-sky" aria-hidden="true" />
             <span className="lg:hidden">{POSITIONING_TAGLINE_SHORT}</span>

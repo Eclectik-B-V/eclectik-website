@@ -38,10 +38,10 @@ export default function SiteHeader({
           <img
             src="/images/eclectik-logo-white-photo.svg"
             alt="Eclectik"
-            className="h-[34px] w-auto block"
+            className="h-[58px] w-auto block"
           />
         </Link>
-        <nav className="flex flex-wrap items-center justify-end gap-x-[26px] gap-y-[18px] ml-10 text-[15px] text-ec-on-dark-nav">
+        <nav className="flex flex-wrap items-center justify-end gap-x-[22px] gap-y-[18px] ml-8 text-[16px] font-medium text-ec-on-dark">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.name}
@@ -60,14 +60,14 @@ export default function SiteHeader({
           <Link
             href="/benchmark"
             onClick={() => trackCTAClick("Join the benchmark waiting list", "header")}
-            className={`${PILL_BASE} bg-ec-sky text-ec-navy px-5 py-2.5 hover:bg-[#54b4cb]`}
+            className={`${PILL_BASE} bg-ec-sky text-ec-navy px-[18px] py-2.5 hover:bg-[#54b4cb]`}
           >
             Join the benchmark waiting list
           </Link>
           <Link
             href="/scorecard"
             onClick={() => trackCTAClick("Take the scorecard", "header")}
-            className={`${PILL_BASE} bg-ec-yellow text-ec-navy px-5 py-2.5 hover:bg-[#ebb100]`}
+            className={`${PILL_BASE} bg-ec-yellow text-ec-navy px-[18px] py-2.5 hover:bg-[#ebb100]`}
           >
             Take the scorecard
           </Link>
@@ -81,7 +81,7 @@ export default function SiteHeader({
             <img
               src="/images/eclectik-logo-white-photo.svg"
               alt="Eclectik"
-              className="h-[26px] w-auto block"
+              className="h-[40px] w-auto block"
             />
           </Link>
           <button
