@@ -85,8 +85,15 @@ function MediaPlaceholder({ label, className }: { label: string; className?: str
 }
 
 /** The brand "bars" motif: three stacked rounded bars in descending width. */
-function Bars({ widths, height }: { widths: [number, number, number]; height: number }) {
-  const colours = ["bg-ec-sky", "bg-ec-teal", "bg-ec-yellow"];
+function Bars({
+  widths,
+  height,
+  colours = ["bg-ec-sky", "bg-ec-teal", "bg-ec-yellow"],
+}: {
+  widths: [number, number, number];
+  height: number;
+  colours?: [string, string, string];
+}) {
   return (
     <div className="flex flex-col gap-1.5 flex-none" aria-hidden="true">
       {widths.map((width, i) => (
@@ -264,14 +271,18 @@ export default function Home() {
       </section>
 
       {/* SPECIALIST STATEMENT */}
-      <section className="bg-ec-navy px-6 py-12 lg:px-16 lg:py-[72px]">
+      <section className="bg-ec-yellow px-6 py-12 lg:px-16 lg:py-[72px]">
         <div className={`${INNER} flex items-start gap-5 lg:gap-7`}>
           <div className="pt-2 lg:pt-3">
-            <Bars widths={[44, 24, 12]} height={5} />
+            <Bars
+              widths={[44, 24, 12]}
+              height={5}
+              colours={["bg-ec-navy", "bg-ec-teal-ink", "bg-ec-red"]}
+            />
           </div>
-          <p className="font-semibold text-[22px] leading-[1.28] text-ec-on-dark max-w-[760px] text-pretty lg:text-[clamp(24px,2.6vw,32px)]">
+          <p className="font-semibold text-[22px] leading-[1.28] text-ec-navy max-w-[760px] text-pretty lg:text-[clamp(24px,2.6vw,32px)]">
             Proving dollar-value ROI on AI transformation takes rare expertise.{" "}
-            <span className="text-ec-yellow">That is what we specialize in.</span>
+            <span className="text-ec-red">That is what we specialize in.</span>
           </p>
         </div>
       </section>
@@ -372,9 +383,9 @@ export default function Home() {
       </section>
 
       {/* YELLOW BAND */}
-      <section className="bg-ec-yellow px-6 py-12 lg:px-16 lg:py-[60px]">
+      <section className="bg-ec-navy px-6 py-12 lg:px-16 lg:py-[60px]">
         <div className={INNER}>
-          <p className="font-extrabold text-[24px] leading-[1.15] text-ec-navy max-w-[760px] text-pretty lg:text-[clamp(26px,3vw,34px)] lg:leading-[1.1]">
+          <p className="font-extrabold text-[24px] leading-[1.15] text-ec-on-dark max-w-[760px] text-pretty lg:text-[clamp(26px,3vw,34px)] lg:leading-[1.1]">
             Partners deliver the transformation. We prove whether it works.
           </p>
         </div>
