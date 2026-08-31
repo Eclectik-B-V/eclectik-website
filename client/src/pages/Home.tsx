@@ -221,7 +221,7 @@ export default function Home() {
       <SiteHeader variant="overlay" />
 
       {/* HERO */}
-      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:items-center shell:min-h-[560px] shell:h-[min(56.25vw,88vh)]">
+      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:items-center shell:min-h-[560px] shell:h-[min(56.25vw,80vh)]">
         <HeroVideo />
         <div
           className="absolute inset-0 shell:hidden"
@@ -271,7 +271,7 @@ export default function Home() {
       </section>
 
       {/* SPECIALIST STATEMENT */}
-      <section className="bg-ec-yellow px-6 py-12 lg:px-16 lg:py-[72px]">
+      <section className="bg-ec-yellow px-6 py-12 lg:px-16 lg:py-[56px]">
         <div className={`${INNER} flex items-start gap-5 lg:gap-7`}>
           <div className="pt-2 lg:pt-3">
             <Bars
