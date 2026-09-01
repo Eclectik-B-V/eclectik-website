@@ -365,7 +365,7 @@ export default function Home() {
 
       {/* BENCHMARK */}
       <section id="benchmark" className={`snap-point bg-white ${SECTION_PAD}`}>
-        <div className={`${INNER} grid gap-10 items-center lg:grid-cols-[1.05fr_0.95fr] lg:gap-14`}>
+        <div className={`${INNER} grid gap-10 items-center lg:grid-cols-[1.25fr_0.75fr] lg:gap-14`}>
           <div>
             <p className={EYEBROW}>The benchmark, opens September</p>
             <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-4 text-pretty lg:text-[44px] lg:leading-[1.03]">
