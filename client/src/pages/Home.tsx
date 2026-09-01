@@ -6,7 +6,7 @@ import SiteFooter from "@/components/site/SiteFooter";
 import { trackCTAClick, trackDoorSelected } from "@/lib/tracking";
 import { POSITIONING_TAGLINE, POSITIONING_TAGLINE_SHORT } from "@shared/const";
 
-const SECTION_PAD = "px-6 py-14 lg:px-16 lg:py-[104px]";
+const SECTION_PAD = "px-6 py-14 lg:px-16 lg:py-[56px]";
 const INNER = "mx-auto max-w-[1000px]";
 const EYEBROW =
   "text-[13px] tracking-[0.14em] uppercase font-semibold text-ec-red mb-3.5";
@@ -397,7 +397,7 @@ export default function Home() {
       {/* INSIGHTS */}
       <section className={`bg-ec-cream ${SECTION_PAD}`}>
         <div className={INNER}>
-          <div className="max-w-[640px] mb-10 lg:mb-12">
+          <div className="max-w-[640px] mb-8 lg:mb-[28px]">
             <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-3 lg:text-[50px] lg:leading-none">
               Evidence, not opinions.
             </h2>
