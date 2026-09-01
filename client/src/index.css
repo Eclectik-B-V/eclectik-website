@@ -175,9 +175,11 @@
   }
 
   @media (max-width: 1399px) {
-    /* Onder de shell-breakpoint staat de navigatiebalk sticky bovenaan */
+    /* Onder de shell-breakpoint staat de navigatiebalk sticky bovenaan. De hoogte
+       is 72px: het 44px tikvlak van de hamburger plus 14px padding boven en onder.
+       Wijkt dit af, dan piept de vorige sectie onder de balk uit. */
     .snap-sections {
-      scroll-padding-top: 60px;
+      scroll-padding-top: 72px;
     }
   }
 

@@ -260,7 +260,7 @@ export default function Home() {
       </section>
 
       {/* TWO DOORS */}
-      <section id="proof" className="snap-point bg-white scroll-mt-16 px-6 py-14 lg:px-16 lg:py-[56px]">
+      <section id="proof" className="snap-point bg-white px-6 py-14 lg:px-16 lg:py-[56px]">
         <div className={INNER}>
           <div className="max-w-[640px] mb-8 lg:mb-[32px]">
             <p className={EYEBROW}>One question, two proofs</p>
@@ -364,7 +364,7 @@ export default function Home() {
       </section>
 
       {/* BENCHMARK */}
-      <section id="benchmark" className={`snap-point bg-white scroll-mt-16 ${SECTION_PAD}`}>
+      <section id="benchmark" className={`snap-point bg-white ${SECTION_PAD}`}>
         <div className={`${INNER} grid gap-10 items-center lg:grid-cols-[1.05fr_0.95fr] lg:gap-14`}>
           <div>
             <p className={EYEBROW}>The benchmark, opens September</p>
