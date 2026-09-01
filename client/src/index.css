@@ -165,6 +165,32 @@
 }
 
 @layer components {
+  /* Scroll-snap voor de homepage. "proximity" laat de pagina alleen bijtrekken
+     als de bezoeker vlakbij een markeerpunt stopt; hij blokkeert het scrollen
+     nooit. De klasse staat op het html-element en wordt door Home gezet en
+     opgeruimd, zodat andere pagina's normaal scrollen. */
+  .snap-sections {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 0;
+  }
+
+  @media (max-width: 1399px) {
+    /* Onder de shell-breakpoint staat de navigatiebalk sticky bovenaan */
+    .snap-sections {
+      scroll-padding-top: 60px;
+    }
+  }
+
+  .snap-sections .snap-point {
+    scroll-snap-align: start;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .snap-sections {
+      scroll-snap-type: none;
+    }
+  }
+
   .container {
     width: 100%;
     margin-left: auto;
