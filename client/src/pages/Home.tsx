@@ -254,11 +254,11 @@ export default function Home() {
       </section>
 
       {/* TWO DOORS */}
-      <section id="proof" className={`bg-white scroll-mt-16 ${SECTION_PAD}`}>
+      <section id="proof" className="bg-white scroll-mt-16 px-6 py-14 lg:px-16 lg:py-[56px]">
         <div className={INNER}>
-          <div className="max-w-[640px] mb-10 lg:mb-[52px]">
+          <div className="max-w-[640px] mb-8 lg:mb-[32px]">
             <p className={EYEBROW}>One question, two proofs</p>
-            <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-3.5 text-pretty lg:text-[50px] lg:leading-[1.02]">
+            <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-3.5 text-pretty lg:text-[40px] lg:leading-[1.05]">
               Independent evidence, on both sides
             </h2>
             <p className="text-[17px] leading-[1.6] text-ec-body">
@@ -313,7 +313,7 @@ export default function Home() {
 
       {/* PROOF BAND */}
       <section
-        className="relative overflow-hidden text-ec-on-dark px-6 py-14 lg:px-16 lg:py-[80px]"
+        className="relative overflow-hidden text-ec-on-dark px-6 py-14 lg:px-16 lg:py-[60px]"
         style={{
           background: "radial-gradient(120% 100% at 80% 0%, #14204A 0%, #19273d 60%)",
         }}
@@ -342,7 +342,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <p className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mt-12 text-pretty lg:text-[48px] lg:leading-none lg:mt-14">
+          <p className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mt-10 text-pretty lg:text-[48px] lg:leading-none lg:mt-10">
             Only independent evidence resolves it.
           </p>
         </div>
