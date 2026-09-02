@@ -470,7 +470,7 @@ export default function Home() {
           </div>
 
           <p className="text-[17px] leading-[1.6] text-ec-body mt-10">
-            Wondering whether that holds for your estate?{" "}
+            Wondering whether that holds in your organisation?{" "}
             <Link
               href="/contact"
               onClick={() => trackCTAClick("Talk to us", "principles")}
