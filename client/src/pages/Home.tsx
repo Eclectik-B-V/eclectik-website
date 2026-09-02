@@ -434,13 +434,13 @@ export default function Home() {
       </section>
 
       {/* Space for the sticky mobile bar so it never covers the footer */}
-      <div className="pb-[76px] lg:pb-0">
+      <div className="pb-[76px] md:pb-0">
         <SiteFooter />
       </div>
 
       {/* Sticky mobile CTA bar */}
       <div
-        className="fixed inset-x-0 bottom-0 z-[38] lg:hidden bg-white/95 backdrop-blur-[8px] border-t border-ec-line px-5 pt-3"
+        className="fixed inset-x-0 bottom-0 z-[38] md:hidden bg-white/95 backdrop-blur-[8px] border-t border-ec-line px-5 pt-3"
         style={{ paddingBottom: "calc(12px + env(safe-area-inset-bottom))" }}
       >
         <div className="flex gap-2.5">
