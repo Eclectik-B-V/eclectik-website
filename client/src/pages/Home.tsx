@@ -179,38 +179,38 @@ export default function Home() {
       <SiteHeader variant="overlay" />
 
       {/* HERO */}
-      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end shell:items-center shell:min-h-[560px] shell:h-[min(56.25vw,80vh)]">
+      <section className="relative bg-ec-navy text-ec-on-dark overflow-hidden flex min-h-[520px] items-end lg:items-center lg:min-h-[560px] lg:h-[min(56.25vw,80vh)]">
         <HeroVideo />
         <div
-          className="absolute inset-0 shell:hidden"
+          className="absolute inset-0 lg:hidden"
           style={{
             background:
               "linear-gradient(180deg, rgba(10,15,31,.45) 0%, rgba(10,15,31,.85) 100%)",
           }}
         />
         <div
-          className="absolute inset-0 hidden shell:block"
+          className="absolute inset-0 hidden lg:block"
           style={{
             background:
               "linear-gradient(180deg, rgba(10,15,31,.5) 0%, rgba(10,15,31,.72) 100%)",
           }}
         />
 
-        <div className={`relative ${INNER} w-full px-6 pb-11 shell:px-16 shell:pt-[110px] shell:pb-0 shell:text-center`}>
+        <div className={`relative ${INNER} w-full px-6 pb-11 lg:px-16 lg:pb-0 lg:text-center shell:pt-[110px]`}>
           <div className="inline-flex items-center gap-2.5 text-[15px] font-semibold tracking-[0.14em] uppercase text-ec-on-dark-eyebrow border border-ec-navy-line px-4 py-2 rounded-full mb-7">
             <span className="w-[22px] h-px bg-ec-sky" aria-hidden="true" />
             <span className="lg:hidden">{POSITIONING_TAGLINE_SHORT}</span>
             <span className="hidden lg:inline">{POSITIONING_TAGLINE}</span>
           </div>
-          <h1 className="font-brand font-extrabold text-[40px] leading-[1.04] tracking-[-0.02em] mb-6 max-w-[820px] shell:text-[68px] shell:leading-[1.02] shell:mx-auto text-pretty">
+          <h1 className="font-brand font-extrabold text-[40px] leading-[1.04] tracking-[-0.02em] mb-6 max-w-[820px] lg:text-[68px] lg:leading-[1.02] lg:mx-auto text-pretty">
             Is your AI transformation <span className="text-ec-yellow">actually working?</span>
           </h1>
-          <p className="text-[19px] leading-[1.55] text-ec-on-dark-muted max-w-[600px] mb-9 shell:text-[21px] shell:mx-auto">
+          <p className="text-[19px] leading-[1.55] text-ec-on-dark-muted max-w-[600px] mb-9 lg:text-[21px] lg:mx-auto">
             We prove it. In the P&amp;L, and in your people.
           </p>
 
           {/* Desktop keeps its CTAs in the nav; mobile needs them here. */}
-          <div className="flex flex-col gap-2.5 shell:hidden">
+          <div className="flex flex-col gap-2.5 lg:hidden">
             <Link
               href="/benchmark"
               onClick={() => trackCTAClick("Join the benchmark waiting list", "hero")}
@@ -434,13 +434,13 @@ export default function Home() {
       </section>
 
       {/* Space for the sticky mobile bar so it never covers the footer */}
-      <div className="pb-[76px] shell:pb-0">
+      <div className="pb-[76px] lg:pb-0">
         <SiteFooter />
       </div>
 
       {/* Sticky mobile CTA bar */}
       <div
-        className="fixed inset-x-0 bottom-0 z-[38] shell:hidden bg-white/95 backdrop-blur-[8px] border-t border-ec-line px-5 pt-3"
+        className="fixed inset-x-0 bottom-0 z-[38] lg:hidden bg-white/95 backdrop-blur-[8px] border-t border-ec-line px-5 pt-3"
         style={{ paddingBottom: "calc(12px + env(safe-area-inset-bottom))" }}
       >
         <div className="flex gap-2.5">

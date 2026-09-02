@@ -34,7 +34,7 @@ export default function SiteHeader({
     <>
       {/* Desktop: transparent row layered over the hero video */}
       <div className={`hidden shell:flex ${desktopBar} items-center justify-between px-16 py-[26px]`}>
-        <Link href="/" className="flex-none" aria-label="Eclectik, naar de homepage">
+        <Link href="/" className="flex-none" aria-label="Eclectik, back to the homepage">
           <img
             src="/images/eclectik-logo-white-photo.svg"
             alt="Eclectik"
@@ -77,14 +77,23 @@ export default function SiteHeader({
       {/* Mobile: solid sticky bar */}
       <div className="shell:hidden sticky top-0 z-40 bg-ec-navy">
         <div className="flex items-center justify-between px-5 py-3.5">
-          <Link href="/" className="flex-none" aria-label="Eclectik, naar de homepage">
+          <Link href="/" className="flex-none" aria-label="Eclectik, back to the homepage">
             <img
               src="/images/eclectik-logo-white-photo.svg"
               alt="Eclectik"
               className="h-[40px] w-auto block"
             />
           </Link>
-          <button
+          <div className="flex items-center gap-3">
+            {/* Zonder deze knop zit de enige CTA tussen 1024 en 1400px in het menu */}
+            <Link
+              href="/scorecard"
+              onClick={() => trackCTAClick("Take the scorecard", "compact-header")}
+              className={`${PILL_BASE} hidden lg:inline-block bg-ec-yellow text-ec-navy px-[18px] py-2.5 text-[15px] focus-visible:outline-ec-sky`}
+            >
+              Take the scorecard
+            </Link>
+            <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
@@ -95,7 +104,8 @@ export default function SiteHeader({
             <span className="block w-[22px] h-0.5 bg-ec-on-dark" />
             <span className="block w-[22px] h-0.5 bg-ec-on-dark" />
             <span className="block w-[22px] h-0.5 bg-ec-on-dark" />
-          </button>
+            </button>
+          </div>
         </div>
 
         {menuOpen && (
