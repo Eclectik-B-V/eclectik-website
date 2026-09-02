@@ -71,19 +71,6 @@ function HeroVideo() {
   );
 }
 
-/** Placeholder for imagery the client still has to deliver. */
-function MediaPlaceholder({ label, className }: { label: string; className?: string }) {
-  return (
-    <div
-      className={`bg-ec-placeholder grid place-items-center text-center text-ec-body-faint text-[13px] px-4 ${className ?? ""}`}
-      role="img"
-      aria-label={label}
-    >
-      {label}
-    </div>
-  );
-}
-
 /** The brand "bars" motif: three stacked rounded bars in descending width. */
 function Bars({
   widths,
@@ -387,9 +374,13 @@ export default function Home() {
               Read the full benchmark prospectus →
             </Link>
           </div>
-          <MediaPlaceholder
-            label="Benchmark visual / dashboard"
-            className="w-full h-[200px] rounded-[14px] lg:h-[340px] lg:rounded-2xl"
+          <img
+            src="/images/benchmark/benchmark-visual.jpg"
+            alt="Standardised charts and tables on a printed sheet, seen through a magnifying glass"
+            loading="lazy"
+            width={1000}
+            height={1000}
+            className="w-full h-[200px] object-cover rounded-[14px] lg:h-[340px] lg:rounded-2xl"
           />
         </div>
       </section>
