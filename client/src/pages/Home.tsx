@@ -101,6 +101,30 @@ const STATS = [
   { figure: "42%", caption: "of AI initiatives are abandoned before value (S&P Global)" },
 ];
 
+const PRINCIPLES = [
+  {
+    label: "Agnostic",
+    accent: "border-ec-sky-ink",
+    ink: "text-ec-sky-ink",
+    title: "We do not sell what we measure.",
+    body: "Copilot, Viva Glint, Workvivo Seer or something you built yourself: the method does not change, and no licence revenue rides on the answer.",
+  },
+  {
+    label: "Independent",
+    accent: "border-ec-teal-ink",
+    ink: "text-ec-teal-ink",
+    title: "We did not build your rollout.",
+    body: "So there is nothing for us to defend when the numbers disappoint. The finding that runs against the plan is the one worth paying for.",
+  },
+  {
+    label: "Scientific",
+    accent: "border-ec-red",
+    ink: "text-ec-red",
+    title: "The method is fixed before the result.",
+    body: "Cohorts named in advance, one stable outcome definition, an estimator chosen up front. If it would not survive review, we do not claim it.",
+  },
+];
+
 const INSIGHTS = [
   {
     category: "Evidence",
@@ -413,6 +437,48 @@ export default function Home() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* PRINCIPLES */}
+      <section className={`bg-white ${SECTION_PAD}`}>
+        <div className={INNER}>
+          <div className="max-w-[640px] mb-10 lg:mb-[32px]">
+            <p className={EYEBROW}>Why the answer holds</p>
+            <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-3.5 text-pretty lg:text-[40px] lg:leading-[1.05]">
+              Agnostic. Independent. Scientific.
+            </h2>
+            <p className="text-[17px] leading-[1.6] text-ec-body">
+              Three commitments that decide whether a number survives being challenged.
+            </p>
+          </div>
+
+          <div className="grid gap-7 md:grid-cols-3 md:gap-11">
+            {PRINCIPLES.map((p) => (
+              <div key={p.label} className={`border-t-[3px] ${p.accent} pt-7`}>
+                <p
+                  className={`text-[12px] tracking-[0.12em] uppercase font-bold mb-3.5 ${p.ink}`}
+                >
+                  {p.label}
+                </p>
+                <h3 className="font-brand tracking-normal font-semibold text-[21px] mb-3 lg:text-[24px]">
+                  {p.title}
+                </h3>
+                <p className="text-[15px] leading-[1.65] text-ec-body">{p.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-[17px] leading-[1.6] text-ec-body mt-10">
+            Wondering whether that holds for your estate?{" "}
+            <Link
+              href="/contact"
+              onClick={() => trackCTAClick("Talk to us", "principles")}
+              className="font-semibold text-ec-red hover:text-ec-red-hover transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
+            >
+              Talk to us →
+            </Link>
+          </p>
         </div>
       </section>
 
