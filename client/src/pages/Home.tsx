@@ -210,7 +210,7 @@ export default function Home() {
           </p>
 
           {/* Desktop keeps its CTAs in the nav; mobile needs them here. */}
-          <div className="flex flex-col gap-2.5 lg:hidden">
+          <div className="flex flex-col gap-2.5 md:hidden">
             <Link
               href="/benchmark"
               onClick={() => trackCTAClick("Join the benchmark waiting list", "hero")}

@@ -89,7 +89,7 @@ export default function SiteHeader({
             <Link
               href="/scorecard"
               onClick={() => trackCTAClick("Take the scorecard", "compact-header")}
-              className={`${PILL_BASE} hidden lg:inline-block bg-ec-yellow text-ec-navy px-[18px] py-2.5 text-[15px] focus-visible:outline-ec-sky`}
+              className={`${PILL_BASE} hidden md:inline-block bg-ec-yellow text-ec-navy px-4 py-2 text-[14px] focus-visible:outline-ec-sky`}
             >
               Take the scorecard
             </Link>
@@ -144,14 +144,14 @@ export default function SiteHeader({
             >
               About us
             </Link>
-            <div className="flex flex-col gap-2.5 pt-[22px]">
+            <div className="flex flex-col gap-2.5 pt-[22px] sm:flex-row sm:max-w-[560px]">
               <Link
                 href="/benchmark"
                 onClick={() => {
                   trackCTAClick("Join the benchmark waiting list", "mobile-menu");
                   closeMenu();
                 }}
-                className={`${PILL_BASE} bg-ec-sky text-ec-navy text-center px-5 py-3.5`}
+                className={`${PILL_BASE} bg-ec-sky text-ec-navy text-center px-5 py-3.5 sm:flex-1`}
               >
                 Join the benchmark waiting list
               </Link>
@@ -161,7 +161,7 @@ export default function SiteHeader({
                   trackCTAClick("Take the scorecard", "mobile-menu");
                   closeMenu();
                 }}
-                className={`${PILL_BASE} bg-ec-yellow text-ec-navy text-center px-5 py-3.5`}
+                className={`${PILL_BASE} bg-ec-yellow text-ec-navy text-center px-5 py-3.5 sm:flex-1`}
               >
                 Take the scorecard
               </Link>
