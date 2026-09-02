@@ -331,11 +331,8 @@ export default function Contact() {
 
                     <img src="/images/ipsos-grey.png" alt="Ipsos" className="h-12 w-auto opacity-90 hover:opacity-100 transition-opacity" />
                     <img src="/images/brand-compliance-logo-final.png" alt="Brand Compliance" className="h-8 w-auto opacity-90 hover:opacity-100 transition-opacity" />
-                    {/* Wit kaartje: Workvivo en Seer zijn donkerblauw artwork en
-                        verdwijnen op het navy paneel. */}
-                    <span className="inline-flex items-center rounded-[10px] bg-white px-4 py-3">
-                      <img src="/images/partners/workvivo-by-zoom.svg" alt="Workvivo by Zoom" className="h-7 w-auto" />
-                    </span>
+                    <img src="/images/partners/seer-by-workvivo.svg" alt="Seer by Workvivo" className="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity" />
+                    <img src="/images/partners/workvivo-by-zoom-white.png" alt="Workvivo by Zoom" className="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity" />
 
 
                   </div>
