@@ -11,16 +11,8 @@ Trusted partners include Alex Lee, EFTA, IMC, Almirall, TD Industries, Warburton
 - [Consulting](https://www.eclectik.co/consulting): Operationalize Workplace Signals. We combine objective telemetry with subjective signals to build actionable AI-transformation roadmaps that deliver measurable impact.
 - [Training](https://www.eclectik.co/training): Interpretation and change activation. We upskill leaders, managers, and HR teams to interpret signals confidently and activate change consistently.
 - [Solutions](https://www.eclectik.co/solutions): Licenses and packaged offerings. Eclectik bundles Microsoft Viva and Copilot licenses with onboarding, analytics accelerators, and service-level commitments.
-- [HR Tech Services](https://www.eclectik.co/hrtechservices): Comprehensive HR technology consulting across the employee-experience stack.
-
-## HR Tech service areas
-
-- [Customer Success](https://www.eclectik.co/services/customer-success)
-- [People Science](https://www.eclectik.co/services/people-science)
-- [Change Management](https://www.eclectik.co/services/change-management)
-- [People Success Academy](https://www.eclectik.co/training/people-success-academy)
-- [Training & Enablement](https://www.eclectik.co/training/enablement)
-- [Executive Coaching](https://www.eclectik.co/training/executive-coaching)
+- [HR Tech Services](https://www.eclectik.co/hrtechservices): Independent Customer Success and People Science for organisations on Viva Glint or Workvivo Seer.
+- [Glint Support](https://www.eclectik.co/glint-support): Independent Customer Success and People Science for organisations running Viva Glint: cycle design, manager enablement and turning results into movement.
 
 ## Case studies
 

@@ -21,13 +21,8 @@ import CaseStudyGlint from "./pages/CaseStudyGlint";
 import CaseStudyAdoption from "./pages/CaseStudyAdoption";
 import CaseStudyAkkodis from "./pages/CaseStudyAkkodis";
 import CaseStudyMicrosoftViva from "./pages/CaseStudyMicrosoftViva";
-import CustomerSuccess from "@/pages/CustomerSuccess";
-import PeopleScience from "@/pages/PeopleScience";
-import ChangeManagement from "@/pages/ChangeManagement";
-import PeopleSuccessAcademy from "@/pages/PeopleSuccessAcademy";
-import TrainingEnablement from "@/pages/TrainingEnablement";
-import ExecutiveCoaching from "@/pages/ExecutiveCoaching";
 import HRTechServices from "@/pages/HRTechServices";
+import GlintSupport from "@/pages/GlintSupport";
 import Sectors from "./pages/Sectors";
 import WhitePapers from "./pages/WhitePapers";
 import Careers from "./pages/Careers";
@@ -48,6 +43,7 @@ function Router() {
       <Route path={"/training"} component={Training} />
       <Route path="/solutions" component={Solutions} />
       <Route path="/hrtechservices" component={HRTechServices} />
+      <Route path="/glint-support" component={GlintSupport} />
       <Route path="/contact" component={Contact} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/cookie-settings" component={CookieSettings} />
@@ -57,12 +53,6 @@ function Router() {
       <Route path="/case-studies/copilot-adoption" component={CaseStudyAdoption} />
       <Route path="/case-studies/akkodis-power-platform" component={CaseStudyAkkodis} />
       <Route path="/case-studies/microsoft-viva-transformation" component={CaseStudyMicrosoftViva} />
-      <Route path="/services/customer-success" component={CustomerSuccess} />
-      <Route path="/services/people-science" component={PeopleScience} />
-      <Route path="/services/change-management" component={ChangeManagement} />
-      <Route path="/training/people-success-academy" component={PeopleSuccessAcademy} />
-      <Route path="/training/enablement" component={TrainingEnablement} />
-      <Route path="/training/executive-coaching" component={ExecutiveCoaching} />
       <Route path={"/sectors"} component={Sectors} />
       <Route path="/resources/white-papers" component={WhitePapers} />
       <Route path="/white-papers" component={WhitePapers} />
