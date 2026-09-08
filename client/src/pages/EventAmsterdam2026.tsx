@@ -522,7 +522,7 @@ export default function EventAmsterdam2026() {
               <p className="nm">Marco van Gelder</p>
               <p className="rl">Chief Strategy Officer</p>
               <p className="or">Eclectik</p>
-              <span className="tag">Confirmed</span>
+              <span className="tag">Host / presenter</span>
             </figure>
           </div>
         </section>
@@ -796,8 +796,9 @@ export default function EventAmsterdam2026() {
                 Parnassus Tower, Locatellikade 1, 1076 AZ Amsterdam
               </p>
               <p>
-                Parking is available in the building's own garage. Amsterdam Zuid station is within
-                walking distance. Please report to the reception desk in the lobby on arrival.
+                Parking is available on the street around the office building at your own cost.
+                Amsterdam Zuid station is within walking distance. Please report to the reception
+                desk in the lobby on arrival.
               </p>
             </div>
             <div className="infocard">
