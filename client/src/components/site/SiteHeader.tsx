@@ -58,6 +58,12 @@ export default function SiteHeader({
             HR Services
           </Link>
           <Link
+            href="/contact"
+            className="whitespace-nowrap hover:text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky"
+          >
+            Contact
+          </Link>
+          <Link
             href="/benchmark"
             onClick={() => trackCTAClick("Join the benchmark waiting list", "header")}
             className={`${PILL_BASE} bg-ec-sky text-ec-navy px-[18px] py-2.5 hover:bg-[#54b4cb]`}
@@ -143,6 +149,13 @@ export default function SiteHeader({
               className="flex items-center justify-between py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
             >
               About us
+            </Link>
+            <Link
+              href="/contact"
+              onClick={closeMenu}
+              className="flex items-center justify-between py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
+            >
+              Contact
             </Link>
             <div className="flex flex-col gap-2.5 pt-[22px] sm:flex-row sm:max-w-[560px]">
               <Link
