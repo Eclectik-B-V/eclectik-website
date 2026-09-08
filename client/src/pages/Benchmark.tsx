@@ -19,7 +19,7 @@ export default function Benchmark() {
       <title>The AI Transformation Benchmark | Eclectik</title>
       <meta
         name="description"
-        content="Standardised KPIs, process-level measurement and peer comparison for AI transformation. Opens September 2026 — join the waiting list."
+        content="Standardised KPIs, process-level measurement and peer comparison for AI transformation. Opens November 2026. Join the waiting list."
       />
 
       {/* Hero — solid background, no image */}
@@ -32,11 +32,11 @@ export default function Benchmark() {
             </span>
           </div>
           <h1 className="text-4xl md:text-6xl font-heading font-bold text-ec-navy leading-tight mb-6">
-            The benchmark — opens September
+            The benchmark, opens November
           </h1>
           <p className="text-xl text-ec-body max-w-2xl">
             How does your AI transformation compare with your peers? Standardised KPIs,
-            process-level measurement and peer comparison across organisations — built on the
+            process-level measurement and peer comparison across organisations. Built on the
             same method we run inside leading enterprises today.
           </p>
         </div>
@@ -51,7 +51,7 @@ export default function Benchmark() {
             </h3>
             <p className="text-ec-body text-sm">
               The same value and change indicators measured the same way in every
-              participating organisation — so comparison means something.
+              participating organisation. So comparison means something.
             </p>
           </div>
           <div>
@@ -68,8 +68,8 @@ export default function Benchmark() {
               Peer comparison
             </h3>
             <p className="text-ec-body text-sm">
-              Placement against organisations of comparable shape — sector, size and
-              transformation stage — not against averages.
+              Placement against organisations of comparable shape: sector, size and
+              transformation stage. Not against averages.
             </p>
           </div>
         </div>
@@ -86,8 +86,8 @@ export default function Benchmark() {
             stand.
           </p>
           <p className="border-l-[3px] border-ec-red pl-[18px] text-ec-body-strong max-w-2xl">
-            We run around twelve audits a year. Q3 is full. The waiting list hears first when
-            September seats open.
+            We run around twelve audits a year. Q3 is full. November seats are open, and the
+            waiting list hears first.
           </p>
         </div>
       </section>
@@ -102,7 +102,7 @@ export default function Benchmark() {
           <p className="text-ec-body max-w-2xl">
             Benchmark participation runs on your own data, under your own governance. Data is
             processed under a data-processing agreement, stored within the EU, and never
-            shared between participants — peer comparison uses aggregated, anonymised
+            shared between participants. Peer comparison uses aggregated, anonymised
             placement only. Eclectik is ISO 27001 certified.
           </p>
         </div>
@@ -113,13 +113,13 @@ export default function Benchmark() {
         <div className="container max-w-4xl grid md:grid-cols-2 gap-12 items-center">
           <div>
             <span className="text-ec-red text-[13px] tracking-[0.14em] uppercase font-semibold block mb-4">
-              The benchmark — opens September
+              The benchmark, opens November
             </span>
             <h2 className="text-3xl font-heading font-semibold text-ec-navy mb-4">
               Join the waiting list
             </h2>
             <p className="text-ec-body">
-              Benchmark updates only. You hear first when September seats open — no spam,
+              Benchmark updates only. You hear first when November seats open. No spam,
               unsubscribe anytime.
             </p>
           </div>
