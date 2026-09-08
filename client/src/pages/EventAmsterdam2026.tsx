@@ -522,7 +522,7 @@ export default function EventAmsterdam2026() {
               <p className="nm">Marco van Gelder</p>
               <p className="rl">Chief Strategy Officer</p>
               <p className="or">Eclectik</p>
-              <span className="tag">Host</span>
+              <span className="tag">Host / presenter</span>
             </figure>
           </div>
         </section>

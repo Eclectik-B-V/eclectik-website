@@ -134,7 +134,10 @@
   display: grid;
   grid-template-columns: 1.55fr 1fr;
   gap: 56px;
-  align-items: start;
+  /* stretch, niet start: in twee kolommen bepaalt het paneel rechts de hoogte
+     van de rij en rekt de cover daarin mee. Zie de min-width-query onder
+     .cover, waar de aspect-ratio daarvoor wordt losgelaten. */
+  align-items: stretch;
 }
 .evt .cover {
   position: relative;
@@ -146,6 +149,17 @@
   flex-direction: column;
   justify-content: center;
   padding: 40px 44px;
+}
+/* Zodra de hero twee kolommen heeft, lijnt de cover onderaan uit met het paneel
+   ernaast. De aspect-ratio gaat er dan af, anders bepaalt de cover zelf de
+   rijhoogte en steekt hij eronderuit. De min-height vangt het geval af waarin
+   het paneel korter is dan de kop nodig heeft. Onder 900px staat alles onder
+   elkaar en geldt de aspect-ratio uit de basisregel gewoon weer. */
+@media (min-width: 901px) {
+  .evt .cover {
+    aspect-ratio: auto;
+    min-height: 360px;
+  }
 }
 .evt .cover::after {
   content: "";
@@ -280,7 +294,8 @@
   margin: 0 0 20px;
 }
 .evt .about p {
-  max-width: 74ch;
+  /* Loopt over de volle breedte van .wrap, gelijk met de agenda eronder.
+     Bewust geen leesmaat van 74ch: op verzoek uitgelijnd met de sessietabel. */
   margin: 0 0 16px;
   font-size: 15px;
 }
@@ -299,7 +314,6 @@
   list-style: none;
   padding: 0;
   margin: 8px 0 20px;
-  max-width: 74ch;
 }
 .evt .list li {
   position: relative;
@@ -324,7 +338,6 @@
   font-size: 15px;
 }
 .evt .small-note {
-  max-width: 74ch;
   color: #d6d9ea;
 }
 .evt .save {
