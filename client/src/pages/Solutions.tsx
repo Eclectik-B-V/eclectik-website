@@ -158,7 +158,7 @@ export default function Solutions() {
               <div className="sticky top-28">
                 <h2 className="text-3xl font-bold mb-6 text-ec-navy">What We Do</h2>
                 <p className="text-lg text-ec-body mb-8 leading-relaxed">
-                  Each product comes with templates, dashboards, and playbooks so you get value on day one—and keep compounding it. We offer ARR-ready bundles that combine licensing, onboarding, and analytics accelerators.
+                  Each product comes with templates, dashboards, and playbooks so you get value on day one, and keep compounding it. We offer ARR-ready bundles that combine licensing, onboarding, and analytics accelerators.
                 </p>
 
                 <div className="bg-white rounded-2xl p-8 border border-ec-line mb-10">

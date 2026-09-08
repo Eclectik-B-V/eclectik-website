@@ -69,14 +69,14 @@ export default function CaseStudyMicrosoftViva() {
                     Business transformation is complex, multifaceted, and perpetual. It's also firmly rooted in an organization's culture, requiring change management technology that meets human needs directly.
                   </p>
                   <p className="mb-4">
-                    When Microsoft embarked on the most revolutionary business transformation in decades—adopting AI and Microsoft 365 Copilot across its 220,000+ global workforce—the company faced unprecedented challenges in driving adoption at scale.
+                    Microsoft embarked on the most revolutionary business transformation in decades: adopting AI and Microsoft 365 Copilot across its 220,000+ global workforce. The company faced unprecedented challenges in driving adoption at scale.
                   </p>
                   <p className="mb-4">
                     Operating across multiple geographies, languages, business units, and regulatory frameworks, Microsoft needed to ensure every employee understood the change, felt included in the transformation, and could adopt new AI capabilities on their own timeline while maintaining their day-to-day productivity.
                   </p>
                   <p className="italic border-l-4 border-ec-red pl-4 py-2 bg-ec-cream text-ec-body-strong">
                     "Everything we do links back to our culture. What that means is we focus on the people side of change, and we take a human-centered approach that focuses on the user's experience of the process."
-                    <span className="block mt-2 text-sm not-italic">— David Laves, Director of Business Programs, Microsoft</span>
+                    <span className="block mt-2 text-sm not-italic">David Laves, Director of Business Programs, Microsoft</span>
                   </p>
                 </div>
               </motion.div>
@@ -136,7 +136,7 @@ export default function CaseStudyMicrosoftViva() {
 
                   <p className="italic border-l-4 border-ec-red pl-4 py-2 bg-ec-cream text-ec-body-strong">
                     "It's a natural fit, because awareness, engagement, and insight pieces are baked in. Instead of getting hit from different directions for each change management goal, employees embark on an orchestrated journey that change management leaders can monitor and modify as it progresses."
-                    <span className="block mt-2 text-sm not-italic">— Kevin Wooldridge, Senior Director, Office of the Chief Operations Officer, Microsoft</span>
+                    <span className="block mt-2 text-sm not-italic">Kevin Wooldridge, Senior Director, Office of the Chief Operations Officer, Microsoft</span>
                   </p>
                 </div>
               </motion.div>
@@ -197,7 +197,7 @@ export default function CaseStudyMicrosoftViva() {
                     <CardContent className="p-6">
                       <h3 className="text-xl font-semibold mb-3 text-foreground">Viva Connections</h3>
                       <p className="text-muted-foreground mb-3">
-                        Served as personalized home feed surfacing leadership communications, community experiences, and important engagements like Camp Copilot—a multi-week series of peer-to-peer, hands-on, gamified activations.
+                        Served as personalized home feed surfacing leadership communications, community experiences, and important engagements like Camp Copilot. Camp Copilot is a multi-week series of peer-to-peer, hands-on, gamified activations.
                       </p>
                       <div className="text-sm font-semibold text-ec-red">Stage: Onboard and Engage</div>
                     </CardContent>
@@ -280,7 +280,7 @@ export default function CaseStudyMicrosoftViva() {
                     The transformation yielded measurable improvements in adoption velocity, employee engagement, and organizational readiness for AI. More importantly, it demonstrated that large-scale business transformation can be human-centered, culturally aligned, and sustainable when powered by the right employee experience platform.
                   </p>
                   <p className="mb-4">
-                    By using Viva Pulse surveys, Microsoft discovered that employees felt saturated with onboarding sessions and needed role-specific scenarios instead. This insight led to focus groups that produced concrete, applicable guidance—demonstrating the power of continuous listening and adaptive change management.
+                    By using Viva Pulse surveys, Microsoft discovered that employees felt saturated with onboarding sessions and needed role-specific scenarios instead. This insight led to focus groups that produced concrete, applicable guidance. That is the power of continuous listening and adaptive change management.
                   </p>
                 </div>
               </motion.div>

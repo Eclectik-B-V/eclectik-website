@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Layout from "@/components/Layout";
 import { ArrowRight, Linkedin, Instagram, Youtube, Mail } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Document, Page, pdfjs } from "react-pdf";
@@ -32,7 +33,7 @@ function IsoCertModal({ onClose }: { onClose: () => void }) {
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-ec-line flex-shrink-0">
-          <h2 className="text-base font-semibold text-ec-navy">ISO 27001 Certificaat — Eclectik B.V.</h2>
+          <h2 className="text-base font-semibold text-ec-navy">ISO 27001 Certificaat, Eclectik B.V.</h2>
           <button
             onClick={onClose}
             className="text-ec-body hover:text-ec-navy transition-colors text-2xl leading-none ml-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
@@ -269,7 +270,7 @@ export default function Contact() {
 
                 <div className="flex items-center justify-between pt-4">
                   <p className="text-xs text-ec-body-faint leading-relaxed max-w-xs">
-                    Protected by reCAPTCHA and the Google <a href="#" className="underline hover:text-ec-red">Privacy Policy</a> and <a href="#" className="underline hover:text-ec-red">Terms of Service</a> apply.
+                    We handle your details as described in our <Link href="/privacy-policy" className="underline hover:text-ec-red">Privacy Policy</Link>.
                   </p>
                   <Button
                     type="submit"
@@ -286,8 +287,8 @@ export default function Contact() {
                 <h2 className="text-3xl font-bold text-ec-navy">Get in touch.</h2>
 
                 <div className="flex flex-col gap-4">
-                  <a href="mailto:info@eclectik.com" className="text-xl font-semibold text-ec-red hover:text-ec-red-hover transition-colors inline-flex items-center gap-2 border-b border-ec-red/30 pb-1 w-fit">
-                    <Mail className="w-5 h-5" /> info@eclectik.com
+                  <a href="mailto:info@eclectik.co" className="text-xl font-semibold text-ec-red hover:text-ec-red-hover transition-colors inline-flex items-center gap-2 border-b border-ec-red/30 pb-1 w-fit">
+                    <Mail className="w-5 h-5" /> info@eclectik.co
                   </a>
 
                   <div className="flex gap-6 mt-4">

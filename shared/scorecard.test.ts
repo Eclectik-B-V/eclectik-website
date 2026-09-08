@@ -24,6 +24,14 @@ describe("bank shape", () => {
       else expect(q.anchors).toHaveLength(5);
     }
   });
+  it("every question has a short label, and labels are unique", () => {
+    for (const q of QUESTIONS) {
+      expect(q.label.trim().length).toBeGreaterThan(0);
+      expect(q.label.length).toBeLessThan(45);
+      expect(q.label).not.toContain("?");
+    }
+    expect(new Set(QUESTIONS.map((q) => q.label)).size).toBe(QUESTIONS.length);
+  });
 });
 
 describe("questionOrder", () => {
@@ -79,5 +87,36 @@ describe("validateAnswers / gapBullets", () => {
     expect(gaps.map((g) => g.id).sort()).toEqual(["C2", "R3", "V5"]);
     const v5 = QUESTIONS.find((q) => q.id === "V5")!;
     expect(gaps.find((g) => g.id === "V5")!.text).toContain(v5.anchors[4]);
+  });
+  it("names the topic and the answer given next to what good looks like", () => {
+    const a = allAnswers(3); a.V5 = 0; a.C2 = 0; a.R3 = 1;
+    const v5 = QUESTIONS.find((q) => q.id === "V5")!;
+    const g = gapBullets(a).find((x) => x.id === "V5")!;
+    expect(g.label).toBe(v5.label);
+    expect(g.current).toBe(v5.anchors[0]);
+    expect(g.target).toBe(v5.anchors[4]);
+    expect(g.text).toBe(
+      `${v5.label}. Today: ${v5.anchors[0]}. What good looks like: ${v5.anchors[4]}.`
+    );
+  });
+  it("all-lowest answers still give three distinct, self-explaining bullets", () => {
+    const gaps = gapBullets(allAnswers(0));
+    expect(gaps).toHaveLength(3);
+    expect(new Set(gaps.map((g) => g.label)).size).toBe(3);
+    expect(new Set(gaps.map((g) => g.text)).size).toBe(3);
+    for (const g of gaps) {
+      const q = QUESTIONS.find((x) => x.id === g.id)!;
+      expect(g.current).toBe(q.anchors[0]);
+      expect(g.text.startsWith(`${q.label}.`)).toBe(true);
+      expect(g.text).toContain(`Today: ${q.anchors[0]}.`);
+      expect(g.text).toContain(`What good looks like: ${q.anchors[q.anchors.length - 1]}`);
+    }
+  });
+  it("questions sharing a top anchor produce different bullets", () => {
+    const a = allAnswers(4); a.V1 = 0; a.V2 = 0; a.C3 = 0;
+    const gaps = gapBullets(a);
+    expect(gaps.map((g) => g.id).sort()).toEqual(["C3", "V1", "V2"]);
+    expect(new Set(gaps.map((g) => g.target))).toEqual(new Set([">75%"]));
+    expect(new Set(gaps.map((g) => g.text)).size).toBe(3);
   });
 });

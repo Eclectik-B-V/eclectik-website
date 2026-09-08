@@ -14,25 +14,25 @@ const QUADRANT_COPY: Record<ScorecardResult["quadrant"], { title: string; body: 
   },
   spreadsheet_confident: {
     title: "Spreadsheet confident",
-    body: "Your numbers look solid — but whether behaviour is actually changing, nobody knows. 57% of employees hide their AI use; usage dashboards won't show you that. Your value story is one blind spot away from stalling.",
+    body: "Your numbers look solid. But whether behaviour is actually changing, nobody knows. 57% of employees hide their AI use; usage dashboards won't show you that. Your value story is one blind spot away from stalling.",
   },
   people_aware_value_blind: {
     title: "People-aware, value-blind",
-    body: "You understand your organisation — but you can't make the business case stick. When budgets tighten, unproven value gets cut first. Connecting your people data to usage data closes exactly that gap.",
+    body: "You understand your organisation. But you can't make the business case stick. When budgets tighten, unproven value gets cut first. Connecting your people data to usage data closes exactly that gap.",
   },
   audit_ready: {
     title: "Audit-ready",
-    body: "You're ahead of nearly everyone. The next step isn't more measurement — it's knowing how you compare. That's what the benchmark is for.",
+    body: "You're ahead of nearly everyone. The next step isn't more measurement. It's knowing how you compare. That's what the benchmark is for.",
   },
 };
 
 const ROUTE_CTA: Record<ScorecardResult["route"], { label: string; href: string; note?: string }> = {
   assessment: {
     label: "Book an assessment scoping call", href: "/contact",
-    note: "Often partner-funded — we'll show you how.",
+    note: "Often partner-funded. We'll show you how.",
   },
   insight_review: { label: "Start with one upgraded insight review on your existing data", href: "/contact" },
-  benchmark: { label: "You belong in the benchmark — join the waiting list", href: "/benchmark#waitlist" },
+  benchmark: { label: "You belong in the benchmark. Join the waiting list", href: "/benchmark#waitlist" },
   workshop: { label: "Book a half-day diagnostic workshop", href: "/contact" },
 };
 
@@ -57,9 +57,9 @@ function EmailUnlockCard({ submitting, onUnlock }: Pick<Props, "submitting" | "o
         Fill out your work email for the full report
       </h2>
       <p className="text-sm text-ec-body mb-6">
-        Your full results — three dimension scores, your biggest gaps and the next
-        step that fits — appear straight away on this page. We use your email to
-        deliver your report and keep it no longer than needed for that purpose.
+        Your full results appear straight away on this page: three dimension
+        scores, your biggest gaps and the next step that fits. We use your email
+        to deliver your report and keep it no longer than needed for that purpose.
       </p>
       <form
         onSubmit={async (e) => {
@@ -126,10 +126,14 @@ export default function ResultView({ result, answers, unlocked, submitting, onUn
             <h3 className="text-sm tracking-[0.12em] uppercase text-ec-body font-bold mb-4">
               Your biggest gaps
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {gapBullets(answers).map((g) => (
                 <li key={g.id} className="flex gap-3 text-ec-body">
-                  <span className="text-ec-red mt-1">•</span><span>{g.text}</span>
+                  <span className="text-ec-red mt-1">•</span>
+                  <span>
+                    <span className="block font-semibold text-ec-navy">{g.label}</span>
+                    Today: {g.current}. What good looks like: {g.target}.
+                  </span>
                 </li>
               ))}
             </ul>
@@ -143,7 +147,7 @@ export default function ResultView({ result, answers, unlocked, submitting, onUn
             {cta.note && <p className="text-sm text-ec-body mt-3">{cta.note}</p>}
             {result.readinessOverlay && (
               <p className="text-sm text-ec-body mt-6">
-                First step is your data foundation — exactly what our data-lab phase does.
+                First step is your data foundation. That's exactly what our data-lab phase does.
               </p>
             )}
             <p className="text-xs text-ec-body-faint mt-8">Your full report arrives by email within a few days.</p>

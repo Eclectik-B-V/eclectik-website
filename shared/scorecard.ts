@@ -11,33 +11,36 @@ export type Answers = Record<string, number>;
 
 export interface Question {
   id: string; block: Block; type: "maturity" | "range";
-  text: string; anchors: string[]; scores?: number[];
+  // `text` is the full question shown in the wizard; `label` is the short
+  // topic name used where a question has to be named in one line (gap
+  // bullets). Labels are unique so two gap bullets can never read the same.
+  label: string; text: string; anchors: string[]; scores?: number[];
 }
 export interface ProfileQuestion { id: "P1" | "P2" | "P3"; text: string; options: string[]; }
 
 export const BANK_VERSION = "1.0";
 
 export const QUESTIONS: Question[] = [
-  { id: "V1", block: "V", type: "range", text: "What share of your intended users actually has an AI licence (e.g. Copilot) today?", anchors: ["We don't know", "<10%", "10–25%", "25–50%", "50–75%", ">75%"], scores: [0, 0, 1, 2, 3, 4] },
-  { id: "V2", block: "V", type: "range", text: "What share of licensed users is actively using AI in a typical week?", anchors: ["We don't track this", "<10%", "10–25%", "25–50%", "50–75%", ">75%"], scores: [0, 0, 1, 2, 3, 4] },
-  { id: "V3", block: "V", type: "maturity", text: "Do you know the depth of use per function — habitual use versus occasional experiments?", anchors: ["No idea", "Anecdotes only", "Rough picture for some groups", "Measured for most groups", "Tracked per persona, monthly"] },
-  { id: "V4", block: "V", type: "maturity", text: "Do you measure anything beyond usage — time, quality, business outcomes?", anchors: ["Nothing beyond usage", "Occasional anecdotes/satisfaction", "We estimate time saved", "Outcomes measured per team or use case", "Usage statistically linked to business KPIs"] },
-  { id: "V5", block: "V", type: "maturity", text: "Do you know the total cost of your AI stack, including consumption/credits?", anchors: ["No real picture", "Licence cost only", "Licences + rough consumption", "Cost tracked per department", "Full TCO model per use case"] },
-  { id: "V6", block: "V", type: "maturity", text: "For the agents you have deployed: do you know what each one costs and contributes?", anchors: ["No sight (or: no agents, no plan)", "We know which agents exist", "Usage per agent", "Cost per agent", "Cost and contribution (ROI) per agent"] },
-  { id: "V7", block: "V", type: "maturity", text: "Are AI investment decisions — expand, pause, stop — based on measured evidence?", anchors: ["Gut feel and vendor claims", "Mostly conviction, some data", "Mixed", "Mostly evidence", "Every decision on measured evidence"] },
-  { id: "V8", block: "V", type: "maturity", text: "Could you show your board independent evidence today of what AI delivers?", anchors: ["No", "We could tell a story, not show evidence", "Internal numbers, contestable", "Solid internal evidence", "Yes — independently validated"] },
-  { id: "C1", block: "C", type: "maturity", text: "Do you know whether your leaders use AI themselves?", anchors: ["No idea", "Impressions only", "We know for some leaders", "Measured across leadership", "Measured — and leaders visibly model it"] },
-  { id: "C2", block: "C", type: "maturity", text: "Do you have sight of AI use outside your sanctioned tools (shadow AI)?", anchors: ["Never considered it", "We suspect it exists", "Occasional signals", "Estimated periodically", "Measured and openly discussable"] },
-  { id: "C3", block: "C", type: "range", text: "What share of employees has received meaningful AI training?", anchors: ["We don't know", "<10%", "10–25%", "25–50%", "50–75%", ">75%"], scores: [0, 0, 1, 2, 3, 4] },
-  { id: "C4", block: "C", type: "maturity", text: "Does your employee listening ask about AI — adoption, trust, anxiety, workload?", anchors: ["Not at all", "One-off questions once", "Some items, some cycles", "Structured AI module every cycle", "Every cycle plus targeted pulses"] },
-  { id: "C5", block: "C", type: "maturity", text: "Is your listening data connected to actual usage data?", anchors: ["Separate worlds", "We eyeball both separately", "Manually compared once or twice", "Joined for some analyses", "Systematically joined (aggregate level)"] },
-  { id: "C6", block: "C", type: "maturity", text: "Do you know how your middle managers are coping as the translation layer of change?", anchors: ["No view", "Anecdotes", "Occasional check-ins", "Measured in listening", "Measured plus a support programme"] },
-  { id: "C7", block: "C", type: "maturity", text: "Do you know which teams still have capacity for the next change — and which are fatigued?", anchors: ["No", "Gut feel", "Rough view of hotspots", "Measured per unit", "Measured per team and steering rollout planning"] },
-  { id: "C8", block: "C", type: "maturity", text: "Do employees see action on what they report — and do you measure that?", anchors: ["We don't measure this", "We assume so", "Communicated, not measured", "Action tracking for major themes", "Action rates measured and shared"] },
-  { id: "R1", block: "R", type: "maturity", text: "Could you produce persona-level usage data within weeks, privacy-approved?", anchors: ["No idea how", "Theoretically, never done", "With significant effort", "Done before, repeatable", "Yes — established process"] },
-  { id: "R2", block: "R", type: "maturity", text: "Is comparable survey/pulse data available across multiple cycles?", anchors: ["Scattered or lost", "Fragments, formats differ", "Mostly available, gaps", "Complete for recent cycles", "Clean multi-year archive"] },
-  { id: "R3", block: "R", type: "maturity", text: "Are privacy and works-council arrangements in place for aggregate people-data analysis?", anchors: ["Nothing arranged", "We'd have to start from scratch", "Informal understanding", "Formal process exists", "Approved framework in place"] },
-  { id: "R4", block: "R", type: "maturity", text: "Is there an executive sponsor who wants this evidence?", anchors: ["Nobody owns this", "Interest, no owner", "Mid-level owner", "Senior sponsor engaged", "CFO/CIO-level sponsor with mandate"] },
+  { id: "V1", block: "V", type: "range", label: "Licence coverage", text: "What share of your intended users actually has an AI licence (e.g. Copilot) today?", anchors: ["We don't know", "<10%", "10–25%", "25–50%", "50–75%", ">75%"], scores: [0, 0, 1, 2, 3, 4] },
+  { id: "V2", block: "V", type: "range", label: "Weekly active use", text: "What share of licensed users is actively using AI in a typical week?", anchors: ["We don't track this", "<10%", "10–25%", "25–50%", "50–75%", ">75%"], scores: [0, 0, 1, 2, 3, 4] },
+  { id: "V3", block: "V", type: "maturity", label: "Depth of use per function", text: "Do you know the depth of use per function, habitual use versus occasional experiments?", anchors: ["No idea", "Anecdotes only", "Rough picture for some groups", "Measured for most groups", "Tracked per persona, monthly"] },
+  { id: "V4", block: "V", type: "maturity", label: "Impact beyond usage", text: "Do you measure anything beyond usage: time, quality, business outcomes?", anchors: ["Nothing beyond usage", "Occasional anecdotes/satisfaction", "We estimate time saved", "Outcomes measured per team or use case", "Usage statistically linked to business KPIs"] },
+  { id: "V5", block: "V", type: "maturity", label: "Cost of the AI stack", text: "Do you know the total cost of your AI stack, including consumption/credits?", anchors: ["No real picture", "Licence cost only", "Licences + rough consumption", "Cost tracked per department", "Full TCO model per use case"] },
+  { id: "V6", block: "V", type: "maturity", label: "Cost and return per agent", text: "For the agents you have deployed: do you know what each one costs and contributes?", anchors: ["No sight (or: no agents, no plan)", "We know which agents exist", "Usage per agent", "Cost per agent", "Cost and contribution (ROI) per agent"] },
+  { id: "V7", block: "V", type: "maturity", label: "Evidence behind investment decisions", text: "Are AI investment decisions (expand, pause, stop) based on measured evidence?", anchors: ["Gut feel and vendor claims", "Mostly conviction, some data", "Mixed", "Mostly evidence", "Every decision on measured evidence"] },
+  { id: "V8", block: "V", type: "maturity", label: "Board-ready evidence", text: "Could you show your board independent evidence today of what AI delivers?", anchors: ["No", "We could tell a story, not show evidence", "Internal numbers, contestable", "Solid internal evidence", "Yes, independently validated"] },
+  { id: "C1", block: "C", type: "maturity", label: "Leaders using AI themselves", text: "Do you know whether your leaders use AI themselves?", anchors: ["No idea", "Impressions only", "We know for some leaders", "Measured across leadership", "Measured, and leaders visibly model it"] },
+  { id: "C2", block: "C", type: "maturity", label: "Sight of shadow AI", text: "Do you have sight of AI use outside your sanctioned tools (shadow AI)?", anchors: ["Never considered it", "We suspect it exists", "Occasional signals", "Estimated periodically", "Measured and openly discussable"] },
+  { id: "C3", block: "C", type: "range", label: "Training reach", text: "What share of employees has received meaningful AI training?", anchors: ["We don't know", "<10%", "10–25%", "25–50%", "50–75%", ">75%"], scores: [0, 0, 1, 2, 3, 4] },
+  { id: "C4", block: "C", type: "maturity", label: "AI in employee listening", text: "Does your employee listening ask about AI: adoption, trust, anxiety, workload?", anchors: ["Not at all", "One-off questions once", "Some items, some cycles", "Structured AI module every cycle", "Every cycle plus targeted pulses"] },
+  { id: "C5", block: "C", type: "maturity", label: "Listening data joined to usage data", text: "Is your listening data connected to actual usage data?", anchors: ["Separate worlds", "We eyeball both separately", "Manually compared once or twice", "Joined for some analyses", "Systematically joined (aggregate level)"] },
+  { id: "C6", block: "C", type: "maturity", label: "How middle managers are coping", text: "Do you know how your middle managers are coping as the translation layer of change?", anchors: ["No view", "Anecdotes", "Occasional check-ins", "Measured in listening", "Measured plus a support programme"] },
+  { id: "C7", block: "C", type: "maturity", label: "Capacity for the next change", text: "Do you know which teams still have capacity for the next change, and which are fatigued?", anchors: ["No", "Gut feel", "Rough view of hotspots", "Measured per unit", "Measured per team and steering rollout planning"] },
+  { id: "C8", block: "C", type: "maturity", label: "Follow-up on what employees report", text: "Do employees see action on what they report, and do you measure that?", anchors: ["We don't measure this", "We assume so", "Communicated, not measured", "Action tracking for major themes", "Action rates measured and shared"] },
+  { id: "R1", block: "R", type: "maturity", label: "Access to persona-level usage data", text: "Could you produce persona-level usage data within weeks, privacy-approved?", anchors: ["No idea how", "Theoretically, never done", "With significant effort", "Done before, repeatable", "Yes, established process"] },
+  { id: "R2", block: "R", type: "maturity", label: "Comparable survey history", text: "Is comparable survey/pulse data available across multiple cycles?", anchors: ["Scattered or lost", "Fragments, formats differ", "Mostly available, gaps", "Complete for recent cycles", "Clean multi-year archive"] },
+  { id: "R3", block: "R", type: "maturity", label: "Privacy and works-council clearance", text: "Are privacy and works-council arrangements in place for aggregate people-data analysis?", anchors: ["Nothing arranged", "We'd have to start from scratch", "Informal understanding", "Formal process exists", "Approved framework in place"] },
+  { id: "R4", block: "R", type: "maturity", label: "Executive sponsorship", text: "Is there an executive sponsor who wants this evidence?", anchors: ["Nobody owns this", "Interest, no owner", "Mid-level owner", "Senior sponsor engaged", "CFO/CIO-level sponsor with mandate"] },
 ];
 
 export const PROFILE_QUESTIONS: ProfileQuestion[] = [
@@ -110,14 +113,32 @@ export function computeScorecard(a: Answers): ScorecardResult {
 }
 
 // Placeholder gap lines until Marco/Manish supply final copy (spec §5):
-// "what good looks like" = the anchor text of the top score.
-export function gapBullets(a: Answers): { id: string; text: string }[] {
+// "what good looks like" = the anchor text of the top score. Every bullet
+// names its topic (`label`) and the answer given (`current`), so a reader
+// sees what the gap is about and two bullets never read the same, even when
+// unrelated questions share a top anchor such as ">75%".
+export interface GapBullet {
+  id: string;
+  label: string;   // short topic name of the question
+  current: string; // the anchor this respondent picked
+  target: string;  // the top anchor: what good looks like
+  text: string;    // the three above as one line, for plain-text contexts
+}
+
+export function gapBullets(a: Answers): GapBullet[] {
   return QUESTIONS
     .map((q) => ({ q, score: answerScore(q, a[q.id]) }))
     .sort((x, y) => x.score - y.score)
     .slice(0, 3)
-    .map(({ q }) => ({
-      id: q.id,
-      text: `What good looks like: ${q.anchors[q.anchors.length - 1]}`,
-    }));
+    .map(({ q }) => {
+      const current = q.anchors[a[q.id]] ?? "No answer given";
+      const target = q.anchors[q.anchors.length - 1];
+      return {
+        id: q.id,
+        label: q.label,
+        current,
+        target,
+        text: `${q.label}. Today: ${current}. What good looks like: ${target}.`,
+      };
+    });
 }
