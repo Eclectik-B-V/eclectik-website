@@ -7,6 +7,9 @@ import Layout from "@/components/Layout";
 export default function CaseStudyGlint() {
   return (
     <Layout>
+      <title>Viva Glint and Insights at Sage | Eclectik</title>
+      <meta name="description" content="How Sage used Viva Glint and Viva Insights to see not just how employees felt but how work patterns shaped it, across a distributed hybrid workforce." />
+      <link rel="canonical" href="https://www.eclectik.co/case-studies/glint-insights" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

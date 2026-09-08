@@ -113,6 +113,9 @@ export default function WhitePapers() {
 
   return (
     <Layout>
+      <title>White papers and research | Eclectik</title>
+      <meta name="description" content="Research on employee experience platforms, AI adoption and workplace signals, including Gallup's State of the Global Workplace and our AI readiness work." />
+      <link rel="canonical" href="https://www.eclectik.co/resources/white-papers" />
       <div className="min-h-screen bg-white pt-16 lg:pt-20 pb-16">
         <div className="container mx-auto px-4">
           <motion.div 

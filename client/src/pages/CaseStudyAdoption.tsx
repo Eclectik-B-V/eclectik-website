@@ -7,6 +7,9 @@ import Layout from "@/components/Layout";
 export default function CaseStudyAdoption() {
   return (
     <Layout>
+      <title>Copilot adoption at SACE | Eclectik</title>
+      <meta name="description" content="How SACE moved from a hierarchical culture to a four-day workweek trial with Microsoft Copilot and Viva, with risk analysis cut from six hours to six minutes." />
+      <link rel="canonical" href="https://www.eclectik.co/case-studies/copilot-adoption" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

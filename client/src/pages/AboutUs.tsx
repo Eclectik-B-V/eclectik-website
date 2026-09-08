@@ -32,6 +32,9 @@ export default function AboutUs() {
 
   return (
     <Layout>
+      <title>About us | Eclectik</title>
+      <meta name="description" content="Eclectik combines objective workplace telemetry with employee sentiment to make AI transformation measurable. Our mission, our values and how we work." />
+      <link rel="canonical" href="https://www.eclectik.co/about" />
       {/* Hero Section */}
       <section className="relative bg-ec-cream pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden">
         <div className="container relative z-10 px-4 mx-auto">

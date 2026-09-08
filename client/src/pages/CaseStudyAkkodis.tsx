@@ -8,6 +8,9 @@ import { Link } from "wouter";
 export default function CaseStudyAkkodis() {
   return (
     <Layout>
+      <title>AKKODiS Power Platform in Japan | Eclectik</title>
+      <meta name="description" content="How a 6,500-person engineering consultancy answered Japan's shrinking workforce with field-led innovation on Microsoft Power Platform and Copilot." />
+      <link rel="canonical" href="https://www.eclectik.co/case-studies/akkodis-power-platform" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

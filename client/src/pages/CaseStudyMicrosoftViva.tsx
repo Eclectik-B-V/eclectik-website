@@ -8,6 +8,9 @@ import { Link } from "wouter";
 export default function CaseStudyMicrosoftViva() {
   return (
     <Layout>
+      <title>Microsoft Viva transformation | Eclectik</title>
+      <meta name="description" content="Microsoft used its own Viva suite to run transformation across 220,000+ employees, with a human-centred approach to change rather than a tooling rollout." />
+      <link rel="canonical" href="https://www.eclectik.co/case-studies/microsoft-viva-transformation" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

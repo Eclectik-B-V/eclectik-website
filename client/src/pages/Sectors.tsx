@@ -55,6 +55,9 @@ export default function Sectors() {
 
   return (
     <Layout>
+      <title>Sectors we serve | Eclectik</title>
+      <meta name="description" content="Workplace signals and AI measurement across manufacturing, agriculture, telecommunications, utilities, transport, retail, finance and life sciences." />
+      <link rel="canonical" href="https://www.eclectik.co/sectors" />
       {/* Hero Section */}
       <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-ec-cream py-16 lg:py-24">
         <div className="container relative z-10">

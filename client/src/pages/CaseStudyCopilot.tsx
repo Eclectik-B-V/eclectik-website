@@ -7,6 +7,9 @@ import Layout from "@/components/Layout";
 export default function CaseStudyCopilot() {
   return (
     <Layout>
+      <title>Copilot ROI impact, measured | Eclectik</title>
+      <meta name="description" content="An independent read on Microsoft Copilot365 at a Fortune Global 500 staffing firm: 200 employees over three to four months, and where the value landed." />
+      <link rel="canonical" href="https://www.eclectik.co/case-studies/copilot-impact" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">
