@@ -30,7 +30,7 @@ export default function CaseStudyAdoption() {
               SACE: Giving Employees Control of Their Time and Wellbeing
             </h1>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              How Italy's financial services firm used Copilot and Viva to transition from a traditional "command and control" culture to a flexible, outcome-based workplace—saving hours per week and boosting satisfaction.
+              How Italy's financial services firm used Copilot and Viva to transition from a traditional "command and control" culture to a flexible, outcome-based workplace. The shift saved hours per week and boosted satisfaction.
             </p>
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground bg-white px-4 py-2 rounded-full border border-ec-line-3">
@@ -129,7 +129,7 @@ export default function CaseStudyAdoption() {
                     <Card className="bg-ec-surface border-ec-line">
                       <CardContent className="p-6">
                         <h4 className="font-bold text-ec-navy mb-2">The "Time Back" Deal</h4>
-                        <p className="text-sm">Leadership made a clear promise: "All the time you free up using technology is yours—to learn, rest, or give back, as long as you deliver outcomes."</p>
+                        <p className="text-sm">Leadership made a clear promise: "All the time you free up using technology is yours: to learn, rest, or give back, as long as you deliver outcomes."</p>
                       </CardContent>
                     </Card>
                   </div>
@@ -162,7 +162,7 @@ export default function CaseStudyAdoption() {
                 </h2>
                 <div className="prose max-w-none text-muted-foreground">
                   <p className="text-lg mb-6">
-                    The cultural shift has been profound. SACE moved from 7 hierarchy layers to just 3, and is now trialing a 4-day workweek for all 1,000 employees—made possible by the efficiency gains from AI.
+                    The cultural shift has been profound. SACE moved from 7 hierarchy layers to just 3, and is now trialing a 4-day workweek for all 1,000 employees. The efficiency gains from AI made that possible.
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -187,7 +187,7 @@ export default function CaseStudyAdoption() {
                   <blockquote className="border-l-4 border-ec-red pl-6 italic text-xl text-ec-body-strong my-8">
                     "It’s impossible to achieve in four days what we used to accomplish in five without the use of technology... The winning formula has been: all the time freed up by leveraging AI tools is given back to you."
                     <footer className="text-sm text-muted-foreground mt-2 not-italic font-medium">
-                      — Gianfranco Chimirri, Chief People Officer, SACE
+                      Gianfranco Chimirri, Chief People Officer, SACE
                     </footer>
                   </blockquote>
                 </div>

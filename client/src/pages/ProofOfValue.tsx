@@ -5,7 +5,8 @@ export default function ProofOfValue() {
     <PlaceholderPage
       title="Proof of value"
       heading="What is AI delivering in the P&L?"
-      description="ROI, TCO and adoption economics, modelled on your own licence, usage and telemetry data. The full proof-of-value page launches in August 2026."
+      path="/proof-of-value"
+      description="ROI, TCO and adoption economics, modelled on your own licence, usage and telemetry data. The full proof-of-value page launches in November 2026."
       cta={{ label: "Take the scorecard (3–4 min)", href: "/scorecard?door=value" }}
     />
   );

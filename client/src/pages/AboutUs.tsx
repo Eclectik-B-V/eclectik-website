@@ -26,7 +26,7 @@ export default function AboutUs() {
     {
       icon: <Lightbulb className="w-8 h-8 text-ec-sky-ink" />,
       title: "Innovation-Led",
-      description: "We combine objective workplace telemetry with subjective sentiment analysis to operationalize AI transformation—from Copilot ROI modeling to change activation and sustained adoption."
+      description: "We combine objective workplace telemetry with subjective sentiment analysis to operationalize AI transformation. That runs from Copilot ROI modeling to change activation and sustained adoption."
     }
   ];
 

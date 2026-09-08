@@ -1,0 +1,5 @@
+# Vercel maakt van elk bestand in api/ een serverless function. De testbestanden
+# horen daar niet bij: zonder deze regel verschijnen ze als /api/contact.test
+# en trekken ze vitest de deploy in. Bestanden met een _-prefix negeert Vercel
+# zelf al, dus _test-helpers.ts hoeft hier niet bij.
+api/*.test.ts

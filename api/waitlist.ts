@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
 import { z } from "zod";
+import { sanitizeSubject } from "./_mail-subject.js";
 
 const BodySchema = z.object({
   name: z.string().trim().min(1).max(200),
@@ -21,6 +22,9 @@ function escapeHtml(str: string): string {
     .replace(/'/g, "&#039;");
 }
 
+/** A hanging CRM must not hold the function open until Vercel kills it. */
+const CRM_TIMEOUT_MS = 8_000;
+
 /**
  * Forward the signup as a signal to the CRM. The CRM endpoint lives in the
  * separate eclektik-crm repo and may not exist yet — if env vars are absent
@@ -33,9 +37,12 @@ async function sendCrmSignal(data: z.infer<typeof BodySchema>) {
     console.warn("CRM env vars not set — skipping website-signal");
     return;
   }
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), CRM_TIMEOUT_MS);
   try {
     const r = await fetch(`${base}/api/website-signal`, {
       method: "POST",
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
         "x-webhook-secret": secret,
@@ -52,10 +59,18 @@ async function sendCrmSignal(data: z.infer<typeof BodySchema>) {
       }),
     });
     if (!r.ok) {
-      console.error("CRM website-signal failed:", r.status, await r.text().catch(() => ""));
+      console.error(
+        "CRM website-signal failed:",
+        r.status,
+        await r.text().catch(() => "")
+      );
     }
   } catch (err) {
+    // Includes the AbortError thrown when CRM_TIMEOUT_MS expires: same path as
+    // any other failed call — log and continue.
     console.error("CRM website-signal error:", err);
+  } finally {
+    clearTimeout(timer);
   }
 }
 
@@ -71,16 +86,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const data = parsed.data;
 
+  await sendCrmSignal(data);
+
+  // Same order as api/waitlist-qualification.ts: the CRM signal is the record,
+  // so it must not depend on the mail configuration. And once the signal has
+  // gone out the signup exists — a missing Resend env var only costs the
+  // internal notification, which is logged rather than surfaced as a 500.
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM_EMAIL;
   const to = process.env.CONTACT_TO_EMAIL;
 
   if (!apiKey || !from || !to) {
-    console.error("Missing Resend env vars");
-    return res.status(500).json({ error: "Service not configured" });
+    console.error("Missing Resend env vars — skipping waitlist notification");
+    return res.status(200).json({ ok: true });
   }
-
-  await sendCrmSignal(data);
 
   const resend = new Resend(apiKey);
 
@@ -90,7 +109,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       from,
       to,
       replyTo: data.email,
-      subject: `Benchmark waiting list: ${data.name} (${data.company})`,
+      // sanitizeSubject, not escapeHtml: a subject is a header field, so the
+      // risk is a newline in a name, not an unescaped angle bracket.
+      subject: sanitizeSubject(
+        `Benchmark waiting list: ${data.name} (${data.company})`
+      ),
       html: `
         <h2>New benchmark waiting-list signup</h2>
         <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
@@ -116,10 +139,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         html: `
           <p>Hi ${escapeHtml(data.name)},</p>
           <p>You're on the waiting list for the Eclectik AI transformation benchmark.
-          We run around twelve audits a year and the waiting list hears first when
-          September seats open.</p>
-          <p>You'll only receive benchmark updates — unsubscribe anytime.</p>
-          <p>— Eclectik</p>
+          We run around twelve audits a year. November seats are open, and the waiting
+          list hears first.</p>
+          <p>You'll only receive benchmark updates. Unsubscribe anytime.</p>
+          <p>Eclectik</p>
         `,
       });
       if (confirmation.error) {

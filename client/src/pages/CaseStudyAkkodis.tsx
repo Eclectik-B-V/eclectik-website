@@ -69,11 +69,11 @@ export default function CaseStudyAkkodis() {
                     AKKODiS Consulting, a leading technology and engineering consultancy with 6,500 employees across Japan, faced an urgent challenge: Japan's aging demographic and shrinking workforce meant they could no longer rely on traditional workforce growth to stay competitive.
                   </p>
                   <p className="mb-4">
-                    With limited talent pools and the need to maintain productivity without increasing headcount, AKKODiS needed to fundamentally reimagine how work gets done—not just for their clients, but for their own organization first.
+                    With limited talent pools and the need to maintain productivity without increasing headcount, AKKODiS needed to fundamentally reimagine how work gets done, not just for their clients, but for their own organization first.
                   </p>
                   <p className="italic border-l-4 border-ec-red pl-4 py-2 bg-ec-cream text-ec-body-strong">
                     "With Japan's population declining, companies can no longer rely on traditional workforce growth to stay competitive. To maximize their potential and compete globally, they must raise labor productivity and empower more people to innovate."
-                    <span className="block mt-2 text-sm not-italic">— Kenichiro Kawasaki, CEO, AKKODiS Consulting</span>
+                    <span className="block mt-2 text-sm not-italic">Kenichiro Kawasaki, CEO, AKKODiS Consulting</span>
                   </p>
                 </div>
               </motion.div>
@@ -133,7 +133,7 @@ export default function CaseStudyAkkodis() {
 
                   <p className="italic border-l-4 border-ec-red pl-4 py-2 bg-ec-cream text-ec-body-strong">
                     "The field understands challenges at the most practical level. Transformation is most sustainable when it's driven by those who experience the work firsthand."
-                    <span className="block mt-2 text-sm not-italic">— Kenichiro Kawasaki, CEO</span>
+                    <span className="block mt-2 text-sm not-italic">Kenichiro Kawasaki, CEO</span>
                   </p>
                 </div>
               </motion.div>
@@ -226,7 +226,7 @@ export default function CaseStudyAkkodis() {
                       </div>
                       <div>
                         <div className="font-medium text-foreground mb-1">Automated Budgeting Workflow</div>
-                        <p className="text-sm text-muted-foreground">Power Apps + Power Automate eliminated the stress of chasing manager approvals—better for efficiency and morale.</p>
+                        <p className="text-sm text-muted-foreground">Power Apps + Power Automate eliminated the stress of chasing manager approvals. That is better for efficiency and morale.</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
@@ -244,7 +244,7 @@ export default function CaseStudyAkkodis() {
                       </div>
                       <div>
                         <div className="font-medium text-foreground mb-1">95% Active Copilot Usage</div>
-                        <p className="text-sm text-muted-foreground">Within six months, 95% of employees were monthly active Copilot users—a testament to genuine adoption.</p>
+                        <p className="text-sm text-muted-foreground">Within six months, 95% of employees were monthly active Copilot users, a testament to genuine adoption.</p>
                       </div>
                     </div>
                   </div>
@@ -274,11 +274,11 @@ export default function CaseStudyAkkodis() {
                     <p className="text-lg italic text-foreground mb-2">
                       "It's not just engineers driving change anymore. Everyone, from sales to HR, is building solutions to everyday challenges. It's changed our culture from one of 'IT-dependent transformation' to 'everyone-driven innovation.'"
                     </p>
-                    <p className="text-sm text-muted-foreground">— Risa Kawaguchi, Business Manager, AKKODiS Consulting</p>
+                    <p className="text-sm text-muted-foreground">Risa Kawaguchi, Business Manager, AKKODiS Consulting</p>
                   </div>
 
                   <p>
-                    Employees are no longer waiting for transformation to happen to them—they are driving it themselves. This bottom-up innovation model has become AKKODiS's competitive advantage, both internally and in how they serve clients.
+                    Employees are no longer waiting for transformation to happen to them. They are driving it themselves. This bottom-up innovation model has become AKKODiS's competitive advantage, both internally and in how they serve clients.
                   </p>
                 </div>
               </motion.div>
@@ -297,10 +297,10 @@ export default function CaseStudyAkkodis() {
                   </p>
                   <p className="italic border-l-4 border-ec-red pl-4 py-2 bg-ec-cream text-ec-body-strong">
                     "Our goal is to create a responsible AI ecosystem where human judgment, ethical oversight, and technology work hand in hand."
-                    <span className="block mt-2 text-sm not-italic">— Kenichiro Kawasaki, CEO</span>
+                    <span className="block mt-2 text-sm not-italic">Kenichiro Kawasaki, CEO</span>
                   </p>
                   <p className="mt-4">
-                    By transforming from the field up, AKKODiS isn't just adapting to Japan's demographic shift—they're showing the way forward for organizations worldwide.
+                    By transforming from the field up, AKKODiS isn't just adapting to Japan's demographic shift. They're showing the way forward for organizations worldwide.
                   </p>
                 </div>
               </motion.div>
@@ -378,18 +378,13 @@ export default function CaseStudyAkkodis() {
               Ready to Transform Your Organization?
             </h2>
             <p className="text-xl text-ec-on-dark-muted mb-8">
-              Learn how Eclectik can help you operationalize AI transformation and build a culture of innovation—from the field up.
+              Learn how Eclectik can help you operationalize AI transformation and build a culture of innovation, from the field up.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link href="/contact">
                 <Button size="lg" className="group">
                   Get in Touch
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link href="/white-papers">
-                <Button size="lg" variant="outline" className="border-ec-navy-line-2 text-ec-on-dark hover:bg-white/10 hover:text-white">
-                  Explore Resources
                 </Button>
               </Link>
             </div>

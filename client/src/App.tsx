@@ -25,7 +25,6 @@ import HRTechServices from "@/pages/HRTechServices";
 import GlintSupport from "@/pages/GlintSupport";
 import WorkvivoSeer from "@/pages/WorkvivoSeer";
 import Sectors from "./pages/Sectors";
-import WhitePapers from "./pages/WhitePapers";
 import Careers from "./pages/Careers";
 import Benchmark from "@/pages/Benchmark";
 import Insights from "@/pages/Insights";
@@ -58,8 +57,6 @@ function Router() {
       <Route path="/case-studies/akkodis-power-platform" component={CaseStudyAkkodis} />
       <Route path="/case-studies/microsoft-viva-transformation" component={CaseStudyMicrosoftViva} />
       <Route path={"/sectors"} component={Sectors} />
-      <Route path="/resources/white-papers" component={WhitePapers} />
-      <Route path="/white-papers" component={WhitePapers} />
       <Route path="/careers" component={Careers} />
       <Route path="/benchmark" component={Benchmark} />
       <Route path="/insights" component={Insights} />

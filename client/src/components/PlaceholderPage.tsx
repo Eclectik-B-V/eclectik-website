@@ -7,14 +7,21 @@ interface PlaceholderPageProps {
   title: string;
   heading: string;
   description: string;
+  /** Route of this page, used for the canonical url (e.g. "/insights"). */
+  path: string;
   cta?: { label: string; href: string };
 }
 
-export default function PlaceholderPage({ title, heading, description, cta }: PlaceholderPageProps) {
+// These pages are linked from the homepage and belong in the sitemap, so they
+// carry the same title/description/canonical set as the rest of the site. They
+// deliberately have no noindex: the copy is short but it is real, published
+// content, not a stub hidden from search.
+export default function PlaceholderPage({ title, heading, description, path, cta }: PlaceholderPageProps) {
   return (
     <Layout>
       <title>{`${title} | Eclectik`}</title>
-      <meta name="robots" content="noindex" />
+      <meta name="description" content={description} />
+      <link rel="canonical" href={`https://www.eclectik.co${path}`} />
       <section className="bg-white min-h-[70vh] flex items-center py-16 lg:py-24">
         <div className="container max-w-3xl">
           <div className="mb-6 flex items-center gap-3">

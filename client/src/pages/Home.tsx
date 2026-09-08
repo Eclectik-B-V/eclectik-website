@@ -336,7 +336,7 @@ export default function Home() {
       <section id="benchmark" className={`snap-point bg-white ${SECTION_PAD}`}>
         <div className={`${INNER} grid gap-10 items-center lg:grid-cols-[1.25fr_0.75fr] lg:gap-14`}>
           <div>
-            <p className={EYEBROW}>The benchmark, opens September</p>
+            <p className={EYEBROW}>The benchmark, opens November</p>
             <h2 className="font-brand tracking-normal font-extrabold text-[30px] leading-[1.06] mb-4 text-pretty lg:text-[44px] lg:leading-[1.03]">
               How does your AI transformation compare with your peers?
             </h2>
@@ -345,8 +345,8 @@ export default function Home() {
               organisations, built on the same method we run inside leading enterprises today.
             </p>
             <p className="border-l-[3px] border-ec-red pl-[18px] text-[16px] leading-[1.6] text-ec-body-strong mb-6">
-              We run about twelve audits a year and Q3 is full. The waiting list hears first when
-              September seats open.
+              We run about twelve audits a year and Q3 is full. November seats are open, and the
+              waiting list hears first.
             </p>
             <Link
               href="/benchmark"
@@ -446,7 +446,7 @@ export default function Home() {
           Is your AI transformation actually working?
         </h2>
         <p className="text-[16px] text-ec-on-dark-caption mb-7 lg:text-[18px]">
-          Join the benchmark waiting list. September seats open to the list first.
+          Join the benchmark waiting list. November seats open to the list first.
         </p>
         <Link
           href="/benchmark"

@@ -76,7 +76,7 @@ function QuestionStep({ question, index, total, selected, onSelect, onBack }: Qu
         </span>
       </div>
       <p className="text-sm text-ec-body">
-        Five quick questions to secure your place — 30 seconds.
+        Five quick questions to secure your place. 30 seconds.
       </p>
       <p className="text-sm font-medium text-ec-navy">{question.text}</p>
       <div className="space-y-2">
@@ -175,7 +175,7 @@ export default function WaitlistForm() {
       .catch((err) => {
         console.error("Waitlist qualification POST failed:", err);
       });
-    toast.success("You're on the list — check your inbox for confirmation.");
+    toast.success("You're on the list. Check your inbox for confirmation.");
     setPhase("done");
   };
 
@@ -208,10 +208,10 @@ export default function WaitlistForm() {
     return (
       <div className={cardClass}>
         <h4 className="font-heading text-lg font-semibold text-ec-navy">
-          You're on the list — check your inbox for confirmation.
+          You're on the list. Check your inbox for confirmation.
         </h4>
         <p className="text-xs text-ec-body">
-          No spam. Benchmark updates only — unsubscribe anytime.
+          No spam. Benchmark updates only. Unsubscribe anytime.
         </p>
       </div>
     );
@@ -295,7 +295,7 @@ export default function WaitlistForm() {
         {submitting ? "Joining…" : "Join the waiting list"}
       </Button>
       <p className="text-xs text-ec-body text-center">
-        No spam. Benchmark updates only — unsubscribe anytime.
+        No spam. Benchmark updates only. Unsubscribe anytime.
       </p>
     </form>
   );
