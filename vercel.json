@@ -3,8 +3,43 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist/public",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/services/customer-success",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/services/people-science",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/services/change-management",
+      "destination": "/glint-support",
+      "permanent": true
+    },
+    {
+      "source": "/training/people-success-academy",
+      "destination": "/training",
+      "permanent": true
+    },
+    {
+      "source": "/training/enablement",
+      "destination": "/training",
+      "permanent": true
+    },
+    {
+      "source": "/training/executive-coaching",
+      "destination": "/training",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
