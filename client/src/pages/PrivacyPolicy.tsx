@@ -57,6 +57,14 @@ export default function PrivacyPolicy() {
             <p className="mb-4">We may share your personal data with:</p>
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>Third-party service providers for business operations (Cloud Services).</li>
+              <li>
+                Event partners, where you have explicitly consented at registration. For an event we
+                organise together with a partner, we share the details you provide on the
+                registration form with that partner, so they can process your registration and
+                contact you about the event. The partner is named in the consent text on the form
+                itself. For the AI Transformation event of 6 October 2026 in Amsterdam, that partner
+                is Workvivo, part of Zoom Communications.
+              </li>
               <li>Legal authorities if required by law or for legal protection.</li>
               <li>Any successors or purchasers in the event of a merger or sale.</li>
             </ul>
@@ -101,7 +109,7 @@ export default function PrivacyPolicy() {
 
             <h2 className="text-2xl font-bold text-ec-navy mt-10 mb-4">11. International Data Transfers</h2>
             <p className="mb-6">
-              If we transfer your data outside the EEA, we ensure appropriate safeguards are in place, such as standard contractual clauses or adequacy decisions.
+              If we transfer your data outside the EEA, we ensure appropriate safeguards are in place, such as standard contractual clauses or adequacy decisions. Where an event partner as described in section 5 is based outside the EEA, this includes the registration details you provide on that event's form.
             </p>
 
             <h2 className="text-2xl font-bold text-ec-navy mt-10 mb-4">12. Data Retention</h2>
