@@ -5,7 +5,8 @@ export default function Insights() {
     <PlaceholderPage
       title="Insights"
       heading="Insights"
-      description="Evidence, not opinions. One observation with a number, every month. The full insights library launches in August 2026."
+      path="/insights"
+      description="Evidence, not opinions. One observation with a number, every month. The full insights library launches in November 2026."
     />
   );
 }

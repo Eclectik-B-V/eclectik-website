@@ -38,6 +38,41 @@
       "source": "/training/executive-coaching",
       "destination": "/training",
       "permanent": true
+    },
+    {
+      "source": "/white-papers",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/white-papers",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/copilot-impact",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/glint-insights",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/copilot-adoption",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/akkodis-power-platform",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/microsoft-viva-transformation",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "rewrites": [
