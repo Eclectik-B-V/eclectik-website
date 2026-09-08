@@ -1,0 +1,842 @@
+/* Styles for /events/amsterdam-2026.
+ *
+ * Taken from the supplied Workvivo mockup, which shipped as a standalone page:
+ * it styled *, body, a and section globally. Everything here hangs off the
+ * .evt wrapper instead, so the dark event design cannot reach the site header,
+ * the footer or any other page. The palette variables are prefixed too, so a
+ * future global --lime cannot collide with this one.
+ *
+ * Tailwind's preflight zeroes the margin on p and h1-h6. The mockup leaned on
+ * the browser default for a few paragraphs, so those margins are written out
+ * here (see .spk .rl and .spk .or).
+ */
+
+.evt {
+  --evt-lime: #e3f58c;
+  --evt-orange: #f0722c;
+  --evt-pink: #e5157f;
+  --evt-navy: #0e1030;
+  --evt-panel: #171a3d;
+  --evt-line: #2a2e55;
+  --evt-white: #ffffff;
+  --evt-muted: #a9aec9;
+  --evt-grad: linear-gradient(120deg, #f58b2b 0%, #ee5a3c 38%, #e5157f 100%);
+  --evt-maxw: 1240px;
+
+  background: var(--evt-navy);
+  color: var(--evt-white);
+  font-family: "Inter", "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.evt *,
+.evt *::before,
+.evt *::after {
+  box-sizing: border-box;
+}
+
+/* index.css puts the brand face on h1-h6 in @layer base. That is a direct
+   assignment, so it beats the font-family inherited from .evt and would leave
+   every heading on this page in Aptos while the body text is in Inter. */
+.evt h1,
+.evt h2,
+.evt h3,
+.evt h4,
+.evt h5,
+.evt h6 {
+  font-family: inherit;
+}
+
+.evt a {
+  color: var(--evt-orange);
+  text-decoration: none;
+}
+.evt a:hover {
+  text-decoration: underline;
+}
+.evt :focus-visible {
+  outline: 2px solid var(--evt-lime);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.evt .wrap {
+  max-width: var(--evt-maxw);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.evt section {
+  padding: 52px 0;
+}
+/* The site header is sticky, so a jump to #register must clear it. */
+.evt [id] {
+  scroll-margin-top: 130px;
+}
+
+/* ---- event branding bar ---- */
+/* Doubles as the seam between the site's navy header and the darker event
+   design: without it the two navies meet in a line that reads as a glitch. */
+.evt .topbar {
+  background: var(--evt-lime);
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+}
+.evt .topbar .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.evt .mark {
+  line-height: 1;
+}
+.evt .mark .word {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  background: var(--evt-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.evt .mark .sub {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #d4453f;
+  margin-top: -4px;
+  letter-spacing: 0.2px;
+}
+.evt .topbar-meta {
+  color: #1a1a2e;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* The mirror of the top bar: a deliberate edge before the white site footer. */
+.evt .bottom-edge {
+  height: 6px;
+  background: var(--evt-lime);
+}
+
+/* ---- hero ---- */
+.evt .hero {
+  padding: 44px 0 8px;
+}
+.evt .hero-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+.evt .cover {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--evt-grad);
+  aspect-ratio: 16 / 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 44px;
+}
+.evt .cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 82% 30%, rgba(229, 21, 127, 0.55) 0%, rgba(229, 21, 127, 0) 60%),
+    repeating-linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0.05) 0 3px,
+      rgba(255, 255, 255, 0) 3px 9px
+    );
+  pointer-events: none;
+}
+.evt .cover-txt {
+  position: relative;
+  z-index: 1;
+}
+.evt .cover h1 {
+  margin: 0;
+  font-size: 52px;
+  line-height: 1.02;
+  font-weight: 800;
+  letter-spacing: -2px;
+  text-wrap: balance;
+  color: #fff;
+}
+.evt .cover h1 em {
+  display: block;
+  font-style: italic;
+  font-weight: 600;
+  color: #fbf3b4;
+  letter-spacing: -1.4px;
+}
+.evt .cover .brandrow {
+  position: relative;
+  z-index: 1;
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.evt .cover .brandrow .w {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #fff;
+}
+.evt .cover .brandrow .t {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.evt .panel .date {
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 18px;
+}
+.evt .panel h2 {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 4px;
+  text-wrap: balance;
+}
+.evt .panel .deck {
+  font-size: 16px;
+  color: var(--evt-lime);
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+.evt .panel .org {
+  color: var(--evt-orange);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 20px;
+}
+.evt .panel .venue {
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0;
+}
+.evt .panel .addr {
+  color: #d6d9ea;
+  font-size: 13.5px;
+  margin: 2px 0 22px;
+}
+.evt .cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--evt-white);
+  color: #12142f;
+  font-weight: 700;
+  font-size: 15.5px;
+  padding: 15px 20px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+.evt .cta:hover {
+  background: #edeffa;
+  text-decoration: none;
+}
+.evt .cta-note {
+  color: var(--evt-orange);
+  font-size: 12.5px;
+  text-align: center;
+  margin: 11px 0 0;
+}
+.evt .free {
+  text-align: center;
+  font-size: 14.5px;
+  margin: 26px 0 4px;
+}
+.evt .free em {
+  display: block;
+  font-size: 13px;
+  color: #d6d9ea;
+  margin-top: 6px;
+}
+
+/* ---- body copy ---- */
+.evt .about h3 {
+  color: var(--evt-orange);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+.evt .about p {
+  max-width: 74ch;
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+.evt .about .lead {
+  font-size: 16.5px;
+}
+.evt .about strong {
+  font-weight: 700;
+}
+.evt .about .hl {
+  color: var(--evt-lime);
+  font-style: italic;
+  font-weight: 600;
+}
+.evt .list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 20px;
+  max-width: 74ch;
+}
+.evt .list li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 9px;
+  font-size: 15px;
+}
+.evt .list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--evt-orange);
+  font-weight: 700;
+}
+.evt .list b {
+  color: var(--evt-orange);
+  font-weight: 700;
+}
+.evt .kicker {
+  font-weight: 700;
+  margin: 26px 0 8px;
+  font-size: 15px;
+}
+.evt .small-note {
+  max-width: 74ch;
+  color: #d6d9ea;
+}
+.evt .save {
+  display: inline-block;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+
+/* ---- speakers ---- */
+.evt h3.sec {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 28px;
+}
+.evt .spk {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px 30px;
+  max-width: 900px;
+}
+.evt .spk figure {
+  margin: 0;
+  text-align: center;
+}
+.evt .avatar {
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: var(--evt-grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.evt .avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+.evt .chip .dot {
+  overflow: hidden;
+  position: relative;
+}
+.evt .chip .dot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.evt .spk .nm {
+  color: var(--evt-lime);
+  font-weight: 600;
+  font-size: 14.5px;
+  margin: 14px 0 4px;
+}
+.evt .spk .rl {
+  font-size: 13px;
+  color: #fff;
+  line-height: 1.45;
+  margin: 0 0 2px;
+}
+.evt .spk .or {
+  font-size: 13px;
+  color: #c7cbe4;
+  margin: 0;
+}
+.evt .spk .tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--evt-navy);
+  background: var(--evt-lime);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ---- countdown ---- */
+.evt .count {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  gap: 10px;
+  padding: 44px 0 8px;
+}
+.evt .count .n {
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--evt-orange);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.evt .count .l {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  margin-top: 10px;
+}
+.evt .count-msg {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--evt-lime);
+  padding: 44px 0 8px;
+  margin: 0;
+}
+
+/* ---- sessions ---- */
+.evt .sessions-box {
+  border: 1px solid var(--evt-line);
+  border-radius: 14px;
+  padding: 6px 26px;
+}
+.evt .srow {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 26px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--evt-line);
+  align-items: start;
+}
+.evt .srow:last-child {
+  border-bottom: 0;
+}
+.evt .thumb {
+  border-radius: 9px;
+  padding: 2px;
+  background: var(--evt-grad);
+}
+.evt .thumb-in {
+  background: #12142f;
+  border-radius: 7px;
+  padding: 14px 15px;
+  min-height: 104px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.evt .thumb-in .lg {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: var(--evt-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.evt .thumb-in .tt {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+}
+.evt .thumb-in .tt em {
+  display: block;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--evt-orange);
+}
+.evt .smeta h4 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.evt .stime {
+  color: #c7cbe4;
+  font-size: 13.5px;
+  margin: 0 0 8px;
+  font-variant-numeric: tabular-nums;
+}
+.evt .sdesc {
+  color: #d6d9ea;
+  font-size: 13.5px;
+  margin: 0;
+  max-width: 70ch;
+}
+.evt .who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.evt .chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: #fff;
+}
+.evt .chip .dot {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border-radius: 50%;
+  background: var(--evt-grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- registration ---- */
+.evt .reg {
+  border: 1px solid var(--evt-line);
+  border-radius: 14px;
+  padding: 30px 32px;
+  max-width: 820px;
+}
+.evt .reg h4 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.evt .reg .sub {
+  color: #c7cbe4;
+  font-size: 13.5px;
+  margin: 0 0 22px;
+}
+.evt .fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+}
+.evt .fld {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.evt .fld.full {
+  grid-column: 1 / -1;
+}
+.evt .fld label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #d6d9ea;
+}
+.evt .fld label .req {
+  color: var(--evt-orange);
+}
+.evt .fld input,
+.evt .fld select {
+  width: 100%;
+  background: #0a0c24;
+  border: 1px solid var(--evt-line);
+  border-radius: 8px;
+  padding: 11px 13px;
+  font-size: 13.5px;
+  font-family: inherit;
+  line-height: 1.4;
+  color: #fff;
+  min-height: 42px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.evt .fld input::placeholder {
+  color: #7d84a8;
+}
+.evt .fld input:hover,
+.evt .fld select:hover {
+  border-color: #3a3f74;
+}
+/* Only the country select: the empty option keeps it :invalid until a choice
+   is made, which is exactly when the label should read as a placeholder. */
+.evt .fld select:invalid {
+  color: #7d84a8;
+}
+.evt .fld select {
+  padding-right: 34px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23a9aec9' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px 14px;
+  cursor: pointer;
+}
+.evt .fld select option {
+  background: #0a0c24;
+  color: #fff;
+}
+.evt .consent {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 18px 20px;
+  background: rgba(227, 245, 140, 0.06);
+  border: 1px solid rgba(227, 245, 140, 0.28);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.evt .consent .tick {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  padding: 0;
+  border: 1.5px solid var(--evt-lime);
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.evt .consent .tick:checked {
+  background-color: var(--evt-lime);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%230e1030' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' d='M3.5 8.5l3 3 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 13px 13px;
+}
+.evt .consent .ctext {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #eaedf8;
+}
+.evt .consent a {
+  color: var(--evt-lime);
+  text-decoration: underline;
+}
+.evt .reg .submit {
+  margin-top: 24px;
+  display: inline-block;
+  background: var(--evt-white);
+  color: #12142f;
+  font-weight: 700;
+  font-size: 15px;
+  font-family: inherit;
+  padding: 13px 34px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.evt .reg .submit:hover:not(:disabled) {
+  background: #edeffa;
+}
+.evt .reg .submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.evt .reg .foot-note {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--evt-muted);
+}
+.evt .reg-done .lead-in {
+  color: var(--evt-lime);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.evt .reg-done p.body {
+  color: #d6d9ea;
+  font-size: 14px;
+  margin: 0 0 10px;
+  max-width: 60ch;
+}
+.evt .reg-done p.body:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- venue + closing note ---- */
+.evt .two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px;
+}
+.evt .infocard {
+  border: 1px solid var(--evt-line);
+  border-radius: 14px;
+  padding: 26px 28px;
+}
+.evt .infocard h4 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--evt-lime);
+}
+.evt .infocard p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #d6d9ea;
+}
+.evt .infocard p:last-child {
+  margin-bottom: 0;
+}
+/* Not a <footer>: the page already has the site footer, and two footer
+   landmarks in one document is one too many. */
+.evt .evt-colophon {
+  border-top: 1px solid var(--evt-line);
+  padding: 34px 0 60px;
+  color: var(--evt-muted);
+  font-size: 13px;
+}
+.evt .foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .evt .wrap {
+    padding: 0 20px;
+  }
+  .evt .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+  .evt .cover h1 {
+    font-size: 38px;
+  }
+  .evt .spk {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .evt .count {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+  }
+  .evt .count .n {
+    font-size: 44px;
+  }
+  .evt .srow {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .evt .thumb {
+    max-width: 230px;
+  }
+  .evt .two {
+    grid-template-columns: 1fr;
+  }
+  .evt .fields {
+    grid-template-columns: 1fr;
+  }
+  .evt section {
+    padding: 38px 0;
+  }
+}
+
+/* Phone. The mockup stopped at one breakpoint; below ~520px the cover
+   headline, the card padding and the two-up speaker grid all need to give. */
+@media (max-width: 560px) {
+  .evt .topbar .wrap {
+    gap: 10px;
+  }
+  .evt .mark .word {
+    font-size: 28px;
+  }
+  .evt .topbar-meta {
+    font-size: 12px;
+  }
+  .evt .cover {
+    padding: 26px 22px;
+    aspect-ratio: auto;
+    min-height: 260px;
+  }
+  .evt .cover h1 {
+    font-size: 31px;
+    letter-spacing: -1.2px;
+  }
+  .evt .cover h1 em {
+    letter-spacing: -0.8px;
+  }
+  .evt .spk {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    max-width: 320px;
+  }
+  .evt .count .n {
+    font-size: 38px;
+  }
+  .evt .count .l {
+    font-size: 14px;
+  }
+  .evt .count-msg {
+    font-size: 16px;
+  }
+  .evt .sessions-box {
+    padding: 4px 18px;
+  }
+  .evt .reg {
+    padding: 22px 18px;
+  }
+  .evt .consent {
+    padding: 14px 15px;
+  }
+  .evt .reg .submit {
+    width: 100%;
+    padding: 14px 20px;
+  }
+  .evt .infocard {
+    padding: 22px 20px;
+  }
+  .evt .foot {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evt * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
