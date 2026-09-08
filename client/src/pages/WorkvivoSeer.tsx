@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import { Helmet } from "react-helmet-async";
 import Layout from "@/components/Layout";
 import { trackCTAClick } from "@/lib/tracking";
 
@@ -49,14 +48,16 @@ const SERVICES = [
 export default function WorkvivoSeer() {
   return (
     <Layout>
-      <Helmet>
-        <title>Workvivo and Seer | Eclectik</title>
-        <meta
-          name="description"
-          content="Eclectik is a Workvivo and Seer partner for organisations that want their employee experience investment to show up in the numbers. Adoption measurement, communication impact analysis, listening programme design and a four to six week execution gap assessment."
-        />
-        <link rel="canonical" href="https://www.eclectik.co/workvivo" />
-      </Helmet>
+      {/* React 19 hoists these into <head> natively. Deliberately not wrapped in
+          react-helmet-async: that package is unmaintained and silently no-ops in
+          the production build here, which left every page on the static title and
+          a canonical pointing at the homepage. */}
+      <title>Workvivo and Seer | Eclectik</title>
+      <meta
+        name="description"
+        content="Eclectik is a Workvivo and Seer partner for organisations that want their employee experience investment to show up in the numbers. Adoption measurement, communication impact analysis, Seer-certified listening programme design and a four to six week execution gap assessment."
+      />
+      <link rel="canonical" href="https://www.eclectik.co/workvivo" />
 
       <div className="bg-white text-ec-navy font-brand font-light">
         {/* Hero */}
