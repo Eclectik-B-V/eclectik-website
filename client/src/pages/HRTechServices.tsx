@@ -105,16 +105,16 @@ export default function HRTechServices() {
                   Seer Support
                 </h3>
                 <p className="text-[15px] leading-[1.65] text-ec-body mb-6">
-                  Implementation, migration and analytics on Workvivo Seer, for teams moving across
-                  or getting more out of the listening data they already collect. We are writing this
-                  one up; in the meantime, ask us directly.
+                  Adoption and activation measurement, communication impact analysis and listening
+                  programme design on Workvivo Seer, plus the execution gap assessment that puts a
+                  number on what closing the gap is worth.
                 </p>
                 <Link
-                  href="/contact"
-                  onClick={() => trackCTAClick("Ask about Seer", "hrtechservices")}
+                  href="/workvivo"
+                  onClick={() => trackCTAClick("Go to Seer Support", "hrtechservices")}
                   className="mt-auto self-start rounded-full font-bold bg-ec-teal-ink text-white px-7 py-3.5 text-[15px] transition-colors hover:bg-[#276e67] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-navy"
                 >
-                  Ask about Seer →
+                  Go to Seer Support →
                 </Link>
               </div>
             </div>

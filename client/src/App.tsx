@@ -23,6 +23,7 @@ import CaseStudyAkkodis from "./pages/CaseStudyAkkodis";
 import CaseStudyMicrosoftViva from "./pages/CaseStudyMicrosoftViva";
 import HRTechServices from "@/pages/HRTechServices";
 import GlintSupport from "@/pages/GlintSupport";
+import WorkvivoSeer from "@/pages/WorkvivoSeer";
 import Sectors from "./pages/Sectors";
 import WhitePapers from "./pages/WhitePapers";
 import Careers from "./pages/Careers";
@@ -44,6 +45,9 @@ function Router() {
       <Route path="/solutions" component={Solutions} />
       <Route path="/hrtechservices" component={HRTechServices} />
       <Route path="/glint-support" component={GlintSupport} />
+      {/* /workvivo is the destination for the Workvivo partner-directory link. */}
+      <Route path="/workvivo" component={WorkvivoSeer} />
+      <Route path="/seer-support">{() => <Redirect to="/workvivo" />}</Route>
       <Route path="/contact" component={Contact} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/cookie-settings" component={CookieSettings} />

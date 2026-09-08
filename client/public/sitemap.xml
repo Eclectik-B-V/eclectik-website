@@ -52,6 +52,13 @@
   </url>
 
   <url>
+    <loc>https://www.eclectik.co/workvivo</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
     <loc>https://www.eclectik.co/contact</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>

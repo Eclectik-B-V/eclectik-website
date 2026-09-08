@@ -13,6 +13,7 @@ Trusted partners include Alex Lee, EFTA, IMC, Almirall, TD Industries, Warburton
 - [Solutions](https://www.eclectik.co/solutions): Licenses and packaged offerings. Eclectik bundles Microsoft Viva and Copilot licenses with onboarding, analytics accelerators, and service-level commitments.
 - [HR Tech Services](https://www.eclectik.co/hrtechservices): Independent Customer Success and People Science for organisations on Viva Glint or Workvivo Seer.
 - [Glint Support](https://www.eclectik.co/glint-support): Independent Customer Success and People Science for organisations running Viva Glint: cycle design, manager enablement and turning results into movement.
+- [Workvivo and Seer](https://www.eclectik.co/workvivo): Workvivo and Seer partner page. Adoption and activation measurement, communication impact analysis, Seer-certified survey onboarding and programme design, and a four to six week execution gap assessment that quantifies the distance between feedback given and change seen.
 
 ## Case studies
 
