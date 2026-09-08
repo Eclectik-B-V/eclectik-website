@@ -797,8 +797,8 @@ export default function EventAmsterdam2026() {
               </p>
               <p>
                 Parking is available on the street around the office building at your own cost.
-                Amsterdam Zuid station is within walking distance. Please report to the reception
-                desk in the lobby on arrival.
+                Amsterdam Zuid (WTC) station is within 5 minutes walking distance. Please report to
+                the reception desk in the lobby on arrival.
               </p>
             </div>
             <div className="infocard">

@@ -63,12 +63,15 @@ export default function SiteHeader({
           >
             Contact
           </Link>
+          {/* Tijdelijk: tot en met 6 oktober 2026 staat hier de event-CTA in
+              plaats van de benchmark-wachtlijst. Daarna terugzetten naar
+              /benchmark, samen met de redirect voor de eventpagina. */}
           <Link
-            href="/benchmark"
-            onClick={() => trackCTAClick("Join the benchmark waiting list", "header")}
+            href="/events/amsterdam-2026"
+            onClick={() => trackCTAClick("Register for 6th Oct event", "header")}
             className={`${PILL_BASE} bg-ec-sky text-ec-navy px-[18px] py-2.5 hover:bg-[#54b4cb]`}
           >
-            Join the benchmark waiting list
+            Register for 6th Oct event
           </Link>
           <Link
             href="/scorecard"
@@ -158,15 +161,16 @@ export default function SiteHeader({
               Contact
             </Link>
             <div className="flex flex-col gap-2.5 pt-[22px] sm:flex-row sm:max-w-[560px]">
+              {/* Zie de comment bij dezelfde knop in de desktopnavigatie. */}
               <Link
-                href="/benchmark"
+                href="/events/amsterdam-2026"
                 onClick={() => {
-                  trackCTAClick("Join the benchmark waiting list", "mobile-menu");
+                  trackCTAClick("Register for 6th Oct event", "mobile-menu");
                   closeMenu();
                 }}
                 className={`${PILL_BASE} bg-ec-sky text-ec-navy text-center px-5 py-3.5 sm:flex-1`}
               >
-                Join the benchmark waiting list
+                Register for 6th Oct event
               </Link>
               <Link
                 href="/scorecard"
