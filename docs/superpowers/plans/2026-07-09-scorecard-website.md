@@ -921,7 +921,7 @@ git commit -m "feat: scorecard resultaat — teaser + werkmail-gate voor volledi
 - [ ] Full browser pass on dev: both doors end-to-end, reload-resume mid-flow, mobile viewport (375px), no console errors, all existing routes still render.
 - [ ] `pnpm check` && `pnpm test` && `pnpm build` all green.
 - [ ] ASK OLIVIER, then push `h2-2026-redesign` → review-site deploy.
-- [ ] Live e2e (CRM side must be deployed first — see CRM plan Task 6): complete a scorecard on https://eclectik-website-h2.vercel.app/scorecard?src=li-sc-e2e with a test email on a WORK domain (bijv. e2e-test@eclectik.co — gratis providers worden geweigerd) → `{ok:true, stored:true}`; `form_responses` row (computed scores match client display); marketing lead activity `scorecard_completed` without raw answers; assessment-route test triggers Marco-notify; cleanup test rows afterwards.
+- [ ] Live e2e (CRM side must be deployed first — see CRM plan Task 6): complete a scorecard on https://www.eclectik.co/scorecard?src=li-sc-e2e with a test email on a WORK domain (bijv. e2e-test@eclectik.co — gratis providers worden geweigerd) → `{ok:true, stored:true}`; `form_responses` row (computed scores match client display); marketing lead activity `scorecard_completed` without raw answers; assessment-route test triggers Marco-notify; cleanup test rows afterwards.
 
 ## Self-review notes
 
