@@ -1,5 +1,4 @@
 import Layout from "@/components/Layout";
-import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
@@ -30,10 +29,8 @@ export default function CookieSettings() {
 
   return (
     <Layout>
-      <Helmet>
-        <title>Cookie Settings - Eclectik</title>
-        <meta name="description" content="Manage your cookie preferences for the Eclectik website." />
-      </Helmet>
+      <title>Cookie Settings - Eclectik</title>
+      <meta name="description" content="Manage your cookie preferences for the Eclectik website." />
       
       <div className="bg-white pt-14 pb-20 lg:pt-20 lg:pb-24">
         <div className="container max-w-3xl mx-auto px-4">

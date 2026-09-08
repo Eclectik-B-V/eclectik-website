@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import { Helmet } from "react-helmet-async";
 import Layout from "@/components/Layout";
 import { trackCTAClick } from "@/lib/tracking";
 
@@ -25,13 +24,11 @@ const DISCIPLINES = [
 export default function HRTechServices() {
   return (
     <Layout>
-      <Helmet>
-        <title>HR Tech Services | Eclectik</title>
-        <meta
-          name="description"
-          content="Independent Customer Success and People Science for organisations running Viva Glint or Workvivo Seer. We did not sell you the platform and we do not resell it."
-        />
-      </Helmet>
+      <title>HR Tech Services | Eclectik</title>
+      <meta
+        name="description"
+        content="Independent Customer Success and People Science for organisations running Viva Glint or Workvivo Seer. We did not sell you the platform and we do not resell it."
+      />
 
       <div className="bg-white text-ec-navy font-brand font-light">
         <section className={`bg-ec-cream ${SECTION}`}>

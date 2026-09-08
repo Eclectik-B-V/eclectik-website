@@ -1,13 +1,10 @@
 import Layout from "@/components/Layout";
-import { Helmet } from "react-helmet-async";
 
 export default function TermsOfService() {
   return (
     <Layout>
-      <Helmet>
-        <title>Terms of Service - Eclectik</title>
-        <meta name="description" content="General Terms and Conditions for Eclectik BV. Read our service agreements, software licenses, and legal obligations." />
-      </Helmet>
+      <title>Terms of Service - Eclectik</title>
+      <meta name="description" content="General Terms and Conditions for Eclectik BV. Read our service agreements, software licenses, and legal obligations." />
       
       <div className="bg-white pt-14 pb-20 lg:pt-20 lg:pb-24">
         <div className="container max-w-4xl mx-auto px-4">

@@ -1,15 +1,12 @@
 import Layout from "@/components/Layout";
-import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 export default function Careers() {
   return (
     <Layout>
-      <Helmet>
-        <title>Careers - Eclectik</title>
-        <meta name="description" content="Join Our Talent Pool at Eclectik. We empower organizations to build thriving, people-centered workplaces through exceptional employee listening solutions." />
-      </Helmet>
+      <title>Careers - Eclectik</title>
+      <meta name="description" content="Join Our Talent Pool at Eclectik. We empower organizations to build thriving, people-centered workplaces through exceptional employee listening solutions." />
       
       <div className="bg-white pt-16 lg:pt-24 pb-20">
         <div className="container max-w-4xl mx-auto px-4">

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import Layout from "@/components/Layout";
-import { Helmet } from "react-helmet-async";
 import DoorChooser from "@/components/scorecard/DoorChooser";
 import QuestionScreen from "@/components/scorecard/QuestionScreen";
 import ResultView from "@/components/scorecard/ResultView";
@@ -123,10 +122,8 @@ export default function Scorecard() {
 
   return (
     <Layout>
-      <Helmet>
-        <title>AI Transformation Scorecard | Eclectik</title>
-        <meta name="description" content="Free 3–4 minute self-assessment: how evidence-led is your AI transformation? Three scores, your readiness profile and the next step that fits." />
-      </Helmet>
+      <title>AI Transformation Scorecard | Eclectik</title>
+      <meta name="description" content="Free 3–4 minute self-assessment: how evidence-led is your AI transformation? Three scores, your readiness profile and the next step that fits." />
       <section className="min-h-screen bg-white pt-16 lg:pt-20 pb-24 px-4">
         {phase === "door" && <DoorChooser onSelect={startDoor} />}
         {phase === "questions" && door && items[step] && (

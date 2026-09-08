@@ -4,7 +4,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Layout from "@/components/Layout";
 import { ArrowRight, Linkedin, Instagram, Youtube, Mail } from "lucide-react";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Document, Page, pdfjs } from "react-pdf";
@@ -134,10 +133,8 @@ export default function Contact() {
 
   return (
     <Layout>
-      <Helmet>
-        <title>Contact | Eclectik</title>
-        <meta name="description" content="Get in touch with Eclectik. Subscribe to our newsletter for insights that matter or contact us directly to start your AI transformation." />
-      </Helmet>
+      <title>Contact | Eclectik</title>
+      <meta name="description" content="Get in touch with Eclectik. Subscribe to our newsletter for insights that matter or contact us directly to start your AI transformation." />
 
       <section className="relative py-16 lg:py-24 overflow-hidden">
         {/* Flat light canvas — the old beacon rings only read on the dark theme. */}

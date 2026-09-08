@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
-import { Helmet } from "react-helmet-async";
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
 import { trackCTAClick, trackDoorSelected } from "@/lib/tracking";
@@ -152,53 +151,12 @@ export default function Home() {
 
   return (
     <div className="relative bg-white text-ec-navy font-brand font-light">
-      <Helmet>
-        <title>Eclectik | Independent AI Transformation Assurance</title>
-
-        {/* Organization Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Eclectik",
-            alternateName: "Eclectik AI Transformation",
-            url: "https://www.eclectik.co",
-            logo: "https://www.eclectik.co/images/eclectik-logo-dark.svg",
-            description:
-              "Eclectik is an independent AI transformation assurance firm. We prove whether AI transformation delivers value in the P&L and change in the workforce.",
-            contactPoint: {
-              "@type": "ContactPoint",
-              email: "info@eclectik.co",
-              contactType: "Customer Service",
-            },
-            sameAs: [
-              "https://www.linkedin.com/company/eclectik",
-              "https://www.instagram.com/eclectik",
-              "https://www.youtube.com/@eclectik",
-            ],
-          })}
-        </script>
-
-        {/* Professional Service Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ProfessionalService",
-            name: "Eclectik AI Transformation Assurance",
-            image: "https://www.eclectik.co/images/eclectik-logo-dark.svg",
-            description:
-              "Independent assurance on AI transformation: proof of value in the P&L and proof of change in the workforce.",
-            url: "https://www.eclectik.co",
-            serviceType: [
-              "AI Transformation Assurance",
-              "AI Value Measurement",
-              "Workplace Analytics",
-              "Change Management",
-              "AI Training & Enablement",
-            ],
-          })}
-        </script>
-      </Helmet>
+      <title>Eclectik | Independent AI Transformation Assurance</title>
+      <meta
+        name="description"
+        content="Independent assurance on AI transformation: proof of value in the P&amp;L and proof of change in the workforce. We measure whether the investment paid off and whether the organisation actually changed."
+      />
+      <link rel="canonical" href="https://www.eclectik.co/" />
 
       <SiteHeader variant="overlay" />
 

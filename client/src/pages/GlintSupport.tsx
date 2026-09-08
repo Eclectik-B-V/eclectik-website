@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import { Helmet } from "react-helmet-async";
 import Layout from "@/components/Layout";
 import { trackCTAClick } from "@/lib/tracking";
 
@@ -179,13 +178,11 @@ function Quote({
 export default function GlintSupport() {
   return (
     <Layout>
-      <Helmet>
-        <title>Glint Support | Eclectik</title>
-        <meta
-          name="description"
-          content="Independent Customer Success, People Science and change management for organisations running Viva Glint. Survey and cycle design, manager enablement, and turning results into movement."
-        />
-      </Helmet>
+      <title>Glint Support | Eclectik</title>
+      <meta
+        name="description"
+        content="Independent Customer Success, People Science and change management for organisations running Viva Glint. Survey and cycle design, manager enablement, and turning results into movement."
+      />
 
       <div className="bg-white text-ec-navy font-brand font-light">
         {/* Opening: the problem the reader already has */}

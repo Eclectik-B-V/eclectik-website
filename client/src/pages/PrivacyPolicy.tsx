@@ -1,13 +1,10 @@
 import Layout from "@/components/Layout";
-import { Helmet } from "react-helmet-async";
 
 export default function PrivacyPolicy() {
   return (
     <Layout>
-      <Helmet>
-        <title>Privacy Policy - Eclectik</title>
-        <meta name="description" content="Privacy Policy for Eclectik BV. Learn how we collect, use, store, and protect your personal data." />
-      </Helmet>
+      <title>Privacy Policy - Eclectik</title>
+      <meta name="description" content="Privacy Policy for Eclectik BV. Learn how we collect, use, store, and protect your personal data." />
       
       <div className="bg-white pt-14 pb-20 lg:pt-20 lg:pb-24">
         <div className="container max-w-4xl mx-auto px-4">

@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import { ArrowRight, BarChart3, Users, Zap, Target, LineChart } from "lucide-react";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 
 export default function Consulting() {
@@ -50,10 +49,8 @@ export default function Consulting() {
 
   return (
     <Layout>
-      <Helmet>
-        <title>Consulting | Eclectik</title>
-        <meta name="description" content="Operationalize Workplace Signals to answer 'what if?' with 'we can'. Our consulting services include AI ROI modelling, value pockets mapping, and change architecture." />
-      </Helmet>
+      <title>Consulting | Eclectik</title>
+      <meta name="description" content="Operationalize Workplace Signals to answer 'what if?' with 'we can'. Our consulting services include AI ROI modelling, value pockets mapping, and change architecture." />
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-white py-16 lg:py-24">
         {/* Top Right Image */}

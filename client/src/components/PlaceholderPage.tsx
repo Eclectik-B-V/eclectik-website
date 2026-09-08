@@ -1,5 +1,4 @@
 import Layout from "@/components/Layout";
-import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import { POSITIONING_TAGLINE } from "@shared/const";
 import { Button } from "@/components/ui/button";
@@ -14,10 +13,8 @@ interface PlaceholderPageProps {
 export default function PlaceholderPage({ title, heading, description, cta }: PlaceholderPageProps) {
   return (
     <Layout>
-      <Helmet>
-        <title>{title} | Eclectik</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      <title>{`${title} | Eclectik`}</title>
+      <meta name="robots" content="noindex" />
       <section className="bg-white min-h-[70vh] flex items-center py-16 lg:py-24">
         <div className="container max-w-3xl">
           <div className="mb-6 flex items-center gap-3">

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Layout from "@/components/Layout";
 import WaitlistForm from "@/components/WaitlistForm";
-import { Helmet } from "react-helmet-async";
 import { POSITIONING_TAGLINE } from "@shared/const";
 
 export default function Benchmark() {
@@ -17,13 +16,11 @@ export default function Benchmark() {
 
   return (
     <Layout>
-      <Helmet>
-        <title>The AI Transformation Benchmark | Eclectik</title>
-        <meta
-          name="description"
-          content="Standardised KPIs, process-level measurement and peer comparison for AI transformation. Opens September 2026 — join the waiting list."
-        />
-      </Helmet>
+      <title>The AI Transformation Benchmark | Eclectik</title>
+      <meta
+        name="description"
+        content="Standardised KPIs, process-level measurement and peer comparison for AI transformation. Opens September 2026 — join the waiting list."
+      />
 
       {/* Hero — solid background, no image */}
       <section className="bg-white pt-16 lg:pt-20 pb-16">
