@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
 import { z } from "zod";
+import { sanitizeSubject } from "./_mail-subject.js";
 
 const BodySchema = z.object({
   firstName: z.string().trim().min(1).max(100),
@@ -48,7 +49,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       from,
       to,
       replyTo: email,
-      subject: `Nieuw contactformulier: ${firstName} ${lastName}${company ? ` (${company})` : ""}`,
+      // sanitizeSubject, not escapeHtml: a subject is a header field, so the
+      // risk is a newline in a name, not an unescaped angle bracket.
+      subject: sanitizeSubject(
+        `Nieuw contactformulier: ${firstName} ${lastName}${company ? ` (${company})` : ""}`
+      ),
       html: `
         <h2>Nieuw bericht via het contactformulier</h2>
         <p><strong>Naam:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>

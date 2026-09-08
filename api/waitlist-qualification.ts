@@ -3,12 +3,21 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { isWorkEmail } from "../shared/work-email.js";
 import {
-  BANK_VERSION, WAITLIST_QUESTIONS, validateWaitlistAnswers,
+  BANK_VERSION,
+  WAITLIST_QUESTIONS,
+  validateWaitlistAnswers,
 } from "../shared/waitlist-qualification.js";
 
 const BodySchema = z.object({
-  email: z.string().trim().email().max(200).refine(isWorkEmail, "work email required"),
-  answers: z.record(z.string(), z.string().max(200)).refine(validateWaitlistAnswers, "invalid answers"),
+  email: z
+    .string()
+    .trim()
+    .email()
+    .max(200)
+    .refine(isWorkEmail, "work email required"),
+  answers: z
+    .record(z.string(), z.string().max(200))
+    .refine(validateWaitlistAnswers, "invalid answers"),
   src: z.string().trim().max(100).optional(),
 });
 
@@ -20,6 +29,9 @@ function escapeHtml(str: string): string {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
+/** A hanging CRM must not hold the function open until Vercel kills it. */
+const CRM_TIMEOUT_MS = 8_000;
 
 /**
  * Forward the qualification answers as a signal to the CRM. The CRM endpoint
@@ -33,9 +45,12 @@ async function sendCrmSignal(data: z.infer<typeof BodySchema>) {
     console.warn("CRM env vars not set — skipping website-signal");
     return;
   }
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), CRM_TIMEOUT_MS);
   try {
     const r = await fetch(`${base}/api/website-signal`, {
       method: "POST",
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
         "x-webhook-secret": secret,
@@ -50,10 +65,18 @@ async function sendCrmSignal(data: z.infer<typeof BodySchema>) {
       }),
     });
     if (!r.ok) {
-      console.error("CRM website-signal failed:", r.status, await r.text().catch(() => ""));
+      console.error(
+        "CRM website-signal failed:",
+        r.status,
+        await r.text().catch(() => "")
+      );
     }
   } catch (err) {
+    // Includes the AbortError thrown when CRM_TIMEOUT_MS expires: same path as
+    // any other failed call — log and continue.
     console.error("CRM website-signal error:", err);
+  } finally {
+    clearTimeout(timer);
   }
 }
 
@@ -80,14 +103,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const to = process.env.CONTACT_TO_EMAIL;
 
   if (!apiKey || !from || !to) {
-    console.error("Missing Resend env vars — skipping qualification notification");
+    console.error(
+      "Missing Resend env vars — skipping qualification notification"
+    );
     return res.status(200).json({ ok: true });
   }
 
   try {
     const resend = new Resend(apiKey);
     const rows = WAITLIST_QUESTIONS.map(
-      (q) => `<p><strong>${escapeHtml(q.text)}</strong><br/>${escapeHtml(data.answers[q.id])}</p>`,
+      q =>
+        `<p><strong>${escapeHtml(q.text)}</strong><br/>${escapeHtml(data.answers[q.id])}</p>`
     ).join("\n");
     const { error } = await resend.emails.send({
       from,
