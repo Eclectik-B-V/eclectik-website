@@ -72,6 +72,46 @@ delen met Workvivo by Zoom.
 - De "Privacy Policy"-link uit de mockup wijst naar `https://www.eclectik.co` en
   gaat naar `/privacy-policy`.
 
+#### De toestemmingstekst
+
+Workvivo heeft deze tekst aangeleverd en die wordt letterlijk overgenomen:
+
+> By ticking this box, you authorize us to share your personal details with
+> Workvivo by Zoom to process your request and provide relevant updates or
+> services. Your information will be handled securely and in accordance with our
+> Privacy Policy, and you may withdraw your consent at any time.
+
+Twee bezwaren, vastgelegd omdat ze een gesprek met Workvivo vragen en niet
+eenzijdig in het formulier opgelost mogen worden.
+
+**Eén vinkje voor twee dingen.** De tekst dekt zowel "to process your request",
+nodig om iemand op de gastenlijst te zetten, als "provide relevant updates or
+services", wat marketing is. Het vinkje is verplicht om te kunnen versturen, dus
+wie alleen naar het event wil moet ook marketing accepteren. Toestemming moet
+vrij gegeven zijn en deelname mag niet afhangen van iets dat voor die deelname
+niet nodig is.
+
+**"our Privacy Policy" is dubbelzinnig.** Het formulier staat op eclectik.co, dus
+een lezer denkt aan Eclectik. De tekst komt van Workvivo, waar "our" hun eigen
+verklaring betekent. Zodra Workvivo de gegevens heeft geldt hun beleid voor wat
+zij ermee doen.
+
+De gesplitste variant staat als uitgecommentarieerd blok in de pagina, klaar om
+aan te zetten zodra Eclectik en Workvivo eruit zijn:
+
+- Verplicht: "I agree that Eclectik shares my registration details with Workvivo
+  by Zoom, so that both organisers can process my registration and contact me
+  about this event."
+- Optioneel: "Workvivo by Zoom and Eclectik may also send me updates about their
+  products and services. I can withdraw this at any time."
+
+Met daaronder een link naar `/privacy-policy` en naar de privacyverklaring van
+Workvivo, zodat duidelijk is welke verklaring waarover gaat.
+
+Bij de gesplitste variant blijft `consent` in de API-payload staan voor het
+verplichte deel, en komt er een tweede veld `consentMarketing` bij dat in de
+vrije payload van het CRM landt.
+
 ### 3. `api/event-registration.ts`
 
 Volgt het patroon van de bestaande handlers: zod-validatie, `sanitizeSubject`,
