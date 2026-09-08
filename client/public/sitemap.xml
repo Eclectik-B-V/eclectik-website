@@ -80,53 +80,11 @@
   </url>
 
   <!-- Case Studies -->
-  <url>
-    <loc>https://www.eclectik.co/case-studies/copilot-impact</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/case-studies/copilot-adoption</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/case-studies/glint-insights</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/case-studies/akkodis-power-platform</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/case-studies/microsoft-viva-transformation</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
   <!-- Services -->
 
   <!-- Training -->
 
   <!-- Resources -->
-  <url>
-    <loc>https://www.eclectik.co/resources/white-papers</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
   <!-- Legal Pages -->
   <url>
     <loc>https://www.eclectik.co/privacy-policy</loc>

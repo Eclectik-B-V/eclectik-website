@@ -11,6 +11,10 @@ export default function CaseStudyAkkodis() {
       <title>AKKODiS Power Platform in Japan | Eclectik</title>
       <meta name="description" content="How a 6,500-person engineering consultancy answered Japan's shrinking workforce with field-led innovation on Microsoft Power Platform and Copilot." />
       <link rel="canonical" href="https://www.eclectik.co/case-studies/akkodis-power-platform" />
+      {/* Buiten de H2-launch: niets in de nieuwe shell linkt hierheen en de
+          pagina staat nog in de oude ontwerptaal. Route blijft bestaan zodat
+          bestaande links niet stuklopen. Weghalen zodra hij herontworpen is. */}
+      <meta name="robots" content="noindex" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

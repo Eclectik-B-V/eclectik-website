@@ -10,6 +10,10 @@ export default function CaseStudyGlint() {
       <title>Viva Glint and Insights at Sage | Eclectik</title>
       <meta name="description" content="How Sage used Viva Glint and Viva Insights to see not just how employees felt but how work patterns shaped it, across a distributed hybrid workforce." />
       <link rel="canonical" href="https://www.eclectik.co/case-studies/glint-insights" />
+      {/* Buiten de H2-launch: niets in de nieuwe shell linkt hierheen en de
+          pagina staat nog in de oude ontwerptaal. Route blijft bestaan zodat
+          bestaande links niet stuklopen. Weghalen zodra hij herontworpen is. */}
+      <meta name="robots" content="noindex" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

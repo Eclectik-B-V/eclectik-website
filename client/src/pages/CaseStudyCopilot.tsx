@@ -10,6 +10,10 @@ export default function CaseStudyCopilot() {
       <title>Copilot ROI impact, measured | Eclectik</title>
       <meta name="description" content="An independent read on Microsoft Copilot365 at a Fortune Global 500 staffing firm: 200 employees over three to four months, and where the value landed." />
       <link rel="canonical" href="https://www.eclectik.co/case-studies/copilot-impact" />
+      {/* Buiten de H2-launch: niets in de nieuwe shell linkt hierheen en de
+          pagina staat nog in de oude ontwerptaal. Route blijft bestaan zodat
+          bestaande links niet stuklopen. Weghalen zodra hij herontworpen is. */}
+      <meta name="robots" content="noindex" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

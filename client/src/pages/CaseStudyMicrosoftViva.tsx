@@ -11,6 +11,10 @@ export default function CaseStudyMicrosoftViva() {
       <title>Microsoft Viva transformation | Eclectik</title>
       <meta name="description" content="Microsoft used its own Viva suite to run transformation across 220,000+ employees, with a human-centred approach to change rather than a tooling rollout." />
       <link rel="canonical" href="https://www.eclectik.co/case-studies/microsoft-viva-transformation" />
+      {/* Buiten de H2-launch: niets in de nieuwe shell linkt hierheen en de
+          pagina staat nog in de oude ontwerptaal. Route blijft bestaan zodat
+          bestaande links niet stuklopen. Weghalen zodra hij herontworpen is. */}
+      <meta name="robots" content="noindex" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

@@ -10,6 +10,10 @@ export default function CaseStudyAdoption() {
       <title>Copilot adoption at SACE | Eclectik</title>
       <meta name="description" content="How SACE moved from a hierarchical culture to a four-day workweek trial with Microsoft Copilot and Viva, with risk analysis cut from six hours to six minutes." />
       <link rel="canonical" href="https://www.eclectik.co/case-studies/copilot-adoption" />
+      {/* Buiten de H2-launch: niets in de nieuwe shell linkt hierheen en de
+          pagina staat nog in de oude ontwerptaal. Route blijft bestaan zodat
+          bestaande links niet stuklopen. Weghalen zodra hij herontworpen is. */}
+      <meta name="robots" content="noindex" />
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative bg-ec-cream py-20 overflow-hidden">

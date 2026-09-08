@@ -116,6 +116,10 @@ export default function WhitePapers() {
       <title>White papers and research | Eclectik</title>
       <meta name="description" content="Research on employee experience platforms, AI adoption and workplace signals, including Gallup's State of the Global Workplace and our AI readiness work." />
       <link rel="canonical" href="https://www.eclectik.co/resources/white-papers" />
+      {/* Buiten de H2-launch: niets in de nieuwe shell linkt hierheen en de
+          pagina staat nog in de oude ontwerptaal. Route blijft bestaan zodat
+          bestaande links niet stuklopen. Weghalen zodra hij herontworpen is. */}
+      <meta name="robots" content="noindex" />
       <div className="min-h-screen bg-white pt-16 lg:pt-20 pb-16">
         <div className="container mx-auto px-4">
           <motion.div 
