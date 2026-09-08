@@ -31,6 +31,8 @@ import Insights from "@/pages/Insights";
 import Scorecard from "@/pages/Scorecard";
 import ProofOfValue from "@/pages/ProofOfValue";
 import ProofOfChange from "@/pages/ProofOfChange";
+import EventAmsterdam2026 from "@/pages/EventAmsterdam2026";
+import EventAmsterdam2026Registrations from "@/pages/EventAmsterdam2026Registrations";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -63,6 +65,8 @@ function Router() {
       <Route path="/scorecard" component={Scorecard} />
       <Route path="/proof-of-value" component={ProofOfValue} />
       <Route path="/proof-of-change" component={ProofOfChange} />
+      <Route path="/events/amsterdam-2026" component={EventAmsterdam2026} />
+      <Route path="/events/amsterdam-2026/registrations" component={EventAmsterdam2026Registrations} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

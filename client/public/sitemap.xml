@@ -106,6 +106,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Events -->
+  <url>
+    <loc>https://www.eclectik.co/events/amsterdam-2026</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Legal Pages -->
   <url>
     <loc>https://www.eclectik.co/privacy-policy</loc>
