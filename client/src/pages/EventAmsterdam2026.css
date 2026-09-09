@@ -96,22 +96,14 @@
 .evt .mark {
   line-height: 1;
 }
-.evt .mark .word {
-  font-size: 34px;
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  background: var(--evt-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.evt .mark .sub {
+/* Het officiele logo van Workvivo als bestand. De mockup zette het merk na met
+   tekst plus een gradient-background-clip, waardoor het in Inter stond in
+   plaats van in het merkfont. Hoogte vast, breedte volgt de verhouding van het
+   bestand (400x183). */
+.evt .mark img {
   display: block;
-  font-size: 11px;
-  font-weight: 600;
-  color: #d4453f;
-  margin-top: -4px;
-  letter-spacing: 0.2px;
+  height: 42px;
+  width: auto;
 }
 .evt .topbar-meta {
   color: #1a1a2e;
@@ -202,11 +194,11 @@
   align-items: center;
   gap: 14px;
 }
-.evt .cover .brandrow .w {
-  font-size: 23px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  color: #fff;
+/* De witte versie: dit staat op het oranje-roze verloop. */
+.evt .cover .brandrow img {
+  display: block;
+  height: 46px;
+  width: auto;
 }
 .evt .cover .brandrow .t {
   font-size: 11px;
@@ -807,8 +799,8 @@
   .evt .topbar .wrap {
     gap: 10px;
   }
-  .evt .mark .word {
-    font-size: 28px;
+  .evt .mark img {
+    height: 34px;
   }
   .evt .topbar-meta {
     font-size: 12px;

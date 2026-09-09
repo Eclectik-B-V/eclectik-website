@@ -23,6 +23,12 @@ const PHOTOS = {
   marco: "/images/events/amsterdam-2026/marco-van-gelder.jpg",
 } as const;
 
+/** Officiele logobestanden, aangeleverd door Workvivo. */
+const LOGOS = {
+  seerGradient: "/images/events/amsterdam-2026/seer-logo-gradient.png",
+  seerWhite: "/images/events/amsterdam-2026/seer-logo-white.png",
+} as const;
+
 type SpeakerKey = keyof typeof PHOTOS;
 
 const SPEAKER_NAMES: Record<SpeakerKey, string> = {
@@ -348,8 +354,15 @@ export default function EventAmsterdam2026() {
         <div className="topbar">
           <div className="wrap">
             <div className="mark">
-              <span className="word">seer</span>
-              <span className="sub">by workvivo</span>
+              {/* Het officiele logobestand van Workvivo. De mockup zette dit na
+                  als tekst met een gradient-background-clip, wat het merk in
+                  het verkeerde font zette. */}
+              <img
+                src={LOGOS.seerGradient}
+                alt="Seer by Workvivo"
+                width={400}
+                height={183}
+              />
             </div>
             <div className="topbar-meta">Amsterdam · 6 October 2026</div>
           </div>
@@ -364,12 +377,15 @@ export default function EventAmsterdam2026() {
                 </h1>
               </div>
               <div className="brandrow">
-                <span className="w">seer</span>
-                <span className="t">
-                  by workvivo
-                  <br />
-                  with Eclectik
-                </span>
+                {/* Wit, want dit staat op het oranje-roze verloop. "with
+                    Eclectik" hoort niet in het Workvivo-logo en blijft tekst. */}
+                <img
+                  src={LOGOS.seerWhite}
+                  alt="Seer by Workvivo"
+                  width={400}
+                  height={183}
+                />
+                <span className="t">with Eclectik</span>
               </div>
             </div>
 
