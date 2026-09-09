@@ -18,6 +18,10 @@ const BodySchema = z.object({
   company: z.string().trim().min(1).max(200),
   jobTitle: z.string().trim().min(1).max(100),
   country: z.string().trim().min(1).max(100),
+  // A closed set, not a free string: the value is written straight into the CRM
+  // payload, and the point of the field is that the two organisers can split
+  // the guest list. Keep in sync with INVITED_BY in the page component.
+  invitedBy: z.enum(["Eclectik", "Zoom/Workvivo", "Other"]),
   phone: z.string().trim().max(50).optional(),
   // z.literal(true), not z.boolean() as in api/scorecard.ts: the box on this
   // form is consent to share the registration with Workvivo by Zoom, which is
@@ -84,6 +88,7 @@ async function sendCrmSignal(data: Body): Promise<boolean> {
         eventName: EVENT_NAME,
         eventDate: EVENT_DATE,
         country: data.country,
+        invitedBy: data.invitedBy,
         phone: data.phone,
         consentWorkvivo: true,
         // `sector` is deliberately absent: this form does not ask for it, and
@@ -178,6 +183,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
         <p><strong>Job title:</strong> ${escapeHtml(data.jobTitle)}</p>
         <p><strong>Country:</strong> ${escapeHtml(data.country)}</p>
+        <p><strong>Invited by:</strong> ${escapeHtml(data.invitedBy)}</p>
         ${data.phone ? `<p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>` : ""}
         <p><strong>Consent to share with Workvivo by Zoom:</strong> yes</p>
         ${data.src ? `<p><strong>Source:</strong> ${escapeHtml(data.src)}</p>` : ""}

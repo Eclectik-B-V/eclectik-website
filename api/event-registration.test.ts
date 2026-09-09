@@ -31,6 +31,7 @@ const validBody = (overrides: Record<string, unknown> = {}) => ({
   company: "Acme BV",
   jobTitle: "CFO",
   country: "Netherlands",
+  invitedBy: "Eclectik",
   phone: "+31 6 12345678",
   consent: true,
   src: "event-hero",
@@ -102,6 +103,14 @@ describe("api/event-registration — body validation", () => {
     ["missing country", validBody({ country: undefined })],
     ["blank country", validBody({ country: "  " })],
     ["country over 100 chars", validBody({ country: "a".repeat(101) })],
+    ["missing invitedBy", validBody({ invitedBy: undefined })],
+    ["blank invitedBy", validBody({ invitedBy: "" })],
+    // A closed set: anything outside the three options is rejected rather than
+    // written into the CRM payload.
+    ["invitedBy off the list", validBody({ invitedBy: "LinkedIn" })],
+    ["invitedBy in the wrong case", validBody({ invitedBy: "eclectik" })],
+    ["invitedBy with padding", validBody({ invitedBy: " Eclectik " })],
+    ["invitedBy as a number", validBody({ invitedBy: 1 })],
     ["phone over 50 chars", validBody({ phone: "1".repeat(51) })],
     ["phone as a number", validBody({ phone: 31612345678 })],
     ["src over 100 chars", validBody({ src: "a".repeat(101) })],
@@ -236,11 +245,21 @@ describe("api/event-registration — CRM signal", () => {
       eventName: "AI Transformation: Measure It. Steer It. Prove It.",
       eventDate: "2026-10-06",
       country: "Netherlands",
+      invitedBy: "Eclectik",
       phone: "+31 6 12345678",
       consentWorkvivo: true,
       src: "event-hero",
     });
   });
+
+  it.each(["Eclectik", "Zoom/Workvivo", "Other"])(
+    "accepts %s as invitedBy and forwards it verbatim",
+    async (option) => {
+      const res = await invoke(handler, { body: validBody({ invitedBy: option }) });
+      expect(res.status).toBe(200);
+      expect(JSON.parse(fetchMock.mock.calls[0][1].body).invitedBy).toBe(option);
+    }
+  );
 
   it("does not send sector, which this form never asks for", async () => {
     await invoke(handler, { body: validBody() });

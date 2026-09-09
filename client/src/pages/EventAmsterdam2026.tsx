@@ -134,6 +134,14 @@ const COUNTRIES = [
   "Other",
 ];
 
+/**
+ * Wie de gast heeft uitgenodigd. Het event wordt door twee partijen
+ * georganiseerd en die pushen het allebei naar hun eigen relaties, dus achteraf
+ * wil je weten welke kant een aanmelding vandaan kwam. Los van `src`, dat de
+ * automatische attributie uit de url is.
+ */
+const INVITED_BY = ["Eclectik", "Zoom/Workvivo", "Other"];
+
 type Phase = "before" | "during" | "after";
 
 interface Clock {
@@ -230,6 +238,7 @@ const EMPTY_FORM = {
   company: "",
   jobTitle: "",
   country: "",
+  invitedBy: "",
   phone: "",
 };
 
@@ -278,6 +287,7 @@ export default function EventAmsterdam2026() {
           company: form.company.trim(),
           jobTitle: form.jobTitle.trim(),
           country: form.country,
+          invitedBy: form.invitedBy,
           ...(phone ? { phone } : {}),
           consent: true,
           src: getAttribution(),
@@ -666,6 +676,27 @@ export default function EventAmsterdam2026() {
                       {COUNTRIES.map((country) => (
                         <option key={country} value={country}>
                           {country}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="fld">
+                    <label htmlFor="evt-invited-by">
+                      Invited by <span className="req">*</span>
+                    </label>
+                    <select
+                      id="evt-invited-by"
+                      name="invitedBy"
+                      required
+                      value={form.invitedBy}
+                      onChange={field("invitedBy")}
+                    >
+                      <option value="" disabled>
+                        Select an organiser
+                      </option>
+                      {INVITED_BY.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
                         </option>
                       ))}
                     </select>
