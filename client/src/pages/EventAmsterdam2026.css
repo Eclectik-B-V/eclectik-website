@@ -602,6 +602,20 @@
   appearance: none;
   -webkit-appearance: none;
 }
+/* Op een telefoon zoomt Safari automatisch in zodra een veld focus krijgt en
+   het lettertype kleiner is dan 16px. Bij zeven velden achter elkaar betekent
+   dat zeven keer inzoomen en terugknijpen, precies op het formulier waar het
+   verkeer binnenkomt. Vandaar 16px hier, en meteen tikdoelen van 46px in
+   plaats van de 43px die de mockup opleverde. Boven 900px blijft de 13,5px uit
+   het ontwerp staan. */
+@media (max-width: 900px) {
+  .evt .fld input,
+  .evt .fld select {
+    font-size: 16px;
+    min-height: 46px;
+    padding: 12px 13px;
+  }
+}
 .evt .fld input::placeholder {
   color: #7d84a8;
 }

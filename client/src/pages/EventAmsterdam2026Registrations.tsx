@@ -17,6 +17,7 @@ interface Registration {
   company?: string | null;
   role?: string | null;
   country?: string | null;
+  invited_by?: string | null;
   phone?: string | null;
   consent_workvivo?: boolean | null;
 }
@@ -63,6 +64,7 @@ const CSV_HEADERS = [
   "Role",
   "Email",
   "Country",
+  "Invited by",
   "Phone",
 ];
 
@@ -94,6 +96,7 @@ export function buildCsv(rows: Registration[]): string {
         row.role,
         row.email,
         row.country,
+        row.invited_by,
         row.phone,
       ]
         .map(csvCell)
@@ -376,6 +379,7 @@ export default function EventAmsterdam2026Registrations() {
                     <th className={thClass}>Role</th>
                     <th className={thClass}>Email</th>
                     <th className={thClass}>Country</th>
+                    <th className={thClass}>Invited by</th>
                     <th className={thClass}>Phone</th>
                   </tr>
                 </thead>
@@ -406,6 +410,7 @@ export default function EventAmsterdam2026Registrations() {
                         )}
                       </td>
                       <td className={tdClass}>{row.country || ""}</td>
+                      <td className={tdClass}>{row.invited_by || ""}</td>
                       <td className={`${tdClass} whitespace-nowrap`}>
                         {row.phone || ""}
                       </td>
