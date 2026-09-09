@@ -447,15 +447,20 @@ export default function Home() {
         <h2 className="font-brand tracking-normal font-extrabold text-[28px] text-white mb-4 text-pretty lg:text-[50px]">
           Is your AI transformation actually working?
         </h2>
+        {/* Tijdelijk, zie de comment bij dezelfde knop in SiteHeader.tsx. De
+            regel erboven ging over de wachtlijst en is meeveranderd, anders
+            belooft hij iets anders dan waar de knop heen gaat. Na 6 oktober
+            allebei terug naar de benchmarktekst. */}
         <p className="text-[16px] text-ec-on-dark-caption mb-7 lg:text-[18px]">
-          Join the benchmark waiting list. November seats open to the list first.
+          Come and find out on 6 October in Amsterdam. A free half-day working session with
+          Workvivo, and places are limited.
         </p>
         <Link
-          href="/benchmark"
-          onClick={() => trackCTAClick("Join the benchmark waiting list", "closing-cta")}
+          href="/events/amsterdam-2026"
+          onClick={() => trackCTAClick("Join the 6th Oct event", "closing-cta")}
           className={`${PILL} bg-ec-sky text-ec-navy inline-block px-[34px] py-4 text-[16px] hover:bg-[#54b4cb] focus-visible:outline-ec-sky`}
         >
-          Join the benchmark waiting list
+          Join the 6th Oct event
         </Link>
       </section>
 
