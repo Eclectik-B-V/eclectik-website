@@ -4,8 +4,6 @@ import { trackCTAClick } from "@/lib/tracking";
 
 const NAV_LINKS = [
   { name: "Consulting", href: "/consulting" },
-  { name: "Training", href: "/training" },
-  { name: "Solutions", href: "/solutions" },
 ];
 
 const PILL_BASE =

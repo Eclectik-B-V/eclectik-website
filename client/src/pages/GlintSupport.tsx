@@ -125,6 +125,36 @@ const CAPABILITIES = [
   },
 ];
 
+/**
+ * Verhuisd van de oude Solutions-pagina, die offline is gegaan omdat hij
+ * Microsoft-licenties verkocht terwijl de homepage belooft dat er geen
+ * licentie-omzet aan het antwoord hangt. De proposities zelf zijn blijven
+ * bestaan; de nieuwe formulering is van Marco en heeft de licentieverkoop
+ * eruit. Wat je hier draait, draait op de licentie die de klant zelf al heeft.
+ */
+const DELIVERY = [
+  {
+    title: "Programme design and launch",
+    body: "A full listening cycle stood up on the licence you already own: configuration, manager enablement and action tracking included.",
+  },
+  {
+    title: "Always-on listening during transformation",
+    body: "Lifecycle programmes, smart alerts and executive reporting.",
+  },
+  {
+    title: "Manager enablement",
+    body: "Action libraries, guided conversations and workflows so managers act without HR hand-holding.",
+  },
+  {
+    title: "Attrition risk monitoring",
+    body: "Index configuration, routing and intervention tracking.",
+  },
+  {
+    title: "Global survey delivery",
+    body: "Pre-translated questionnaires and multi-language rollout.",
+  },
+];
+
 // Client quotes, kept verbatim from the pages this one replaces. Each sits in
 // the section whose work it speaks to rather than in a wall of testimonials.
 const QUOTE = {
@@ -413,6 +443,33 @@ export default function GlintSupport() {
             </div>
 
             <Quote {...QUOTE.change} />
+          </div>
+        </section>
+
+        {/* What we run for you: verhuisd van de oude Solutions-pagina */}
+        <section className={`bg-ec-cream ${SECTION}`}>
+          <div className={INNER}>
+            <div className="max-w-[680px] mb-10">
+              <p className={EYEBROW}>What we run for you</p>
+              <h2 className="font-brand tracking-normal font-extrabold text-[28px] leading-[1.08] mb-3.5 text-pretty lg:text-[40px]">
+                On the licence you already own
+              </h2>
+              <p className="text-[17px] leading-[1.6] text-ec-body">
+                We do not sell you the platform and we do not resell the licence. These are the
+                things we run on the one you already have, whether that is a first cycle or a
+                programme that has been going for years.
+              </p>
+            </div>
+            <div className="grid gap-7 sm:grid-cols-2 md:gap-x-11 md:gap-y-9">
+              {DELIVERY.map((d) => (
+                <div key={d.title} className="border-t-[3px] border-ec-sky pt-6">
+                  <h3 className="font-brand tracking-normal font-semibold text-[19px] mb-2.5 text-ec-sky-ink">
+                    {d.title}
+                  </h3>
+                  <p className="text-[15px] leading-[1.65] text-ec-body">{d.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

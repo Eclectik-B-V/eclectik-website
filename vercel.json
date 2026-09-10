@@ -25,18 +25,28 @@
       "permanent": true
     },
     {
+      "source": "/training",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
       "source": "/training/people-success-academy",
-      "destination": "/training",
+      "destination": "/hrtechservices",
       "permanent": true
     },
     {
       "source": "/training/enablement",
-      "destination": "/training",
+      "destination": "/hrtechservices",
       "permanent": true
     },
     {
       "source": "/training/executive-coaching",
-      "destination": "/training",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/solutions",
+      "destination": "/hrtechservices",
       "permanent": true
     },
     {

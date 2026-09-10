@@ -160,15 +160,10 @@ export default function AboutUs() {
           <p className="text-xl text-ec-body mb-8 max-w-2xl mx-auto">
             Join the forward-thinking companies that are leveraging Eclectik's expertise to build AI-native, people-first cultures.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Link href="/contact">
               <Button size="lg" className="text-lg px-8 h-14">
                 Get in Touch <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-            <Link href="/solutions">
-              <Button variant="outline" size="lg" className="text-lg px-8 h-14">
-                Explore Solutions
               </Button>
             </Link>
           </div>

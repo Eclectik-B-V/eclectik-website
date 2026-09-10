@@ -2,8 +2,6 @@ import { Link } from "wouter";
 
 const SERVICES = [
   { name: "Consulting", href: "/consulting" },
-  { name: "Training", href: "/training" },
-  { name: "Solutions", href: "/solutions" },
 ];
 
 const COMPANY = [
