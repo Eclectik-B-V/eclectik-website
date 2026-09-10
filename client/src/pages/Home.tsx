@@ -179,15 +179,14 @@ export default function Home() {
         />
 
         <div className={`relative ${INNER} w-full px-6 pb-11 lg:px-16 lg:pb-0 lg:text-center shell:pt-[110px]`}>
-          <div className="inline-flex items-center gap-2.5 text-[15px] font-semibold tracking-[0.14em] uppercase text-ec-on-dark-eyebrow border border-ec-navy-line px-4 py-2 rounded-full mb-7">
-            <span className="w-[22px] h-px bg-ec-sky" aria-hidden="true" />
+          <div className="inline-flex items-center text-[15px] font-bold tracking-[0.14em] uppercase text-ec-on-dark-eyebrow border border-ec-navy-line px-4 py-2 rounded-full mb-7">
             <span className="lg:hidden">{POSITIONING_TAGLINE_SHORT}</span>
             <span className="hidden lg:inline">{POSITIONING_TAGLINE}</span>
           </div>
           <h1 className="font-brand font-extrabold text-[40px] leading-[1.04] tracking-[-0.02em] mb-6 max-w-[820px] lg:text-[68px] lg:leading-[1.02] lg:mx-auto text-pretty">
             Is your AI transformation <span className="text-ec-yellow">actually working?</span>
           </h1>
-          <p className="text-[19px] leading-[1.55] text-ec-on-dark-muted max-w-[600px] mb-9 lg:text-[21px] lg:mx-auto">
+          <p className="text-[19px] font-medium leading-[1.55] text-ec-on-dark-muted max-w-[600px] mb-9 lg:text-[21px] lg:mx-auto">
             We prove it. In the P&amp;L, and in your people.
           </p>
 

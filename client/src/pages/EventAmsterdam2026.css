@@ -475,14 +475,27 @@
   flex-direction: column;
   justify-content: space-between;
 }
+/* De seer-only wordmark, door Workvivo aangeleverd voor de plekken waar het
+   volledige lockup te klein wordt: op 17px hoog zou "by workvivo" zo'n 4px
+   worden en dus onleesbaar.
+   Het bestand is wit en de chip vraagt om de gradientvulling die de mockup hier
+   had. Vandaar een masker: de officiele letters blijven exact, en de vulling is
+   hetzelfde merkverloop dat Workvivo zelf op het lockup gebruikt. */
 .evt .thumb-in .lg {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  /* Breedte expliciet, niet via aspect-ratio: dit is een block in een
+     flexkolom, dus het vult de hele chipbreedte en dan zou het masker het merk
+     midden in die 166px centreren in plaats van links uitlijnen.
+     59px is 17 maal de verhouding van het bestand. */
+  display: block;
+  height: 17px;
+  width: 59px;
   background: var(--evt-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  -webkit-mask: url("/images/events/amsterdam-2026/seer-wordmark-white.png") no-repeat center /
+    contain;
+  mask: url("/images/events/amsterdam-2026/seer-wordmark-white.png") no-repeat center / contain;
+  /* De tekst blijft in de DOM voor schermlezers en valt hier buiten beeld. */
+  text-indent: -9999px;
+  overflow: hidden;
 }
 .evt .thumb-in .tt {
   font-size: 14.5px;
