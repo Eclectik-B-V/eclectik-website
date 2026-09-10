@@ -10,8 +10,6 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "@/pages/Home";
 import AboutUs from "@/pages/AboutUs";
 import Consulting from "./pages/Consulting";
-import Training from "./pages/Training";
-import Solutions from "@/pages/Solutions";
 import Contact from "@/pages/Contact";
 import TermsOfService from "@/pages/TermsOfService";
 import CookieSettings from "@/pages/CookieSettings";
@@ -42,8 +40,6 @@ function Router() {
       <Route path="/about" component={AboutUs} />
       <Route path="/about-us">{() => <Redirect to="/about" />}</Route>
       <Route path={"/consulting"} component={Consulting} />
-      <Route path={"/training"} component={Training} />
-      <Route path="/solutions" component={Solutions} />
       <Route path="/hrtechservices" component={HRTechServices} />
       <Route path="/glint-support" component={GlintSupport} />
       {/* /workvivo is the destination for the Workvivo partner-directory link. */}
