@@ -121,7 +121,7 @@ GA4 en GTM via de bestaande `trackEvent`, met twee events in
 `client/src/lib/tracking.ts`:
 
 - `ms_page_viewed` bij binnenkomst
-- `ms_cta_clicked` met een `cta`-label per knop (`hero_email`,
+- `ms_cta_clicked` met een `cta`-label per knop (`hero_bookings`,
   `hero_see_what_we_deliver`, `cta_email`, `cta_bookings`)
 
 Beide dragen `event_category: "microsoft_sellers"` en de `src` uit de URL.
