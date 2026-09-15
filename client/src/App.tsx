@@ -31,6 +31,7 @@ import ProofOfValue from "@/pages/ProofOfValue";
 import ProofOfChange from "@/pages/ProofOfChange";
 import EventAmsterdam2026 from "@/pages/EventAmsterdam2026";
 import EventAmsterdam2026Registrations from "@/pages/EventAmsterdam2026Registrations";
+import MicrosoftSellers from "@/pages/MicrosoftSellers";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -63,6 +64,11 @@ function Router() {
       <Route path="/proof-of-change" component={ProofOfChange} />
       <Route path="/events/amsterdam-2026" component={EventAmsterdam2026} />
       <Route path="/events/amsterdam-2026/registrations" component={EventAmsterdam2026Registrations} />
+      {/* /microsoft is the landing page for the link we mail to Microsoft
+          sellers. Deliberately absent from SiteHeader, from sitemap.xml and
+          from robots.txt: reachable only by the people we send the URL to.
+          noindex is enforced by the X-Robots-Tag header in vercel.json. */}
+      <Route path="/microsoft" component={MicrosoftSellers} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

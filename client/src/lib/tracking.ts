@@ -166,7 +166,18 @@ export function initAttribution() {
 export function getAttribution(): string | undefined {
   if (typeof window === "undefined") return undefined;
   try {
-    return sessionStorage.getItem(ATTRIBUTION_KEY) || undefined;
+    const stored = sessionStorage.getItem(ATTRIBUTION_KEY);
+    if (stored) return stored;
+  } catch {
+    // sessionStorage unavailable — fall through to the URL below
+  }
+  // Fall back to the URL itself. initAttribution() runs in an effect on App,
+  // and React runs child effects before parent ones, so a page that reports an
+  // event on mount asks for the attribution before App has stored it. Every
+  // caller so far read it on submit, long after mount, which hid this; the
+  // page-view event on /microsoft is the first that does not.
+  try {
+    return new URLSearchParams(window.location.search).get("src")?.slice(0, 100) || undefined;
   } catch {
     return undefined;
   }
@@ -215,4 +226,22 @@ export function trackScorecard(
 ) {
   trackEvent(event, { event_category: "scorecard", src: getAttribution(), ...params });
   if (event === "sc_email_submitted") trackLinkedInConversion();
+}
+
+/**
+ * Microsoft sellers landing page (/microsoft): ms_page_viewed on arrival,
+ * ms_cta_clicked with a `cta` label on each button.
+ *
+ * The page is reached only through the link we mail, so `src` is what ties a
+ * visit back to a campaign. Per-recipient attribution is not read here: the
+ * mail platform already logs clicks per recipient, and connecting a CTA press
+ * to a named seller needs the CRM to accept a recipient token instead of an
+ * email address, which api/website-signal does not do today.
+ */
+export function trackMicrosoftPage(
+  event: "ms_page_viewed" | "ms_cta_clicked",
+  params?: Record<string, any>,
+) {
+  trackEvent(event, { event_category: "microsoft_sellers", src: getAttribution(), ...params });
+  if (event === "ms_cta_clicked") trackLinkedInConversion();
 }
