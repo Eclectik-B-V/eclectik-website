@@ -182,12 +182,21 @@ Ze staan ook als comment bovenaan `MicrosoftSellers.tsx`.
 Uit de Microsoft-slide "Frontier Accelerate for Copilot" is alleen de opbouw van
 de tabel overgenomen. Geen bedragen, geen tiernamen, geen opmaak.
 
-## 8. De tweede CTA
+## 8. Waar de knoppen heen gaan
 
-"Pick a slot" wijst naar Marco's Microsoft Bookings-pagina, met
-`target="_blank"` en `rel="noopener noreferrer"`. De klik logt als
-`ms_cta_clicked` met `cta: "cta_bookings"`, dus in GA4 is te zien welke van de
-twee routes sellers kiezen.
+Twee knoppen wijzen naar Marco's Microsoft Bookings-pagina, allebei met
+`target="_blank"` en `rel="noopener noreferrer"`: "Book a 20-minute intro" in
+de hero en "Pick a slot" onderaan. "Email Marco" onderaan is de mailto met een
+vaste onderwerpregel.
 
-`BOOKINGS_URL` leegmaken haalt de knop weg in plaats van een dode link achter
-te laten. Dat blijft zo, voor het geval de Bookings-pagina ooit verdwijnt.
+De hero-knop stond eerst op de mailto, omdat de briefing de Bookings-link
+alleen bij de tweede CTA noemt. Maar er staat "book" op de knop, dus daar hoort
+de agenda achter en niet een mailvenster.
+
+De twee knoppen gedragen zich verschillend als `BOOKINGS_URL` leeg is. Onderaan
+verdwijnt "Pick a slot" dan, want daar staat "Email Marco" al naast. De
+hero-knop valt terug op de mailto, want de hero mag niet zonder primaire actie
+komen te staan.
+
+Elke knop logt zijn eigen label (`hero_bookings`, `hero_see_what_we_deliver`,
+`cta_email`, `cta_bookings`), dus in GA4 is te zien welke route sellers kiezen.

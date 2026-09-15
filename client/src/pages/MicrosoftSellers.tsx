@@ -229,10 +229,15 @@ export default function MicrosoftSellers() {
                 where your next deal starts.
               </p>
               <div className="msl-actions">
+                {/* The label says "book", so it opens Bookings. It falls back
+                    to the mailto rather than disappearing the way the second
+                    CTA does: the hero cannot be left without a primary action. */}
                 <a
                   className="msl-btn msl-btn-primary"
-                  href={MAILTO}
-                  onClick={() => onCta("hero_email")}
+                  href={BOOKINGS_URL || MAILTO}
+                  target={BOOKINGS_URL ? "_blank" : undefined}
+                  rel={BOOKINGS_URL ? "noopener noreferrer" : undefined}
+                  onClick={() => onCta(BOOKINGS_URL ? "hero_bookings" : "hero_email")}
                 >
                   Book a 20-minute intro
                 </a>
