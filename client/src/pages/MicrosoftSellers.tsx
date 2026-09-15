@@ -25,10 +25,11 @@ import "./MicrosoftSellers.css";
  *
  * BEFORE THIS GOES LIVE (briefing paragraph 7, in Marco's words "belangrijker
  * dan de vormgeving"):
- *  1. Consent for the quote. QUOTE_APPROVED below is the switch; leave it false
- *     until the Microsoft AE has explicitly agreed to a web page, not just to
- *     the one-to-one mail. Country plus sector plus month is traceable to one
- *     person for an insider.
+ *  1. Consent for the quote. Cleared: Olivier confirmed approval on
+ *     15 September 2026 and QUOTE_APPROVED is now true. The quote and its
+ *     attribution are live. Note that country plus sector plus month is
+ *     traceable to one person for an insider, so any change to the attribution
+ *     line needs the same approval again.
  *  2. No client names. Not the insurer, not LHH, not RS, not in unnamed form.
  *  3. No numbers. No result percentage and no amount until the baseline is
  *     confirmed internally, and then as a ratio only.
@@ -38,12 +39,12 @@ import "./MicrosoftSellers.css";
  */
 
 /**
- * Paragraph 7.1 is a blocker, not a wish. While this is false the proof block
- * drops the quotation and the attribution and keeps only the three
- * characteristics, which is the fallback the briefing prescribes. Flip to true
- * once the AE has agreed in writing.
+ * Approved on 15 September 2026, so the proof block carries the AE's quote and
+ * its attribution. Setting this back to false swaps in the fallback the
+ * briefing prescribes: the three characteristics, without quotation marks and
+ * without the attribution line.
  */
-const QUOTE_APPROVED = false;
+const QUOTE_APPROVED = true;
 
 /**
  * Bookings link for the second CTA, Marco's Microsoft Bookings page. Empty

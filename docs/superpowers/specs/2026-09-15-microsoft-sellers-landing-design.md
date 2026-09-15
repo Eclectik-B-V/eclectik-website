@@ -163,12 +163,14 @@ aanroepers lazen hem pas bij submit, lang na mount, waardoor dit nooit opviel.
 Paragraaf 7 van de briefing, in Marco's woorden belangrijker dan de vormgeving.
 Ze staan ook als comment bovenaan `MicrosoftSellers.tsx`.
 
-1. **Akkoord op het citaat.** `QUOTE_APPROVED` in de component staat op `false`.
-   Zolang dat zo is toont het bewijsblok de drie kenmerken zonder aanhalingstekens
-   en zonder attributie, precies de terugvaloptie die de briefing voorschrijft.
-   De pagina kan dus live zonder het citaat. Op `true` zetten zodra de AE
-   schriftelijk akkoord is voor een webpagina, wat iets anders is dan akkoord
-   voor een één-op-één mail.
+1. **Akkoord op het citaat.** Geregeld. Olivier bevestigde het akkoord op
+   15 september 2026, `QUOTE_APPROVED` staat op `true` en het bewijsblok draagt
+   het citaat met attributie. De schakelaar blijft staan: op `false` komt de
+   terugvaloptie uit de briefing terug, de drie kenmerken zonder
+   aanhalingstekens en zonder attributie. De regel "Switzerland, large US
+   insurance account, June 2026" is voor een insider herleidbaar tot één persoon
+   en één klant, dus een wijziging aan die attributie vraagt hetzelfde akkoord
+   opnieuw.
 2. **Geen klantnamen.** Staan er niet op, ook niet omschreven.
 3. **Geen cijfers.** Geen resultaatpercentage en geen bedrag. De tabel bevat
    alleen seat-aantallen als accountindicatie.
