@@ -139,13 +139,24 @@
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  padding-block: 22px 0;
+  /* The bottom padding is not decoration: the hero section below draws the
+     first hairline, and without room here that rule sits against the logo. */
+  padding-block: 24px 22px;
 }
 
+/* Same size as the site header, which runs 58px on desktop and 40px on the
+   compact bar. The logo carries a tagline under the wordmark that turns to
+   mush below roughly 50px. */
 .msl-logo {
-  height: 40px;
+  height: 58px;
   width: auto;
   display: block;
+}
+
+@media (max-width: 640px) {
+  .msl-logo {
+    height: 40px;
+  }
 }
 
 /* Two logo files, one per theme: the wordmark is artwork, not text, so it
