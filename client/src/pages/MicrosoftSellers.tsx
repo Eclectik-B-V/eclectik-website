@@ -46,11 +46,12 @@ import "./MicrosoftSellers.css";
 const QUOTE_APPROVED = false;
 
 /**
- * Bookings link for the second CTA. Empty means the button does not render:
- * a dead "Pick a slot" costs more than one missing button. Fill in the real
- * Bookings URL to switch it on.
+ * Bookings link for the second CTA, Marco's Microsoft Bookings page. Empty
+ * means the button does not render: a dead "Pick a slot" costs more than one
+ * missing button.
  */
-const BOOKINGS_URL = "";
+const BOOKINGS_URL =
+  "https://bookings.cloud.microsoft/book/MeetingwithMarco@eclectik.co/?ismsaljsauthenabled";
 
 const MAILTO =
   "mailto:marco@eclectik.co" +

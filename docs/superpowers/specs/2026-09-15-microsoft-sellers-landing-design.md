@@ -180,8 +180,12 @@ Ze staan ook als comment bovenaan `MicrosoftSellers.tsx`.
 Uit de Microsoft-slide "Frontier Accelerate for Copilot" is alleen de opbouw van
 de tabel overgenomen. Geen bedragen, geen tiernamen, geen opmaak.
 
-## 8. Open punt
+## 8. De tweede CTA
 
-De tweede CTA "Pick a slot" heeft een Bookings-URL nodig. `BOOKINGS_URL` in de
-component is leeg en de knop rendert dan niet, zodat er geen dode link op de
-pagina staat. Zodra de URL er is, is het één regel.
+"Pick a slot" wijst naar Marco's Microsoft Bookings-pagina, met
+`target="_blank"` en `rel="noopener noreferrer"`. De klik logt als
+`ms_cta_clicked` met `cta: "cta_bookings"`, dus in GA4 is te zien welke van de
+twee routes sellers kiezen.
+
+`BOOKINGS_URL` leegmaken haalt de knop weg in plaats van een dode link achter
+te laten. Dat blijft zo, voor het geval de Bookings-pagina ooit verdwijnt.
