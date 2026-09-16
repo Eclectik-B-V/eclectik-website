@@ -1172,90 +1172,147 @@ git commit -m "feat: load LinkedIn Insight Tag only after marketing consent"
 **Files:**
 - Modify: `client/src/pages/CookieSettings.tsx`
 
-De pagina schrijft nu alleen een `console.log`. De opmaak blijft ongewijzigd, alleen de logica verandert.
+De pagina schreef alleen een `console.log`. Dit is de wettelijk vereiste intrekroute: toestemming
+intrekken moet even makkelijk zijn als geven. Daarom krijgt de pagina niet alleen werkende opslag,
+maar ook een waarschuwing bij niet-opgeslagen wijzigingen en knoppen die in een klik alles
+accepteren of weigeren, net als de banner. Zonder dat toont de pagina een schakelaar die omgaat
+terwijl er niets is vastgelegd, en dat is precies de verkeerde belofte op deze pagina.
 
-- [ ] **Step 1: Vervang de imports bovenin het bestand**
+De opmaak van de vier kaarten blijft ongewijzigd. De `essential`-schakelaar staat hardcoded op
+`checked={true} disabled={true}` en blijft zo, want essentieel is nooit optioneel en zit daarom
+bewust niet in `ConsentCategories`.
 
-Het bestand begint nu met:
-
-```tsx
-import Layout from "@/components/Layout";
-import { Helmet } from "react-helmet-async";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Cookie, Shield, BarChart3, Megaphone } from "lucide-react";
-```
-
-Vervang dat blok door:
+- [ ] **Step 1: Vervang alles boven `return (`**
 
 ```tsx
 import Layout from "@/components/Layout";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Cookie, Shield, BarChart3, Megaphone } from "lucide-react";
 import { toast } from "sonner";
 import { useConsent } from "@/contexts/ConsentContext";
-import { DENY_ALL, type ConsentCategories } from "@/lib/consent";
-```
+import { ACCEPT_ALL, DENY_ALL, type ConsentCategories } from "@/lib/consent";
 
-- [ ] **Step 2: Vervang de state en handlers**
-
-Het huidige blok is:
-
-```tsx
 export default function CookieSettings() {
-  const [preferences, setPreferences] = useState({
-    essential: true,
-    analytics: true,
-    marketing: false,
-    functional: true
-  });
-
-  const handleToggle = (key: keyof typeof preferences) => {
-    if (key === 'essential') return; // Essential cookies cannot be disabled
-    setPreferences(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-  };
-
-  const handleSave = () => {
-    // In a real implementation, this would save to localStorage or a cookie management system
-    console.log("Saving cookie preferences:", preferences);
-    // Show success message or toast here
-  };
-```
-
-Vervang dat door:
-
-```tsx
-export default function CookieSettings() {
-  const { categories, saveConsent } = useConsent();
+  const { categories, needsChoice, saveConsent } = useConsent();
   // De provider leest de cookie synchroon bij de eerste render, dus `categories`
   // klopt hier meteen. Er is geen naloop-effect nodig.
   const [preferences, setPreferences] = useState<ConsentCategories>(categories ?? DENY_ALL);
+  const [reloadPending, setReloadPending] = useState(false);
+
+  const stored = categories ?? DENY_ALL;
+  const hasUnsavedChanges =
+    preferences.analytics !== stored.analytics ||
+    preferences.marketing !== stored.marketing ||
+    preferences.functional !== stored.functional;
+
+  // Zonder opgeslagen keuze mag de bezoeker ook bewust "alles uit" vastleggen,
+  // dus dan is opslaan altijd zinvol.
+  const canSave = needsChoice || hasUnsavedChanges;
+
+  // Dekt het sluiten van de tab en navigatie buiten de site. Klikken op een
+  // interne link gaat via wouter en veroorzaakt geen unload, dus daarvoor is de
+  // zichtbare waarschuwing hieronder het vangnet.
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+    const warn = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [hasUnsavedChanges]);
 
   const handleToggle = (key: keyof ConsentCategories) => {
     setPreferences((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const handleSave = () => {
-    const { reloading } = saveConsent(preferences);
-    // Bij intrekken van marketing herlaadt de pagina, dan is een toast zinloos.
-    if (!reloading) {
-      toast.success("Your cookie preferences have been saved.");
+  const persist = (next: ConsentCategories) => {
+    setPreferences(next);
+    const { reloading } = saveConsent(next);
+    if (reloading) {
+      // De pagina herlaadt om de LinkedIn-tag echt kwijt te raken. Een toast
+      // zou daar middenin verdwijnen, dus we tonen hem niet.
+      setReloadPending(true);
+      return;
     }
+    toast.success("Your cookie preferences have been saved.");
   };
+
+  const handleSave = () => persist(preferences);
 ```
 
-De `essential`-schakelaar in de JSX staat al hardcoded op `checked={true} disabled={true}` en hoeft niet te veranderen. Essential zit bewust niet in `ConsentCategories`, want hij is nooit optioneel.
+- [ ] **Step 2: Vervang de knoppenrij onderaan**
 
-- [ ] **Step 3: Typecheck**
+De huidige rij is:
+
+```tsx
+            <div className="flex justify-end pt-6">
+              <Button size="lg" onClick={handleSave} className="px-8">
+                Save Preferences
+              </Button>
+            </div>
+```
+
+Vervang die door:
+
+```tsx
+            <div className="flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  disabled={reloadPending}
+                  onClick={() => persist(DENY_ALL)}
+                >
+                  Reject all
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  disabled={reloadPending}
+                  onClick={() => persist(ACCEPT_ALL)}
+                >
+                  Accept all
+                </Button>
+              </div>
+              <div className="flex items-center gap-4">
+                {hasUnsavedChanges && (
+                  <p role="status" className="text-sm text-amber-400">
+                    You have unsaved changes.
+                  </p>
+                )}
+                <Button
+                  size="lg"
+                  onClick={handleSave}
+                  disabled={!canSave || reloadPending}
+                  className="px-8"
+                >
+                  Save Preferences
+                </Button>
+              </div>
+            </div>
+```
+
+- [ ] **Step 3: Meld eerlijk wanneer er nog niets is opgeslagen**
+
+Een bezoeker die via de footer binnenkomt zonder de banner te hebben gezien, ziet alle schakelaars
+uit staan. Dat is niet te onderscheiden van een bewuste weigering. Voeg direct na de bestaande
+inleidende paragraaf toe:
+
+```tsx
+            {needsChoice && (
+              <p className="mt-4 text-sm text-muted-foreground">
+                You have not made a choice yet. Everything below is switched off by default, and
+                nothing is stored until you save.
+              </p>
+            )}
+```
+
+- [ ] **Step 4: Typecheck**
 
 ```bash
 cd ~/Desktop/eclectik-website-consent
@@ -1264,18 +1321,15 @@ pnpm check
 
 Expected: geen output, exit code 0.
 
-- [ ] **Step 4: Verifieer in de browser**
+- [ ] **Step 5: Verifieer in de browser**
 
-Ga naar `/cookie-settings` op poort 5173 en loop dit door:
+1. Wis de cookie en open `/cookie-settings` direct. Expected: de melding "You have not made a choice yet" staat er, en Save is klikbaar.
+2. Accepteer alles via de banner op de homepage en kom terug. Expected: de melding is weg, Save is uitgeschakeld.
+3. Zet Marketing uit zonder op te slaan. Expected: "You have unsaved changes" verschijnt en Save wordt klikbaar. Zet hem terug: de waarschuwing verdwijnt weer.
+4. Klik met marketing aan op "Reject all". Expected: in een klik opgeslagen, de pagina herlaadt, en daarna nul requests naar `snap.licdn.com`.
+5. Controleer dat de `beforeunload`-listener alleen hangt zolang er niet-opgeslagen wijzigingen zijn.
 
-1. Wis de cookie via de console en herlaad. Expected: alle drie de schakelaars staan uit.
-2. Zet analytics aan, klik op "Save Preferences". Expected: een toast met "Your cookie preferences have been saved." en de cookie `eclectik_consent` bevat `"analytics":true,"marketing":false`.
-3. Navigeer naar de homepage. Expected: geen banner meer.
-4. Ga terug naar `/cookie-settings`. Expected: analytics staat aan, de andere twee uit.
-5. Zet marketing aan en sla op. Expected: een request naar `snap.licdn.com` verschijnt.
-6. Zet marketing weer uit en sla op. Expected: de pagina herlaadt, en na de reload is er geen nieuw request naar `snap.licdn.com`.
-
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
 cd ~/Desktop/eclectik-website-consent
