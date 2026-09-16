@@ -30,6 +30,7 @@
 | `client/src/lib/consent.ts` | Create | Consent-store: opslag, validatie, categorie-naar-signaal mapping, `gtag`-update |
 | `client/src/lib/consent.test.ts` | Create | Unit tests voor bovenstaande |
 | `client/index.html` | Modify | Bootstrap-script bovenin de head; LinkedIn-scripts en noscript-pixel eruit |
+| `client/src/lib/consent.bootstrap.test.ts` | Create | Canary die de bewuste duplicatie tussen bootstrap en store bewaakt |
 | `client/src/contexts/ConsentContext.tsx` | Create | React-state rond de store, plus de herlaadregel bij intrekken van marketing |
 | `client/src/components/CookieBanner.tsx` | Create | Banner met drie gelijkwaardige keuzes |
 | `client/src/components/LinkedInInsightTag.tsx` | Create | Injecteert de LinkedIn-tag pas na marketing-consent |
@@ -537,6 +538,7 @@ git commit -m "feat: add consent store with Consent Mode v2 signal mapping"
 
 **Files:**
 - Modify: `client/index.html`
+- Create: `client/src/lib/consent.bootstrap.test.ts`
 
 Het script moet inline en synchroon draaien, als allereerste in de `<head>`, boven de GTM-snippet. Laadt GTM eerder, dan zijn de defaults te laat en vuurt GA4 met volledige opslag.
 
@@ -613,7 +615,72 @@ grep -n "Consent bootstrap\|Google Tag Manager\|Google Analytics 4" client/index
 
 Expected: het regelnummer van `Consent bootstrap` is lager dan dat van `Google Tag Manager`, dat weer lager is dan `Google Analytics 4`.
 
-- [ ] **Step 3: Verifieer in de browser dat de default-call vooraan staat**
+- [ ] **Step 3: Leg de duplicatie vast met een canary-test**
+
+Het bootstrap-script dupliceert bewust de cookienaam, het versienummer en de
+signaalmapping uit `client/src/lib/consent.ts`. Zonder vangnet loopt die
+duplicatie stil uit elkaar zodra iemand `CONSENT_VERSION` verhoogt en het
+script vergeet. Deze test laat dat luid falen.
+
+Maak `client/src/lib/consent.bootstrap.test.ts`:
+
+```ts
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { describe, expect, it } from "vitest";
+import { CONSENT_VERSION, COOKIE_NAME } from "./consent";
+
+// Vitest draait vanaf de repo-root, niet vanaf client/.
+const indexHtml = readFileSync(path.resolve(process.cwd(), "client/index.html"), "utf8");
+
+describe("bootstrap-script in client/index.html", () => {
+  it("gebruikt dezelfde cookienaam als de consent-store", () => {
+    expect(indexHtml).toContain(`var COOKIE_NAME = '${COOKIE_NAME}';`);
+  });
+
+  it("gebruikt hetzelfde versienummer als de consent-store", () => {
+    expect(indexHtml).toContain(`var CONSENT_VERSION = ${CONSENT_VERSION};`);
+  });
+
+  it("staat boven de GTM-snippet", () => {
+    const bootstrapAt = indexHtml.indexOf("Consent bootstrap");
+    const gtmAt = indexHtml.indexOf("Google Tag Manager");
+    expect(bootstrapAt).toBeGreaterThan(-1);
+    expect(gtmAt).toBeGreaterThan(-1);
+    expect(bootstrapAt).toBeLessThan(gtmAt);
+  });
+
+  it("zet elk niet-essentieel signaal op denied als default", () => {
+    const defaults = indexHtml.slice(
+      indexHtml.indexOf("gtag('consent', 'default'"),
+      indexHtml.indexOf("gtag('set', 'ads_data_redaction'"),
+    );
+    for (const signal of [
+      "ad_storage",
+      "ad_user_data",
+      "ad_personalization",
+      "analytics_storage",
+      "functionality_storage",
+      "personalization_storage",
+    ]) {
+      expect(defaults).toContain(`${signal}: 'denied'`);
+    }
+    expect(defaults).toContain("security_storage: 'granted'");
+    expect(defaults).toContain("wait_for_update: 500");
+  });
+});
+```
+
+Draai de tests:
+
+```bash
+cd ~/Desktop/eclectik-website-consent
+pnpm test
+```
+
+Expected: alle tests slagen, inclusief de vier nieuwe.
+
+- [ ] **Step 4: Verifieer in de browser dat de default-call vooraan staat**
 
 Start de preview met de configuratie `eclectik-site-dev` (poort 5173) en voer op de pagina uit:
 
@@ -623,7 +690,7 @@ window.dataLayer.map(function (entry) { return Array.prototype.slice.call(entry)
 
 Expected: het eerste item is `["consent", "default", {...}]` met alle waarden `denied` behalve `security_storage`, en het staat vóór de `gtm.start`-entry.
 
-- [ ] **Step 4: Build-sanity**
+- [ ] **Step 5: Build-sanity**
 
 ```bash
 cd ~/Desktop/eclectik-website-consent
@@ -632,11 +699,11 @@ pnpm build
 
 Expected: `built in ...` zonder errors.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
 cd ~/Desktop/eclectik-website-consent
-git add client/index.html
+git add client/index.html client/src/lib/consent.bootstrap.test.ts
 git commit -m "feat: set Consent Mode v2 defaults to denied before GTM loads"
 ```
 
