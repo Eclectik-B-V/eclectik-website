@@ -1152,7 +1152,7 @@ import Layout from "@/components/Layout";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Cookie, Shield, BarChart3, Megaphone } from "lucide-react";
 import { toast } from "sonner";
@@ -1193,13 +1193,9 @@ Vervang dat door:
 ```tsx
 export default function CookieSettings() {
   const { categories, saveConsent } = useConsent();
+  // De provider leest de cookie synchroon bij de eerste render, dus `categories`
+  // klopt hier meteen. Er is geen naloop-effect nodig.
   const [preferences, setPreferences] = useState<ConsentCategories>(categories ?? DENY_ALL);
-
-  // De provider leest de cookie pas na de eerste render, dus de opgeslagen
-  // keuze komt een tik later binnen.
-  useEffect(() => {
-    if (categories) setPreferences(categories);
-  }, [categories]);
 
   const handleToggle = (key: keyof ConsentCategories) => {
     setPreferences((prev) => ({ ...prev, [key]: !prev[key] }));
