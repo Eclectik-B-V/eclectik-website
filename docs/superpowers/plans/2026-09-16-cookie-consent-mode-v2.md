@@ -512,7 +512,7 @@ cd ~/Desktop/eclectik-website-consent
 pnpm test
 ```
 
-Expected: PASS, 16 tests geslaagd, 0 gefaald.
+Expected: PASS, 19 tests geslaagd, 0 gefaald.
 
 - [ ] **Step 5: Typecheck**
 
