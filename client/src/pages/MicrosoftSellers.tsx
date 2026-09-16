@@ -218,12 +218,14 @@ export default function MicrosoftSellers() {
             <div>
               <p className="msl-eyebrow">Independent AI value measurement</p>
               {/* Near enough the subject line of the 8 September mail that the
-                  reader recognises where he clicked from. */}
+                  reader recognises where he clicked from. The mail says "the
+                  number", singular; the plural here is deliberate, so do not
+                  "correct" it back to match the mail. */}
               <h1>
-                Your customer bought Copilot. Now the CFO wants the number.
+                Your customer bought Copilot. Now the CFO wants the numbers.
               </h1>
               <p className="msl-lede">
-                We are the third party that produces that number. Empirical
+                We are the third party that produces those numbers. Empirical
                 method, statistical confidence, one hundred percent customer
                 data, and a readout that lands with the CFO, which is exactly
                 where your next deal starts.
@@ -340,6 +342,18 @@ export default function MicrosoftSellers() {
               </figcaption>
             </figure>
           </div>
+        </div>
+      </section>
+
+      {/* The specialist statement from the homepage, repeated here because a
+          seller who clicks the link in the mail lands on this page and never
+          sees the homepage. */}
+      <section className="msl-statement">
+        <div className="msl-wrap">
+          <p>
+            Proving dollar-value ROI on AI transformation takes rare expertise.{" "}
+            <span>That is what we specialize in.</span>
+          </p>
         </div>
       </section>
 

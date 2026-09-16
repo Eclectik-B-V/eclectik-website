@@ -40,6 +40,11 @@
 
   --msl-mono:
     ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  /* Statement band under the hero. Deliberately not --msl-paper-2: the proof
+     band sits directly below and uses that, and two adjacent bands in the same
+     tone read as one. 1.21:1 against the page, 1.12:1 against the proof band. */
+  --msl-statement-bg: #d8dee0;
+
   --msl-measure: 68ch;
   --msl-maxw: 1040px;
 
@@ -68,6 +73,7 @@
     --msl-accent-ink: var(--color-ec-navy);
     --msl-flag: #f2795a; /* ec-red lifted to 5.47:1; the original is 3.03:1 on navy */
     --msl-flag-mark: #f2795a;
+    --msl-statement-bg: #263a58; /* 1.31:1 against the page, 1.52:1 against the proof band */
   }
 }
 
@@ -293,6 +299,36 @@
 
 .msl a.msl-btn-ghost:hover {
   border-color: var(--msl-accent);
+  color: var(--msl-accent);
+}
+
+/* ---- statement band ---- */
+
+/* No hairline on top: the change of background is the separator. The proof
+   section below keeps its own, which helps hold the two greys apart. */
+.msl-statement {
+  background: var(--msl-statement-bg);
+  border-top: none;
+}
+
+.msl-statement > .msl-wrap {
+  padding-block: 40px;
+}
+
+.msl-statement p {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(21px, 2.6vw, 30px);
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  max-width: 34ch;
+  text-wrap: pretty;
+  color: var(--msl-ink);
+}
+
+/* Accent, not --msl-flag: this page reserves the red for marking what goes
+   wrong, so the homepage's red second sentence would read as a warning here. */
+.msl-statement p span {
   color: var(--msl-accent);
 }
 
