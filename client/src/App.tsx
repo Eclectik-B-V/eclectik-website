@@ -31,6 +31,7 @@ import ProofOfValue from "@/pages/ProofOfValue";
 import ProofOfChange from "@/pages/ProofOfChange";
 import EventAmsterdam2026 from "@/pages/EventAmsterdam2026";
 import EventAmsterdam2026Registrations from "@/pages/EventAmsterdam2026Registrations";
+import GlintValue from "@/pages/GlintValue";
 import MicrosoftSellers from "@/pages/MicrosoftSellers";
 
 function Router() {
@@ -64,6 +65,13 @@ function Router() {
       <Route path="/proof-of-change" component={ProofOfChange} />
       <Route path="/events/amsterdam-2026" component={EventAmsterdam2026} />
       <Route path="/events/amsterdam-2026/registrations" component={EventAmsterdam2026Registrations} />
+      {/* /glint is the landing page for the link we mail to organisations that
+          already run Viva Glint, and the landing page under the LinkedIn
+          campaigns. Deliberately absent from SiteHeader, from sitemap.xml and
+          from robots.txt while it is link-only: noindex is enforced by the
+          X-Robots-Tag header in vercel.json. Not to be confused with
+          /glint-support, which is the public proposition page. */}
+      <Route path="/glint" component={GlintValue} />
       {/* /microsoft is the landing page for the link we mail to Microsoft
           sellers. Deliberately absent from SiteHeader, from sitemap.xml and
           from robots.txt: reachable only by the people we send the URL to.

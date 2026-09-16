@@ -169,13 +169,13 @@ export function getAttribution(): string | undefined {
     const stored = sessionStorage.getItem(ATTRIBUTION_KEY);
     if (stored) return stored;
   } catch {
-    // sessionStorage unavailable — fall through to the URL below
+    // sessionStorage unavailable, so fall through to the URL below
   }
   // Fall back to the URL itself. initAttribution() runs in an effect on App,
   // and React runs child effects before parent ones, so a page that reports an
   // event on mount asks for the attribution before App has stored it. Every
-  // caller so far read it on submit, long after mount, which hid this; the
-  // page-view event on /microsoft is the first that does not.
+  // caller that reads it on submit is long past mount, which hid this; the
+  // page-view event on a landing page is the first that is not.
   try {
     return new URLSearchParams(window.location.search).get("src")?.slice(0, 100) || undefined;
   } catch {
@@ -226,6 +226,29 @@ export function trackScorecard(
 ) {
   trackEvent(event, { event_category: "scorecard", src: getAttribution(), ...params });
   if (event === "sc_email_submitted") trackLinkedInConversion();
+}
+
+/**
+ * Glint value landing page (/glint): glint_page_viewed on arrival,
+ * glint_cta_clicked with a `cta` label on each button.
+ *
+ * The page is reached through the link we mail and through LinkedIn campaigns,
+ * so `src` is what ties a visit back to a campaign, per briefing paragraph 6.
+ *
+ * The briefing also asks for both CTAs to land in marketing_lead_activity in
+ * the CRM. They do not, and cannot as the page stands: POST /api/website-signal
+ * validates an email address before it will write a row, and both CTAs here
+ * hand off to a mail client or to Bookings without the page ever seeing one.
+ * The events below carry the campaign source; the identity arrives when the
+ * mail or the booking does. Writing the CRM row from the page would need either
+ * a form on the page or a website-signal that accepts an anonymous token.
+ */
+export function trackGlintPage(
+  event: "glint_page_viewed" | "glint_cta_clicked",
+  params?: Record<string, any>,
+) {
+  trackEvent(event, { event_category: "glint_landing", src: getAttribution(), ...params });
+  if (event === "glint_cta_clicked") trackLinkedInConversion();
 }
 
 /**
