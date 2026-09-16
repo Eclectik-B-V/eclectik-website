@@ -46,19 +46,22 @@ export function trackLinkedInConversion(conversionId?: number) {
 }
 
 /**
- * Track contact form submission
+ * Track contact form submission.
+ *
+ * Deliberately takes no visitor details. This used to accept name, email and
+ * company and forward them as event parameters, which Google's terms for
+ * Analytics forbid: personally identifiable data in a GA4 property is grounds
+ * for having the data deleted. The submitted details reach us through
+ * POST /api/contact, which is where they belong; GA4 only counts the
+ * conversion and the campaign it came from.
  */
-export function trackContactFormSubmission(formData?: {
-  name?: string;
-  email?: string;
-  company?: string;
-}) {
+export function trackContactFormSubmission() {
   trackEvent('contact_form_submit', {
     event_category: 'engagement',
     event_label: 'Contact Form',
-    ...formData
+    src: getAttribution(),
   });
-  
+
   // Track LinkedIn conversion
   trackLinkedInConversion();
 }
@@ -99,13 +102,28 @@ export function trackResourceDownload(resourceName: string, resourceType: string
 }
 
 /**
- * Track page views (called automatically by GA4, but can be used for custom tracking)
+ * Report a page view to GA4.
+ *
+ * The gtag('config', ...) call in index.html reports the page a visit lands on
+ * and nothing after it: this is a single-page app, so every following
+ * navigation swaps the route client-side without a document load. PageViewTracker
+ * calls this on each of those, which is what keeps per-page reporting in GA4
+ * from collapsing onto the landing page.
+ *
+ * GA4 reads `page_location` (the full URL); `page_path` is kept alongside it for
+ * the GTM dataLayer, where the triggers in GTM-SETUP-GUIDE.md expect it.
+ * Both default to the current URL.
  */
-export function trackPageView(pagePath: string, pageTitle: string) {
-  trackEvent('page_view', {
-    page_path: pagePath,
-    page_title: pageTitle
-  });
+export function trackPageView(pagePath?: string, pageTitle?: string) {
+  const hasWindow = typeof window !== 'undefined';
+  const params: Record<string, any> = {
+    page_path: pagePath ?? (hasWindow ? window.location.pathname + window.location.search : '/'),
+    page_title: pageTitle ?? (typeof document !== 'undefined' ? document.title : undefined),
+    src: getAttribution(),
+  };
+  if (hasWindow) params.page_location = window.location.href;
+
+  trackEvent('page_view', params);
 }
 
 /**

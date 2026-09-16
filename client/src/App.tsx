@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { initAttribution } from "@/lib/tracking";
 import ScrollToTop from "@/components/ScrollToTop";
+import PageViewTracker from "@/components/PageViewTracker";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch, Redirect } from "wouter";
@@ -102,6 +103,7 @@ function App() {
       >
         <TooltipProvider>
           <ScrollToTop />
+          <PageViewTracker />
           <Toaster />
           <Router />
         </TooltipProvider>
