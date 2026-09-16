@@ -32,7 +32,8 @@
 | `client/index.html` | Modify | Bootstrap-script bovenin de head; LinkedIn-scripts en noscript-pixel eruit |
 | `client/src/lib/consent.bootstrap.test.ts` | Create | Canary die de bewuste duplicatie tussen bootstrap en store bewaakt |
 | `client/src/contexts/ConsentContext.tsx` | Create | React-state rond de store, plus de herlaadregel bij intrekken van marketing |
-| `client/src/components/CookieBanner.tsx` | Create | Banner met drie gelijkwaardige keuzes |
+| `client/src/components/CookieBanner.tsx` | Create | Banner met accept en reject in gelijk gewicht |
+| `client/src/components/Layout.tsx` | Modify | Mobiel menu boven de banner tillen (`z-40` naar `z-[60]`) |
 | `client/src/components/LinkedInInsightTag.tsx` | Create | Injecteert de LinkedIn-tag pas na marketing-consent |
 | `client/src/lib/tracking.ts` | Modify | `Window`-declaratie uitbreiden met `_linkedin_data_partner_ids` en `lintrk.q` |
 | `client/src/App.tsx` | Modify | `ConsentProvider`, `CookieBanner` en `LinkedInInsightTag` monteren |
@@ -871,6 +872,7 @@ dus een gelabelde `region` beschrijft eerlijker wat het is.
 Maak `client/src/components/CookieBanner.tsx`:
 
 ```tsx
+import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useConsent } from "@/contexts/ConsentContext";
@@ -879,16 +881,42 @@ import { ACCEPT_ALL, DENY_ALL } from "@/lib/consent";
 export default function CookieBanner() {
   const { needsChoice, saveConsent } = useConsent();
   const [location] = useLocation();
+  const bannerRef = useRef<HTMLDivElement>(null);
 
   // Op de voorkeurenpagina zou de banner de opslaan-knop overlappen. De keuze
   // wordt daar sowieso gemaakt, dus daar blijft hij weg.
-  if (!needsChoice || location === "/cookie-settings") return null;
+  const visible = needsChoice && location !== "/cookie-settings";
+
+  // De banner staat fixed onderaan en dekt anders de laatste rij van de footer
+  // af, inclusief de link naar de cookie-instellingen. Zolang hij in beeld is
+  // krijgt de pagina er onderaan precies evenveel ruimte bij, zodat alles
+  // bereikbaar blijft door te scrollen.
+  useEffect(() => {
+    const node = bannerRef.current;
+    if (!visible || !node) return;
+
+    const sync = () => {
+      document.body.style.paddingBottom = `${node.offsetHeight}px`;
+    };
+    sync();
+
+    const observer = new ResizeObserver(sync);
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      document.body.style.paddingBottom = "";
+    };
+  }, [visible]);
+
+  if (!visible) return null;
 
   return (
     <div
+      ref={bannerRef}
       role="region"
       aria-label="Cookie preferences"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-card/95 backdrop-blur-md"
+      className="fixed inset-x-0 bottom-0 z-50 max-h-[60vh] overflow-y-auto border-t border-white/10 bg-card/95 backdrop-blur-md"
     >
       <div className="container mx-auto flex max-w-5xl flex-col gap-4 px-4 py-6 md:flex-row md:items-center md:justify-between">
         <p className="text-sm text-muted-foreground">
@@ -924,16 +952,26 @@ Voeg bij de imports toe, direct onder de bestaande `import ScrollToTop from "@/c
 import CookieBanner from "@/components/CookieBanner";
 ```
 
-Voeg in de `App`-functie `<CookieBanner />` toe direct na `<Router />`, zodat het blok er zo uitziet:
+Voeg `<CookieBanner />` toe direct **voor** `<Router />`. De banner staat visueel onderaan,
+maar is de eerste beslissing die we vragen, dus hij hoort ook vooraan in de tabvolgorde.
+Stond hij achteraan in de DOM, dan moest een toetsenbordgebruiker eerst langs veertig andere
+elementen. Die mismatch tussen beeld en tabvolgorde is een bewuste afweging.
 
 ```tsx
           <TooltipProvider>
             <ScrollToTop />
             <Toaster />
-            <Router />
+            {/* Bewust vóór de Router: de banner staat visueel onderaan maar is
+                de eerste beslissing die we vragen, dus hij hoort ook vooraan in
+                de tabvolgorde te staan. */}
             <CookieBanner />
+            <Router />
           </TooltipProvider>
 ```
+
+Til daarnaast in `client/src/components/Layout.tsx` het mobiele menu boven de banner: op regel 136
+staat `z-40` in de className van de overlay, dat wordt `z-[60]`. Zonder die wijziging dekt de banner
+de onderste menu-items af en is "Contact" op een telefoon onbereikbaar.
 
 - [ ] **Step 3: Typecheck**
 
@@ -963,7 +1001,7 @@ Expected na de reload:
 
 ```bash
 cd ~/Desktop/eclectik-website-consent
-git add client/src/components/CookieBanner.tsx client/src/App.tsx
+git add client/src/components/CookieBanner.tsx client/src/App.tsx client/src/components/Layout.tsx
 git commit -m "feat: add cookie banner with equally weighted accept and reject"
 ```
 
