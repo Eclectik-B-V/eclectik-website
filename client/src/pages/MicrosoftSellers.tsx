@@ -106,28 +106,31 @@ interface Shape {
 }
 
 /* Seat counts only. The Microsoft slide that inspired this table carried
-   investment amounts and tier names; none of that is ours to publish. */
+   investment amounts and tier names; none of that is ours to publish.
+   The M to XXL labels are ours and deliberately do not line up with that
+   slide's own scale, which starts at XXS for the same seat count. Do not
+   "align" them back to it. */
 const SHAPES: Shape[] = [
   {
-    size: "XS",
+    size: "M",
     account: "300+ Copilot seats",
     preSales: "Focused value case, one function",
     postSales: "Value map, one business unit",
   },
   {
-    size: "S",
+    size: "L",
     account: "500+ Copilot seats",
     preSales: "Value case across two to three functions",
     postSales: "Value map plus intervention design",
   },
   {
-    size: "M",
+    size: "XL",
     account: "1,500+ Copilot seats",
     preSales: "Enterprise value case with P&L traceability",
     postSales: "Value map, interventions, re-measurement",
   },
   {
-    size: "L",
+    size: "XXL",
     account: "3,000+ Copilot seats",
     preSales: "Enterprise value case, multi-market",
     postSales: "Full programme measurement across waves",
