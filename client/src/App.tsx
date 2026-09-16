@@ -32,6 +32,7 @@ import ProofOfChange from "@/pages/ProofOfChange";
 import EventAmsterdam2026 from "@/pages/EventAmsterdam2026";
 import EventAmsterdam2026Registrations from "@/pages/EventAmsterdam2026Registrations";
 import GlintValue from "@/pages/GlintValue";
+import MicrosoftSellers from "@/pages/MicrosoftSellers";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -71,6 +72,11 @@ function Router() {
           X-Robots-Tag header in vercel.json. Not to be confused with
           /glint-support, which is the public proposition page. */}
       <Route path="/glint" component={GlintValue} />
+      {/* /microsoft is the landing page for the link we mail to Microsoft
+          sellers. Deliberately absent from SiteHeader, from sitemap.xml and
+          from robots.txt: reachable only by the people we send the URL to.
+          noindex is enforced by the X-Robots-Tag header in vercel.json. */}
+      <Route path="/microsoft" component={MicrosoftSellers} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

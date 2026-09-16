@@ -250,3 +250,21 @@ export function trackGlintPage(
   trackEvent(event, { event_category: "glint_landing", src: getAttribution(), ...params });
   if (event === "glint_cta_clicked") trackLinkedInConversion();
 }
+
+/**
+ * Microsoft sellers landing page (/microsoft): ms_page_viewed on arrival,
+ * ms_cta_clicked with a `cta` label on each button.
+ *
+ * The page is reached only through the link we mail, so `src` is what ties a
+ * visit back to a campaign. Per-recipient attribution is not read here: the
+ * mail platform already logs clicks per recipient, and connecting a CTA press
+ * to a named seller needs the CRM to accept a recipient token instead of an
+ * email address, which api/website-signal does not do today.
+ */
+export function trackMicrosoftPage(
+  event: "ms_page_viewed" | "ms_cta_clicked",
+  params?: Record<string, any>,
+) {
+  trackEvent(event, { event_category: "microsoft_sellers", src: getAttribution(), ...params });
+  if (event === "ms_cta_clicked") trackLinkedInConversion();
+}
