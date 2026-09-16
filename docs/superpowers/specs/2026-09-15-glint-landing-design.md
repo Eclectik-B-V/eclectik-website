@@ -20,6 +20,14 @@ al heeft en merkt dat het minder oplevert dan gehoopt.
 | Warburtons-blok | Herschreven op de goedgekeurde case, niet op de mockup |
 | Meting | GA-events met `src`, geen CRM-regel (zie hieronder) |
 
+## Volgorde van de blokken
+
+De briefing zet Warburtons op blok 5, na de diagnose en de twee rollen. Op de
+pagina staat het blok direct onder de hero, op verzoek van Olivier van
+16 september. Het bewijs is daarmee het eerste wat de lezer tegenkomt, in plaats
+van de beloning voor het doorscrollen langs twee blokken betoog. De rest van de
+volgorde is ongewijzigd.
+
 ## Het Warburtons-blok
 
 Dit is de enige plek waar de pagina bewust van de mockup afwijkt, en het is de

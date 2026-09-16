@@ -419,11 +419,38 @@
   background: var(--glv-paper-2);
 }
 
+/* Heading left, client wordmark opposite it. Below 640px there is no "right",
+   so the two stack and the logo leads the block. */
+.glv-casehead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.glv-casehead > div {
+  min-width: 0;
+}
+
 .glv-caselogo {
-  height: 40px;
+  height: 50px;
   width: auto;
   display: block;
-  margin: 18px 0 0;
+  flex: none;
+  /* Drops the wordmark onto the cap height of the heading rather than the
+     eyebrow above it. */
+  margin-top: 26px;
+}
+
+@media (max-width: 640px) {
+  .glv-casehead {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .glv-caselogo {
+    order: -1;
+    margin-top: 0;
+  }
 }
 
 /* The supplied wordmark is brand orange on transparent, so it reads on the
@@ -434,8 +461,11 @@
   font-size: 11.5px;
   line-height: 1.7;
   color: var(--glv-ink-3);
-  margin-top: 20px;
-  max-width: 44ch;
+  margin-top: 0;
+  /* Runs the full width of the heading column instead of the narrow measure the
+     other mono captions use: it is a single run-on line of facts, and wrapping
+     it early stacks it into a block that competes with the heading. */
+  max-width: none;
 }
 
 /* Three figures across, the case's own headline numbers. The mockup carried a

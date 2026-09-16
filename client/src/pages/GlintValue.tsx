@@ -13,6 +13,11 @@ import "./GlintValue.css";
  * reader. The English copy is his, taken over from paragraph 4 of that
  * briefing, except in the Warburtons block. See below.
  *
+ * ORDER: the briefing puts Warburtons at block 5, after the diagnosis and the
+ * two roles. It sits directly under the hero instead, on Olivier's call of
+ * 16 September, so the proof is the first thing the reader meets rather than
+ * the reward for scrolling past two blocks of argument.
+ *
  * THE WARBURTONS BLOCK IS NOT THE MOCKUP'S. Marco's mockup wrote block 5 from
  * his call notes of 23 June. His own briefing, paragraph 7.4, says the
  * approved case text wins wherever the two differ, and the approved text
@@ -414,72 +419,30 @@ export default function GlintValue() {
         </div>
       </section>
 
-      <section>
-        <div className="glv-wrap">
-          <p className="glv-eyebrow">The honest diagnosis</p>
-          <h2>The survey closes. Then what?</h2>
-          <p className="glv-intro">
-            These are the five places value leaks out of a listening programme.
-            Most teams recognise at least three of them, and none of them are a
-            platform problem.
-          </p>
-          <ul className="glv-leaks">
-            {LEAKS.map(leak => (
-              <li key={leak.heading}>
-                <strong>{leak.heading}</strong>
-                {leak.body}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section id="support">
-        <div className="glv-wrap">
-          <p className="glv-eyebrow">How we support you</p>
-          <h2>Two roles, one team alongside yours</h2>
-          <p className="glv-intro">
-            You buy hours, not headcount. We staff the cycle with the two roles
-            that carry it, and scale up around your survey window rather than
-            sitting on your payroll all year.
-          </p>
-          <div className="glv-roles">
-            {ROLES.map(role => (
-              <div className="glv-role" key={role.heading}>
-                <p className="glv-eyebrow">{role.eyebrow}</p>
-                <h3>{role.heading}</h3>
-                <p>{role.body}</p>
-                <ul className="glv-deliverables">
-                  {role.deliverables.map(item => (
-                    <li key={item}>
-                      <span className="glv-n" aria-hidden="true">
-                        &rarr;
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="glv-case" id="warburtons">
         <div className="glv-wrap">
-          <p className="glv-eyebrow">Customer case</p>
-          <h2>How Warburtons turned focused listening into visible action</h2>
-          <img
-            src="/images/clients/warburtons.png"
-            alt="Warburtons"
-            className="glv-caselogo"
-            loading="lazy"
-          />
-          <p className="glv-casemeta">
-            Food manufacturing, bakery &middot; United Kingdom &middot; nearly
-            5,000 colleagues across 29 sites &middot; Microsoft Viva Glint
-            &middot; two annual insight cycles to date
-          </p>
+          <div className="glv-casehead">
+            <div>
+              <p className="glv-eyebrow">Customer case</p>
+              <h2>
+                How Warburtons turned focused listening into visible action
+              </h2>
+              <p className="glv-casemeta">
+                Food manufacturing, bakery &middot; United Kingdom &middot;
+                nearly 5,000 colleagues across 29 sites &middot; Microsoft Viva
+                Glint &middot; two annual insight cycles to date
+              </p>
+            </div>
+            {/* Supplied and approved by Warburtons. It sits opposite the
+                heading rather than under it, so the brand introduces the block
+                the way it would on a case sheet. */}
+            <img
+              src="/images/clients/warburtons.png"
+              alt="Warburtons"
+              className="glv-caselogo"
+              loading="lazy"
+            />
+          </div>
 
           <div className="glv-figures">
             {CASE_FIGURES.map(item => (
@@ -586,6 +549,57 @@ export default function GlintValue() {
             >
               Ask for the full Warburtons case
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="glv-wrap">
+          <p className="glv-eyebrow">The honest diagnosis</p>
+          <h2>The survey closes. Then what?</h2>
+          <p className="glv-intro">
+            These are the five places value leaks out of a listening programme.
+            Most teams recognise at least three of them, and none of them are a
+            platform problem.
+          </p>
+          <ul className="glv-leaks">
+            {LEAKS.map(leak => (
+              <li key={leak.heading}>
+                <strong>{leak.heading}</strong>
+                {leak.body}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section id="support">
+        <div className="glv-wrap">
+          <p className="glv-eyebrow">How we support you</p>
+          <h2>Two roles, one team alongside yours</h2>
+          <p className="glv-intro">
+            You buy hours, not headcount. We staff the cycle with the two roles
+            that carry it, and scale up around your survey window rather than
+            sitting on your payroll all year.
+          </p>
+          <div className="glv-roles">
+            {ROLES.map(role => (
+              <div className="glv-role" key={role.heading}>
+                <p className="glv-eyebrow">{role.eyebrow}</p>
+                <h3>{role.heading}</h3>
+                <p>{role.body}</p>
+                <ul className="glv-deliverables">
+                  {role.deliverables.map(item => (
+                    <li key={item}>
+                      <span className="glv-n" aria-hidden="true">
+                        &rarr;
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>
