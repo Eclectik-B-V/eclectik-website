@@ -1108,10 +1108,12 @@ De noscript-pixel komt niet terug. Een pixel in `<noscript>` kan niet afhankelij
 
 ```bash
 cd ~/Desktop/eclectik-website-consent
-grep -c "licdn\|linkedin" client/index.html
+grep -n "licdn\|snap\.\|px\.ads" client/index.html
 ```
 
-Expected: `0`.
+Expected: geen resultaten. Let op: `grep -c "linkedin"` geeft wel een treffer, namelijk de
+`sameAs`-link naar het bedrijfsprofiel in de JSON-LD structured data. Dat is geen tracker en
+blijft staan.
 
 - [ ] **Step 5: Monteer de component in `client/src/App.tsx`**
 
