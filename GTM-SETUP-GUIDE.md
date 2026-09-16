@@ -1,233 +1,156 @@
-# Google Tag Manager Setup Guide
-## Eclectik AI Transformation Website
+# Google Analytics en Tag Manager
 
-Deze handleiding helpt je om de tracking volledig te configureren in Google Tag Manager.
+Deze handleiding beschrijft hoe de tracking op de Eclectik website in elkaar zit
+en wat er in Google Analytics, Google Tag Manager en LinkedIn nog met de hand
+ingesteld moet worden.
 
----
+## Wat er in de code staat
 
-## ✅ Wat is al geïnstalleerd
+Drie tags staan in `client/index.html`:
 
-De volgende tracking codes zijn al toegevoegd aan je website:
+| Tag | ID | Plek |
+| --- | --- | --- |
+| Google Tag Manager | `GTM-KZKSN8CT` | script in de `head`, `noscript` iframe in de `body` |
+| Google Analytics 4 | `G-LD7EPKT1W2` | gtag.js in de `head`, met een `config` call |
+| LinkedIn Insight Tag | partner `9108033` | script in de `head`, `noscript` pixel in de `body` |
 
-1. **Google Tag Manager** (GTM-KZKSN8CT)
-2. **Google Analytics 4** (G-LD7EPKT1W2)
-3. **LinkedIn Insight Tag** (Partner ID: 9108033)
-4. **Conversion Tracking Events** (via custom JavaScript)
+De events komen uit `client/src/lib/tracking.ts`. Elke helper daar doet twee
+dingen: `gtag('event', ...)` richting GA4, en een push naar `window.dataLayer`
+zodat GTM hetzelfde event ziet. Je hebt dus geen GA4-tag in GTM nodig om deze
+events in Analytics terug te vinden. Zet er ook geen tweede GA4 configuratietag
+in, want dan telt alles dubbel.
 
----
+## Paginaweergaves
 
-## 📊 Tracking Events die automatisch worden verzonden
+De site is een single-page app: na de eerste paginaload wisselt wouter de route
+in de browser zonder dat er een nieuw document geladen wordt. De
+`gtag('config', ...)` in `index.html` meldt daarom alleen de pagina waarop
+iemand binnenkomt.
 
-De website stuurt automatisch de volgende events naar GA4 en GTM:
+`PageViewTracker` (`client/src/components/PageViewTracker.tsx`) vangt de rest op.
+Die component hangt in `App.tsx` en stuurt bij elke routewissel een `page_view`
+met `page_location`, `page_path`, `page_title` en `src`. De eerste route slaat
+hij over, anders zou de landingspagina dubbel geteld worden.
 
-### 1. CTA Clicks
-- **Event naam**: `cta_click`
-- **Wanneer**: Gebruiker klikt op "Explore Solutions" button
-- **Parameters**:
-  - `event_category`: engagement
-  - `event_label`: Naam van de CTA
-  - `cta_location`: Locatie op de pagina
+Zonder die component belandt al het verkeer op de pagina waar het bezoek begon,
+en zie je in GA4 nul bezoeken op /contact, /scorecard en de case studies.
 
-### 2. Contact Form Submissions
-- **Event naam**: `contact_form_submit`
-- **Wanneer**: Gebruiker verstuurt contactformulier
-- **Parameters**:
-  - `event_category`: engagement
-  - `event_label`: Contact Form
-  - `name`, `email`, `company` (indien beschikbaar)
+## Events die de site verstuurt
 
-### 3. Case Study Views
-- **Event naam**: `case_study_view`
-- **Wanneer**: Gebruiker bekijkt een case study
-- **Parameters**:
-  - `event_category`: content
-  - `event_label`: Naam van de case study
+| Event | Wanneer | Waar in de code |
+| --- | --- | --- |
+| `page_view` | bij elke routewissel | `components/PageViewTracker.tsx` |
+| `cta_click` | klik op een CTA-knop | header, Home, Consulting, HRTechServices, GlintSupport, WorkvivoSeer |
+| `door_selected` | keuze tussen de twee deuren | `pages/Home.tsx`, `pages/Scorecard.tsx` |
+| `contact_form_submit` | contactformulier succesvol verstuurd | `pages/Contact.tsx` |
+| `wl_q_started`, `wl_q_answered`, `wl_q_completed`, `waitlist_joined` | benchmark wachtlijst | `components/WaitlistForm.tsx` |
+| `sc_start`, `sc_q_answered`, `sc_completed`, `sc_email_submitted`, `sc_cta_clicked` | scorecard funnel | `pages/Scorecard.tsx`, `components/scorecard/ResultView.tsx` |
+| `glint_page_viewed`, `glint_cta_clicked` | landingspagina /glint | `pages/GlintValue.tsx` |
+| `ms_page_viewed`, `ms_cta_clicked` | landingspagina /microsoft | `pages/MicrosoftSellers.tsx` |
 
-### 4. Resource Downloads
-- **Event naam**: `resource_download`
-- **Wanneer**: Gebruiker download een resource
-- **Parameters**:
-  - `event_category`: conversion
-  - `event_label`: Naam van de resource
-  - `resource_type`: Type resource
+Bij `contact_form_submit`, `waitlist_joined`, `sc_email_submitted`,
+`glint_cta_clicked` en `ms_cta_clicked` gaat er ook een LinkedIn conversie mee
+via `lintrk`.
 
-### 5. Newsletter Signups
-- **Event naam**: `newsletter_signup`
-- **Wanneer**: Gebruiker schrijft zich in voor nieuwsbrief
-- **Parameters**:
-  - `event_category`: engagement
-  - `event_label`: Newsletter Subscription
+### Campagnebron
 
-### 6. Consultation Requests
-- **Event naam**: `consultation_request`
-- **Wanneer**: Gebruiker vraagt consultatie aan
-- **Parameters**:
-  - `event_category`: conversion
-  - `event_label`: Consultation Request
-  - `value`: 1
+Komt een bezoeker binnen via een link met `?src=`, dan wordt die waarde een
+sessie lang bewaard en als parameter `src` meegestuurd met de paginaweergaves en
+de meeste funnel-events. Zo is in GA4 terug te zien welke campagne een aanmelding
+opleverde. Er komt geen cookie aan te pas, alleen `sessionStorage`.
 
----
+### Helpers zonder aanroep
 
-## 🔧 Google Tag Manager Configuratie
+In `tracking.ts` staan ook `trackCaseStudyView`, `trackResourceDownload`,
+`trackNewsletterSignup`, `trackConsultationRequest` en `trackServiceView`. Die
+worden nergens aangeroepen, dus die events komen niet in GA4 binnen. De case
+studies en de service-pagina's tellen wel gewoon mee als paginaweergave. Wil je
+ze apart meten, dan moet de bijbehorende helper nog in de pagina of de knop
+gezet worden.
 
-### Stap 1: Verifieer GTM Installatie
+### Geen persoonsgegevens in GA4
 
-1. Ga naar [tagmanager.google.com](https://tagmanager.google.com)
-2. Selecteer container **GTM-KZKSN8CT**
-3. Klik op "Preview" rechtsboven
-4. Voer je website URL in: `https://www.eclectik-insights.co`
-5. Controleer of GTM correct laadt
+De events sturen bewust geen naam, e-mailadres of bedrijfsnaam mee. Google
+verbiedt persoonsgegevens in een Analytics-property en kan de data daarop
+verwijderen. De ingevulde gegevens komen binnen via `POST /api/contact`; GA4 telt
+alleen de conversie en de bron.
 
-### Stap 2: Configureer Triggers
+## Instellen in Google Analytics 4
 
-Maak de volgende triggers aan in GTM:
+1. Open [analytics.google.com](https://analytics.google.com) en kies de property
+   bij `G-LD7EPKT1W2`.
+2. Ga naar Reports, Realtime. Open de site in een ander tabblad en klik door een
+   paar pagina's. Je moet per klik een nieuwe `page_view` zien binnenkomen.
+3. Ga naar Admin, Data display, Events. Markeer als key event wat je als
+   conversie wilt tellen: `contact_form_submit`, `waitlist_joined`,
+   `sc_email_submitted`, `glint_cta_clicked`, `ms_cta_clicked`.
+4. Ga naar Admin, Data display, Custom definitions en maak een custom dimension
+   op event-scope voor `src`. Zonder die stap laat GA4 de parameter wel binnen,
+   maar kun je er niet op rapporteren.
+5. Doe hetzelfde voor `cta` en `door` als je die uitsplitsing wilt in rapporten.
 
-#### Trigger 1: Contact Form Submit
-- **Type**: Custom Event
-- **Event name**: `contact_form_submit`
-- **This trigger fires on**: All Custom Events
+Nieuwe custom dimensions vullen zich pas vanaf het moment dat je ze aanmaakt. Ze
+werken niet met terugwerkende kracht.
 
-#### Trigger 2: CTA Click
-- **Type**: Custom Event
-- **Event name**: `cta_click`
-- **This trigger fires on**: All Custom Events
+## Instellen in Google Tag Manager
 
-#### Trigger 3: Consultation Request
-- **Type**: Custom Event
-- **Event name**: `consultation_request`
-- **This trigger fires on**: All Custom Events
+GTM is nodig zodra je iets wilt afvuren dat niet in de code staat, bijvoorbeeld
+een LinkedIn conversie-ID of een advertentiepixel.
 
-### Stap 3: Configureer Tags (optioneel)
+1. Open [tagmanager.google.com](https://tagmanager.google.com), container
+   `GTM-KZKSN8CT`.
+2. Maak per event dat je wilt gebruiken een trigger van het type Custom Event,
+   met de eventnaam uit de tabel hierboven.
+3. Wil je een eventparameter gebruiken in een tag, maak dan een variabele van het
+   type Data Layer Variable met de naam van die parameter, bijvoorbeeld `src` of
+   `cta`.
+4. Test met Preview op `https://www.eclectik.co` voordat je publiceert.
 
-Als je extra tracking wilt toevoegen via GTM (naast de directe GA4 en LinkedIn tracking):
+Een LinkedIn conversie via GTM ziet er zo uit, als Custom HTML tag op de trigger
+die je wilt tellen:
 
-#### Tag 1: GA4 Event - Contact Form
-- **Tag Type**: Google Analytics: GA4 Event
-- **Measurement ID**: G-LD7EPKT1W2
-- **Event Name**: contact_form_submit
-- **Trigger**: Contact Form Submit
-
-#### Tag 2: LinkedIn Conversion
-- **Tag Type**: Custom HTML
-- **HTML**:
 ```html
 <script>
-  window.lintrk('track', { conversion_id: YOUR_CONVERSION_ID });
+  window.lintrk('track', { conversion_id: JOUW_CONVERSION_ID });
 </script>
 ```
-- **Trigger**: Consultation Request
 
----
+## Instellen in LinkedIn
 
-## 📈 Google Analytics 4 Configuratie
+1. Ga in [Campaign Manager](https://www.linkedin.com/campaignmanager) naar
+   Account Assets, Insight Tag en controleer of partner ID `9108033` data
+   ontvangt.
+2. Maak onder Account Assets, Conversions de conversies aan die je wilt meten en
+   koppel ze aan je campagnes.
+3. Verifieer met de LinkedIn Insight Tag Helper extensie in Chrome.
 
-### Stap 1: Verifieer GA4 Tracking
+## Testen voor je live gaat
 
-1. Ga naar [analytics.google.com](https://analytics.google.com)
-2. Selecteer je property (G-LD7EPKT1W2)
-3. Ga naar **Reports** → **Realtime**
-4. Open je website in een nieuw tabblad
-5. Controleer of je real-time bezoek ziet
+- Klik door vijf pagina's en tel of er vijf `page_view` events binnenkomen in
+  Realtime.
+- Verstuur het contactformulier en controleer `contact_form_submit`.
+- Open een campagnelink met `?src=test` en kijk of `src` meekomt op de events.
+- Loop de scorecard helemaal door en controleer de vijf `sc_`-events.
+- Draai GTM Preview en controleer dat de triggers afgaan die je hebt gemaakt.
 
-### Stap 2: Configureer Conversies
+In de browserconsole kun je met `window.dataLayer` de hele lijst events
+teruglezen. Dat werkt ook als GA4 zelf geblokkeerd wordt.
 
-1. Ga naar **Configure** → **Events**
-2. Markeer de volgende events als conversies:
-   - `contact_form_submit`
-   - `consultation_request`
-   - `resource_download`
-   - `newsletter_signup`
+## Als er niets binnenkomt
 
-### Stap 3: Maak Custom Reports
+Adblockers en tracking protection blokkeren `googletagmanager.com` standaard.
+Test in een venster zonder blokkers, anders lijkt alles kapot terwijl de code
+klopt. `window.dataLayer` vult zich wel gewoon, want die push doet de site zelf.
 
-1. Ga naar **Explore** → **Blank**
-2. Maak rapporten voor:
-   - CTA Click Performance
-   - Contact Form Conversion Rate
-   - Case Study Engagement
-   - Resource Download Tracking
+Komt er alleen een paginaweergave van de landingspagina binnen en verder niets,
+kijk dan of `PageViewTracker` nog in `App.tsx` staat.
 
----
+Ziet GA4 helemaal geen verkeer, controleer dan of de measurement ID in
+`client/index.html` nog `G-LD7EPKT1W2` is en of er JavaScript-fouten in de
+console staan.
 
-## 🔗 LinkedIn Campaign Manager Configuratie
+## Verder lezen
 
-### Stap 1: Verifieer Insight Tag
-
-1. Ga naar [LinkedIn Campaign Manager](https://www.linkedin.com/campaignmanager)
-2. Klik op **Account Assets** → **Insight Tag**
-3. Controleer of Partner ID **9108033** actief is
-4. Gebruik de Tag Helper Chrome extensie om te verifiëren
-
-### Stap 2: Maak Conversion Tracking
-
-1. Ga naar **Account Assets** → **Conversions**
-2. Maak nieuwe conversies aan:
-   - **Contact Form Submission** (Auto-conversion via Insight Tag)
-   - **Consultation Request** (Auto-conversion via Insight Tag)
-   - **Resource Download** (Auto-conversion via Insight Tag)
-
-### Stap 3: Koppel aan Campagnes
-
-1. Ga naar je LinkedIn Ads campagnes
-2. Selecteer de conversies die je wilt tracken
-3. Stel conversion attribution window in (bijv. 30 dagen)
-
----
-
-## 🧪 Testing Checklist
-
-Voordat je live gaat, test de volgende scenario's:
-
-- [ ] **Page View Tracking**: Open homepage en controleer in GA4 Realtime
-- [ ] **CTA Click**: Klik op "Explore Solutions" en controleer event in GA4
-- [ ] **Contact Form**: Vul formulier in en controleer conversion
-- [ ] **Case Study View**: Open case study en controleer event
-- [ ] **LinkedIn Tag**: Gebruik LinkedIn Tag Helper om te verifiëren
-- [ ] **GTM Preview**: Test alle triggers in GTM Preview mode
-
----
-
-## 📞 Troubleshooting
-
-### GA4 Events verschijnen niet
-- Controleer of GA4 Measurement ID correct is (G-LD7EPKT1W2)
-- Check browser console voor JavaScript errors
-- Verifieer dat ad-blockers zijn uitgeschakeld tijdens testen
-
-### LinkedIn Tag werkt niet
-- Controleer of Partner ID correct is (9108033)
-- Gebruik LinkedIn Insight Tag Helper Chrome extensie
-- Verifieer dat third-party cookies zijn ingeschakeld
-
-### GTM laadt niet
-- Controleer of GTM container ID correct is (GTM-KZKSN8CT)
-- Verifieer dat GTM script in `<head>` staat
-- Check of noscript in `<body>` staat
-
----
-
-## 🎯 Aanbevolen Dashboards
-
-### GA4 Dashboard
-- **Traffic Sources**: Waar komen bezoekers vandaan?
-- **User Engagement**: Welke pagina's presteren het best?
-- **Conversions**: Hoeveel contact form submissions?
-- **Event Tracking**: Welke CTA's worden het meest geklikt?
-
-### LinkedIn Campaign Manager
-- **Conversion Tracking**: Hoeveel leads via LinkedIn?
-- **Website Demographics**: Wie bezoekt je website?
-- **Retargeting Audiences**: Bouw audiences voor retargeting
-
----
-
-## 📚 Nuttige Resources
-
-- [Google Tag Manager Documentation](https://support.google.com/tagmanager)
-- [GA4 Setup Guide](https://support.google.com/analytics/answer/9304153)
-- [LinkedIn Insight Tag Guide](https://business.linkedin.com/marketing-solutions/insight-tag)
-- [GTM Preview Mode](https://support.google.com/tagmanager/answer/6107056)
-
----
-
-**Vragen?** Neem contact op met je marketing team of web developer voor verdere ondersteuning.
+- [Google Tag Manager documentatie](https://support.google.com/tagmanager)
+- [GA4 setup](https://support.google.com/analytics/answer/9304153)
+- [LinkedIn Insight Tag](https://business.linkedin.com/marketing-solutions/insight-tag)
