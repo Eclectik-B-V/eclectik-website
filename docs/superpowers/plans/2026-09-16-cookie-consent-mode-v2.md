@@ -860,7 +860,11 @@ git commit -m "feat: add ConsentProvider and mount it in App"
 - Create: `client/src/components/CookieBanner.tsx`
 - Modify: `client/src/App.tsx`
 
-De drie knoppen krijgen gelijk visueel gewicht. Weigeren moet even makkelijk zijn als accepteren, anders is de toestemming niet vrij gegeven en juridisch ongeldig.
+Weigeren en accepteren krijgen exact hetzelfde visuele gewicht: dezelfde variant, dezelfde
+grootte, dezelfde vorm. Anders is de toestemming niet vrij gegeven en juridisch waardeloos.
+"Manage preferences" is geen weigering maar een derde route, en mag daarom wel secundair
+ogen. De banner is bewust geen `role="dialog"`: hij vangt geen focus en blokkeert niets,
+dus een gelabelde `region` beschrijft eerlijker wat het is.
 
 - [ ] **Step 1: Maak de banner**
 
@@ -882,9 +886,8 @@ export default function CookieBanner() {
 
   return (
     <div
-      role="dialog"
+      role="region"
       aria-label="Cookie preferences"
-      aria-live="polite"
       className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-card/95 backdrop-blur-md"
     >
       <div className="container mx-auto flex max-w-5xl flex-col gap-4 px-4 py-6 md:flex-row md:items-center md:justify-between">
@@ -897,11 +900,11 @@ export default function CookieBanner() {
           .
         </p>
         <div className="flex flex-col gap-2 sm:flex-row sm:shrink-0">
-          <Button variant="outline" size="lg" onClick={() => saveConsent(DENY_ALL)}>
-            Essential only
-          </Button>
           <Button variant="outline" size="lg" asChild>
             <Link href="/cookie-settings">Manage preferences</Link>
+          </Button>
+          <Button size="lg" onClick={() => saveConsent(DENY_ALL)}>
+            Essential only
           </Button>
           <Button size="lg" onClick={() => saveConsent(ACCEPT_ALL)}>
             Accept all
