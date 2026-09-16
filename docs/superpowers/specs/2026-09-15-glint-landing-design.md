@@ -81,11 +81,16 @@ overloop.
 
 ## Wat nog geregeld moet worden
 
-1. Toestemming voor het Warburtons-woordmerk. De casetekst is goedgekeurd, het
-   logo op een marketingpagina is een aparte vraag.
-2. Kirsty één keer over de omschrijving van CSM en PSC laten lezen. Zij levert
+1. Kirsty één keer over de omschrijving van CSM en PSC laten lezen. Zij levert
    het, en die omschrijving is een reconstructie uit de CRM-rollen.
-3. De keuze publiek of niet. De case is goedgekeurd, dus dit is nu een besluit
-   en geen blocker. Publiek maken is: de `/glint`-regel uit `vercel.json`
-   halen, het noindex-effect uit de pagina halen, en de route in `sitemap.xml`
-   zetten.
+2. De keuze publiek en vindbaar. De pagina staat sinds 16 september live op
+   `/glint`, bereikbaar via de link maar op noindex. Vindbaar maken is: de
+   `/glint`-regel uit `vercel.json` halen, het noindex-effect uit de pagina
+   halen, en de route in `sitemap.xml` zetten.
+
+Afgehandeld, allebei bevestigd door Olivier op 16 september 2026: het
+Warburtons-woordmerk, dat Warburtons zelf heeft aangeleverd en goedgekeurd, en
+de casetekst, die naast de goedkeuring van Warburtons ook die van Kirsty draagt.
+
+Punt 1 hierboven blijft daarmee staan: haar akkoord op de case zegt niets over
+de omschrijving van CSM en PSC, want dat is een ander blok.

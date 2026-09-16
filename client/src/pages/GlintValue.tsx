@@ -54,12 +54,14 @@ import "./GlintValue.css";
  * below, and add the route to sitemap.xml. The gate is the case, and the case
  * is approved, so this is now a decision rather than a blocker.
  *
- * STILL TO CONFIRM BEFORE THE MAILING GOES OUT:
- *  1. The Warburtons wordmark. The case text is approved; permission to use
- *     the logo on a marketing page is a separate thing to ask for.
- *  2. Kirsty to read the CSM and PSC descriptions once. She delivers the work
- *     and the wording here is Marco's reconstruction from the CRM roles
- *     (briefing, bronteksten paragraph 3).
+ * CLEARED (both confirmed by Olivier on 16 September 2026):
+ *  - The Warburtons wordmark below. Warburtons supplied it and approved its use.
+ *  - The case text, which carries Kirsty's approval as well as Warburtons'.
+ *
+ * STILL TO CONFIRM: Kirsty to read the CSM and PSC descriptions in the block
+ * above the case. That is a separate thing from her sign-off on the case: she
+ * delivers that work, and the wording here is Marco's reconstruction from the
+ * CRM roles (briefing, bronteksten paragraph 3).
  */
 
 /**
