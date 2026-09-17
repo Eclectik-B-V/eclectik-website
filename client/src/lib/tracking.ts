@@ -24,7 +24,8 @@ export function trackEvent(eventName: string, eventParams?: Record<string, any>)
     window.gtag('event', eventName, eventParams);
   }
   
-  // Also push to dataLayer for GTM
+  // Ook naar de dataLayer. GTM is weg, maar gtag zelf leest hier ook uit,
+  // en een eventuele toekomstige tagmanager pikt het zo op.
   if (typeof window !== 'undefined' && window.dataLayer) {
     window.dataLayer.push({
       event: eventName,

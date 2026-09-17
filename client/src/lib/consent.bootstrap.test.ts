@@ -26,15 +26,20 @@ describe("bootstrap-script in client/index.html", () => {
     expect(normalized).toContain(`var CONSENT_VERSION = ${CONSENT_VERSION};`);
   });
 
-  it("staat boven zowel de GTM- als de GA4-snippet", () => {
+  it("staat boven de GA4-snippet", () => {
     const bootstrapAt = normalized.indexOf("Consent bootstrap");
-    const gtmAt = normalized.indexOf("Google Tag Manager");
     const ga4At = normalized.indexOf("Google Analytics 4");
     expect(bootstrapAt).toBeGreaterThan(-1);
-    expect(gtmAt).toBeGreaterThan(-1);
     expect(ga4At).toBeGreaterThan(-1);
-    expect(bootstrapAt).toBeLessThan(gtmAt);
     expect(bootstrapAt).toBeLessThan(ga4At);
+  });
+
+  it("laadt geen Google Tag Manager meer", () => {
+    // De container GTM-KZKSN8CT was leeg: nul tags, nul triggers. Hij laadde
+    // ruim 330 KB runtime om niets te doen. Komt hij ooit terug, dan moet het
+    // bootstrap-script er weer boven staan, net als bij GA4.
+    expect(normalized).not.toContain("GTM-KZKSN8CT");
+    expect(normalized).not.toContain("googletagmanager.com/gtm.js");
   });
 
   it("zet elk niet-essentieel signaal op denied als default", () => {
