@@ -577,10 +577,23 @@ export default function GlintValue() {
         <div className="glv-wrap">
           <p className="glv-eyebrow">How we support you</p>
           <h2>Two roles, one team alongside yours</h2>
+          {/* The first two sentences answer a reader the page otherwise turns
+              away: the team that runs a good cycle and is simply short-staffed
+              for the next one. Kirsty's colleague raised it on 17 September,
+              and it is a second reason to call rather than a second audience,
+              so it is one sentence here and one in the CTA, not a block of its
+              own. A block would widen the page the way the briefing's
+              premortem warns against. It sits in this intro because this
+              section follows the five leaks, so the relief lands immediately
+              after the confrontation. */}
           <p className="glv-intro">
-            You buy hours, not headcount. We staff the cycle with the two roles
-            that carry it, and scale up around your survey window rather than
-            sitting on your payroll all year.
+            You do not need a failing programme to bring us in. Plenty of teams
+            run a good cycle and are a person short for the next one: someone
+            leaves, the survey lands in a bad month, the team is already at
+            capacity, or there is no People Science in the building. You buy
+            hours, not headcount. We staff the cycle with the two roles that
+            carry it, and scale up around your survey window rather than sitting
+            on your payroll all year.
           </p>
           <div className="glv-roles">
             {ROLES.map(role => (
@@ -652,10 +665,14 @@ export default function GlintValue() {
         <div className="glv-wrap">
           <p className="glv-eyebrow">Next step</p>
           <h2>Tell us where your last cycle stalled</h2>
+          {/* The heading still assumes a stall, which is the right bet for most
+              readers. This line is where the short-staffed team gets an opening,
+              so the page does not close on a question they cannot answer. */}
           <p>
-            Thirty minutes, no deck. We will tell you which of the four steps
-            you are actually on, and what we would do first. If that is nothing,
-            we will say so.
+            Thirty minutes, no deck. Whether the last cycle stalled or the next
+            one is short a pair of hands, we will tell you which of the four
+            steps you are on and what we would do first. If that is nothing, we
+            will say so.
           </p>
           <div className="glv-actions">
             <a
