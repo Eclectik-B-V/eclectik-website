@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
 import Layout from "@/components/Layout";
-import { trackCTAClick } from "@/lib/tracking";
+import { trackGlintPage } from "@/lib/tracking";
 
 const SECTION = "px-6 py-14 lg:px-16 lg:py-[72px]";
 const INNER = "mx-auto max-w-[1000px]";
@@ -206,6 +207,12 @@ function Quote({
 }
 
 export default function GlintSupport() {
+  useEffect(() => {
+    trackGlintPage("glint_page_viewed", "glint-support");
+  }, []);
+
+  const onCta = (cta: string) => trackGlintPage("glint_cta_clicked", "glint-support", { cta });
+
   return (
     <Layout>
       <title>Glint Support | Eclectik</title>
@@ -484,7 +491,7 @@ export default function GlintSupport() {
           </p>
           <Link
             href="/contact"
-            onClick={() => trackCTAClick("Talk to us", "glint-support")}
+            onClick={() => onCta("Talk to us")}
             className="rounded-full font-bold bg-ec-sky text-ec-navy inline-block px-[34px] py-4 text-[16px] transition-colors hover:bg-[#54b4cb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky"
           >
             Talk to us

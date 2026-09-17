@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
+import { trackContactFormSubmission } from "@/lib/tracking";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -110,6 +111,7 @@ export default function Contact() {
       }
 
       toast.success("Message sent successfully! We'll get back to you soon.");
+      trackContactFormSubmission();
       setFormData({
         firstName: "",
         lastName: "",

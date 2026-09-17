@@ -54,20 +54,23 @@ Sinds september 2026 draait de site op Google Consent Mode v2 in advanced mode.
 **Events controleren:** gebruik in GA4 de DebugView onder Configure, of open in de browser de Netwerk-tab en zoek naar requests naar `google-analytics.com/g/collect`. Zonder GTM is er geen aparte preview-modus meer nodig.
 
 **Nog te doen, buiten de scope van deze wijziging:**
-- De events uit `client/src/lib/tracking.ts` die hieronder staan beschreven, alsnog aansluiten waar dat nog niet gebeurt. `trackCTAClick` wordt al aangeroepen op veel plekken: de header, het mobiele menu, Home, Consulting, WorkvivoSeer, HRTechServices en GlintSupport. `trackNewsletterSignup` wordt nergens aangeroepen. Het contactformulier in `client/src/pages/Contact.tsx` stuurt geen `contact_form_submit`, ondanks wat hieronder beschreven staat.
-- Er lopen al events die niet in de lijst hieronder staan: `door_selected`, `waitlist_joined`, `waitlist_qualification`, de scorecard-events, de Glint-paginaevents en de Microsoft-sellerspagina-events. Wil je die apart rapporteren, maak er dan Explore-rapporten voor in GA4 op basis van wat al binnenkomt.
+- `trackCTAClick` wordt al aangeroepen op veel plekken: de header, het mobiele menu, Home, Consulting, WorkvivoSeer, HRTechServices en GlintSupport.
+- Er lopen al events die niet in de lijst hieronder staan: `door_selected`, `waitlist_joined`, `waitlist_qualification`, de scorecard-events, de Glint-paginaevents (`glint_page_viewed`, `glint_cta_clicked`) en de Microsoft-sellerspagina-events. Wil je die apart rapporteren, maak er dan Explore-rapporten voor in GA4 op basis van wat al binnenkomt.
+- De Glint-paginaevents dragen een `page`-parameter met waarde `glint` of `glint-support`. Zonder dat onderscheid zouden de gemailde landingspagina `/glint` en de publieke propositiepagina `/glint-support` in een rapport niet uit elkaar te houden zijn.
 
 ---
 
 ## 📊 Tracking Events
 
-> **Let op:** van de events hieronder is er op dit moment een daadwerkelijk aangesloten,
-> `cta_click`. Die vuurt op veel plekken door de site heen, niet alleen op de homepage.
-> De andere vijf staan wel als functie in `client/src/lib/tracking.ts`, maar worden nergens
-> aangeroepen, ook `newsletter_signup` niet. Lees dit hoofdstuk dus als de bedoelde opzet,
-> niet als de huidige situatie.
+> **Let op:** `cta_click`, `contact_form_submit` en `event_registration` zijn aangesloten en
+> vuren daadwerkelijk. De functies uit een eerdere, deels dode generatie van
+> `client/src/lib/tracking.ts` (`case_study_view`, `resource_download`, `newsletter_signup`,
+> `consultation_request`, en het losse `page_view`) zijn verwijderd: ze hadden geen
+> aanroepen meer en wezen naar pagina's die in de herontwerp-ronde zijn geschrapt
+> (WhitePapers, Solutions, Training, een nieuwsbriefformulier, een consultatieflow).
+> `page_view` was sowieso overbodig naast wat GA4's enhanced measurement al meet.
 
-De volgende events horen naar GA4 te gaan.
+De volgende events gaan daadwerkelijk naar GA4.
 
 ### 1. CTA Clicks
 - **Event naam**: `cta_click`
@@ -80,41 +83,26 @@ De volgende events horen naar GA4 te gaan.
 
 ### 2. Contact Form Submissions
 - **Event naam**: `contact_form_submit`
-- **Wanneer**: gebruiker verstuurt contactformulier
-- **Parameters**:
-  - `event_category`: engagement
-  - `event_label`: Contact Form
-  - `name`, `email`, `company` (indien beschikbaar)
-
-### 3. Case Study Views
-- **Event naam**: `case_study_view`
-- **Wanneer**: gebruiker bekijkt een case study
-- **Parameters**:
-  - `event_category`: content
-  - `event_label`: naam van de case study
-
-### 4. Resource Downloads
-- **Event naam**: `resource_download`
-- **Wanneer**: gebruiker download een resource
+- **Wanneer**: gebruiker verstuurt het contactformulier op `/contact` en de server bevestigt de aanvraag. `client/src/pages/Contact.tsx` roept `trackContactFormSubmission()` pas aan na de succesmelding, niet ervoor.
 - **Parameters**:
   - `event_category`: conversion
-  - `event_label`: naam van de resource
-  - `resource_type`: type resource
+  - `src`: zie de uitleg bij `getAttribution()` verderop, meestal leeg
+- **Geen persoonsgegevens**: `trackContactFormSubmission()` accepteert bewust geen enkel argument. Naam, e-mailadres en bedrijfsnaam gaan het formulier wel in, maar nooit het GA4-event in. Dat is geen slordigheid: Google's eigen voorwaarden verbieden het opslaan van persoonsgegevens in GA4, en het zou daarnaast een AVG-overtreding zijn. Wat gemeten wordt is dat iemand het formulier invulde, niet wie.
 
-### 5. Newsletter Signups
-- **Event naam**: `newsletter_signup`
-- **Wanneer**: gebruiker schrijft zich in voor de nieuwsbrief
-- **Parameters**:
-  - `event_category`: engagement
-  - `event_label`: Newsletter Subscription
-
-### 6. Consultation Requests
-- **Event naam**: `consultation_request`
-- **Wanneer**: gebruiker vraagt een consultatie aan
+### 3. Event Registration
+- **Event naam**: `event_registration`
+- **Wanneer**: gebruiker rondt de registratie voor een evenement af, bijvoorbeeld op `/events/amsterdam-2026`. `client/src/pages/EventAmsterdam2026.tsx` roept `trackEventRegistration("amsterdam-2026")` pas aan na de succesmelding.
 - **Parameters**:
   - `event_category`: conversion
-  - `event_label`: Consultation Request
-  - `value`: 1
+  - `event_label`: naam van het evenement, bijvoorbeeld `amsterdam-2026`. Deze staat er wel bij, in tegenstelling tot bij het contactformulier, omdat `event_registration` een en dezelfde eventnaam is voor meerdere evenementen. Er is maar een contactformulier, dus daar is geen label nodig om events uit elkaar te houden.
+  - `src`: zie de uitleg bij `getAttribution()` verderop, meestal leeg
+- **Geen persoonsgegevens**: net als bij het contactformulier gaan voornaam, achternaam, e-mailadres, bedrijf en telefoonnummer nooit het GA4-event in.
+
+### Wat `src` wel en niet is
+
+Meerdere events hierboven en verderop, waaronder de Glint-paginaevents, dragen een `src`-parameter. Die komt uit `getAttribution()` in `client/src/lib/tracking.ts` en leest alleen een handmatig toegevoegde `?src=` uit de URL van de eerste pagina in de sessie.
+
+Dit is geen kanaalattributie. Er wordt niet gekeken naar `utm_source` of naar de referrer, dus voor een bezoeker die binnenkomt via een ongetagde link blijft `src` leeg. Dat is bedoeld gedrag en geen gebrek: GA4 registreert bron en medium al zelf, per event, in zijn eigen kanaalrapport. Gebruik `src` alleen om specifieke, met de hand getagde links uit elkaar te houden, bijvoorbeeld een mailing versus een LinkedIn-campagne. Lees een lege `src`-kolom dus niet als "geen herleidbare aanvragen": dat zegt het GA4-kanaalrapport, niet dit veld.
 
 ---
 
@@ -131,11 +119,9 @@ De volgende events horen naar GA4 te gaan.
 ### Stap 2: Configureer Conversies
 
 1. Ga naar **Configure** → **Events**
-2. Markeer de volgende events als conversies zodra ze aangesloten zijn:
+2. Markeer de volgende events als conversies:
    - `contact_form_submit`
-   - `consultation_request`
-   - `resource_download`
-   - `newsletter_signup`
+   - `event_registration`
 
 ### Stap 3: Maak Custom Reports
 
@@ -143,8 +129,8 @@ De volgende events horen naar GA4 te gaan.
 2. Maak rapporten voor:
    - CTA Click Performance
    - Contact Form Conversion Rate
-   - Case Study Engagement
-   - Resource Download Tracking
+   - Event Registration per evenement, met `event_label` als uitsplitsing
+   - Glint-paginaverkeer, met `page` als uitsplitsing tussen `glint` en `glint-support`
 
 ---
 
@@ -162,8 +148,7 @@ De volgende events horen naar GA4 te gaan.
 1. Ga naar **Account Assets** → **Conversions**
 2. Maak nieuwe conversies aan:
    - **Contact Form Submission** (Auto-conversion via Insight Tag)
-   - **Consultation Request** (Auto-conversion via Insight Tag)
-   - **Resource Download** (Auto-conversion via Insight Tag)
+   - **Event Registration** (Auto-conversion via Insight Tag)
 
 ### Stap 3: Koppel aan Campagnes
 
@@ -179,7 +164,8 @@ Voordat je live gaat, test de volgende scenario's:
 
 - [ ] **Page View Tracking**: open homepage en controleer in GA4 Realtime
 - [ ] **CTA Click**: klik op een CTA, bijvoorbeeld "Take the scorecard" in de header, en controleer het event in GA4
-- [ ] **Contact Form**: vul formulier in en controleer of dit al conversion oplevert. Op dit moment gebeurt dat nog niet, zie de opmerking hierboven
+- [ ] **Contact Form**: vul het formulier in, verstuur het, en controleer dat `contact_form_submit` binnenkomt zonder naam, e-mailadres of bedrijfsnaam in de parameters
+- [ ] **Event Registration**: rond een evenementregistratie af en controleer dat `event_registration` binnenkomt met het juiste `event_label`
 - [ ] **LinkedIn Tag**: gebruik LinkedIn Tag Helper om te verifiëren
 
 ---
@@ -204,7 +190,7 @@ Voordat je live gaat, test de volgende scenario's:
 ### GA4 Dashboard
 - **Traffic Sources**: waar komen bezoekers vandaan?
 - **User Engagement**: welke pagina's presteren het best?
-- **Conversions**: hoeveel contact form submissions?
+- **Conversions**: hoeveel contact form submissions en event registrations?
 - **Event Tracking**: welke CTA's worden het meest geklikt?
 
 ### LinkedIn Campaign Manager

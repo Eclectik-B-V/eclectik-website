@@ -20,17 +20,21 @@ declare global {
  * @param eventParams - Additional parameters for the event
  */
 export function trackEvent(eventName: string, eventParams?: Record<string, any>) {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', eventName, eventParams);
-  }
-  
-  // Ook naar de dataLayer. GTM is weg, maar gtag zelf leest hier ook uit,
-  // en een eventuele toekomstige tagmanager pikt het zo op.
-  if (typeof window !== 'undefined' && window.dataLayer) {
-    window.dataLayer.push({
-      event: eventName,
-      ...eventParams
-    });
+  try {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", eventName, eventParams);
+    }
+
+    // Ook naar de dataLayer. GTM is weg, maar gtag zelf leest hier ook uit,
+    // en een eventuele toekomstige tagmanager pikt het zo op.
+    if (typeof window !== "undefined" && window.dataLayer) {
+      window.dataLayer.push({ event: eventName, ...eventParams });
+    }
+  } catch (error) {
+    // Meten mag falen, de gebruikersflow niet. Deze functie wordt aangeroepen
+    // vlak nadat een formulier is geslaagd en de bevestiging al in beeld staat.
+    // Zou hij gooien, dan zag de bezoeker tegelijk een succes- en een foutmelding.
+    console.warn("[tracking] kon event niet versturen", eventName, error);
   }
 }
 
@@ -49,20 +53,17 @@ export function trackLinkedInConversion(conversionId?: number) {
 }
 
 /**
- * Track contact form submission
+ * Track a contact form submission.
+ *
+ * Deliberately takes no arguments. Naam, e-mailadres en bedrijfsnaam horen niet
+ * in Google Analytics: dat verbieden Google's eigen voorwaarden en het is een
+ * AVG-overtreding. We meten dat iemand het formulier invulde, niet wie.
  */
-export function trackContactFormSubmission(formData?: {
-  name?: string;
-  email?: string;
-  company?: string;
-}) {
-  trackEvent('contact_form_submit', {
-    event_category: 'engagement',
-    event_label: 'Contact Form',
-    ...formData
+export function trackContactFormSubmission() {
+  trackEvent("contact_form_submit", {
+    event_category: "conversion",
+    src: getAttribution(),
   });
-  
-  // Track LinkedIn conversion
   trackLinkedInConversion();
 }
 
@@ -74,77 +75,6 @@ export function trackCTAClick(ctaName: string, ctaLocation: string) {
     event_category: 'engagement',
     event_label: ctaName,
     cta_location: ctaLocation
-  });
-}
-
-/**
- * Track case study views
- */
-export function trackCaseStudyView(caseStudyName: string) {
-  trackEvent('case_study_view', {
-    event_category: 'content',
-    event_label: caseStudyName
-  });
-}
-
-/**
- * Track resource downloads
- */
-export function trackResourceDownload(resourceName: string, resourceType: string) {
-  trackEvent('resource_download', {
-    event_category: 'conversion',
-    event_label: resourceName,
-    resource_type: resourceType
-  });
-  
-  // Track LinkedIn conversion for downloads
-  trackLinkedInConversion();
-}
-
-/**
- * Track page views (called automatically by GA4, but can be used for custom tracking)
- */
-export function trackPageView(pagePath: string, pageTitle: string) {
-  trackEvent('page_view', {
-    page_path: pagePath,
-    page_title: pageTitle
-  });
-}
-
-/**
- * Track newsletter signup
- */
-export function trackNewsletterSignup(email?: string) {
-  trackEvent('newsletter_signup', {
-    event_category: 'engagement',
-    event_label: 'Newsletter Subscription'
-  });
-  
-  // Track LinkedIn conversion
-  trackLinkedInConversion();
-}
-
-/**
- * Track consultation request
- */
-export function trackConsultationRequest() {
-  trackEvent('consultation_request', {
-    event_category: 'conversion',
-    event_label: 'Consultation Request',
-    value: 1
-  });
-  
-  // Track LinkedIn conversion
-  trackLinkedInConversion();
-}
-
-/**
- * Track service page views
- */
-export function trackServiceView(serviceName: string) {
-  trackEvent('service_view', {
-    event_category: 'content',
-    event_label: serviceName
   });
 }
 
@@ -166,6 +96,15 @@ export function initAttribution() {
   }
 }
 
+/**
+ * Leest de handmatig getagde bron uit `?src=` van de eerste pagina in de sessie.
+ *
+ * Let op wat dit NIET is: dit is geen kanaalattributie. Er wordt niet gekeken
+ * naar `utm_source` of naar de referrer, dus voor bezoekers die binnenkomen via
+ * een ongetagde link blijft dit leeg. Dat is geen gebrek: GA4 registreert bron
+ * en medium zelf al per event. Gebruik dit veld alleen om specifieke, met de
+ * hand getagde links uit elkaar te houden.
+ */
 export function getAttribution(): string | undefined {
   if (typeof window === "undefined") return undefined;
   try {
@@ -209,6 +148,23 @@ export function trackWaitlistJoined() {
 }
 
 /**
+ * Track a completed event registration.
+ *
+ * Carries an `event_label` because `event_registration` is one event name
+ * shared by every event we run; the label is what tells one registration
+ * apart from another in a report. `contact_form_submit` has no such label
+ * because there is only ever one contact form.
+ */
+export function trackEventRegistration(eventName: string) {
+  trackEvent("event_registration", {
+    event_category: "conversion",
+    event_label: eventName,
+    src: getAttribution(),
+  });
+  trackLinkedInConversion();
+}
+
+/**
  * Waitlist qualification funnel events: wl_q_started, wl_q_answered (id),
  * wl_q_completed. waitlist_joined stays on the form submit itself.
  */
@@ -232,8 +188,10 @@ export function trackScorecard(
 }
 
 /**
- * Glint value landing page (/glint): glint_page_viewed on arrival,
- * glint_cta_clicked with a `cta` label on each button.
+ * Glint pages: glint_page_viewed on arrival, glint_cta_clicked with a `cta`
+ * label on each button. `page` distinguishes the mailed landing page (/glint)
+ * from the public proposition page (/glint-support) so the two are
+ * comparable in a report rather than indistinguishable.
  *
  * The page is reached through the link we mail and through LinkedIn campaigns,
  * so `src` is what ties a visit back to a campaign, per briefing paragraph 6.
@@ -246,11 +204,19 @@ export function trackScorecard(
  * mail or the booking does. Writing the CRM row from the page would need either
  * a form on the page or a website-signal that accepts an anonymous token.
  */
+type GlintPage = "glint" | "glint-support";
+
 export function trackGlintPage(
   event: "glint_page_viewed" | "glint_cta_clicked",
+  page: GlintPage,
   params?: Record<string, any>,
 ) {
-  trackEvent(event, { event_category: "glint_landing", src: getAttribution(), ...params });
+  trackEvent(event, {
+    event_category: "glint_landing",
+    page,
+    src: getAttribution(),
+    ...params
+  });
   if (event === "glint_cta_clicked") trackLinkedInConversion();
 }
 

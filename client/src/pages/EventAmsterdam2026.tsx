@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 import Layout from "@/components/Layout";
-import { getAttribution } from "@/lib/tracking";
+import { getAttribution, trackEventRegistration } from "@/lib/tracking";
 import { isWorkEmail } from "@shared/work-email";
 import "./EventAmsterdam2026.css";
 
@@ -322,6 +322,7 @@ export default function EventAmsterdam2026() {
 
       setState("registered");
       toast.success("You're registered. Check your inbox for the confirmation.");
+      trackEventRegistration("amsterdam-2026");
     } catch {
       // fetch only rejects on a network-level failure; anything the server
       // answered is handled above.

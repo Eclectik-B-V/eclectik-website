@@ -242,7 +242,7 @@ const WORKING = [
 
 export default function GlintValue() {
   useEffect(() => {
-    trackGlintPage("glint_page_viewed");
+    trackGlintPage("glint_page_viewed", "glint");
   }, []);
 
   /**
@@ -273,7 +273,7 @@ export default function GlintValue() {
     };
   }, []);
 
-  const onCta = (cta: string) => trackGlintPage("glint_cta_clicked", { cta });
+  const onCta = (cta: string) => trackGlintPage("glint_cta_clicked", "glint", { cta });
 
   return (
     <div className="glv">
