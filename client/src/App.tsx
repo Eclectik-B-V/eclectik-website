@@ -2,11 +2,14 @@ import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { initAttribution } from "@/lib/tracking";
 import ScrollToTop from "@/components/ScrollToTop";
+import CookieBanner from "@/components/CookieBanner";
+import LinkedInInsightTag from "@/components/LinkedInInsightTag";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { ConsentProvider } from "./contexts/ConsentContext";
 import Home from "@/pages/Home";
 import AboutUs from "@/pages/AboutUs";
 import Consulting from "./pages/Consulting";
@@ -100,11 +103,18 @@ function App() {
         defaultTheme="light"
         // switchable
       >
-        <TooltipProvider>
-          <ScrollToTop />
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <ConsentProvider>
+          <TooltipProvider>
+            <ScrollToTop />
+            <Toaster />
+            {/* Bewust vóór de Router: de banner staat visueel onderaan maar is
+                de eerste beslissing die we vragen, dus hij hoort ook vooraan in
+                de tabvolgorde te staan. */}
+            <CookieBanner />
+            <LinkedInInsightTag />
+            <Router />
+          </TooltipProvider>
+        </ConsentProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

@@ -7,8 +7,10 @@
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
-    lintrk?: (...args: any[]) => void;
+    // `q` is de wachtrij die de Insight Tag zelf leegt zodra hij geladen is.
+    lintrk?: ((...args: any[]) => void) & { q?: any[][] };
     dataLayer?: any[];
+    _linkedin_data_partner_ids?: string[];
   }
 }
 
