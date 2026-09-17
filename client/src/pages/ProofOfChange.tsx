@@ -1,13 +1,26 @@
-import PlaceholderPage from "@/components/PlaceholderPage";
+import ProofPage from "@/components/ProofPage";
 
+/**
+ * De tekst is aangeleverd en staat hier onverkort. De alinea is alleen
+ * gebroken waar het betoog draait: eerst wat rolloutcijfers niet vertellen,
+ * dan hoe we lezen, dan wat je terugkrijgt. Er is niets bijgeschreven en niets
+ * weggelaten.
+ */
 export default function ProofOfChange() {
   return (
-    <PlaceholderPage
-      title="Proof of change"
-      heading="Is your workforce actually changing?"
+    <ProofPage
+      door="change"
       path="/proof-of-change"
-      description="People science and expert interpretation of your listening data, whatever instrument you run. The full proof-of-change page launches in November 2026."
-      cta={{ label: "Take the scorecard (3–4 min)", href: "/scorecard?door=change" }}
+      title="Proof of change"
+      description="Rollout numbers tell you what was implemented, not what changed in the work. We read your listening data with people science, whatever instrument you run."
+      eyebrow="PROOF OF CHANGE · TRANSFORMATION LEADERS"
+      heading="Is your workforce actually changing?"
+      lead="Rollout numbers tell you what was implemented. They do not tell you what changed in the work."
+      body={[
+        "We read your listening data, whatever instrument you run, with people science: where AI lands as a resource, where it lands as an extra demand, and for whom. Cohorts and outcome definitions are fixed up front, so the reading survives challenge.",
+        "You receive an independent picture of how working patterns are actually moving, tied back to real adoption, and the levers that steer it: transparency, perceived fairness and human oversight.",
+      ]}
+      closing="The full proof-of-change page opens in November 2026."
     />
   );
 }
