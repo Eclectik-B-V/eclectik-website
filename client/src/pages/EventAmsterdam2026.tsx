@@ -453,7 +453,7 @@ export default function EventAmsterdam2026() {
               University
             </li>
             <li>
-              <b>Marco van Gelder</b>, Chief Strategy Officer at Eclectik
+              <b>Marco van Gelder</b>, Chief Strategy &amp; Innovation Officer at Eclectik
             </li>
             <li>
               <b>Steven Buck</b>, Principal People Scientist, Seer by Workvivo
@@ -540,13 +540,13 @@ export default function EventAmsterdam2026() {
               <div className="avatar">
                 <img
                   src={PHOTOS.marco}
-                  alt="Marco van Gelder, Chief Strategy Officer at Eclectik"
+                  alt="Marco van Gelder, Chief Strategy and Innovation Officer at Eclectik"
                   loading="lazy"
                   decoding="async"
                 />
               </div>
               <p className="nm">Marco van Gelder</p>
-              <p className="rl">Chief Strategy Officer</p>
+              <p className="rl">Chief Strategy &amp; Innovation Officer</p>
               <p className="or">Eclectik</p>
               <span className="tag">Host / presenter</span>
             </figure>
