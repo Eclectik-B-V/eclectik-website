@@ -29,21 +29,23 @@ export default function SiteFooter() {
             <p className="text-sm text-ec-body-faint">
               Independent AI transformation assurance. ISO 27001 certified.
             </p>
-            {/* Vestigings- en registratiegegevens. In een <address> omdat dat het
-                element voor contactgegevens van de uitgever is; not-italic omdat
-                browsers dat element standaard cursief zetten. */}
-            <address className="mt-4 not-italic text-xs leading-[1.7] text-ec-body-faint">
-              <span className="font-semibold text-ec-body">Eclectik B.V.</span>
-              <br />
-              Helmbrekersteeg 4, 2011 DE Haarlem
-              <br />
-              The Netherlands
-              <br />
-              VAT NL866927414B01
-              <br />
-              Chamber of Commerce 94892652
-            </address>
           </div>
+
+          {/* Vestigings- en registratiegegevens als eigen kolom, tussen het logo
+              en de links. In een <address> omdat dat het element voor
+              contactgegevens van de uitgever is; not-italic omdat browsers dat
+              element standaard cursief zetten. */}
+          <address className="not-italic text-xs leading-[1.7] text-ec-body-faint">
+            <span className="font-semibold text-ec-body">Eclectik B.V.</span>
+            <br />
+            Helmbrekersteeg 4, 2011 DE Haarlem
+            <br />
+            The Netherlands
+            <br />
+            VAT NL866927414B01
+            <br />
+            Chamber of Commerce 94892652
+          </address>
 
           <div className="flex gap-14 text-sm text-ec-body">
             <div className="flex flex-col gap-2.5">
