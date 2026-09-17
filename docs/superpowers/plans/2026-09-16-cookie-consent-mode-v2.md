@@ -38,7 +38,7 @@
 | `client/src/lib/tracking.ts` | Modify | `Window`-declaratie uitbreiden met `_linkedin_data_partner_ids` en `lintrk.q` |
 | `client/src/App.tsx` | Modify | `ConsentProvider`, `CookieBanner` en `LinkedInInsightTag` monteren |
 | `client/src/pages/CookieSettings.tsx` | Modify | Lezen uit en schrijven naar de store in plaats van `console.log` |
-| `GTM-SETUP-GUIDE.md` | Modify | Consent-sectie toevoegen, verouderd domein corrigeren |
+| `ANALYTICS.md` | Modify | Consent-sectie toevoegen, verouderd domein corrigeren |
 
 ---
 
@@ -1391,13 +1391,13 @@ Rapporteer per controle het waargenomen resultaat, met de screenshot erbij. Als 
 ### Task 10: Documentatie bijwerken
 
 **Files:**
-- Modify: `GTM-SETUP-GUIDE.md`
+- Modify: `ANALYTICS.md`
 
 De guide beschrijft nu een situatie zonder consent en verwijst naar een verouderd domein.
 
 - [ ] **Step 1: Corrigeer het verouderde domein**
 
-In `GTM-SETUP-GUIDE.md` staat bij Stap 1 van de GTM-configuratie:
+In `ANALYTICS.md` staat bij Stap 1 van de GTM-configuratie:
 
 ```
 5. Voer je website URL in: `https://www.eclectik-insights.co`
@@ -1452,7 +1452,7 @@ Sinds september 2026 draait de site op Google Consent Mode v2 in advanced mode.
 
 ```bash
 cd ~/Desktop/eclectik-website-consent
-git add GTM-SETUP-GUIDE.md
+git add ANALYTICS.md
 git commit -m "docs: document consent mode v2 setup and correct stale domain"
 ```
 

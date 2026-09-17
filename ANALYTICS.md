@@ -1,18 +1,29 @@
-# Google Tag Manager Setup Guide
+# Analytics Guide
 ## Eclectik AI Transformation Website
 
-Deze handleiding helpt je om de tracking volledig te configureren in Google Tag Manager.
+Deze handleiding beschrijft hoe bezoekersanalyse op de site werkt: wat er meet, hoe toestemming werkt, en wat je moet weten voor je iets verandert.
 
 ---
 
 ## ✅ Wat is al geïnstalleerd
 
-De volgende tracking codes zijn al toegevoegd aan je website:
+De volgende tracking is toegevoegd aan de website:
 
-1. **Google Tag Manager** (GTM-KZKSN8CT)
-2. **Google Analytics 4** (G-LD7EPKT1W2)
-3. **LinkedIn Insight Tag** (Partner ID: 9108033)
-4. **Conversion Tracking Events** (via custom JavaScript)
+1. **Google Analytics 4** (G-LD7EPKT1W2), rechtstreeks geladen in `client/index.html`
+2. **LinkedIn Insight Tag** (Partner ID: 9108033), pas geladen nadat een bezoeker marketing-cookies accepteert
+3. **Conversion Tracking Events** via custom JavaScript in `client/src/lib/tracking.ts`
+
+---
+
+## 🚫 Google Tag Manager is verwijderd
+
+Op 17 september 2026 is gecontroleerd wat er in GTM-container `GTM-KZKSN8CT` zat. Antwoord: niets. Nul tags, nul triggers, nul predicates, alleen de vijf ingebouwde variabelen die elke nieuwe container standaard meekrijgt. Het GA4-measurement-ID stond nergens in de container. Ondertussen laadde het GTM-script wel op elke paginaweergave, goed voor zo'n 330 KB aan extra runtime, voor niets.
+
+De eigenaar wil eenvoudige bezoekersanalyse en niet meer dan dat. Daarom zijn het GTM-script en de bijbehorende `<noscript>`-iframe uit `client/index.html` gehaald. GA4 en de LinkedIn Insight Tag draaien ongewijzigd door, rechtstreeks.
+
+Dit betekent ook meteen het antwoord op een oude open vraag: er was geen dubbele tagging. Gemeten op de live site vlak voor het verwijderen kwam er precies een `page_view` binnen per paginaweergave, op een enkel measurement-ID. De tweede `collect`-request die je in het netwerkoverzicht zag, was GA4's eigen enhanced-measurement `scroll`-event, geen tweede pageview.
+
+**Wil je GTM ooit terug?** Zet de container-snippet dan onder het consent-bootstrapscript in `client/index.html`, nooit erboven. Het bootstrapscript zet de Consent Mode-standaarden op `denied` voordat er iets anders laadt. Komt de GTM-snippet eerder, dan vuurt GA4 met volledige opslag voordat er ooit toestemming is gevraagd, en is de hele consentlaag zinloos.
 
 ---
 
@@ -22,10 +33,10 @@ Sinds september 2026 draait de site op Google Consent Mode v2 in advanced mode.
 
 **Hoe het werkt**
 
-1. Een inline script bovenin `client/index.html` zet alle consent-signalen op `denied` voordat GTM laadt. GA4 laadt dus wel, maar stuurt cookieloze pings tot de bezoeker kiest.
+1. Een inline script bovenin `client/index.html` zet alle consent-signalen op `denied` voordat GA4 laadt. GA4 laadt dus wel, maar stuurt cookieloze pings tot de bezoeker kiest.
 2. De bezoeker kiest via de banner of via `/cookie-settings`.
 3. De keuze wordt opgeslagen in de first-party cookie `eclectik_consent`, twaalf maanden geldig, en direct als `consent update` naar Google gestuurd.
-4. Bij een herhaalbezoek stuurt het bootstrap-script de update opnieuw, nog voordat GTM laadt.
+4. Bij een herhaalbezoek stuurt het bootstrap-script de update opnieuw, nog voordat GA4 laadt.
 
 **Categorieen en signalen**
 
@@ -40,12 +51,11 @@ Sinds september 2026 draait de site op Google Consent Mode v2 in advanced mode.
 
 **Als je een tracker toevoegt:** verhoog `CONSENT_VERSION` in `client/src/lib/consent.ts` en in het bootstrap-script in `client/index.html`. Bestaande toestemming vervalt dan en de banner verschijnt opnieuw.
 
-**Tags testen in GTM:** gebruik in de GTM-preview het tabblad Consent om per tag te zien welke signalen hij vereist en of hij daadwerkelijk gevuurd heeft.
+**Events controleren:** gebruik in GA4 de DebugView onder Configure, of open in de browser de Netwerk-tab en zoek naar requests naar `google-analytics.com/g/collect`. Zonder GTM is er geen aparte preview-modus meer nodig.
 
 **Nog te doen, buiten de scope van deze wijziging:**
-- Controleren of de GTM-container een eigen GA4-configuratietag bevat. Als dat zo is, vuurt elke pageview dubbel naast de directe `gtag('config', ...)` in `client/index.html`.
-- De events uit `client/src/lib/tracking.ts` die hieronder staan beschreven, alsnog aansluiten. Alleen `trackCTAClick` wordt nu aangeroepen, en dat op veel meer plekken dan een homepage-knop: onder andere de header, het mobiele menu, Consulting, WorkvivoSeer, HRTechServices en GlintSupport. `trackNewsletterSignup` wordt nergens aangeroepen. Het contactformulier in `client/src/pages/Contact.tsx` stuurt geen `contact_form_submit`, ondanks wat hieronder beschreven staat.
-- Een aparte laag events op GTM aansluiten als je die wilt rapporteren: `door_selected`, `waitlist_joined`, `waitlist_qualification`, de scorecard-events, de Glint-paginaevents en de Microsoft-sellerspagina-events. Die worden al aangeroepen, alleen niet beschreven in de lijst hieronder.
+- De events uit `client/src/lib/tracking.ts` die hieronder staan beschreven, alsnog aansluiten waar dat nog niet gebeurt. `trackCTAClick` wordt al aangeroepen op veel plekken: de header, het mobiele menu, Home, Consulting, WorkvivoSeer, HRTechServices en GlintSupport. `trackNewsletterSignup` wordt nergens aangeroepen. Het contactformulier in `client/src/pages/Contact.tsx` stuurt geen `contact_form_submit`, ondanks wat hieronder beschreven staat.
+- Er lopen al events die niet in de lijst hieronder staan: `door_selected`, `waitlist_joined`, `waitlist_qualification`, de scorecard-events, de Glint-paginaevents en de Microsoft-sellerspagina-events. Wil je die apart rapporteren, maak er dan Explore-rapporten voor in GA4 op basis van wat al binnenkomt.
 
 ---
 
@@ -57,19 +67,20 @@ Sinds september 2026 draait de site op Google Consent Mode v2 in advanced mode.
 > aangeroepen, ook `newsletter_signup` niet. Lees dit hoofdstuk dus als de bedoelde opzet,
 > niet als de huidige situatie.
 
-De volgende events horen naar GA4 en GTM te gaan:
+De volgende events horen naar GA4 te gaan.
 
 ### 1. CTA Clicks
 - **Event naam**: `cta_click`
-- **Wanneer**: Gebruiker klikt op "Explore Solutions" button
+- **Wanneer**: gebruiker klikt op een call-to-action knop, verspreid over de site. Onder meer in de header, op de homepage en op de servicepagina's.
+- **Voorbeelden van labels**: "Register for 6th Oct event" (header en homepage), "Take the scorecard" (header), "Book an execution gap assessment" (Workvivo Seer-pagina)
 - **Parameters**:
   - `event_category`: engagement
-  - `event_label`: Naam van de CTA
-  - `cta_location`: Locatie op de pagina
+  - `event_label`: naam van de CTA
+  - `cta_location`: locatie op de pagina
 
 ### 2. Contact Form Submissions
 - **Event naam**: `contact_form_submit`
-- **Wanneer**: Gebruiker verstuurt contactformulier
+- **Wanneer**: gebruiker verstuurt contactformulier
 - **Parameters**:
   - `event_category`: engagement
   - `event_label`: Contact Form
@@ -77,84 +88,33 @@ De volgende events horen naar GA4 en GTM te gaan:
 
 ### 3. Case Study Views
 - **Event naam**: `case_study_view`
-- **Wanneer**: Gebruiker bekijkt een case study
+- **Wanneer**: gebruiker bekijkt een case study
 - **Parameters**:
   - `event_category`: content
-  - `event_label`: Naam van de case study
+  - `event_label`: naam van de case study
 
 ### 4. Resource Downloads
 - **Event naam**: `resource_download`
-- **Wanneer**: Gebruiker download een resource
+- **Wanneer**: gebruiker download een resource
 - **Parameters**:
   - `event_category`: conversion
-  - `event_label`: Naam van de resource
-  - `resource_type`: Type resource
+  - `event_label`: naam van de resource
+  - `resource_type`: type resource
 
 ### 5. Newsletter Signups
 - **Event naam**: `newsletter_signup`
-- **Wanneer**: Gebruiker schrijft zich in voor nieuwsbrief
+- **Wanneer**: gebruiker schrijft zich in voor de nieuwsbrief
 - **Parameters**:
   - `event_category`: engagement
   - `event_label`: Newsletter Subscription
 
 ### 6. Consultation Requests
 - **Event naam**: `consultation_request`
-- **Wanneer**: Gebruiker vraagt consultatie aan
+- **Wanneer**: gebruiker vraagt een consultatie aan
 - **Parameters**:
   - `event_category`: conversion
   - `event_label`: Consultation Request
   - `value`: 1
-
----
-
-## 🔧 Google Tag Manager Configuratie
-
-### Stap 1: Verifieer GTM Installatie
-
-1. Ga naar [tagmanager.google.com](https://tagmanager.google.com)
-2. Selecteer container **GTM-KZKSN8CT**
-3. Klik op "Preview" rechtsboven
-4. Voer je website URL in: `https://www.eclectik.co`
-5. Controleer of GTM correct laadt
-
-### Stap 2: Configureer Triggers
-
-Maak de volgende triggers aan in GTM:
-
-#### Trigger 1: Contact Form Submit
-- **Type**: Custom Event
-- **Event name**: `contact_form_submit`
-- **This trigger fires on**: All Custom Events
-
-#### Trigger 2: CTA Click
-- **Type**: Custom Event
-- **Event name**: `cta_click`
-- **This trigger fires on**: All Custom Events
-
-#### Trigger 3: Consultation Request
-- **Type**: Custom Event
-- **Event name**: `consultation_request`
-- **This trigger fires on**: All Custom Events
-
-### Stap 3: Configureer Tags (optioneel)
-
-Als je extra tracking wilt toevoegen via GTM (naast de directe GA4 en LinkedIn tracking):
-
-#### Tag 1: GA4 Event - Contact Form
-- **Tag Type**: Google Analytics: GA4 Event
-- **Measurement ID**: G-LD7EPKT1W2
-- **Event Name**: contact_form_submit
-- **Trigger**: Contact Form Submit
-
-#### Tag 2: LinkedIn Conversion
-- **Tag Type**: Custom HTML
-- **HTML**:
-```html
-<script>
-  window.lintrk('track', { conversion_id: YOUR_CONVERSION_ID });
-</script>
-```
-- **Trigger**: Consultation Request
 
 ---
 
@@ -171,7 +131,7 @@ Als je extra tracking wilt toevoegen via GTM (naast de directe GA4 en LinkedIn t
 ### Stap 2: Configureer Conversies
 
 1. Ga naar **Configure** → **Events**
-2. Markeer de volgende events als conversies:
+2. Markeer de volgende events als conversies zodra ze aangesloten zijn:
    - `contact_form_submit`
    - `consultation_request`
    - `resource_download`
@@ -217,12 +177,10 @@ Als je extra tracking wilt toevoegen via GTM (naast de directe GA4 en LinkedIn t
 
 Voordat je live gaat, test de volgende scenario's:
 
-- [ ] **Page View Tracking**: Open homepage en controleer in GA4 Realtime
-- [ ] **CTA Click**: Klik op "Explore Solutions" en controleer event in GA4
-- [ ] **Contact Form**: Vul formulier in en controleer conversion
-- [ ] **Case Study View**: Open case study en controleer event
-- [ ] **LinkedIn Tag**: Gebruik LinkedIn Tag Helper om te verifiëren
-- [ ] **GTM Preview**: Test alle triggers in GTM Preview mode
+- [ ] **Page View Tracking**: open homepage en controleer in GA4 Realtime
+- [ ] **CTA Click**: klik op een CTA, bijvoorbeeld "Take the scorecard" in de header, en controleer het event in GA4
+- [ ] **Contact Form**: vul formulier in en controleer of dit al conversion oplevert. Op dit moment gebeurt dat nog niet, zie de opmerking hierboven
+- [ ] **LinkedIn Tag**: gebruik LinkedIn Tag Helper om te verifiëren
 
 ---
 
@@ -237,35 +195,29 @@ Voordat je live gaat, test de volgende scenario's:
 - Controleer of Partner ID correct is (9108033)
 - Gebruik LinkedIn Insight Tag Helper Chrome extensie
 - Verifieer dat third-party cookies zijn ingeschakeld
-
-### GTM laadt niet
-- Controleer of GTM container ID correct is (GTM-KZKSN8CT)
-- Verifieer dat GTM script in `<head>` staat
-- Check of noscript in `<body>` staat
+- Controleer of de bezoeker marketing-cookies heeft geaccepteerd. Zonder die toestemming wordt de tag helemaal niet geladen
 
 ---
 
 ## 🎯 Aanbevolen Dashboards
 
 ### GA4 Dashboard
-- **Traffic Sources**: Waar komen bezoekers vandaan?
-- **User Engagement**: Welke pagina's presteren het best?
-- **Conversions**: Hoeveel contact form submissions?
-- **Event Tracking**: Welke CTA's worden het meest geklikt?
+- **Traffic Sources**: waar komen bezoekers vandaan?
+- **User Engagement**: welke pagina's presteren het best?
+- **Conversions**: hoeveel contact form submissions?
+- **Event Tracking**: welke CTA's worden het meest geklikt?
 
 ### LinkedIn Campaign Manager
-- **Conversion Tracking**: Hoeveel leads via LinkedIn?
-- **Website Demographics**: Wie bezoekt je website?
-- **Retargeting Audiences**: Bouw audiences voor retargeting
+- **Conversion Tracking**: hoeveel leads via LinkedIn?
+- **Website Demographics**: wie bezoekt je website?
+- **Retargeting Audiences**: bouw audiences voor retargeting
 
 ---
 
 ## 📚 Nuttige Resources
 
-- [Google Tag Manager Documentation](https://support.google.com/tagmanager)
 - [GA4 Setup Guide](https://support.google.com/analytics/answer/9304153)
 - [LinkedIn Insight Tag Guide](https://business.linkedin.com/marketing-solutions/insight-tag)
-- [GTM Preview Mode](https://support.google.com/tagmanager/answer/6107056)
 
 ---
 

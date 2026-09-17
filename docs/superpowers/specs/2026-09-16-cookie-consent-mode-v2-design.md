@@ -18,8 +18,8 @@ Alle drie vuren onvoorwaardelijk bij pageload. Er is geen cookiebanner, geen Con
 Dit ontwerp beschrijft alleen de consent-laag. Drie andere bekende problemen blijven expliciet buiten scope en krijgen een eigen traject:
 
 1. Mogelijke dubbele tagging: zowel de GTM-container als een directe `gtag('config', ...)` staan in de head. Of dit tot dubbele pageviews leidt, hangt af van de inhoud van de GTM-container en is niet uit de code af te leiden.
-2. De event-tracking is grotendeels niet aangesloten. `client/src/lib/tracking.ts` bevat negen functies, maar alleen `trackCTAClick` en `trackNewsletterSignup` worden aangeroepen, beide in `client/src/pages/Home.tsx`. Het contactformulier importeert `tracking` niet, dus `contact_form_submit` wordt nooit verzonden, ondanks dat `GTM-SETUP-GUIDE.md` het als werkend beschrijft.
-3. De tag-IDs staan hardcoded in de HTML in plaats van in een omgevingsvariabele, en `GTM-SETUP-GUIDE.md` verwijst nog naar het oude domein `eclectik-insights.co`.
+2. De event-tracking is grotendeels niet aangesloten. `client/src/lib/tracking.ts` bevat negen functies, maar alleen `trackCTAClick` en `trackNewsletterSignup` worden aangeroepen, beide in `client/src/pages/Home.tsx`. Het contactformulier importeert `tracking` niet, dus `contact_form_submit` wordt nooit verzonden, ondanks dat `ANALYTICS.md` het als werkend beschrijft.
+3. De tag-IDs staan hardcoded in de HTML in plaats van in een omgevingsvariabele, en `ANALYTICS.md` verwijst nog naar het oude domein `eclectik-insights.co`.
 
 ## Genomen besluiten
 
