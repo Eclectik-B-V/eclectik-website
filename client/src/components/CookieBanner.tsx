@@ -42,25 +42,38 @@ export default function CookieBanner() {
       ref={bannerRef}
       role="region"
       aria-label="Cookie preferences"
-      className="fixed inset-x-0 bottom-0 z-50 max-h-[60vh] overflow-y-auto border-t border-white/10 bg-card/95 backdrop-blur-md"
+      className="fixed inset-x-0 bottom-0 z-50 max-h-[60vh] overflow-y-auto border-t border-ec-navy-line bg-ec-navy"
     >
       <div className="container mx-auto flex max-w-5xl flex-col gap-4 px-4 py-6 md:flex-row md:items-center md:justify-between">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white/80">
           We use cookies to analyse our traffic and to measure our marketing. You decide what we may
           use. Read more in our{" "}
-          <Link href="/privacy-policy" className="underline transition-colors hover:text-white">
+          <Link href="/privacy-policy" className="underline transition-colors hover:text-ec-sky">
             Privacy Policy
           </Link>
           .
         </p>
         <div className="flex flex-col gap-2 sm:flex-row sm:shrink-0">
-          <Button variant="outline" size="lg" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            asChild
+            className="rounded-full border border-white/30 text-white px-6 font-medium hover:bg-white/10 hover:text-white"
+          >
             <Link href="/cookie-settings">Manage preferences</Link>
           </Button>
-          <Button size="lg" onClick={() => saveConsent(DENY_ALL)}>
+          <Button
+            size="lg"
+            className="rounded-full bg-ec-sky text-ec-navy font-bold px-8 hover:bg-[#54b4cb]"
+            onClick={() => saveConsent(DENY_ALL)}
+          >
             Essential only
           </Button>
-          <Button size="lg" onClick={() => saveConsent(ACCEPT_ALL)}>
+          <Button
+            size="lg"
+            className="rounded-full bg-ec-sky text-ec-navy font-bold px-8 hover:bg-[#54b4cb]"
+            onClick={() => saveConsent(ACCEPT_ALL)}
+          >
             Accept all
           </Button>
         </div>
