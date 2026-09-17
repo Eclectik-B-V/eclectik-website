@@ -60,6 +60,38 @@ losse casepagina maar vraagt de volledige case op per mail. De case staat als
 document klaar, niet als publiceerbare pagina; dat is de openstaande keuze uit
 "Lees mij eerst".
 
+## De tweede reden om te bellen
+
+Een collega van Kirsty las de pagina op 17 september en miste één lezer: de
+organisatie die Glint prima kan runnen, maar tijdelijk capaciteit of
+specialistische kennis tekortkomt. Iemand vertrekt, er komt een survey aan, het
+team zit vol, of er is geen People Science in huis. De pagina was opgebouwd
+rondom één diagnose, namelijk dat er te weinig waarde uit Glint komt, en wie een
+goed lopend programma heeft leest het blok met de vijf lekken en concludeert dat
+het niet over hem gaat.
+
+Dat is opgelost als tweede reden om te bellen en niet als tweede doelgroep. Een
+doelgroep vraagt een eigen blok, een eigen CTA en misschien een andere hero, en
+dat is precies de verbreding waar de premortem van de briefing tegen waarschuwt.
+Een reden vraagt twee zinnen:
+
+- De intro van "Two roles, one team alongside yours" opent nu met het feit dat
+  een falend programma geen voorwaarde is, en noemt de vier situaties concreet.
+  Die plek is gekozen omdat dit blok direct na de vijf lekken komt, dus de lucht
+  volgt meteen op de confrontatie.
+- De regel onder de CTA dekt naast een vastgelopen cyclus ook de cyclus die
+  handen tekortkomt. De kop blijft "Tell us where your last cycle stalled", want
+  dat is voor de meeste lezers de juiste gok.
+
+De hero is bewust niet aangepast. De regel "Most organisations run a good survey
+and stop short of the part that changes anything" is de zin die deze lezer
+afstoot, maar hem daar repareren kost de enkele scherpe vraag waar de pagina op
+rust.
+
+Openstaand voor Marco: deze zinnen nodigen uit tot interim- en
+capaciteitsaanvragen, terwijl de briefing de pagina bewust rond waarde
+positioneerde en niet rond bezetting. Dat is een commerciële keuze.
+
 ## Meting
 
 Briefing 6 vraagt om beide CTA's in `marketing_lead_activity` in het CRM. Dat
