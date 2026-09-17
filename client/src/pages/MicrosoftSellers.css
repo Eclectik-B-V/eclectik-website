@@ -1,0 +1,685 @@
+/* Styles for /microsoft, the landing page behind the link we mail to Microsoft
+ * sellers, AEs and partner teams.
+ *
+ * Everything hangs off the .msl wrapper, following the pattern of
+ * EventAmsterdam2026.css: this page renders without Layout, so it has no site
+ * header or footer to protect, but scoping still keeps its variables from
+ * colliding with the global palette and keeps the page portable.
+ *
+ * Palette: the supplied mockup shipped its own colours (paper, pine green,
+ * stone red). Per the briefing, the eclectik.co tokens win where they exist, so
+ * the roles below map onto --color-ec-* and only deviate where a token fails
+ * WCAG on this page's backgrounds. Those deviations are marked and explained.
+ *
+ * Tailwind's preflight zeroes margins on p and h1-h6, so every margin here is
+ * written out rather than inherited from the browser default.
+ */
+
+.msl {
+  /* Light: cool neutral paper, deep navy ink. */
+  --msl-paper: var(--color-ec-surface);
+  --msl-paper-2: #e7eaeb; /* derived: a half-step down from ec-surface, no token exists */
+  --msl-ink: var(--color-ec-navy);
+  --msl-ink-2: var(--color-ec-body-strong);
+  --msl-ink-3: var(--color-ec-body);
+  --msl-rule: #c9cfd2; /* derived: ec-line is warm and vanishes on ec-surface */
+
+  /* Accent. ec-teal (#39a99f) reaches only 2.55:1 on this paper and teal-ink
+     3.94:1, both short of 4.5:1 for the mono labels and links that carry it.
+     This is ec-teal darkened to the "dark pine green" the briefing asks for,
+     at 5.57:1. */
+  --msl-accent: #256b64;
+  --msl-accent-ink: #ffffff;
+
+  /* The one off-palette colour, used only to mark what is going wrong.
+     ec-red is 4.42:1 here, just under the threshold, so text uses
+     ec-red-hover (6.0:1); the graphic marks keep ec-red, which clears the
+     3:1 that non-text needs. */
+  --msl-flag: var(--color-ec-red-hover);
+  --msl-flag-mark: var(--color-ec-red);
+
+  --msl-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  /* Statement band under the hero. Deliberately not --msl-paper-2: the proof
+     band sits directly below and uses that, and two adjacent bands in the same
+     tone read as one. 1.21:1 against the page, 1.12:1 against the proof band. */
+  --msl-statement-bg: #d8dee0;
+
+  --msl-measure: 68ch;
+  --msl-maxw: 1040px;
+
+  background: var(--msl-paper);
+  color: var(--msl-ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.62;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Dark theme. The site ships light-only (ThemeProvider defaultTheme="light",
+   not switchable), so this follows the reader's own setting instead: sellers
+   open this link on a phone between meetings, and the briefing asks for both
+   themes. Scoped to .msl, so it changes nothing elsewhere. */
+@media (prefers-color-scheme: dark) {
+  .msl {
+    --msl-paper: var(--color-ec-navy);
+    --msl-paper-2: #101a2b; /* derived: recedes below ec-navy for the proof band */
+    --msl-ink: var(--color-ec-on-dark);
+    --msl-ink-2: var(--color-ec-on-dark-muted);
+    --msl-ink-3: var(--color-ec-on-dark-caption);
+    --msl-rule: var(--color-ec-navy-line);
+    --msl-accent: var(--color-ec-sky); /* 7.26:1 on navy */
+    --msl-accent-ink: var(--color-ec-navy);
+    --msl-flag: #f2795a; /* ec-red lifted to 5.47:1; the original is 3.03:1 on navy */
+    --msl-flag-mark: #f2795a;
+    --msl-statement-bg: #263a58; /* 1.31:1 against the page, 1.52:1 against the proof band */
+  }
+}
+
+.msl *,
+.msl *::before,
+.msl *::after {
+  box-sizing: border-box;
+}
+
+.msl-wrap {
+  max-width: var(--msl-maxw);
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.msl section {
+  border-top: 1px solid var(--msl-rule);
+}
+
+.msl section > .msl-wrap {
+  padding-block: 56px;
+}
+
+.msl h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 3.2vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 10px 0 18px;
+  text-wrap: balance;
+  max-width: 24ch;
+}
+
+.msl p {
+  max-width: var(--msl-measure);
+  margin: 0;
+}
+
+.msl a {
+  color: var(--msl-accent);
+}
+
+.msl :focus-visible {
+  outline: 2px solid var(--msl-accent);
+  outline-offset: 3px;
+}
+
+/* Eyebrow: the mono half of the type system. Headings and body sit in the
+   brand face; every label, number and unit is mono. */
+.msl-eyebrow {
+  font-family: var(--msl-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--msl-ink-3);
+  margin: 0;
+}
+
+/* ---- masthead ---- */
+
+.msl-masthead {
+  border-top: none;
+}
+
+.msl-masthead > .msl-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  /* The bottom padding is not decoration: the hero section below draws the
+     first hairline, and without room here that rule sits against the logo. */
+  padding-block: 24px 22px;
+}
+
+/* Same size as the site header, which runs 58px on desktop and 40px on the
+   compact bar. The logo carries a tagline under the wordmark that turns to
+   mush below roughly 50px. */
+.msl-logo {
+  height: 58px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .msl-logo {
+    height: 40px;
+  }
+}
+
+/* Two logo files, one per theme: the wordmark is artwork, not text, so it
+   cannot pick up the colour variables above. */
+.msl-logo-dark {
+  display: block;
+}
+.msl-logo-light {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  .msl-logo-dark {
+    display: none;
+  }
+  .msl-logo-light {
+    display: block;
+  }
+}
+
+.msl-stamp {
+  font-family: var(--msl-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--msl-ink-3);
+  border: 1px solid var(--msl-rule);
+  border-radius: 2px;
+  padding: 4px 8px;
+}
+
+/* ---- hero ---- */
+
+.msl-hero > .msl-wrap {
+  padding-block: 40px 52px;
+}
+
+.msl h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 6.2vw, 58px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  margin: 14px 0 20px;
+  text-wrap: balance;
+  max-width: 19ch;
+}
+
+.msl-lede {
+  font-size: clamp(17px, 2.1vw, 20px);
+  color: var(--msl-ink-2);
+  max-width: 56ch;
+}
+
+.msl-hero-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: 48px;
+  align-items: end;
+}
+
+@media (max-width: 820px) {
+  .msl-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+}
+
+.msl figure {
+  margin: 0;
+}
+
+.msl figcaption {
+  font-family: var(--msl-mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--msl-ink-3);
+  margin-top: 10px;
+  max-width: 38ch;
+}
+
+.msl svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+/* Set here rather than as font-family/font-size presentation attributes on
+   each <text>: browsers do not reliably substitute var() inside presentation
+   attributes, so the labels fell back to a wider default face and ran into
+   each other. */
+.msl svg text {
+  font-family: var(--msl-mono);
+  font-size: 9px;
+}
+
+/* ---- actions ---- */
+
+.msl-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.msl-btn {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 13px 22px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* Written as a.msl-btn-*, not .msl-btn-*: the buttons are anchors, and
+   `.msl a` above scores one class plus one element, which outranks a bare
+   single class. Without the element in the selector the primary button drew
+   accent text on an accent fill, so the label disappeared. */
+.msl a.msl-btn-primary {
+  background: var(--msl-accent);
+  color: var(--msl-accent-ink);
+}
+
+.msl a.msl-btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.msl a.msl-btn-ghost {
+  border: 1px solid var(--msl-rule);
+  color: var(--msl-ink);
+}
+
+.msl a.msl-btn-ghost:hover {
+  border-color: var(--msl-accent);
+  color: var(--msl-accent);
+}
+
+/* ---- statement band ---- */
+
+/* No hairline on top: the change of background is the separator. The proof
+   section below keeps its own, which helps hold the two greys apart. */
+.msl-statement {
+  background: var(--msl-statement-bg);
+  border-top: none;
+}
+
+.msl-statement > .msl-wrap {
+  padding-block: 40px;
+}
+
+.msl-statement p {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(21px, 2.6vw, 30px);
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  max-width: 34ch;
+  text-wrap: pretty;
+  color: var(--msl-ink);
+}
+
+/* Accent, not --msl-flag: this page reserves the red for marking what goes
+   wrong, so the homepage's red second sentence would read as a warning here. */
+.msl-statement p span {
+  color: var(--msl-accent);
+}
+
+/* ---- proof ---- */
+
+.msl-proof {
+  background: var(--msl-paper-2);
+}
+
+.msl-proof-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr;
+  gap: 52px;
+}
+
+@media (max-width: 820px) {
+  .msl-proof-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.msl blockquote {
+  margin: 0;
+  font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.45;
+  max-width: 44ch;
+  letter-spacing: -0.01em;
+}
+
+.msl blockquote p {
+  max-width: none;
+  margin: 0 0 14px;
+}
+
+.msl-attrib {
+  font-family: var(--msl-mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--msl-ink-3);
+  margin-top: 22px;
+}
+
+.msl-recipe {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.msl-recipe li {
+  font-size: 15px;
+  color: var(--msl-ink-2);
+  padding: 12px 0;
+  border-top: 1px solid var(--msl-rule);
+  display: flex;
+  gap: 12px;
+}
+
+.msl-recipe li .msl-k {
+  color: var(--msl-accent);
+  font-family: var(--msl-mono);
+  font-size: 11px;
+  padding-top: 4px;
+  flex: none;
+}
+
+/* ---- two motions ---- */
+
+.msl-motions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 8px;
+}
+
+.msl-motion {
+  padding: 28px 32px 28px 0;
+}
+
+.msl-motion + .msl-motion {
+  border-left: 1px solid var(--msl-rule);
+  padding-left: 32px;
+  padding-right: 0;
+}
+
+@media (max-width: 760px) {
+  .msl-motions {
+    grid-template-columns: 1fr;
+  }
+  .msl-motion {
+    padding: 24px 0;
+  }
+  .msl-motion + .msl-motion {
+    border-left: none;
+    border-top: 1px solid var(--msl-rule);
+    padding-left: 0;
+  }
+}
+
+.msl-motion h3 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 8px 0 12px;
+}
+
+.msl-motion p {
+  font-size: 16px;
+  color: var(--msl-ink-2);
+  max-width: 42ch;
+}
+
+.msl-deliverables {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+  font-size: 15px;
+}
+
+.msl-deliverables li {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px dotted var(--msl-rule);
+  color: var(--msl-ink-2);
+}
+
+.msl-deliverables li:last-child {
+  border-bottom: none;
+}
+
+.msl-deliverables .msl-n {
+  font-family: var(--msl-mono);
+  font-size: 11px;
+  color: var(--msl-accent);
+  padding-top: 4px;
+  flex: none;
+}
+
+/* ---- adoption versus immersion ---- */
+
+.msl-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--msl-rule);
+  border: 1px solid var(--msl-rule);
+  margin-top: 24px;
+}
+
+.msl-compare > div {
+  background: var(--msl-paper);
+  padding: 22px 24px;
+}
+
+.msl-compare h3 {
+  font-family: var(--msl-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+  font-weight: 500;
+}
+
+.msl-compare .msl-a h3 {
+  color: var(--msl-flag);
+}
+
+.msl-compare .msl-b h3 {
+  color: var(--msl-accent);
+}
+
+.msl-compare p {
+  font-size: 16px;
+  margin: 0;
+  color: var(--msl-ink-2);
+}
+
+@media (max-width: 640px) {
+  .msl-compare {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- engagement table ---- */
+
+.msl-tablewrap {
+  overflow-x: auto;
+  margin-top: 22px;
+  border-top: 1px solid var(--msl-rule);
+}
+
+.msl table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 560px;
+  font-size: 15px;
+}
+
+.msl th,
+.msl td {
+  text-align: left;
+  padding: 13px 16px 13px 0;
+  border-bottom: 1px solid var(--msl-rule);
+  vertical-align: top;
+}
+
+.msl thead th {
+  font-family: var(--msl-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--msl-ink-3);
+  padding-top: 16px;
+}
+
+.msl td.msl-size {
+  font-family: var(--msl-mono);
+  color: var(--msl-accent);
+  white-space: nowrap;
+}
+
+.msl td.msl-num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--msl-ink-2);
+}
+
+.msl-tnote {
+  font-family: var(--msl-mono);
+  font-size: 11.5px;
+  color: var(--msl-ink-3);
+  margin-top: 14px;
+  max-width: 60ch;
+}
+
+/* ---- funding strip ---- */
+
+.msl-funding {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 8px;
+}
+
+@media (max-width: 760px) {
+  .msl-funding {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.msl-funding h3 {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.msl-funding p {
+  font-size: 15px;
+  color: var(--msl-ink-2);
+  margin: 0;
+  max-width: 34ch;
+}
+
+.msl-funding .msl-tick {
+  color: var(--msl-accent);
+  font-family: var(--msl-mono);
+  font-size: 11px;
+  display: block;
+  margin-bottom: 8px;
+  letter-spacing: 0.12em;
+}
+
+/* ---- cta ---- */
+
+.msl-cta {
+  background: var(--color-ec-navy);
+  border-top: none;
+}
+
+/* In dark mode the page itself is ec-navy, so a navy CTA disappears into it.
+   The briefing wants hairlines between sections and a solid block for the CTA
+   alone, so it lifts to navy-line-2: 1.65:1 against the page, enough to read
+   as a panel, with its text still at 5.19:1 or better. */
+@media (prefers-color-scheme: dark) {
+  .msl-cta {
+    background: var(--color-ec-navy-line-2);
+  }
+}
+
+.msl-cta h2,
+.msl-cta p {
+  color: var(--color-ec-on-dark);
+}
+
+.msl-cta p {
+  color: var(--color-ec-on-dark-muted);
+}
+
+.msl-cta .msl-eyebrow {
+  color: var(--color-ec-on-dark-eyebrow);
+}
+
+/* The CTA panel is navy in both themes, so its buttons cannot use the
+   light-theme accent: ec-sky on navy is 7.26:1, and navy on ec-sky the same. */
+.msl-cta a.msl-btn-primary {
+  background: var(--color-ec-sky);
+  color: var(--color-ec-navy);
+}
+
+.msl-cta a.msl-btn-ghost {
+  border-color: var(--color-ec-navy-line-2);
+  color: var(--color-ec-on-dark);
+}
+
+.msl-cta a.msl-btn-ghost:hover {
+  border-color: var(--color-ec-sky);
+  color: var(--color-ec-sky);
+}
+
+.msl-cta :focus-visible {
+  outline-color: var(--color-ec-sky);
+}
+
+/* ---- footer ---- */
+
+.msl-footer {
+  border-top: 1px solid var(--msl-rule);
+}
+
+.msl-footer > .msl-wrap {
+  padding-block: 26px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: var(--msl-mono);
+  font-size: 11.5px;
+  color: var(--msl-ink-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msl *,
+  .msl *::before,
+  .msl *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

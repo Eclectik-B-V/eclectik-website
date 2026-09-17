@@ -1,0 +1,852 @@
+/* Styles for /glint, the landing page behind the link we mail to organisations
+ * that already run Viva Glint.
+ *
+ * Second page in the same series as /microsoft (MicrosoftSellers.css), so the
+ * structure below deliberately mirrors that file: same wrapper pattern, same
+ * hairline-between-sections rhythm, same mono/heading/body split. The two are
+ * meant to read as one brand when opened side by side. What differs is the
+ * reader, the accent and the Warburtons band.
+ *
+ * Everything hangs off the .glv wrapper, following EventAmsterdam2026.css:
+ * the page renders without Layout, so there is no site header or footer to
+ * protect, but scoping keeps its variables out of the global palette.
+ *
+ * Palette: the mockup shipped its own hex values (#0E2841 navy, #37AFA5 teal,
+ * #B0562F orange). Briefing paragraph 5 says the eclectik.co tokens win where
+ * they exist, so the roles below map onto --color-ec-* and only deviate where
+ * a token fails WCAG on this page's backgrounds. Deviations are marked.
+ *
+ * Tailwind's preflight zeroes margins on p and h1-h6, so every margin here is
+ * written out rather than inherited from the browser default.
+ */
+
+.glv {
+  /* Light: cool neutral paper, deep navy ink. */
+  --glv-paper: var(--color-ec-surface);
+  --glv-paper-2: #e7eaeb; /* derived: a half-step down from ec-surface, no token exists */
+  --glv-ink: var(--color-ec-navy);
+  --glv-ink-2: var(--color-ec-body-strong);
+  --glv-ink-3: var(--color-ec-body);
+  --glv-rule: #c9cfd2; /* derived: ec-line is warm and vanishes on ec-surface */
+
+  /* Accent. The briefing asks for the brand teal, but ec-teal (#39a99f) reaches
+     2.55:1 on this paper and ec-teal-ink 3.94:1, both short of the 4.5:1 that
+     the mono labels and links carrying it need. This is the same darkened teal
+     /microsoft settled on, at 5.57:1, which also keeps the two pages matched. */
+  --glv-accent: #256b64;
+  --glv-accent-ink: #ffffff;
+
+  /* The one off-palette colour, used only to mark what is going wrong. The
+     mockup's #B0562F reaches 4.44:1 here, just under the threshold for text,
+     so text uses it darkened to 5.54:1 and the graphic marks keep the original,
+     which clears the 3:1 that non-text needs. */
+  --glv-flag: #9a4a28;
+  --glv-flag-mark: #b0562f;
+
+  --glv-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --glv-measure: 68ch;
+  --glv-maxw: 1040px;
+
+  background: var(--glv-paper);
+  color: var(--glv-ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.62;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Dark theme. The site ships light-only (ThemeProvider defaultTheme="light",
+   not switchable), so this follows the reader's own setting instead: the
+   briefing asks for both themes, and this link gets opened on a phone. Scoped
+   to .glv, so it changes nothing elsewhere. */
+@media (prefers-color-scheme: dark) {
+  .glv {
+    --glv-paper: var(--color-ec-navy);
+    --glv-paper-2: #101a2b; /* derived: recedes below ec-navy for the banded sections */
+    --glv-ink: var(--color-ec-on-dark);
+    --glv-ink-2: var(--color-ec-on-dark-muted);
+    --glv-ink-3: var(--color-ec-on-dark-caption);
+    --glv-rule: var(--color-ec-navy-line);
+    --glv-accent: var(--color-ec-sky); /* 7.26:1 on navy */
+    --glv-accent-ink: var(--color-ec-navy);
+    --glv-flag: #e08a5f; /* the mockup orange lifted to 5.70:1; the original is 2.4:1 on navy */
+    --glv-flag-mark: #e08a5f;
+  }
+}
+
+.glv *,
+.glv *::before,
+.glv *::after {
+  box-sizing: border-box;
+}
+
+.glv-wrap {
+  max-width: var(--glv-maxw);
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.glv section {
+  border-top: 1px solid var(--glv-rule);
+}
+
+.glv section > .glv-wrap {
+  padding-block: 56px;
+}
+
+.glv h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 3.2vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 10px 0 18px;
+  text-wrap: balance;
+  max-width: 26ch;
+}
+
+.glv p {
+  max-width: var(--glv-measure);
+  margin: 0;
+}
+
+.glv a {
+  color: var(--glv-accent);
+}
+
+.glv :focus-visible {
+  outline: 2px solid var(--glv-accent);
+  outline-offset: 3px;
+}
+
+/* Eyebrow: the mono half of the type system. Headings and body sit in the
+   brand face; every label, number and unit is mono. */
+.glv-eyebrow {
+  font-family: var(--glv-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--glv-ink-3);
+  margin: 0;
+}
+
+.glv-intro {
+  color: var(--glv-ink-2);
+}
+
+/* ---- masthead ---- */
+
+.glv-masthead {
+  border-top: none;
+}
+
+.glv-masthead > .glv-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  /* The bottom padding is not decoration: the hero section below draws the
+     first hairline, and without room here that rule sits against the logo. */
+  padding-block: 24px 22px;
+}
+
+/* Same size as the site header, which runs 58px on desktop and 40px on the
+   compact bar. The logo carries a tagline under the wordmark that turns to
+   mush below roughly 50px. */
+.glv-logo {
+  height: 58px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .glv-logo {
+    height: 40px;
+  }
+}
+
+/* Two logo files, one per theme: the wordmark is artwork, not text, so it
+   cannot pick up the colour variables above. */
+.glv-logo-dark {
+  display: block;
+}
+.glv-logo-light {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  .glv-logo-dark {
+    display: none;
+  }
+  .glv-logo-light {
+    display: block;
+  }
+}
+
+.glv-stamp {
+  font-family: var(--glv-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--glv-ink-3);
+  border: 1px solid var(--glv-rule);
+  border-radius: 2px;
+  padding: 4px 8px;
+}
+
+/* ---- hero ---- */
+
+.glv-hero > .glv-wrap {
+  padding-block: 40px 52px;
+}
+
+.glv h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 5.6vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  margin: 14px 0 20px;
+  text-wrap: balance;
+  max-width: 17ch;
+}
+
+.glv-lede {
+  font-size: clamp(17px, 2.1vw, 20px);
+  color: var(--glv-ink-2);
+  max-width: 56ch;
+}
+
+.glv-hero-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: 48px;
+  align-items: end;
+}
+
+@media (max-width: 860px) {
+  .glv-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+}
+
+.glv figure {
+  margin: 0;
+}
+
+.glv figcaption {
+  font-family: var(--glv-mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--glv-ink-3);
+  margin-top: 10px;
+  max-width: 40ch;
+}
+
+.glv svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+/* Set here rather than as presentation attributes on each <text>: browsers do
+   not reliably substitute var() inside presentation attributes, so the labels
+   fall back to a wider default face and run into each other. */
+.glv svg text {
+  font-family: var(--glv-mono);
+  font-size: 9px;
+}
+
+/* ---- actions ---- */
+
+.glv-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.glv-btn {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 13px 22px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* Written as a.glv-btn-*, not .glv-btn-*: the buttons are anchors, and
+   `.glv a` above scores one class plus one element, which outranks a bare
+   single class. Without the element in the selector the primary button draws
+   accent text on an accent fill, so the label disappears. */
+.glv a.glv-btn-primary {
+  background: var(--glv-accent);
+  color: var(--glv-accent-ink);
+}
+
+.glv a.glv-btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.glv a.glv-btn-ghost {
+  border: 1px solid var(--glv-rule);
+  color: var(--glv-ink);
+}
+
+.glv a.glv-btn-ghost:hover {
+  border-color: var(--glv-accent);
+  color: var(--glv-accent);
+}
+
+/* ---- the diagnosis: five leaks ---- */
+
+.glv-leaks {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+}
+
+@media (max-width: 720px) {
+  .glv-leaks {
+    grid-template-columns: 1fr;
+  }
+}
+
+.glv-leaks li {
+  border-top: 1px solid var(--glv-rule);
+  padding: 14px 0;
+  font-size: 15px;
+  color: var(--glv-ink-2);
+}
+
+.glv-leaks strong {
+  display: block;
+  color: var(--glv-ink);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+/* ---- two roles ---- */
+
+.glv-roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 8px;
+}
+
+.glv-role {
+  padding: 28px 32px 28px 0;
+}
+
+.glv-role + .glv-role {
+  border-left: 1px solid var(--glv-rule);
+  padding-left: 32px;
+  padding-right: 0;
+}
+
+@media (max-width: 760px) {
+  .glv-roles {
+    grid-template-columns: 1fr;
+  }
+  .glv-role {
+    padding: 24px 0;
+  }
+  .glv-role + .glv-role {
+    border-left: none;
+    border-top: 1px solid var(--glv-rule);
+    padding-left: 0;
+  }
+}
+
+.glv-role h3 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 8px 0 12px;
+}
+
+.glv-role p {
+  font-size: 16px;
+  color: var(--glv-ink-2);
+  max-width: 42ch;
+}
+
+.glv-deliverables {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+  font-size: 15px;
+}
+
+.glv-deliverables li {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px dotted var(--glv-rule);
+  color: var(--glv-ink-2);
+}
+
+.glv-deliverables li:last-child {
+  border-bottom: none;
+}
+
+.glv-deliverables .glv-n {
+  font-family: var(--glv-mono);
+  font-size: 11px;
+  color: var(--glv-accent);
+  padding-top: 4px;
+  flex: none;
+}
+
+/* ---- Warburtons ----
+ *
+ * `.glv p { margin: 0 }` above scores one class plus one element, so any rule
+ * here that sets a margin on a paragraph carries the element too. Without it
+ * the attribution and the meta line sit flat against what precedes them. */
+
+.glv-case {
+  background: var(--glv-paper-2);
+}
+
+/* Heading left, client wordmark opposite it. Below 640px there is no "right",
+   so the two stack and the logo leads the block. */
+.glv-casehead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.glv-casehead > div {
+  min-width: 0;
+}
+
+.glv-caselogo {
+  height: 50px;
+  width: auto;
+  display: block;
+  flex: none;
+  /* Drops the wordmark onto the cap height of the heading rather than the
+     eyebrow above it. */
+  margin-top: 26px;
+}
+
+@media (max-width: 640px) {
+  .glv-casehead {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .glv-caselogo {
+    order: -1;
+    margin-top: 0;
+  }
+}
+
+/* The supplied wordmark is brand orange on transparent, so it reads on the
+   light band and on navy without a plate behind it. */
+
+.glv p.glv-casemeta {
+  font-family: var(--glv-mono);
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--glv-ink-3);
+  margin-top: 0;
+  /* Runs the full width of the heading column instead of the narrow measure the
+     other mono captions use: it is a single run-on line of facts, and wrapping
+     it early stacks it into a block that competes with the heading. */
+  max-width: none;
+}
+
+/* Three figures across, the case's own headline numbers. The mockup carried a
+   single figure because the only number available then was unverified; these
+   come from the approved case, so they lead the band. */
+.glv-figures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 28px;
+  border-top: 1px solid var(--glv-rule);
+  padding-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .glv-figures {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+.glv-figures .glv-fig {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.6vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--glv-accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+
+.glv-figures .glv-cap {
+  font-size: 14px;
+  color: var(--glv-ink-2);
+  margin-top: 8px;
+  max-width: 30ch;
+}
+
+.glv-case-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 52px;
+  margin-top: 8px;
+}
+
+@media (max-width: 860px) {
+  .glv-case-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.glv blockquote {
+  margin: 0;
+  font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.42;
+  max-width: 26ch;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+.glv blockquote p {
+  max-width: none;
+  margin: 0;
+}
+
+.glv p.glv-attrib {
+  font-family: var(--glv-mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--glv-ink-3);
+  margin-top: 18px;
+}
+
+.glv-story p {
+  font-size: 16px;
+  color: var(--glv-ink-2);
+}
+
+.glv-story p + p {
+  margin-top: 14px;
+}
+
+.glv-pillars {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.glv-pillars li {
+  font-family: var(--glv-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--glv-accent);
+  border: 1px solid var(--glv-accent);
+  border-radius: 2px;
+  padding: 5px 9px;
+}
+
+/* Insight to action. Three columns on desktop, stacked as labelled blocks on a
+   phone: the columns only mean something next to each other, so they carry
+   their own headings below the breakpoint rather than losing them. */
+.glv-chain {
+  margin-top: 36px;
+  border-top: 1px solid var(--glv-rule);
+}
+
+.glv-chain-head {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  padding-top: 14px;
+}
+
+.glv-chain-head span {
+  font-family: var(--glv-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--glv-ink-3);
+}
+
+.glv-chain-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--glv-rule);
+}
+
+.glv-chain-row p {
+  font-size: 15px;
+  color: var(--glv-ink-2);
+  margin: 0;
+  max-width: none;
+}
+
+.glv-chain-row .glv-changed {
+  color: var(--glv-ink);
+  font-weight: 600;
+}
+
+.glv-chain-row .glv-label {
+  display: none;
+  font-family: var(--glv-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--glv-ink-3);
+  margin-bottom: 4px;
+}
+
+@media (max-width: 760px) {
+  .glv-chain-head {
+    display: none;
+  }
+  .glv-chain-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .glv-chain-row .glv-label {
+    display: block;
+  }
+}
+
+/* Written as blockquote.glv-casequote: `.glv blockquote` above scores one
+   class plus one element, so a bare class here loses to it and this quote
+   renders at pull-quote size. */
+.glv blockquote.glv-casequote {
+  margin: 28px 0 0;
+  max-width: 58ch;
+  font-weight: 400;
+  letter-spacing: 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--glv-accent);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--glv-ink-2);
+}
+
+.glv-casequote p {
+  margin: 0;
+  max-width: none;
+}
+
+.glv-caseactions {
+  margin-top: 28px;
+}
+
+/* ---- sequencing ---- */
+
+.glv-phases {
+  margin-top: 24px;
+  border-top: 1px solid var(--glv-rule);
+}
+
+.glv-phase {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: start;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--glv-rule);
+}
+
+@media (max-width: 720px) {
+  .glv-phase {
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+  }
+}
+
+.glv-phase .glv-step {
+  font-family: var(--glv-mono);
+  font-size: 11px;
+  color: var(--glv-ink-3);
+  padding-top: 4px;
+  letter-spacing: 0.1em;
+}
+
+.glv-phase h3 {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.glv-phase p {
+  font-size: 15px;
+  color: var(--glv-ink-2);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.glv-tag {
+  font-family: var(--glv-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+  align-self: start;
+}
+
+.glv-tag-now {
+  background: var(--glv-accent);
+  color: var(--glv-accent-ink);
+}
+
+.glv-tag-later {
+  border: 1px solid var(--glv-rule);
+  color: var(--glv-ink-3);
+}
+
+@media (max-width: 720px) {
+  .glv-tag {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 8px;
+  }
+}
+
+/* ---- how it works ---- */
+
+.glv-working {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 8px;
+}
+
+@media (max-width: 760px) {
+  .glv-working {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.glv-working h3 {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.glv-working p {
+  font-size: 15px;
+  color: var(--glv-ink-2);
+  margin: 0;
+  max-width: 34ch;
+}
+
+.glv-working .glv-tick {
+  color: var(--glv-accent);
+  font-family: var(--glv-mono);
+  font-size: 11px;
+  display: block;
+  margin-bottom: 8px;
+  letter-spacing: 0.12em;
+}
+
+/* ---- cta ---- */
+
+.glv-cta {
+  background: var(--color-ec-navy);
+  border-top: none;
+}
+
+/* In dark mode the page itself is ec-navy, so a navy CTA disappears into it.
+   The briefing wants hairlines between sections and a solid block for the CTA
+   and the case band alone, so it lifts to navy-line-2: 1.65:1 against the page,
+   enough to read as a panel, with its text still at 5.19:1 or better. */
+@media (prefers-color-scheme: dark) {
+  .glv-cta {
+    background: var(--color-ec-navy-line-2);
+  }
+}
+
+.glv-cta h2,
+.glv-cta p {
+  color: var(--color-ec-on-dark);
+}
+
+.glv-cta p {
+  color: var(--color-ec-on-dark-muted);
+}
+
+.glv-cta .glv-eyebrow {
+  color: var(--color-ec-on-dark-eyebrow);
+}
+
+/* The CTA panel is navy in both themes, so its buttons cannot use the
+   light-theme accent: ec-sky on navy is 7.26:1, and navy on ec-sky the same. */
+.glv-cta a.glv-btn-primary {
+  background: var(--color-ec-sky);
+  color: var(--color-ec-navy);
+}
+
+.glv-cta a.glv-btn-ghost {
+  border-color: var(--color-ec-navy-line-2);
+  color: var(--color-ec-on-dark);
+}
+
+.glv-cta a.glv-btn-ghost:hover {
+  border-color: var(--color-ec-sky);
+  color: var(--color-ec-sky);
+}
+
+.glv-cta :focus-visible {
+  outline-color: var(--color-ec-sky);
+}
+
+/* ---- footer ---- */
+
+.glv-footer {
+  border-top: 1px solid var(--glv-rule);
+}
+
+.glv-footer > .glv-wrap {
+  padding-block: 26px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: var(--glv-mono);
+  font-size: 11.5px;
+  color: var(--glv-ink-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glv *,
+  .glv *::before,
+  .glv *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

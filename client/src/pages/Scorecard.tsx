@@ -1,0 +1,146 @@
+import { useEffect, useMemo, useState } from "react";
+import Layout from "@/components/Layout";
+import DoorChooser from "@/components/scorecard/DoorChooser";
+import QuestionScreen from "@/components/scorecard/QuestionScreen";
+import ResultView from "@/components/scorecard/ResultView";
+import {
+  PROFILE_QUESTIONS, questionOrder, validateAnswers, computeScorecard,
+  type Answers, type Door, type ScorecardResult,
+} from "@shared/scorecard";
+import { isWorkEmail } from "@shared/work-email";
+import { getAttribution, trackScorecard, trackDoorSelected } from "@/lib/tracking";
+
+const STORAGE_KEY = "eclectik_scorecard_v1";
+type Phase = "door" | "questions" | "result";
+interface Saved { door: Door; answers: Answers; step: number }
+
+function loadSaved(): Saved | null {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw) as Saved;
+    // Vormcontrole: kapotte opslag (bv. zonder answers-object) mag de render niet laten crashen.
+    return s && typeof s === "object" && s.answers && typeof s.answers === "object" ? s : null;
+  } catch { return null; }
+}
+function save(state: Saved | null) {
+  try {
+    if (state) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    else sessionStorage.removeItem(STORAGE_KEY);
+  } catch { /* best-effort */ }
+}
+
+export default function Scorecard() {
+  const urlDoor = useMemo<Door | null>(() => {
+    const d = new URLSearchParams(window.location.search).get("door");
+    return d === "value" || d === "change" ? d : null;
+  }, []);
+  const saved = useMemo(loadSaved, []);
+  // Volledig ingevulde opgeslagen sessie → direct de teaser (resultaatfase).
+  const savedComplete = useMemo(() => saved !== null && validateAnswers(saved.answers), [saved]);
+
+  const [door, setDoor] = useState<Door | null>(saved?.door ?? urlDoor);
+  const [answers, setAnswers] = useState<Answers>(saved?.answers ?? {});
+  const [step, setStep] = useState(saved?.step ?? 0);      // 0-based over items[]
+  const [phase, setPhase] = useState<Phase>(() =>
+    savedComplete ? "result" : door ? "questions" : "door",
+  );
+  const [submitting, setSubmitting] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const [result, setResult] = useState<ScorecardResult | null>(() =>
+    savedComplete && saved ? computeScorecard(saved.answers) : null,
+  );
+
+  // 23 items: 20 scored (volgorde per deur) + P1..P3 als laatste
+  const items = useMemo(() => {
+    if (!door) return [];
+    return [
+      ...questionOrder(door).map((q) => ({ id: q.id, text: q.text, options: q.anchors })),
+      ...PROFILE_QUESTIONS.map((p) => ({ id: p.id, text: p.text, options: p.options })),
+    ];
+  }, [door]);
+
+  useEffect(() => {
+    if (door && phase === "questions") save({ door, answers, step });
+  }, [door, answers, step, phase]);
+
+  useEffect(() => {
+    if (door && phase === "questions" && step === 0 && Object.keys(answers).length === 0) {
+      trackScorecard("sc_start", { door });
+    }
+  }, [door, phase]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const startDoor = (d: Door) => {
+    trackDoorSelected(d);
+    setDoor(d); setPhase("questions"); setStep(0);
+  };
+
+  const answer = (optionIndex: number) => {
+    const item = items[step];
+    const next = { ...answers, [item.id]: optionIndex };
+    setAnswers(next);
+    trackScorecard("sc_q_answered", { id: item.id });
+    if (step + 1 < items.length) setStep(step + 1);
+    else {
+      // Expliciet opslaan zodat een reload op de teaser terugkomt.
+      if (door) save({ door, answers: next, step });
+      trackScorecard("sc_completed", { door });
+      setResult(computeScorecard(next));
+      setPhase("result");
+    }
+  };
+
+  const back = () => {
+    if (step > 0) setStep(step - 1);
+    else { setPhase("door"); setDoor(null); }
+  };
+
+  // Unlock: geldige werkmail → POST, daarna deelscores/gaps/CTA tonen.
+  // Retourneert false als de server het adres afwijst (4xx) → formulier toont de fout.
+  const submit = async (email: string, consent: boolean): Promise<boolean> => {
+    if (submitting) return false;
+    if (!door || !result || !isWorkEmail(email)) return false;
+    setSubmitting(true);
+    try {
+      const r = await fetch("/api/scorecard", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, consent, door, answers, src: getAttribution() }),
+      });
+      if (r.status >= 400 && r.status < 500) {
+        // Validatie geweigerd (bv. zod-e-mailcheck): niet unlocken, geen event.
+        setSubmitting(false);
+        return false;
+      }
+    } catch { /* netwerkfout: resultaat toch tonen; opslag is server-side gelogd */ }
+    trackScorecard("sc_email_submitted", { route: result.route });
+    setUnlocked(true);
+    setSubmitting(false);
+    save(null);
+    return true;
+  };
+
+  return (
+    <Layout>
+      <title>AI Transformation Scorecard | Eclectik</title>
+      <meta name="description" content="Free 3–4 minute self-assessment: how evidence-led is your AI transformation? Three scores, your readiness profile and the next step that fits." />
+      <section className="min-h-screen bg-white pt-16 lg:pt-20 pb-24 px-4">
+        {phase === "door" && <DoorChooser onSelect={startDoor} />}
+        {phase === "questions" && door && items[step] && (
+          <QuestionScreen
+            step={step + 1} total={items.length}
+            text={items[step].text} options={items[step].options}
+            selected={answers[items[step].id]}
+            onAnswer={answer} onBack={step === 0 && !urlDoor ? back : step > 0 ? back : undefined}
+          />
+        )}
+        {phase === "result" && result && (
+          <ResultView
+            result={result} answers={answers}
+            unlocked={unlocked} submitting={submitting} onUnlock={submit}
+          />
+        )}
+      </section>
+    </Layout>
+  );
+}

@@ -105,3 +105,8 @@ temp/
 *.db
 *.sqlite
 *.sqlite3
+/redesign-reference/
+.vercel
+
+# Design handoff reference (not production assets)
+design-reference/

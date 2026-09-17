@@ -2,6 +2,70 @@
 <html lang="en">
 
   <head>
+    <!-- Consent bootstrap: MOET boven GTM en GA4 staan en synchroon draaien.
+         Dupliceert bewust de cookienaam, het versienummer en de signaalmapping
+         uit client/src/lib/consent.ts, omdat dit draait voordat de bundle
+         bestaat. Wijzig je daar iets, wijzig het hier ook. -->
+    <script>
+    (function () {
+      var COOKIE_NAME = 'eclectik_consent';
+      var CONSENT_VERSION = 1;
+
+      try {
+        window.dataLayer = window.dataLayer || [];
+        var gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag = window.gtag || gtag;
+
+        gtag('consent', 'default', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: 'denied',
+          functionality_storage: 'denied',
+          personalization_storage: 'denied',
+          security_storage: 'granted',
+          wait_for_update: 500
+        });
+        gtag('set', 'ads_data_redaction', true);
+        gtag('set', 'url_passthrough', true);
+
+        try {
+          var prefix = COOKIE_NAME + '=';
+          var match = document.cookie.split('; ').filter(function (row) {
+            return row.indexOf(prefix) === 0;
+          })[0];
+          if (!match) return;
+
+          var stored = JSON.parse(decodeURIComponent(match.slice(prefix.length)));
+          if (!stored || stored.version !== CONSENT_VERSION || !stored.categories) return;
+          if (typeof stored.timestamp !== 'string') return;
+
+          var c = stored.categories;
+          if (typeof c.analytics !== 'boolean' ||
+              typeof c.marketing !== 'boolean' ||
+              typeof c.functional !== 'boolean') return;
+
+          var g = function (allowed) { return allowed ? 'granted' : 'denied'; };
+          gtag('consent', 'update', {
+            ad_storage: g(c.marketing),
+            ad_user_data: g(c.marketing),
+            ad_personalization: g(c.marketing),
+            analytics_storage: g(c.analytics),
+            functionality_storage: g(c.functional),
+            personalization_storage: g(c.functional),
+            security_storage: 'granted'
+          });
+        } catch (e) {
+          /* Onleesbare of geblokkeerde cookie: de denied-defaults blijven staan. */
+        }
+      } catch (e) {
+        /* De defaults konden niet gezet worden, bijvoorbeeld doordat een extensie
+           window.dataLayer heeft dichtgezet. Stil falen: een uitzondering hier mag
+           de rest van de pagina niet breken. */
+      }
+    })();
+    </script>
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -19,37 +83,22 @@
       gtag('config', 'G-LD7EPKT1W2');
     </script>
     <!-- End Google Analytics 4 -->
-    
-    <!-- LinkedIn Insight Tag -->
-    <script type="text/javascript">
-    _linkedin_partner_id = "9108033";
-    window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
-    window._linkedin_data_partner_ids.push(_linkedin_partner_id);
-    </script><script type="text/javascript">
-    (function(l) {
-    if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
-    window.lintrk.q=[]}
-    var s = document.getElementsByTagName("script")[0];
-    var b = document.createElement("script");
-    b.type = "text/javascript";b.async = true;
-    b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
-    s.parentNode.insertBefore(b, s);})(window.lintrk);
-    </script>
-    <!-- End LinkedIn Insight Tag -->
-    
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Eclectik AI Transformation</title>
-    <meta name="description" content="Eclectik is a boutique consultancy specializing in AI transformation. We operationalize Workplace Signals to help organizations answer 'what if?' with 'we can,' delivering measurable impact through data-driven insights and strategic AI implementation." />
+    <!-- Geen description hier: React voegt die van de pagina erna toe, en de
+         eerste in de head wint. Een generieke hier maakte elke paginaeigen
+         description krachteloos. Pagina's zetten hun eigen. -->
     <meta name="keywords" content="AI transformation, workplace signals, AI consulting, change management, employee experience, AI adoption, organizational transformation, people analytics, AI strategy" />
     <meta name="author" content="Eclectik" />
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.eclectik.co/" />
-    <meta property="og:title" content="Eclectik AI Transformation | Workplace Signals & AI Consulting" />
-    <meta property="og:description" content="Boutique consultancy specializing in AI transformation. We operationalize Workplace Signals to help organizations answer 'what if?' with 'we can,' delivering measurable impact through strategic AI implementation." />
+    <meta property="og:title" content="Eclectik | Independent AI Transformation Assurance" />
+    <meta property="og:description" content="Independent AI transformation assurance. We measure whether AI investments deliver, in the P&amp;L and in how people actually work. We do not sell what we measure, and no licence revenue rides on the answer." />
     <meta property="og:image" content="https://www.eclectik.co/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -60,17 +109,20 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@eclectik" />
     <meta name="twitter:creator" content="@eclectik" />
-    <meta name="twitter:title" content="Eclectik AI Transformation | Workplace Signals & AI Consulting" />
-    <meta name="twitter:description" content="Boutique consultancy specializing in AI transformation. We operationalize Workplace Signals to help organizations answer 'what if?' with 'we can.'" />
+    <meta name="twitter:title" content="Eclectik | Independent AI Transformation Assurance" />
+    <meta name="twitter:description" content="Independent AI transformation assurance. We measure whether AI investments deliver, in the P&amp;L and in how people actually work." />
     <meta name="twitter:image" content="https://www.eclectik.co/og-image.jpg" />
     
     <!-- Additional SEO Meta Tags -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
-    <link rel="canonical" href="https://www.eclectik.co/" />
+    <!-- No canonical here on purpose. A hardcoded one applies to every route, so
+         it told crawlers that /workvivo, /glint-support and the rest were all the
+         homepage. Pages set their own via React 19's native metadata; React does
+         not dedupe <link>, so a static one would sit alongside the page's own. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -97,11 +149,10 @@
         "name": "Global"
       },
       "serviceType": [
-        "AI Transformation Consulting",
-        "Change Management",
-        "Employee Experience Platform",
-        "Workplace Analytics",
-        "AI Training and Enablement"
+        "AI Transformation Assurance",
+        "AI ROI and TCO Measurement",
+        "People Analytics",
+        "Employee Listening"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
@@ -111,24 +162,24 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "AI Transformation Consulting",
-              "description": "Strategic consulting to operationalize AI across your organization"
+              "name": "Proof of Value",
+              "description": "ROI, TCO and adoption economics modelled on the organisation\u2019s own licence, usage and telemetry data, for CFOs and CIOs"
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Change Management",
-              "description": "Expert guidance to drive successful AI adoption and organizational change"
+              "name": "Proof of Change",
+              "description": "People-science reading of listening data, whatever instrument the organisation runs, for transformation leaders"
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Training and Enablement",
-              "description": "Comprehensive training programs to build AI capabilities within your team"
+              "name": "HR Tech Services",
+              "description": "Customer Success and People Science for organisations on Viva Glint and on Workvivo Seer, independently of the platform vendor"
             }
           }
         ]
@@ -183,7 +234,7 @@
           "name": "What is AI transformation and why is it important for organizations?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "AI transformation is the strategic process of integrating artificial intelligence technologies across an organization to fundamentally change how it operates, delivers value, and competes. Eclectik specializes in operationalizing AI transformation by combining objective telemetry with subjective sentiment through Workplace Signals. This approach helps organizations move from asking 'what if?' to confidently stating 'we can,' delivering measurable impact through data-driven insights and strategic implementation."
+            "text": "AI transformation is the strategic process of integrating artificial intelligence technologies across an organization to fundamentally change how it operates, delivers value, and competes. Eclectik measures whether that change is actually happening, in the P&L and in how people do their work, by combining objective telemetry with employee listening data. Cohorts are named in advance, one outcome definition holds throughout, and the estimator is chosen up front, so the finding survives review."
           }
         },
         {
@@ -191,7 +242,7 @@
           "name": "What services does Eclectik provide for AI transformation?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Eclectik provides comprehensive AI transformation services including: AI Transformation Consulting to operationalize AI across your organization, Change Management to drive successful AI adoption, Employee Experience Platform implementation, Workplace Analytics and Signals analysis, AI Training and Enablement programs, Executive Coaching, and People Science consulting. Our boutique consultancy delivers specialized expertise with a personal touch."
+            "text": "Eclectik provides independent AI transformation assurance. Proof of Value models ROI, TCO and adoption economics on the organisation\u2019s own licence, usage and telemetry data, for CFOs and CIOs. Proof of Change is a people-science reading of listening data, whatever instrument the organisation runs, for transformation leaders. Eclectik also runs Customer Success and People Science for organisations on Viva Glint and on Workvivo Seer, independently of the platform vendor. Partners deliver the transformation; Eclectik proves whether it works."
           }
         },
         {
@@ -236,10 +287,6 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZKSN8CT"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-
-    <!-- LinkedIn Insight Tag (noscript) -->
-    <noscript><img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9108033&fmt=gif" /></noscript>
-    <!-- End LinkedIn Insight Tag (noscript) -->
 
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

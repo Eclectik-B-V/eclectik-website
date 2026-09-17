@@ -10,7 +10,7 @@
 
   <!-- Main Pages -->
   <url>
-    <loc>https://www.eclectik.co/about-us</loc>
+    <loc>https://www.eclectik.co/about</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -24,22 +24,22 @@
   </url>
 
   <url>
-    <loc>https://www.eclectik.co/training</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/solutions</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
     <loc>https://www.eclectik.co/hrtechservices</loc>
     <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.eclectik.co/glint-support</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.eclectik.co/workvivo</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -66,89 +66,36 @@
   </url>
 
   <!-- Case Studies -->
-  <url>
-    <loc>https://www.eclectik.co/case-studies/copilot-impact</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/case-studies/copilot-adoption</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/case-studies/glint-insights</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/case-studies/akkodis-power-platform</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/case-studies/microsoft-viva-transformation</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
   <!-- Services -->
-  <url>
-    <loc>https://www.eclectik.co/services/customer-success</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/services/people-science</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/services/change-management</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
 
   <!-- Training -->
-  <url>
-    <loc>https://www.eclectik.co/training/people-success-academy</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/training/enablement</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://www.eclectik.co/training/executive-coaching</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
 
   <!-- Resources -->
   <url>
-    <loc>https://www.eclectik.co/resources/white-papers</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://www.eclectik.co/proof-of-value</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.eclectik.co/proof-of-change</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.eclectik.co/insights</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Events -->
+  <url>
+    <loc>https://www.eclectik.co/events/amsterdam-2026</loc>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

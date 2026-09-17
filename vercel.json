@@ -3,10 +3,113 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist/public",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/about-us",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/services/customer-success",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/services/people-science",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/services/change-management",
+      "destination": "/glint-support",
+      "permanent": true
+    },
+    {
+      "source": "/training",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/training/people-success-academy",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/training/enablement",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/training/executive-coaching",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/solutions",
+      "destination": "/hrtechservices",
+      "permanent": true
+    },
+    {
+      "source": "/white-papers",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/white-papers",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/copilot-impact",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/glint-insights",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/copilot-adoption",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/akkodis-power-platform",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/microsoft-viva-transformation",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
+    {
+      "source": "/glint",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/microsoft",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
@@ -32,7 +135,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://snap.licdn.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://px.ads.linkedin.com; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
         }
       ]
     }

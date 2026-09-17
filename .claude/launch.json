@@ -6,6 +6,12 @@
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["dev"],
       "port": 5173
+    },
+    {
+      "name": "design-reference",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4177", "--directory", "design-reference/design_handoff_eclectik_homepage"],
+      "port": 4177
     }
   ]
 }
