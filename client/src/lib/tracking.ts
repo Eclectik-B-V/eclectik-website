@@ -224,16 +224,33 @@ export function trackGlintPage(
  * Microsoft sellers landing page (/microsoft): ms_page_viewed on arrival,
  * ms_cta_clicked with a `cta` label on each button.
  *
- * The page is reached only through the link we mail, so `src` is what ties a
- * visit back to a campaign. Per-recipient attribution is not read here: the
- * mail platform already logs clicks per recipient, and connecting a CTA press
- * to a named seller needs the CRM to accept a recipient token instead of an
- * email address, which api/website-signal does not do today.
+ * The page is reached through the link we mail and through the LinkedIn
+ * campaign, so `src` is what ties a visit back to one of them
+ * (`li-cfo`, `li-dormant`, `li-independent` for the three ad variants).
+ * Per-recipient attribution is not read here: the mail platform already logs
+ * clicks per recipient, and connecting a CTA press to a named seller needs the
+ * CRM to accept a recipient token instead of an email address, which
+ * api/website-signal does not do today.
  */
+
+/**
+ * Conversion id for the Microsoft sellers campaign, created in Campaign
+ * Manager under Analyze > Conversions. While this is undefined lintrk still
+ * fires, but without an id Campaign Manager records a generic event it cannot
+ * attribute to a campaign, so the ads report clicks and nothing that happened
+ * after the click.
+ *
+ * What this can never count: LinkedInInsightTag only injects the tag once a
+ * visitor accepts marketing cookies, and consent here is opt-in. Campaign
+ * Manager therefore sees a subset of the CTA presses the page actually had.
+ * The shortfall is the consent rate, not a fault in the measurement.
+ */
+const LINKEDIN_MS_CONVERSION_ID: number | undefined = undefined;
+
 export function trackMicrosoftPage(
   event: "ms_page_viewed" | "ms_cta_clicked",
   params?: Record<string, any>,
 ) {
   trackEvent(event, { event_category: "microsoft_sellers", src: getAttribution(), ...params });
-  if (event === "ms_cta_clicked") trackLinkedInConversion();
+  if (event === "ms_cta_clicked") trackLinkedInConversion(LINKEDIN_MS_CONVERSION_ID);
 }
