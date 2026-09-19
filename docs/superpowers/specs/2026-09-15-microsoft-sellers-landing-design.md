@@ -225,10 +225,11 @@ Ze staan ook als comment bovenaan `MicrosoftSellers.tsx`.
 2. **Geen klantnamen.** Staan er niet op, ook niet omschreven.
 3. **Geen cijfers.** Geen resultaatpercentage en geen bedrag. De tabel bevat
    alleen seat-aantallen als accountindicatie.
-4. **ECIF en MCI.** Het financieringsblok herhaalt onze eigen uitgaande mail.
-   Microsoft-programmaregels wijzigen per fiscaal jaar en zijn niet geverifieerd.
-   Laten bevestigen voordat de pagina publiek staat. Hier zit geen schakelaar
-   omhéén, want de briefing geeft geen alternatieve formulering.
+4. **ECIF en MCI.** Geregeld. Olivier heeft de formulering nagevraagd en op
+   19 september 2026 akkoord gekregen, dus het financieringsblok blijft staan
+   zoals het er staat. Microsoft-programmaregels wijzigen per fiscaal jaar, dus
+   dit akkoord geldt niet automatisch in een volgend fiscaal jaar en niet voor
+   een andere formulering over financiering.
 
 Uit de Microsoft-slide "Frontier Accelerate for Copilot" is alleen de opbouw van
 de tabel overgenomen. Geen bedragen, geen tiernamen, geen opmaak.
