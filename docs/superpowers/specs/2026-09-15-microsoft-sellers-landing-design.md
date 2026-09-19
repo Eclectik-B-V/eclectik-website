@@ -158,9 +158,13 @@ staat in `MS_CONVERSION_CTAS` in `tracking.ts`.
 De conversiecategorie in Campaign Manager is Lead en niet Afspraak boeken: één
 conversie dekt zowel het boeken van een slot als het openen van een mail. De
 uitsplitsing per knop zit al in GA4 via het `cta`-label, dus daar is geen
-tweede LinkedIn-conversie voor nodig. De conversie krijgt geen bedrag mee: de
-code stuurt geen waarde, dus dynamic zou niets te lezen hebben, en een verzonnen
-bedrag voor een intro-gesprek vervuilt de rapportage later.
+tweede LinkedIn-conversie voor nodig. De waarde staat op "same value" met bedrag 1, en
+niet op dynamic: de code stuurt geen waarde mee, dus dynamic zou niets te lezen
+hebben. Campaign Manager eist minimaal 1 zodra je een waarde instelt, en 1 is
+de minst schadelijke keuze. De conversiewaarde in een rapport is dan gelijk aan
+het aantal conversies, dus "47" leest als 47 conversies. Een verzonnen bedrag
+voor een intro-gesprek zou LinkedIn een ROAS laten uitrekenen over een getal
+dat wij zelf bedacht hebben.
 
 Belangrijk voor de interpretatie van die cijfers: `LinkedInInsightTag` injecteert
 de tag pas nadat een bezoeker marketingcookies accepteert, en de toestemming
