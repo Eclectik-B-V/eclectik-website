@@ -249,10 +249,30 @@ export function trackGlintPage(
  */
 const LINKEDIN_MS_CONVERSION_ID: number | undefined = undefined;
 
+/**
+ * Which CTA presses count as a LinkedIn conversion.
+ *
+ * "See what we deliver" is deliberately absent: it only scrolls to a section
+ * further down the same page. Counting it would inflate the conversion number,
+ * and it would teach LinkedIn to optimise delivery towards people who scroll
+ * rather than people who get in touch.
+ *
+ * `hero_email` is in the set because the hero button falls back to the mailto
+ * when BOOKINGS_URL is emptied.
+ */
+const MS_CONVERSION_CTAS = new Set([
+  "hero_bookings",
+  "hero_email",
+  "cta_bookings",
+  "cta_email",
+]);
+
 export function trackMicrosoftPage(
   event: "ms_page_viewed" | "ms_cta_clicked",
   params?: Record<string, any>,
 ) {
   trackEvent(event, { event_category: "microsoft_sellers", src: getAttribution(), ...params });
-  if (event === "ms_cta_clicked") trackLinkedInConversion(LINKEDIN_MS_CONVERSION_ID);
+  if (event === "ms_cta_clicked" && MS_CONVERSION_CTAS.has(String(params?.cta))) {
+    trackLinkedInConversion(LINKEDIN_MS_CONVERSION_ID);
+  }
 }

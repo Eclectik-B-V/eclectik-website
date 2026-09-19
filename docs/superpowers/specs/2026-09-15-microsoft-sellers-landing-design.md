@@ -149,6 +149,19 @@ dus er is geen bedankpagina om op te matchen. Zolang die
 generiek event dat hij niet aan een campagne kan koppelen. De advertenties
 rapporteren dan kliks en verder niets.
 
+Niet elke CTA telt als conversie. "See what we deliver" scrollt alleen naar een
+blok verderop op dezelfde pagina; die zou het aantal opblazen en LinkedIn leren
+te optimaliseren op scrollgedrag in plaats van op contact. GA4 registreert alle
+vier de kliks, LinkedIn alleen de drie die de site verlaten. Welke dat zijn
+staat in `MS_CONVERSION_CTAS` in `tracking.ts`.
+
+De conversiecategorie in Campaign Manager is Lead en niet Afspraak boeken: één
+conversie dekt zowel het boeken van een slot als het openen van een mail. De
+uitsplitsing per knop zit al in GA4 via het `cta`-label, dus daar is geen
+tweede LinkedIn-conversie voor nodig. De conversie krijgt geen bedrag mee: de
+code stuurt geen waarde, dus dynamic zou niets te lezen hebben, en een verzonnen
+bedrag voor een intro-gesprek vervuilt de rapportage later.
+
 Belangrijk voor de interpretatie van die cijfers: `LinkedInInsightTag` injecteert
 de tag pas nadat een bezoeker marketingcookies accepteert, en de toestemming
 staat standaard op weigeren. Campaign Manager ziet dus een deelverzameling van
