@@ -23,8 +23,9 @@ import "./MicrosoftSellers.css";
  * None of that is access control. Anyone holding the URL can open it, which is
  * intended: the mail asks recipients to forward it to colleagues.
  *
- * BEFORE THIS GOES LIVE (briefing paragraph 7, in Marco's words "belangrijker
- * dan de vormgeving"):
+ * BRIEFING PARAGRAPH 7, in Marco's words "belangrijker dan de vormgeving".
+ * All four are now cleared, but they are not one-off gates: each one is a
+ * standing rule for anything added to this page later.
  *  1. Consent for the quote. Cleared: Olivier confirmed approval on
  *     15 September 2026 and QUOTE_APPROVED is now true. The quote and its
  *     attribution are live. Note that country plus sector plus month is
@@ -33,9 +34,10 @@ import "./MicrosoftSellers.css";
  *  2. No client names. Not the insurer, not LHH, not RS, not in unnamed form.
  *  3. No numbers. No result percentage and no amount until the baseline is
  *     confirmed internally, and then as a ratio only.
- *  4. ECIF and MCI. The funding block repeats our own outbound mail. Microsoft
- *     programme rules change per fiscal year and were not verified. Have Manish
- *     or our Microsoft contact confirm the wording before this is public.
+ *  4. ECIF and MCI. Cleared: Olivier had the wording checked and approved on
+ *     19 September 2026, so the funding block stands as written. Microsoft
+ *     programme rules change per fiscal year, so this approval does not carry
+ *     over to a new fiscal year or to any reworded claim about funding.
  */
 
 /**
