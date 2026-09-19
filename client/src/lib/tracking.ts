@@ -250,7 +250,7 @@ export function trackGlintPage(
  * Manager therefore sees a subset of the CTA presses the page actually had.
  * The shortfall is the consent rate, not a fault in the measurement.
  */
-const LINKEDIN_MS_CONVERSION_ID: number | undefined = undefined;
+const LINKEDIN_MS_CONVERSION_ID: number | undefined = 31055969;
 
 /**
  * Which CTA presses count as a LinkedIn conversion.
