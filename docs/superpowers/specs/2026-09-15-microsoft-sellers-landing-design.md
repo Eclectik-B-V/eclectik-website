@@ -117,7 +117,7 @@ lijnen.
 
 ## 6. Meting
 
-GA4 en GTM via de bestaande `trackEvent`, met twee events in
+GA4 via de bestaande `trackEvent`, met twee events in
 `client/src/lib/tracking.ts`:
 
 - `ms_page_viewed` bij binnenkomst
@@ -125,8 +125,59 @@ GA4 en GTM via de bestaande `trackEvent`, met twee events in
   `hero_see_what_we_deliver`, `cta_email`, `cta_bookings`)
 
 Beide dragen `event_category: "microsoft_sellers"` en de `src` uit de URL.
-`ms_cta_clicked` vuurt daarnaast de LinkedIn-conversie, zoals
-`sc_email_submitted` dat doet.
+`ms_cta_clicked` vuurt daarnaast de LinkedIn-conversie.
+
+### Bronwaarden
+
+De pagina leest elke `?src=`-waarde, er zit geen lijst in de code. Afgesproken
+waarden, zodat campagne en rapportage dezelfde termen gebruiken:
+
+| Bron | `src` |
+| --- | --- |
+| Uitgaande mail 8 september | `ms-sellers-8sept` |
+| LinkedIn, advertentie de CFO-vraag | `li-cfo` |
+| LinkedIn, advertentie slapende seats | `li-dormant` |
+| LinkedIn, advertentie onafhankelijkheid | `li-independent` |
+
+### LinkedIn-conversie
+
+`LINKEDIN_MS_CONVERSION_ID` in `tracking.ts` is het id van de conversie die in
+Campaign Manager wordt aangemaakt onder Analyze > Conversion Tracking. Kies als
+bron de handmatige conversie en daarbinnen event-specific: dat is de tak die
+een conversie-id uitgeeft. Niet "website acties", want die laat LinkedIn zelf
+pagina's en knoppen detecteren die zijn tag al heeft waargenomen, en onze
+pagina staat daar niet tussen zolang de tag er nooit gevuurd heeft. En niet
+page load, want beide CTA's verlaten de site en er is geen bedankpagina om op
+te matchen. Zolang die
+`undefined` is vuurt `lintrk` wel, maar zonder id boekt Campaign Manager een
+generiek event dat hij niet aan een campagne kan koppelen. De advertenties
+rapporteren dan kliks en verder niets.
+
+Niet elke CTA telt als conversie. "See what we deliver" scrollt alleen naar een
+blok verderop op dezelfde pagina; die zou het aantal opblazen en LinkedIn leren
+te optimaliseren op scrollgedrag in plaats van op contact. GA4 registreert alle
+vier de kliks, LinkedIn alleen de drie die de site verlaten. Welke dat zijn
+staat in `MS_CONVERSION_CTAS` in `tracking.ts`.
+
+De conversiecategorie in Campaign Manager is Lead en niet Afspraak boeken: één
+conversie dekt zowel het boeken van een slot als het openen van een mail. De
+uitsplitsing per knop zit al in GA4 via het `cta`-label, dus daar is geen
+tweede LinkedIn-conversie voor nodig. De waarde staat op "same value" met bedrag 1, en
+niet op dynamic: de code stuurt geen waarde mee, dus dynamic zou niets te lezen
+hebben. Campaign Manager eist minimaal 1 zodra je een waarde instelt, en 1 is
+de minst schadelijke keuze. De conversiewaarde in een rapport is dan gelijk aan
+het aantal conversies, dus "47" leest als 47 conversies. Een verzonnen bedrag
+voor een intro-gesprek zou LinkedIn een ROAS laten uitrekenen over een getal
+dat wij zelf bedacht hebben.
+
+Belangrijk voor de interpretatie van die cijfers: `LinkedInInsightTag` injecteert
+de tag pas nadat een bezoeker marketingcookies accepteert, en de toestemming
+staat standaard op weigeren. Campaign Manager ziet dus een deelverzameling van
+de CTA-kliks die de pagina werkelijk had. Het verschil is het toestemmingspercentage,
+geen meetfout. GA4 draait onder Consent Mode en telt in dezelfde situatie
+cookieloos door, dus GA4 en Campaign Manager zullen structureel verschillen.
+Neem GA4 als bron voor het gedrag op de pagina en Campaign Manager alleen voor
+wat je binnen LinkedIn moet bijsturen.
 
 ### Wat hier nog niet zit
 

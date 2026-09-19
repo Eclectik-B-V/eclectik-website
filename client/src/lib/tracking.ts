@@ -224,16 +224,58 @@ export function trackGlintPage(
  * Microsoft sellers landing page (/microsoft): ms_page_viewed on arrival,
  * ms_cta_clicked with a `cta` label on each button.
  *
- * The page is reached only through the link we mail, so `src` is what ties a
- * visit back to a campaign. Per-recipient attribution is not read here: the
- * mail platform already logs clicks per recipient, and connecting a CTA press
- * to a named seller needs the CRM to accept a recipient token instead of an
- * email address, which api/website-signal does not do today.
+ * The page is reached through the link we mail and through the LinkedIn
+ * campaign, so `src` is what ties a visit back to one of them
+ * (`li-cfo`, `li-dormant`, `li-independent` for the three ad variants).
+ * Per-recipient attribution is not read here: the mail platform already logs
+ * clicks per recipient, and connecting a CTA press to a named seller needs the
+ * CRM to accept a recipient token instead of an email address, which
+ * api/website-signal does not do today.
  */
+
+/**
+ * Conversion id for the Microsoft sellers campaign, created in Campaign
+ * Manager under Analyze > Conversion Tracking. Pick the manual setup as the
+ * source and then event-specific, which is the branch that hands out a
+ * conversion id. Not "website actions": that one lets LinkedIn detect pages
+ * and buttons its tag has already seen, and not a page load either, because
+ * both CTAs leave the site and there is no thank-you URL to match on.
+ * While this is undefined lintrk still
+ * fires, but without an id Campaign Manager records a generic event it cannot
+ * attribute to a campaign, so the ads report clicks and nothing that happened
+ * after the click.
+ *
+ * What this can never count: LinkedInInsightTag only injects the tag once a
+ * visitor accepts marketing cookies, and consent here is opt-in. Campaign
+ * Manager therefore sees a subset of the CTA presses the page actually had.
+ * The shortfall is the consent rate, not a fault in the measurement.
+ */
+const LINKEDIN_MS_CONVERSION_ID: number | undefined = 31055969;
+
+/**
+ * Which CTA presses count as a LinkedIn conversion.
+ *
+ * "See what we deliver" is deliberately absent: it only scrolls to a section
+ * further down the same page. Counting it would inflate the conversion number,
+ * and it would teach LinkedIn to optimise delivery towards people who scroll
+ * rather than people who get in touch.
+ *
+ * `hero_email` is in the set because the hero button falls back to the mailto
+ * when BOOKINGS_URL is emptied.
+ */
+const MS_CONVERSION_CTAS = new Set([
+  "hero_bookings",
+  "hero_email",
+  "cta_bookings",
+  "cta_email",
+]);
+
 export function trackMicrosoftPage(
   event: "ms_page_viewed" | "ms_cta_clicked",
   params?: Record<string, any>,
 ) {
   trackEvent(event, { event_category: "microsoft_sellers", src: getAttribution(), ...params });
-  if (event === "ms_cta_clicked") trackLinkedInConversion();
+  if (event === "ms_cta_clicked" && MS_CONVERSION_CTAS.has(String(params?.cta))) {
+    trackLinkedInConversion(LINKEDIN_MS_CONVERSION_ID);
+  }
 }
