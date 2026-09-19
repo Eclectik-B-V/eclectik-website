@@ -142,7 +142,9 @@ waarden, zodat campagne en rapportage dezelfde termen gebruiken:
 ### LinkedIn-conversie
 
 `LINKEDIN_MS_CONVERSION_ID` in `tracking.ts` is het id van de conversie die in
-Campaign Manager wordt aangemaakt onder Analyze > Conversions. Zolang die
+Campaign Manager wordt aangemaakt onder Analyze > Conversion Tracking, als
+event-specific conversie en niet als page load: beide CTA's verlaten de site,
+dus er is geen bedankpagina om op te matchen. Zolang die
 `undefined` is vuurt `lintrk` wel, maar zonder id boekt Campaign Manager een
 generiek event dat hij niet aan een campagne kan koppelen. De advertenties
 rapporteren dan kliks en verder niets.

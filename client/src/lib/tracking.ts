@@ -235,7 +235,9 @@ export function trackGlintPage(
 
 /**
  * Conversion id for the Microsoft sellers campaign, created in Campaign
- * Manager under Analyze > Conversions. While this is undefined lintrk still
+ * Manager under Analyze > Conversion Tracking, as an event-specific
+ * conversion rather than a page load: both CTAs leave the site, so there is no
+ * thank-you URL to match on. While this is undefined lintrk still
  * fires, but without an id Campaign Manager records a generic event it cannot
  * attribute to a campaign, so the ads report clicks and nothing that happened
  * after the click.
