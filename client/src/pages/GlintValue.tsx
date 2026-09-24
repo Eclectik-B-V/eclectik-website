@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "wouter";
 import { trackGlintPage } from "@/lib/tracking";
 import "./GlintValue.css";
 
@@ -273,7 +274,8 @@ export default function GlintValue() {
     };
   }, []);
 
-  const onCta = (cta: string) => trackGlintPage("glint_cta_clicked", "glint", { cta });
+  const onCta = (cta: string) =>
+    trackGlintPage("glint_cta_clicked", "glint", { cta });
 
   return (
     <div className="glv">
@@ -675,13 +677,17 @@ export default function GlintValue() {
             will say so.
           </p>
           <div className="glv-actions">
-            <a
+            {/* The one link off this page into the site proper. wouter's Link
+                renders the anchor, so the navigation stays client-side and the
+                unmount effect above puts the shared robots tags back before the
+                contact page renders. */}
+            <Link
               className="glv-btn glv-btn-primary"
-              href={MAILTO}
-              onClick={() => onCta("cta_email")}
+              href="/contact"
+              onClick={() => onCta("cta_contact")}
             >
-              Email Marco
-            </a>
+              Contact Marco
+            </Link>
             {BOOKINGS_URL && (
               <a
                 className="glv-btn glv-btn-ghost"

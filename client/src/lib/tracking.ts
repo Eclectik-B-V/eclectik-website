@@ -197,12 +197,13 @@ export function trackScorecard(
  * so `src` is what ties a visit back to a campaign, per briefing paragraph 6.
  *
  * The briefing also asks for both CTAs to land in marketing_lead_activity in
- * the CRM. They do not, and cannot as the page stands: POST /api/website-signal
- * validates an email address before it will write a row, and both CTAs here
- * hand off to a mail client or to Bookings without the page ever seeing one.
- * The events below carry the campaign source; the identity arrives when the
- * mail or the booking does. Writing the CRM row from the page would need either
- * a form on the page or a website-signal that accepts an anonymous token.
+ * the CRM. They still do not. POST /api/website-signal validates an email
+ * address before it will write a row, and no CTA here ever hands the page one:
+ * they go to Bookings, to a mail client, or to /contact, whose form mails
+ * through Resend without touching the CRM. The events below carry the campaign
+ * source; the identity arrives with the mail or the booking. Note that the
+ * contact form does not forward `src`, so a lead that arrives that way is
+ * traceable to the campaign in GA but not in Marco's inbox.
  */
 type GlintPage = "glint" | "glint-support";
 
