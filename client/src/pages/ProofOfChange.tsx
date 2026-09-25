@@ -13,7 +13,15 @@ export default function ProofOfChange() {
       path="/proof-of-change"
       title="Proof of change"
       description="Rollout numbers tell you what was implemented, not what changed in the work. We read your listening data with people science, whatever instrument you run."
-      eyebrow="PROOF OF CHANGE · TRANSFORMATION LEADERS"
+      // De doelgroep breekt als geheel naar de tweede regel in plaats van
+      // "LEADERS" alleen te laten hangen. Geen breakpoint: de browser breekt
+      // pas voor TRANSFORMATION wanneer het niet meer past.
+      eyebrow={
+        <>
+          PROOF OF CHANGE ·{" "}
+          <span className="whitespace-nowrap">TRANSFORMATION LEADERS</span>
+        </>
+      }
       heading="Is your workforce actually changing?"
       lead="Rollout numbers tell you what was implemented. They do not tell you what changed in the work."
       body={[

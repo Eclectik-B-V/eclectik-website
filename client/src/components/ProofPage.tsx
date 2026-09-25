@@ -24,7 +24,7 @@ interface ProofPageProps {
   path: string;
   title: string;
   description: string;
-  eyebrow: string;
+  eyebrow: React.ReactNode;
   heading: React.ReactNode;
   /** Opening sentence(s); staat als enige alinea in de crème band onder de h1. */
   lead: React.ReactNode;
