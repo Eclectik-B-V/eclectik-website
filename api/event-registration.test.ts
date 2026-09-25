@@ -159,30 +159,24 @@ describe("api/event-registration — body validation", () => {
   });
 });
 
-describe("api/event-registration — work email gate", () => {
+describe("api/event-registration — no work email gate", () => {
   beforeEach(() => {
     setMailEnv();
     setCrmEnv();
   });
 
+  // The scorecard and the waitlist do gate on a work address. This form does
+  // not: guests are invited by name, and some of them register from a personal
+  // address. Only the address format is checked.
   it.each([
     "someone@gmail.com",
     "someone@hotmail.com",
     "someone@outlook.com",
     "someone@ziggo.nl",
-  ])("rejects the free-provider address %s with a 400", async email => {
+    "Someone@GMAIL.com",
+  ])("accepts the free-provider address %s", async email => {
     const res = await invoke(handler, { body: validBody({ email }) });
-    expect(res.status).toBe(400);
-    expect(res.body).toEqual({ error: "Invalid form data" });
-    expect(fetchMock).not.toHaveBeenCalled();
-    expect(sendMock).not.toHaveBeenCalled();
-  });
-
-  it("rejects a free-provider address whatever its casing", async () => {
-    const res = await invoke(handler, {
-      body: validBody({ email: "Someone@GMAIL.com" }),
-    });
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(200);
   });
 
   it("accepts a work address", async () => {
@@ -191,6 +185,17 @@ describe("api/event-registration — work email gate", () => {
     });
     expect(res.status).toBe(200);
   });
+
+  it.each(["not-an-email", "a@b", "@example.com", ""])(
+    "still rejects the malformed address %s with a 400",
+    async email => {
+      const res = await invoke(handler, { body: validBody({ email }) });
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: "Invalid form data" });
+      expect(fetchMock).not.toHaveBeenCalled();
+      expect(sendMock).not.toHaveBeenCalled();
+    },
+  );
 });
 
 describe("api/event-registration — consent is a condition for submitting", () => {

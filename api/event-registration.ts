@@ -1,20 +1,18 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
 import { z } from "zod";
-import { sanitizeSubject } from "./_mail-subject.js";
 // Relative import with a .js extension: api/ is plain ESM without the bundler
 // aliases the client has, so neither @shared nor an extensionless path resolves.
-import { isWorkEmail } from "../shared/work-email.js";
+import { sanitizeSubject } from "./_mail-subject.js";
 
 const BodySchema = z.object({
   firstName: z.string().trim().min(1).max(100),
   lastName: z.string().trim().min(1).max(100),
-  email: z
-    .string()
-    .trim()
-    .email()
-    .max(200)
-    .refine(isWorkEmail, "work email required"),
+  // Deliberately no work-email gate here, unlike api/scorecard.ts and
+  // api/waitlist-qualification.ts. Guests for this afternoon are invited by
+  // name and their place is confirmed by hand after a check on role, so a
+  // personal address is no reason to turn someone away at the form.
+  email: z.string().trim().email().max(200),
   company: z.string().trim().min(1).max(200),
   jobTitle: z.string().trim().min(1).max(100),
   country: z.string().trim().min(1).max(100),

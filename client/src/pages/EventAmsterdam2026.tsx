@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import { toast } from "sonner";
 import Layout from "@/components/Layout";
 import { getAttribution, trackEventRegistration } from "@/lib/tracking";
-import { isWorkEmail } from "@shared/work-email";
 import "./EventAmsterdam2026.css";
 
 /**
@@ -268,10 +267,6 @@ export default function EventAmsterdam2026() {
       toast.error("Please tick the consent box to complete your registration");
       return;
     }
-    if (!isWorkEmail(form.email)) {
-      toast.error("Please use your business email address");
-      return;
-    }
 
     const firstName = form.firstName.trim();
     const lastName = form.lastName.trim();
@@ -409,7 +404,7 @@ export default function EventAmsterdam2026() {
               <p className="cta-note">Registration handled by Eclectik</p>
               <p className="free">
                 This event is FREE to attend and 100% in-person!
-                <em>(Be sure to use your business email address to register!)</em>
+                <em>(A business email address is preferred, but not required.)</em>
               </p>
             </div>
           </div>
@@ -632,7 +627,7 @@ export default function EventAmsterdam2026() {
                   </div>
                   <div className="fld">
                     <label htmlFor="evt-email">
-                      Business email <span className="req">*</span>
+                      Email <span className="req">*</span>
                     </label>
                     <input
                       id="evt-email"
