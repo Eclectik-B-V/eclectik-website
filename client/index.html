@@ -67,13 +67,34 @@
     </script>
 
     
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LD7EPKT1W2"></script>
+    <!-- Google Analytics 4.
+         Het script wordt hier ingevoegd in plaats van als vaste <script src>,
+         zodat de tokenpagina's onder /s/ overgeslagen kunnen worden. Die zitten
+         achter een persoonlijke link in een mail: daar hoort niemand mee te
+         kijken, ook wij niet. De LinkedIn Insight Tag en de cookiebanner blijven
+         daar weg via dezelfde voorwaarde in client/src/App.tsx.
+
+         De padtoets staat hier met de hand geschreven en dupliceert bewust
+         isSessionInvitePath uit client/src/data/sessionInvite.ts, net als de
+         consent-bootstrap hierboven: dit draait voordat de bundle bestaat.
+         Wijzig je daar de vorm van het pad, wijzig het hier ook. -->
     <script>
+    (function () {
+      var path = window.location.pathname;
+      if (path === '/s' || path.indexOf('/s/') === 0) return;
+
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-LD7EPKT1W2');
+      var gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag = window.gtag || gtag;
+
+      window.gtag('js', new Date());
+      window.gtag('config', 'G-LD7EPKT1W2');
+
+      var tag = document.createElement('script');
+      tag.async = true;
+      tag.src = 'https://www.googletagmanager.com/gtag/js?id=G-LD7EPKT1W2';
+      document.head.appendChild(tag);
+    })();
     </script>
     <!-- End Google Analytics 4 -->
 

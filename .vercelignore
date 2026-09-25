@@ -3,3 +3,6 @@
 # en trekken ze vitest de deploy in. Bestanden met een _-prefix negeert Vercel
 # zelf al, dus _test-helpers.ts hoeft hier niet bij.
 api/*.test.ts
+# Dezelfde regel voor de submappen, zoals api/s/ met de user session endpoints:
+# api/*.test.ts dekt alleen het eerste niveau.
+api/**/*.test.ts
