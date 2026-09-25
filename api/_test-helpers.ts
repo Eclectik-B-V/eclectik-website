@@ -17,18 +17,20 @@ export interface Captured {
   headers: Record<string, string>;
 }
 
-export function createReq(
-  init: {
-    method?: string;
-    body?: unknown;
-    headers?: Record<string, string>;
-  } = {}
-): VercelRequest {
+export interface ReqInit {
+  method?: string;
+  body?: unknown;
+  /** Parsed query string, as Vercel hands it over: repeated keys are arrays. */
+  query?: Record<string, string | string[]>;
+  headers?: Record<string, string>;
+}
+
+export function createReq(init: ReqInit = {}): VercelRequest {
   return {
     method: init.method ?? "POST",
     body: init.body,
-    headers: init.headers ?? { "content-type": "application/json" },
-    query: {},
+    headers: { "content-type": "application/json", ...init.headers },
+    query: init.query ?? {},
     cookies: {},
   } as unknown as VercelRequest;
 }
@@ -67,7 +69,7 @@ export function createRes(): { res: VercelResponse; captured: Captured } {
 /** Run a handler against the doubles and return what it wrote to the response. */
 export async function invoke(
   handler: Handler,
-  init: { method?: string; body?: unknown } = {}
+  init: ReqInit = {}
 ): Promise<Captured> {
   const { res, captured } = createRes();
   await handler(createReq(init), res);
