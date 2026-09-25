@@ -6,7 +6,7 @@ import CookieBanner from "@/components/CookieBanner";
 import LinkedInInsightTag from "@/components/LinkedInInsightTag";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch, Redirect } from "wouter";
+import { Route, Switch, Redirect, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ConsentProvider } from "./contexts/ConsentContext";
@@ -36,6 +36,12 @@ import EventAmsterdam2026 from "@/pages/EventAmsterdam2026";
 import EventAmsterdam2026Registrations from "@/pages/EventAmsterdam2026Registrations";
 import GlintValue from "@/pages/GlintValue";
 import MicrosoftSellers from "@/pages/MicrosoftSellers";
+import SessionSlots from "@/pages/SessionSlots";
+import SessionThanks from "@/pages/SessionThanks";
+import SessionDone from "@/pages/SessionDone";
+import SessionInvalid from "@/pages/SessionInvalid";
+import SessionClosed from "@/pages/SessionClosed";
+import { isSessionInvitePath } from "@/data/sessionInvite";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -80,6 +86,19 @@ function Router() {
           from robots.txt: reachable only by the people we send the URL to.
           noindex is enforced by the X-Robots-Tag header in vercel.json. */}
       <Route path="/microsoft" component={MicrosoftSellers} />
+      {/* /s/* zijn de tokenpagina's achter de Ja- en Nee-knop in de mail over
+          de user session. Kaal, zonder header, footer of cookiebanner, en
+          zonder analytics: zie SessionShell en client/index.html. Niet in
+          sitemap.xml of robots.txt; noindex komt uit vercel.json.
+
+          /s/invalid en /s/closed staan vóór de tokenroutes. Ze botsen nu niet,
+          want die hebben een pad meer, maar komt er ooit een /s/:token bij,
+          dan leest die "invalid" als token. */}
+      <Route path="/s/invalid" component={SessionInvalid} />
+      <Route path="/s/closed" component={SessionClosed} />
+      <Route path="/s/:token/slots" component={SessionSlots} />
+      <Route path="/s/:token/thanks" component={SessionThanks} />
+      <Route path="/s/:token/done" component={SessionDone} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -93,6 +112,16 @@ function Router() {
 // - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
 function App() {
+  const [location] = useLocation();
+
+  // De tokenpagina's onder /s/ krijgen geen cookiebanner en geen LinkedIn
+  // Insight Tag. De banner zou een pagina die in tien seconden af moet zijn
+  // openen met een vraag die er niets mee te maken heeft, en de tag hoort niet
+  // mee te kijken met wie op een knop in een persoonlijke mail klikte. Google
+  // Analytics zit in client/index.html en wordt daar op dezelfde voorwaarde
+  // overgeslagen.
+  const bare = isSessionInvitePath(location);
+
   useEffect(() => {
     initAttribution();
   }, []);
@@ -110,8 +139,8 @@ function App() {
             {/* Bewust vóór de Router: de banner staat visueel onderaan maar is
                 de eerste beslissing die we vragen, dus hij hoort ook vooraan in
                 de tabvolgorde te staan. */}
-            <CookieBanner />
-            <LinkedInInsightTag />
+            {!bare && <CookieBanner />}
+            {!bare && <LinkedInInsightTag />}
             <Router />
           </TooltipProvider>
         </ConsentProvider>
