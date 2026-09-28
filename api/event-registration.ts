@@ -44,7 +44,7 @@ const CRM_TIMEOUT_MS = 8_000;
 
 const EVENT_SLUG = "amsterdam-2026";
 const EVENT_NAME = "AI Transformation: Measure It. Steer It. Prove It.";
-const EVENT_DATE = "2026-10-06";
+const EVENT_DATE = "2026-11-12";
 const REGISTRATIONS_URL =
   "https://www.eclectik.co/events/amsterdam-2026/registrations";
 
@@ -175,7 +175,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         `Event registration: ${fullName} (${data.company})`
       ),
       html: `
-        <h2>New registration for Amsterdam, 6 October 2026</h2>
+        <h2>New registration for Amsterdam, 12 November 2026</h2>
         <p><strong>Name:</strong> ${escapeHtml(fullName)}</p>
         <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
         <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
@@ -200,11 +200,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { error } = await resend.emails.send({
       from,
       to: data.email,
-      subject: "We received your registration for 6 October in Amsterdam",
+      subject: "We received your registration for 12 November in Amsterdam",
       html: `
         <p>Hi ${escapeHtml(data.firstName)},</p>
         <p>Thank you for registering for ${EVENT_NAME}</p>
-        <p>Date: 6 October 2026. Location: the Zoom office in Amsterdam.</p>
+        <p>Date: 12 November 2026. Location: the Zoom office in Amsterdam.</p>
         <p>Seats are limited, so we run a short check on role before we confirm a place. You will hear from us by email once your seat is confirmed.</p>
         <p>Eclectik and Workvivo by Zoom</p>
       `,

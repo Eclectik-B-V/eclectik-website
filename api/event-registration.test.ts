@@ -248,7 +248,7 @@ describe("api/event-registration — CRM signal", () => {
       role: "CFO",
       eventSlug: "amsterdam-2026",
       eventName: "AI Transformation: Measure It. Steer It. Prove It.",
-      eventDate: "2026-10-06",
+      eventDate: "2026-11-12",
       country: "Netherlands",
       invitedBy: "Eclectik",
       phone: "+31 6 12345678",
@@ -461,14 +461,14 @@ describe("api/event-registration — the two mails", () => {
     expect(confirmation.from).toBe("site@eclectik.co");
     expect(confirmation.to).toBe("marco@acme-corp.com");
     expect(confirmation.subject).toBe(
-      "We received your registration for 6 October in Amsterdam"
+      "We received your registration for 12 November in Amsterdam"
     );
     expect(confirmation.replyTo).toBeUndefined();
     expect(confirmation.html).toContain("Hi Marco,");
     expect(confirmation.html).toContain(
       "AI Transformation: Measure It. Steer It. Prove It."
     );
-    expect(confirmation.html).toContain("6 October 2026");
+    expect(confirmation.html).toContain("12 November 2026");
     expect(confirmation.html).toContain("a short check on role");
     expect(confirmation.html).toContain("once your seat is confirmed");
   });

@@ -193,13 +193,13 @@ export default function Home() {
           {/* Desktop keeps its CTAs in the nav; mobile needs them here. */}
           <div className="flex flex-col gap-2.5 md:hidden">
             {/* Tijdelijk, zie de comment bij dezelfde knop in SiteHeader.tsx:
-                tot en met 6 oktober 2026 staat hier de event-CTA. */}
+                tot en met 12 november 2026 staat hier de event-CTA. */}
             <Link
               href="/events/amsterdam-2026"
-              onClick={() => trackCTAClick("Register for 6th Oct event", "hero")}
+              onClick={() => trackCTAClick("Register for 12th Nov event", "hero")}
               className={`${PILL} bg-ec-sky text-ec-navy text-center px-6 py-4 focus-visible:outline-ec-sky`}
             >
-              Register for 6th Oct event
+              Register for 12th Nov event
             </Link>
             <Link
               href="/hrtechservices"
@@ -448,18 +448,18 @@ export default function Home() {
         </h2>
         {/* Tijdelijk, zie de comment bij dezelfde knop in SiteHeader.tsx. De
             regel erboven ging over de wachtlijst en is meeveranderd, anders
-            belooft hij iets anders dan waar de knop heen gaat. Na 6 oktober
+            belooft hij iets anders dan waar de knop heen gaat. Na 12 november
             allebei terug naar de benchmarktekst. */}
         <p className="text-[16px] text-ec-on-dark-caption mb-7 lg:text-[18px]">
-          Come and find out on 6 October in Amsterdam. A free half-day working session with
+          Come and find out on 12 November in Amsterdam. A free half-day working session with
           Workvivo, and places are limited.
         </p>
         <Link
           href="/events/amsterdam-2026"
-          onClick={() => trackCTAClick("Join the 6th Oct event", "closing-cta")}
+          onClick={() => trackCTAClick("Join the 12th Nov event", "closing-cta")}
           className={`${PILL} bg-ec-sky text-ec-navy inline-block px-[34px] py-4 text-[16px] hover:bg-[#54b4cb] focus-visible:outline-ec-sky`}
         >
-          Join the 6th Oct event
+          Join the 12th Nov event
         </Link>
       </section>
 
@@ -478,10 +478,10 @@ export default function Home() {
               Korte tekst: deze pil is de helft van een balk van 375px breed. */}
           <Link
             href="/events/amsterdam-2026"
-            onClick={() => trackCTAClick("6 Oct event", "sticky-bar")}
+            onClick={() => trackCTAClick("12 Nov event", "sticky-bar")}
             className={`${PILL} bg-ec-sky text-ec-navy flex-1 text-center py-3 text-sm focus-visible:outline-ec-navy`}
           >
-            6 Oct event
+            12 Nov event
           </Link>
           <Link
             href="/scorecard"

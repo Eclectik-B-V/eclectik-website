@@ -61,15 +61,15 @@ export default function SiteHeader({
           >
             Contact
           </Link>
-          {/* Tijdelijk: tot en met 6 oktober 2026 staat hier de event-CTA in
+          {/* Tijdelijk: tot en met 12 november 2026 staat hier de event-CTA in
               plaats van de benchmark-wachtlijst. Daarna terugzetten naar
               /benchmark, samen met de redirect voor de eventpagina. */}
           <Link
             href="/events/amsterdam-2026"
-            onClick={() => trackCTAClick("Register for 6th Oct event", "header")}
+            onClick={() => trackCTAClick("Register for 12th Nov event", "header")}
             className={`${PILL_BASE} bg-ec-sky text-ec-navy px-[18px] py-2.5 hover:bg-[#54b4cb]`}
           >
-            Register for 6th Oct event
+            Register for 12th Nov event
           </Link>
           <Link
             href="/scorecard"
@@ -163,12 +163,12 @@ export default function SiteHeader({
               <Link
                 href="/events/amsterdam-2026"
                 onClick={() => {
-                  trackCTAClick("Register for 6th Oct event", "mobile-menu");
+                  trackCTAClick("Register for 12th Nov event", "mobile-menu");
                   closeMenu();
                 }}
                 className={`${PILL_BASE} bg-ec-sky text-ec-navy text-center px-5 py-3.5 sm:flex-1`}
               >
-                Register for 6th Oct event
+                Register for 12th Nov event
               </Link>
               <Link
                 href="/scorecard"

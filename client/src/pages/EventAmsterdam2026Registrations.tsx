@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Download, Lock, RefreshCw } from "lucide-react";
 
 const EVENT_SLUG = "amsterdam-2026";
-const EVENT_TITLE = "AI Transformation, Amsterdam, 6 October 2026";
+const EVENT_TITLE = "AI Transformation, Amsterdam, 12 November 2026";
 
 // sessionStorage, not localStorage: the password lives for one browser session
 // and is gone once the tab closes.
