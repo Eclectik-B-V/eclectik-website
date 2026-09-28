@@ -84,45 +84,26 @@ describe("trackGlintPage", () => {
   });
 
   /**
-   * The conversion allowlist is not exported, so these go through lintrk. Both
-   * Glint pages share this helper, hence the /glint-support label in the list.
+   * The Glint pages run on email outreach, not on a LinkedIn campaign, so they
+   * report no LinkedIn conversion at all. Without a campaign behind it a press
+   * would be filed as a generic event against nothing. Should a campaign start,
+   * this expectation is what has to change first.
    */
-  describe("LinkedIn conversions", () => {
-    beforeEach(() => {
-      window.lintrk = vi.fn();
-    });
+  it("reports no LinkedIn conversion, on any CTA", () => {
+    window.lintrk = vi.fn();
 
-    it("counts every CTA that gets the reader in touch", () => {
-      const converting = [
-        ["glint", "hero_bookings"],
-        ["glint", "hero_email"],
-        ["glint", "case_request_full_story"],
-        ["glint", "cta_contact"],
-        ["glint", "cta_bookings"],
-        ["glint-support", "Talk to us"],
-      ] as const;
+    for (const [page, cta] of [
+      ["glint", "hero_bookings"],
+      ["glint", "cta_contact"],
+      ["glint", "case_request_full_story"],
+      ["glint", "hero_see_how_we_support"],
+      ["glint-support", "Talk to us"],
+    ] as const) {
+      trackGlintPage("glint_cta_clicked", page, { cta });
+    }
+    trackGlintPage("glint_page_viewed", "glint");
 
-      for (const [page, cta] of converting) {
-        (window.lintrk as ReturnType<typeof vi.fn>).mockClear();
-        trackGlintPage("glint_cta_clicked", page, { cta });
-
-        expect(window.lintrk, cta).toHaveBeenCalledTimes(1);
-      }
-    });
-
-    it("does not count the CTA that only scrolls further down the page", () => {
-      trackGlintPage("glint_cta_clicked", "glint", {
-        cta: "hero_see_how_we_support",
-      });
-
-      expect(window.lintrk).not.toHaveBeenCalled();
-    });
-
-    it("does not count a page view", () => {
-      trackGlintPage("glint_page_viewed", "glint");
-
-      expect(window.lintrk).not.toHaveBeenCalled();
-    });
+    expect(window.lintrk).not.toHaveBeenCalled();
   });
 });
 

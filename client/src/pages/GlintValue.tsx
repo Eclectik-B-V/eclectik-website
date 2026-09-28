@@ -5,8 +5,9 @@ import "./GlintValue.css";
 
 /**
  * /glint: the landing page behind the link we mail to organisations that
- * already run Viva Glint, and the landing page under LinkedIn campaigns and
- * reactivation mailings.
+ * already run Viva Glint, and the landing page for reactivation mailings. The
+ * briefing also foresaw LinkedIn campaigns; those were never run, so the page
+ * reports no LinkedIn conversions (see trackGlintPage).
  *
  * Briefing: "Briefing Olivier: landingspagina voor Glint-klanten en
  * -prospects", Marco, 15 September 2026. Second page in the same series as

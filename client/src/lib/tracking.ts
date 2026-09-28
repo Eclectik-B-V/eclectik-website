@@ -208,8 +208,16 @@ export function trackScorecard(
  * from the public proposition page (/glint-support) so the two are
  * comparable in a report rather than indistinguishable.
  *
- * The page is reached through the link we mail and through LinkedIn campaigns,
- * so `src` is what ties a visit back to a campaign, per briefing paragraph 6.
+ * The page is reached through the link we mail, so `src` is what ties a visit
+ * back to a mailing, per briefing paragraph 6. The briefing also planned
+ * LinkedIn campaigns for it; those were never run, and Glint goes out by email
+ * outreach instead (Olivier, 28 September 2026).
+ *
+ * Hence no LinkedIn conversion here, unlike trackMicrosoftPage below. Without a
+ * campaign there is nothing for Campaign Manager to attribute a press to, so
+ * firing lintrk would only file generic events against no campaign at all.
+ * Should a Glint campaign ever run, this needs its own conversion id and an
+ * allowlist of the CTAs that convert; git history has a working version.
  *
  * The briefing also asks for both CTAs to land in marketing_lead_activity in
  * the CRM. They still do not. POST /api/website-signal validates an email
@@ -222,48 +230,6 @@ export function trackScorecard(
  */
 type GlintPage = "glint" | "glint-support";
 
-/**
- * Which CTA presses on the Glint pages count as a LinkedIn conversion.
- *
- * Same rule as MS_CONVERSION_CTAS below, and for the same reason: until this
- * set existed every press counted, `hero_see_how_we_support` included, and
- * that one only scrolls to a section further down the same page. Counting it
- * inflates the conversion number and teaches LinkedIn to optimise delivery
- * towards people who scroll rather than people who get in touch.
- *
- * `hero_email` is in the set because the hero button falls back to the mailto
- * when BOOKINGS_URL is emptied. `case_request_full_story` is in it because it
- * mails Marco for the Warburtons case, which is a lead arriving by another
- * door. "Talk to us" is the /glint-support button; the label reads oddly next
- * to the snake_case ones, but renaming it would break the GA history it
- * already has.
- *
- * Adding a CTA to a page means adding its label here, or deciding out loud
- * that it does not convert. A label renamed on the page and not here goes
- * quiet without failing anything, which is what happened to cta_email.
- */
-const GLINT_CONVERSION_CTAS = new Set([
-  "hero_bookings",
-  "hero_email",
-  "case_request_full_story",
-  "cta_contact",
-  "cta_bookings",
-  "Talk to us",
-]);
-
-/**
- * Conversion id for the Glint campaign. Undefined because none has been
- * created yet: the Microsoft id below belongs to the Microsoft campaign and
- * reusing it would file Glint presses under those ads.
- *
- * While this is undefined lintrk still fires, but Campaign Manager records a
- * generic event it cannot attribute, so the Glint ads report clicks and
- * nothing that happened after the click. Creating one is the same route as the
- * Microsoft id: Campaign Manager > Analyze > Conversion Tracking, manual setup
- * as the source, then event-specific.
- */
-const LINKEDIN_GLINT_CONVERSION_ID: number | undefined = undefined;
-
 export function trackGlintPage(
   event: "glint_page_viewed" | "glint_cta_clicked",
   page: GlintPage,
@@ -275,12 +241,6 @@ export function trackGlintPage(
     src: getAttribution(),
     ...params,
   });
-  if (
-    event === "glint_cta_clicked" &&
-    GLINT_CONVERSION_CTAS.has(String(params?.cta))
-  ) {
-    trackLinkedInConversion(LINKEDIN_GLINT_CONVERSION_ID);
-  }
 }
 
 /**
