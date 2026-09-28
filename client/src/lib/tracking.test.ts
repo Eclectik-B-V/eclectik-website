@@ -4,9 +4,21 @@
 // hence the per-file override above.
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { trackContactFormSubmission, trackEventRegistration, trackGlintPage } from "./tracking";
+import {
+  trackContactFormSubmission,
+  trackEventRegistration,
+  trackGlintPage,
+  trackMicrosoftPage,
+} from "./tracking";
 
-const FORBIDDEN_KEYS = ["name", "email", "company", "firstName", "lastName", "phone"];
+const FORBIDDEN_KEYS = [
+  "name",
+  "email",
+  "company",
+  "firstName",
+  "lastName",
+  "phone",
+];
 
 beforeEach(() => {
   window.gtag = vi.fn();
@@ -30,7 +42,8 @@ describe("trackContactFormSubmission", () => {
   it("never includes personal data in the event payload", () => {
     trackContactFormSubmission();
 
-    const gtagPayload = (window.gtag as ReturnType<typeof vi.fn>).mock.calls[0][2];
+    const gtagPayload = (window.gtag as ReturnType<typeof vi.fn>).mock
+      .calls[0][2];
     const dataLayerPayload = window.dataLayer?.[0];
 
     for (const key of FORBIDDEN_KEYS) {
@@ -68,5 +81,47 @@ describe("trackGlintPage", () => {
     const call = (window.gtag as ReturnType<typeof vi.fn>).mock.calls[0];
     expect(call[1]).toBe("glint_page_viewed");
     expect(call[2]).toMatchObject({ page: "glint" });
+  });
+});
+
+describe("trackMicrosoftPage", () => {
+  /**
+   * The conversion allowlist lives in the module and is not exported, so these
+   * go through lintrk. Renaming a CTA label without adding it to that set stops
+   * the button counting as a LinkedIn conversion, which is silent: the event
+   * still reaches GA and only Campaign Manager goes quiet. That happened once,
+   * when cta_email became cta_contact.
+   */
+  beforeEach(() => {
+    window.lintrk = vi.fn();
+  });
+
+  it("counts the primary CTA as a LinkedIn conversion", () => {
+    trackMicrosoftPage("ms_cta_clicked", { cta: "cta_contact" });
+
+    expect(window.lintrk).toHaveBeenCalledWith("track", {
+      conversion_id: 31055969,
+    });
+  });
+
+  it("counts the booking CTAs as LinkedIn conversions", () => {
+    for (const cta of ["hero_bookings", "hero_email", "cta_bookings"]) {
+      (window.lintrk as ReturnType<typeof vi.fn>).mockClear();
+      trackMicrosoftPage("ms_cta_clicked", { cta });
+
+      expect(window.lintrk, cta).toHaveBeenCalledTimes(1);
+    }
+  });
+
+  it("does not count a CTA that only scrolls further down the page", () => {
+    trackMicrosoftPage("ms_cta_clicked", { cta: "hero_see_what_we_deliver" });
+
+    expect(window.lintrk).not.toHaveBeenCalled();
+  });
+
+  it("does not count a page view", () => {
+    trackMicrosoftPage("ms_page_viewed");
+
+    expect(window.lintrk).not.toHaveBeenCalled();
   });
 });
