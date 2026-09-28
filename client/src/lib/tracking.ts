@@ -19,7 +19,10 @@ declare global {
  * @param eventName - Name of the event
  * @param eventParams - Additional parameters for the event
  */
-export function trackEvent(eventName: string, eventParams?: Record<string, any>) {
+export function trackEvent(
+  eventName: string,
+  eventParams?: Record<string, any>
+) {
   try {
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", eventName, eventParams);
@@ -43,11 +46,11 @@ export function trackEvent(eventName: string, eventParams?: Record<string, any>)
  * @param conversionId - LinkedIn conversion ID
  */
 export function trackLinkedInConversion(conversionId?: number) {
-  if (typeof window !== 'undefined' && window.lintrk) {
+  if (typeof window !== "undefined" && window.lintrk) {
     if (conversionId) {
-      window.lintrk('track', { conversion_id: conversionId });
+      window.lintrk("track", { conversion_id: conversionId });
     } else {
-      window.lintrk('track', {});
+      window.lintrk("track", {});
     }
   }
 }
@@ -71,10 +74,10 @@ export function trackContactFormSubmission() {
  * Track CTA button clicks
  */
 export function trackCTAClick(ctaName: string, ctaLocation: string) {
-  trackEvent('cta_click', {
-    event_category: 'engagement',
+  trackEvent("cta_click", {
+    event_category: "engagement",
     event_label: ctaName,
-    cta_location: ctaLocation
+    cta_location: ctaLocation,
   });
 }
 
@@ -119,7 +122,10 @@ export function getAttribution(): string | undefined {
   // caller that reads it on submit is long past mount, which hid this; the
   // page-view event on a landing page is the first that is not.
   try {
-    return new URLSearchParams(window.location.search).get("src")?.slice(0, 100) || undefined;
+    return (
+      new URLSearchParams(window.location.search).get("src")?.slice(0, 100) ||
+      undefined
+    );
   } catch {
     return undefined;
   }
@@ -170,7 +176,7 @@ export function trackEventRegistration(eventName: string) {
  */
 export function trackWaitlistQualification(
   event: "wl_q_started" | "wl_q_answered" | "wl_q_completed",
-  params?: Record<string, any>,
+  params?: Record<string, any>
 ) {
   trackEvent(event, params);
 }
@@ -180,10 +186,19 @@ export function trackWaitlistQualification(
  * sc_email_submitted, sc_cta_clicked.
  */
 export function trackScorecard(
-  event: "sc_start" | "sc_q_answered" | "sc_completed" | "sc_email_submitted" | "sc_cta_clicked",
-  params?: Record<string, any>,
+  event:
+    | "sc_start"
+    | "sc_q_answered"
+    | "sc_completed"
+    | "sc_email_submitted"
+    | "sc_cta_clicked",
+  params?: Record<string, any>
 ) {
-  trackEvent(event, { event_category: "scorecard", src: getAttribution(), ...params });
+  trackEvent(event, {
+    event_category: "scorecard",
+    src: getAttribution(),
+    ...params,
+  });
   if (event === "sc_email_submitted") trackLinkedInConversion();
 }
 
@@ -210,13 +225,13 @@ type GlintPage = "glint" | "glint-support";
 export function trackGlintPage(
   event: "glint_page_viewed" | "glint_cta_clicked",
   page: GlintPage,
-  params?: Record<string, any>,
+  params?: Record<string, any>
 ) {
   trackEvent(event, {
     event_category: "glint_landing",
     page,
     src: getAttribution(),
-    ...params
+    ...params,
   });
   if (event === "glint_cta_clicked") trackLinkedInConversion();
 }
@@ -266,21 +281,30 @@ const LINKEDIN_MS_CONVERSION_ID: number | undefined = 31055969;
  * rather than people who get in touch.
  *
  * `hero_email` is in the set because the hero button falls back to the mailto
- * when BOOKINGS_URL is emptied.
+ * when BOOKINGS_URL is emptied. `cta_contact` replaced `cta_email` when that
+ * button started pointing at /contact instead of opening a mail client; it is
+ * still the page's primary way of getting in touch, so it still converts.
  */
 const MS_CONVERSION_CTAS = new Set([
   "hero_bookings",
   "hero_email",
   "cta_bookings",
-  "cta_email",
+  "cta_contact",
 ]);
 
 export function trackMicrosoftPage(
   event: "ms_page_viewed" | "ms_cta_clicked",
-  params?: Record<string, any>,
+  params?: Record<string, any>
 ) {
-  trackEvent(event, { event_category: "microsoft_sellers", src: getAttribution(), ...params });
-  if (event === "ms_cta_clicked" && MS_CONVERSION_CTAS.has(String(params?.cta))) {
+  trackEvent(event, {
+    event_category: "microsoft_sellers",
+    src: getAttribution(),
+    ...params,
+  });
+  if (
+    event === "ms_cta_clicked" &&
+    MS_CONVERSION_CTAS.has(String(params?.cta))
+  ) {
     trackLinkedInConversion(LINKEDIN_MS_CONVERSION_ID);
   }
 }
