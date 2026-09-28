@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 import Layout from "@/components/Layout";
+import RescheduleNotice from "@/components/RescheduleNotice";
 import { getAttribution, trackEventRegistration } from "@/lib/tracking";
 import "./EventAmsterdam2026.css";
 
@@ -344,6 +345,12 @@ export default function EventAmsterdam2026() {
       />
 
       <div className="evt">
+        {/* Tijdelijk: tot en met 3 oktober 2026 krijgt wie via een oude
+            LinkedIn-post of mailing binnenkomt eerst te zien dat de datum is
+            verschoven. Daarna rendert dit niets meer en mag het weg, samen met
+            RescheduleNotice.tsx en data/rescheduleNotice.ts. */}
+        <RescheduleNotice />
+
         {/* Event branding strip. Kept from the mockup as the co-brand for the
             afternoon and as the seam between the site header and the dark
             design; the mockup's fake "English" language switcher is gone. */}
