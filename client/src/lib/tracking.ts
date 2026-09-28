@@ -232,6 +232,10 @@ export function trackGlintPage(
  * clicks per recipient, and connecting a CTA press to a named seller needs the
  * CRM to accept a recipient token instead of an email address, which
  * api/website-signal does not do today.
+ *
+ * As on /glint, the primary CTA goes to /contact rather than to a mail client.
+ * That form mails through Resend and forwards no `src`, so a seller who arrives
+ * that way is traceable to the campaign in GA but not in Marco's inbox.
  */
 
 /**

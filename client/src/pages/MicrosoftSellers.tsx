@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "wouter";
 import { trackMicrosoftPage } from "@/lib/tracking";
 import "./MicrosoftSellers.css";
 
@@ -175,10 +176,12 @@ export default function MicrosoftSellers() {
    */
   useEffect(() => {
     const tags = Array.from(
-      document.querySelectorAll<HTMLMetaElement>('meta[name="robots"], meta[name="googlebot"]'),
+      document.querySelectorAll<HTMLMetaElement>(
+        'meta[name="robots"], meta[name="googlebot"]'
+      )
     );
-    const previous = tags.map((tag) => tag.content);
-    tags.forEach((tag) => {
+    const previous = tags.map(tag => tag.content);
+    tags.forEach(tag => {
       tag.content = "noindex, nofollow";
     });
     return () => {
@@ -244,7 +247,9 @@ export default function MicrosoftSellers() {
                   href={BOOKINGS_URL || MAILTO}
                   target={BOOKINGS_URL ? "_blank" : undefined}
                   rel={BOOKINGS_URL ? "noopener noreferrer" : undefined}
-                  onClick={() => onCta(BOOKINGS_URL ? "hero_bookings" : "hero_email")}
+                  onClick={() =>
+                    onCta(BOOKINGS_URL ? "hero_bookings" : "hero_email")
+                  }
                 >
                   Book a 20-minute intro
                 </a>
@@ -544,13 +549,17 @@ export default function MicrosoftSellers() {
             not, we will say so.
           </p>
           <div className="msl-actions">
-            <a
+            {/* The one link off this page into the site proper, matching
+                /glint. wouter's Link renders the anchor, so the navigation
+                stays client-side and the unmount effect above puts the shared
+                robots tags back before the contact page renders. */}
+            <Link
               className="msl-btn msl-btn-primary"
-              href={MAILTO}
-              onClick={() => onCta("cta_email")}
+              href="/contact"
+              onClick={() => onCta("cta_contact")}
             >
-              Email Marco
-            </a>
+              Contact Marco
+            </Link>
             {BOOKINGS_URL && (
               <a
                 className="msl-btn msl-btn-ghost"
