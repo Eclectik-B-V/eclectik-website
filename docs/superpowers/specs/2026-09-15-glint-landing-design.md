@@ -102,6 +102,24 @@ campagnebron (`?src=`). De identiteit komt binnen met de mail of de boeking.
 Een CRM-regel vanaf de pagina vraagt óf een formulier op de pagina, óf een
 `website-signal` die een anoniem token accepteert.
 
+### Geen LinkedIn-conversie
+
+De briefing noemt de pagina bruikbaar als landing onder LinkedIn-campagnes, en
+de meting was daarop gebouwd. Die campagnes zijn er nooit gekomen: Glint loopt
+via e-mail outreach (Olivier, 28 september 2026). De pagina vuurde daardoor
+generieke conversie-events die Campaign Manager aan geen enkele campagne kon
+koppelen. Die aanroep is eruit. Komt er alsnog een campagne, dan is er een eigen
+conversie-id nodig plus een allowlist van de knoppen die tellen; PR #30 in de
+historie heeft een werkende versie.
+
+### Bronwaarden
+
+Nog niet afgesproken, in tegenstelling tot de Microsoft-pagina, die daar wel een
+tabel voor heeft. De pagina leest elke `?src=`-waarde, er zit geen lijst in de
+code, dus zolang de mailing ongetagde links stuurt blijft `src` leeg en is niet
+te zien welke mailing iemand bracht. Een tabel per mailing, in dezelfde vorm als
+die van de Microsoft-pagina, is wat hier hoort te staan.
+
 ## Toegankelijkheid en contrast
 
 Alle kleuren zijn getoetst op de twee achtergronden van de pagina.

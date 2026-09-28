@@ -122,10 +122,16 @@ GA4 via de bestaande `trackEvent`, met twee events in
 
 - `ms_page_viewed` bij binnenkomst
 - `ms_cta_clicked` met een `cta`-label per knop (`hero_bookings`,
-  `hero_see_what_we_deliver`, `cta_email`, `cta_bookings`)
+  `hero_see_what_we_deliver`, `cta_contact`, `cta_bookings`, en `hero_email`
+  als terugval wanneer `BOOKINGS_URL` leeg is)
 
 Beide dragen `event_category: "microsoft_sellers"` en de `src` uit de URL.
-`ms_cta_clicked` vuurt daarnaast de LinkedIn-conversie.
+
+`ms_cta_clicked` vuurt de LinkedIn-conversie alleen voor de labels in
+`MS_CONVERSION_CTAS`. `hero_see_what_we_deliver` staat daar niet in, want die
+knop scrollt alleen naar beneden. Een label hernoemen op de pagina zonder het
+hier bij te werken haalt de knop stil uit de conversiemeting; dat gebeurde toen
+`cta_email` `cta_contact` werd. Tests in `tracking.test.ts` dekken de set nu af.
 
 ### Bronwaarden
 
