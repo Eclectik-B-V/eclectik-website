@@ -82,6 +82,48 @@ describe("trackGlintPage", () => {
     expect(call[1]).toBe("glint_page_viewed");
     expect(call[2]).toMatchObject({ page: "glint" });
   });
+
+  /**
+   * The conversion allowlist is not exported, so these go through lintrk. Both
+   * Glint pages share this helper, hence the /glint-support label in the list.
+   */
+  describe("LinkedIn conversions", () => {
+    beforeEach(() => {
+      window.lintrk = vi.fn();
+    });
+
+    it("counts every CTA that gets the reader in touch", () => {
+      const converting = [
+        ["glint", "hero_bookings"],
+        ["glint", "hero_email"],
+        ["glint", "case_request_full_story"],
+        ["glint", "cta_contact"],
+        ["glint", "cta_bookings"],
+        ["glint-support", "Talk to us"],
+      ] as const;
+
+      for (const [page, cta] of converting) {
+        (window.lintrk as ReturnType<typeof vi.fn>).mockClear();
+        trackGlintPage("glint_cta_clicked", page, { cta });
+
+        expect(window.lintrk, cta).toHaveBeenCalledTimes(1);
+      }
+    });
+
+    it("does not count the CTA that only scrolls further down the page", () => {
+      trackGlintPage("glint_cta_clicked", "glint", {
+        cta: "hero_see_how_we_support",
+      });
+
+      expect(window.lintrk).not.toHaveBeenCalled();
+    });
+
+    it("does not count a page view", () => {
+      trackGlintPage("glint_page_viewed", "glint");
+
+      expect(window.lintrk).not.toHaveBeenCalled();
+    });
+  });
 });
 
 describe("trackMicrosoftPage", () => {
