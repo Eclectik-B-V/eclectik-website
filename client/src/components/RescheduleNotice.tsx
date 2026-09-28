@@ -51,8 +51,7 @@ export default function RescheduleNotice() {
             Our event has been rescheduled to the 12th of November.
           </DialogTitle>
           <DialogDescription className="pt-2 text-[15px] leading-[1.6] text-[#c7cbe4]">
-            Thursday, November 12, 2026, 12:15 to 16:30 CET, at the Zoom office in Amsterdam. Your
-            registration stays valid.
+            Thursday, November 12, 2026, 12:15 to 16:30 CET, at the Zoom office in Amsterdam.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
