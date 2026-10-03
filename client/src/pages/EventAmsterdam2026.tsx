@@ -7,15 +7,15 @@ import { getAttribution, trackEventRegistration } from "@/lib/tracking";
 import "./EventAmsterdam2026.css";
 
 /**
- * Event page for the Workvivo/Eclectik afternoon in Amsterdam, 12 November 2026.
+ * Event page for the Workvivo/Eclectik afternoon in Amsterdam, 17 November 2026.
  * Design spec: docs/superpowers/specs/2026-09-08-event-amsterdam-2026-design.md
  *
  * The dark Workvivo design lives inside the .evt wrapper; every rule in
  * EventAmsterdam2026.css is scoped to it so the rest of the site is untouched.
  */
 
-const EVENT_START_MS = Date.parse("2026-11-12T12:15:00+01:00");
-const EVENT_END_MS = Date.parse("2026-11-12T16:30:00+01:00");
+const EVENT_START_MS = Date.parse("2026-11-17T12:15:00+01:00");
+const EVENT_END_MS = Date.parse("2026-11-17T16:30:00+01:00");
 
 const PHOTOS = {
   marc: "/images/events/amsterdam-2026/marc-van-veldhoven.jpg",
@@ -49,20 +49,20 @@ const SESSIONS: Session[] = [
   {
     card: { title: "Registration", accent: "& Lunch" },
     heading: "Registration & Networking Lunch",
-    time: "Thu, Nov 12, 2026 12:15 PM – 1:00 PM CET",
+    time: "Tue, Nov 17, 2026 12:15 PM – 1:00 PM CET",
     description: "Welcome in the double-height lobby of the Parnassus Tower.",
   },
   {
     card: { title: "The first", accent: "measurement" },
     heading: "Opening: who steers your AI transformation?",
-    time: "Thu, Nov 12, 2026 1:00 PM – 1:25 PM CET",
+    time: "Tue, Nov 17, 2026 1:00 PM – 1:25 PM CET",
     description:
       "Not an ice-breaker. A live anonymous poll on the room itself. Who owns AI here, has a commitment already been made outside HR, for which group has the work actually changed, and is AI currently a help or an extra burden for your frontline. Results go on screen immediately.",
   },
   {
     card: { title: "Keynote", accent: "Tilburg University" },
     heading: "Implemented is not the same as experienced",
-    time: "Thu, Nov 12, 2026 1:25 PM – 1:50 PM CET",
+    time: "Tue, Nov 17, 2026 1:25 PM – 1:50 PM CET",
     description:
       "What employees perceive of an activity decides whether the implemented policy achieves what it was meant to achieve. With AI, that gap is wider than ever. Picks up the poll results live.",
     who: ["marc"],
@@ -70,7 +70,7 @@ const SESSIONS: Session[] = [
   {
     card: { title: "Part 1", accent: "Measure it" },
     heading: "What is AI doing to the work, and for whom?",
-    time: "Thu, Nov 12, 2026 1:50 PM – 2:35 PM CET",
+    time: "Tue, Nov 17, 2026 1:50 PM – 2:35 PM CET",
     description:
       "Eclectik opens with two of its own cases: objective diagnosis first, then the translation to employees. Workvivo follows with the instrument, a targeted pulse rather than the annual survey. AI acts as a demand and as a resource at the same time, and which one dominates differs per group. It has to be measured, not assumed. Closing exercise: for which group in your organisation would you least like to guess the answer?",
     who: ["marco", "steven"],
@@ -78,13 +78,13 @@ const SESSIONS: Session[] = [
   {
     card: { title: "Coffee", accent: "Break" },
     heading: "Coffee Break",
-    time: "Thu, Nov 12, 2026 2:35 PM – 2:50 PM CET",
+    time: "Tue, Nov 17, 2026 2:35 PM – 2:50 PM CET",
     description: "At the coffee bar.",
   },
   {
     card: { title: "Part 2", accent: "Steer it" },
     heading: "The steering levers, with a live demo",
-    time: "Thu, Nov 12, 2026 2:50 PM – 3:25 PM CET",
+    time: "Tue, Nov 17, 2026 2:50 PM – 3:25 PM CET",
     description:
       "What you actually adjust once the diagnosis is in: transparency about what AI will and will not do, perceived fairness, and human oversight. Steven Buck gives a live demo of Workvivo HQ and HQ Agent as the lever that reaches everyone, frontline first, and takes questions from the room as they come up. Closing exercise: which three questions do your team leaders answer every week?",
     who: ["steven"],
@@ -92,7 +92,7 @@ const SESSIONS: Session[] = [
   {
     card: { title: "Part 3", accent: "Prove it" },
     heading: "Which pilot do you stop?",
-    time: "Thu, Nov 12, 2026 3:25 PM – 3:50 PM CET",
+    time: "Tue, Nov 17, 2026 3:25 PM – 3:50 PM CET",
     description:
       "Unguided experimentation is expensive not because AI is expensive, but because you cannot tell which pilot to stop. How to connect employee data to performance indicators, which claims survive a conversation with the CFO, and which do not. Participants fill in a one-page worksheet for their own organisation.",
     who: ["marco"],
@@ -100,7 +100,7 @@ const SESSIONS: Session[] = [
   {
     card: { title: "Close &", accent: "Networking" },
     heading: "Close and Networking Reception",
-    time: "Thu, Nov 12, 2026 3:50 PM – 4:30 PM CET",
+    time: "Tue, Nov 17, 2026 3:50 PM – 4:30 PM CET",
     description:
       "The loop in one slide, then drinks around the coffee bar. Optional customers corner with a Seer and Workvivo HQ roadmap preview.",
   },
@@ -333,7 +333,7 @@ export default function EventAmsterdam2026() {
       <title>AI Transformation: Measure It. Steer It. Prove It. | Eclectik</title>
       <meta
         name="description"
-        content="Half-day working session for CPOs, CHROs and senior People leaders on steering AI transformation. Amsterdam, 12 November 2026, by Workvivo by Zoom and Eclectik."
+        content="Half-day working session for CPOs, CHROs and senior People leaders on steering AI transformation. Amsterdam, 17 November 2026, by Workvivo by Zoom and Eclectik."
       />
       <link rel="canonical" href="https://www.eclectik.co/events/amsterdam-2026" />
       {/* The event design is set in Inter; the site loads Outfit, Plus Jakarta
@@ -345,7 +345,7 @@ export default function EventAmsterdam2026() {
       />
 
       <div className="evt">
-        {/* Tijdelijk: tot en met 3 oktober 2026 krijgt wie via een oude
+        {/* Tijdelijk: tot en met 17 oktober 2026 krijgt wie via een oude
             LinkedIn-post of mailing binnenkomt eerst te zien dat de datum is
             verschoven. Daarna rendert dit niets meer en mag het weg, samen met
             RescheduleNotice.tsx en data/rescheduleNotice.ts. */}
@@ -367,7 +367,7 @@ export default function EventAmsterdam2026() {
                 height={183}
               />
             </div>
-            <div className="topbar-meta">Amsterdam · 12 November 2026</div>
+            <div className="topbar-meta">Amsterdam · 17 November 2026</div>
           </div>
         </div>
 
@@ -394,7 +394,7 @@ export default function EventAmsterdam2026() {
 
             <div className="panel">
               <p className="date">
-                Thursday, November 12, 2026
+                Tuesday, November 17, 2026
                 <br />
                 12:15 – 16:30 CET
               </p>
@@ -438,7 +438,7 @@ export default function EventAmsterdam2026() {
             </span>
           </p>
           <p>
-            On Thursday, November 12 in Amsterdam, Workvivo and Eclectik bring together a select group
+            On Tuesday, November 17 in Amsterdam, Workvivo and Eclectik bring together a select group
             of CPOs, CHROs and senior People leaders for a half-day working session on guided
             transformation as a control loop: measure what has actually changed in the work,
             interpret for whom AI is a resource and for whom it is an extra demand, steer on the
@@ -815,7 +815,7 @@ export default function EventAmsterdam2026() {
                 </h4>
                 {state === "duplicate" ? (
                   <p className="body">
-                    This email address is already registered for the afternoon of 12 November. There
+                    This email address is already registered for the afternoon of 17 November. There
                     is nothing left for you to do. If you have not had a confirmation, mail us at{" "}
                     <a href="mailto:info@eclectik.co">info@eclectik.co</a> and we will look it up.
                   </p>
@@ -826,7 +826,7 @@ export default function EventAmsterdam2026() {
                       confirm your place after a short check on role.
                     </p>
                     <p className="body">
-                      Thursday, November 12, 2026, 12:15 to 16:30 CET, Zoom Office Amsterdam,
+                      Tuesday, November 17, 2026, 12:15 to 16:30 CET, Zoom Office Amsterdam,
                       Parnassus Tower, Locatellikade 1.
                     </p>
                   </>
@@ -868,7 +868,7 @@ export default function EventAmsterdam2026() {
 
         <div className="evt-colophon">
           <div className="wrap foot">
-            <span>Organised by Workvivo by Zoom and Eclectik · Amsterdam, 12 November 2026</span>
+            <span>Organised by Workvivo by Zoom and Eclectik · Amsterdam, 17 November 2026</span>
             <span>
               Prof. dr. Marc van Veldhoven speaks independently and does not endorse any product.
             </span>

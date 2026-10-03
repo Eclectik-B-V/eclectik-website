@@ -41,18 +41,22 @@ describe("isWithinNoticeWindow", () => {
     expect(isWithinNoticeWindow(END_MS + 1000)).toBe(false);
   });
 
-  it("valt op 3 oktober 2026 23:59:59 in Amsterdamse tijd", () => {
+  it("valt op 17 oktober 2026 23:59:59 in Amsterdamse tijd", () => {
     const local = new Date(END_MS).toLocaleString("nl-NL", {
       timeZone: "Europe/Amsterdam",
       dateStyle: "short",
       timeStyle: "medium",
     });
-    expect(local).toContain("3-10-2026");
+    expect(local).toContain("17-10-2026");
     expect(local).toContain("23:59:59");
   });
 
-  it("staat nog open op de dag dat de melding live gaat", () => {
-    expect(isWithinNoticeWindow(Date.parse("2026-09-28T12:00:00Z"))).toBe(true);
+  it("staat nog open op de dag dat de datum naar 17 november ging", () => {
+    expect(isWithinNoticeWindow(Date.parse("2026-10-03T12:00:00Z"))).toBe(true);
+  });
+
+  it("staat ook nog open in de week erna", () => {
+    expect(isWithinNoticeWindow(Date.parse("2026-10-10T12:00:00Z"))).toBe(true);
   });
 });
 
@@ -76,7 +80,7 @@ describe("hasDismissedNotice", () => {
     expect(hasDismissedNotice()).toBe(true);
   });
 
-  it("schrijft onder de sleutel met het jaartal erin", () => {
+  it("schrijft onder een sleutel die de nieuwe datum draagt, zodat wie de vorige melding wegklikte deze wel ziet", () => {
     const store = stubStorage();
     markNoticeDismissed();
     expect(store.get(NOTICE_STORAGE_KEY)).toBe("1");

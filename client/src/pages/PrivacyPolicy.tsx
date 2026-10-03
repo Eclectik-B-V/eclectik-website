@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
                 organise together with a partner, we share the details you provide on the
                 registration form with that partner, so they can process your registration and
                 contact you about the event. The partner is named in the consent text on the form
-                itself. For the AI Transformation event of 12 November 2026 in Amsterdam, that partner
+                itself. For the AI Transformation event of 17 November 2026 in Amsterdam, that partner
                 is Workvivo, part of Zoom Communications.
               </li>
               <li>Legal authorities if required by law or for legal protection.</li>

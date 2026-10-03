@@ -12,7 +12,7 @@ import { markNoticeDismissed, shouldShowNotice } from "@/data/rescheduleNotice";
 /**
  * Tijdelijk: vertelt bezoekers die via een oude LinkedIn-post of mailing
  * binnenkomen dat het event van 6 oktober naar 12 november is verschoven.
- * Verdwijnt vanzelf na 3 oktober 2026, zie rescheduleNotice.ts, en mag daarna
+ * Verdwijnt vanzelf na 17 oktober 2026, zie rescheduleNotice.ts, en mag daarna
  * samen met die module weg.
  *
  * De kleuren staan als hex in plaats van als var(--evt-*), want Radix hangt de
@@ -48,10 +48,10 @@ export default function RescheduleNotice() {
       >
         <DialogHeader>
           <DialogTitle className="text-[22px] leading-[1.25] font-bold text-white">
-            Our event has been rescheduled to the 12th of November.
+            Our event has been rescheduled to the 17th of November.
           </DialogTitle>
           <DialogDescription className="pt-2 text-[15px] leading-[1.6] text-[#c7cbe4]">
-            Thursday, November 12, 2026, 12:15 to 16:30 CET, at the Zoom office in Amsterdam.
+            Tuesday, November 17, 2026, 12:15 to 16:30 CET, at the Zoom office in Amsterdam.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
