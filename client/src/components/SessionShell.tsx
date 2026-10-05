@@ -14,10 +14,25 @@ import { SESSION_COPY } from "@/data/sessionInvite";
  * gaan. De meeste mensen openen deze pagina's vanuit Outlook op hun telefoon,
  * ook in de ingebouwde browser daarvan.
  */
-export default function SessionShell({ children }: { children: React.ReactNode }) {
+/**
+ * De titel en de voetnoot zijn optioneel, zodat de bevestigingspagina's onder
+ * /e/ dezelfde omlijsting kunnen gebruiken met hun eigen zinnen. Zonder die
+ * props blijft het de user session, precies zoals het was.
+ */
+export default function SessionShell({
+  children,
+  documentTitle = SESSION_COPY.documentTitle,
+  footerNote = SESSION_COPY.footerNote,
+  footerLinkLabel = SESSION_COPY.footerLinkLabel,
+}: {
+  children: React.ReactNode;
+  documentTitle?: string;
+  footerNote?: string;
+  footerLinkLabel?: string;
+}) {
   return (
     <div className="min-h-screen bg-white text-ec-navy font-brand font-light">
-      <title>{SESSION_COPY.documentTitle}</title>
+      <title>{documentTitle}</title>
       {/* Geen canonical en geen description: deze pagina's horen niet in een
           index, en een description zou verraden waar de link over gaat.
 
@@ -40,12 +55,12 @@ export default function SessionShell({ children }: { children: React.ReactNode }
         {children}
 
         <p className="mt-12 border-t border-ec-line-2 pt-6 text-[14px] leading-[1.6] text-ec-body-faint">
-          {SESSION_COPY.footerNote}{" "}
+          {footerNote}{" "}
           <Link
             href="/privacy-policy"
             className="underline underline-offset-2 transition-colors hover:text-ec-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky"
           >
-            {SESSION_COPY.footerLinkLabel}
+            {footerLinkLabel}
           </Link>
         </p>
       </main>

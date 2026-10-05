@@ -43,6 +43,9 @@ import SessionInvalid from "@/pages/SessionInvalid";
 import SessionClosed from "@/pages/SessionClosed";
 import SessionIntern from "@/pages/SessionIntern";
 import { isSessionInvitePath } from "@/data/sessionInvite";
+import EventConfirm from "@/pages/EventConfirm";
+import EventConfirmInvalid from "@/pages/EventConfirmInvalid";
+import { isEventConfirmPath } from "@/data/eventConfirm";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -98,6 +101,12 @@ function Router() {
       {/* /s/intern is de interne aanmeldpagina. Staat hier bij de vaste
           paden, boven de tokenroutes, om dezelfde reden als /s/invalid. Geen
           link vanaf de rest van de site en noindex via SessionShell. */}
+      {/* /e/* zijn de bevestigingspagina's achter de link in de mail over de
+          nieuwe eventdatum. Kaal, net als /s/*, en om dezelfde reden: wie uit
+          een mail komt met één vraag heeft niets aan een header met uitgangen.
+          /e/invalid staat vóór de tokenroute. */}
+      <Route path="/e/invalid" component={EventConfirmInvalid} />
+      <Route path="/e/:token" component={EventConfirm} />
       <Route path="/s/intern" component={SessionIntern} />
       <Route path="/s/invalid" component={SessionInvalid} />
       <Route path="/s/closed" component={SessionClosed} />
@@ -125,7 +134,7 @@ function App() {
   // mee te kijken met wie op een knop in een persoonlijke mail klikte. Google
   // Analytics zit in client/index.html en wordt daar op dezelfde voorwaarde
   // overgeslagen.
-  const bare = isSessionInvitePath(location);
+  const bare = isSessionInvitePath(location) || isEventConfirmPath(location);
 
   useEffect(() => {
     initAttribution();

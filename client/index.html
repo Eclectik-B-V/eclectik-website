@@ -69,7 +69,7 @@
     
     <!-- Google Analytics 4.
          Het script wordt hier ingevoegd in plaats van als vaste <script src>,
-         zodat de tokenpagina's onder /s/ overgeslagen kunnen worden. Die zitten
+         zodat de tokenpagina's onder /s/ en /e/ overgeslagen kunnen worden. Die zitten
          achter een persoonlijke link in een mail: daar hoort niemand mee te
          kijken, ook wij niet. De LinkedIn Insight Tag en de cookiebanner blijven
          daar weg via dezelfde voorwaarde in client/src/App.tsx.
@@ -82,6 +82,7 @@
     (function () {
       var path = window.location.pathname;
       if (path === '/s' || path.indexOf('/s/') === 0) return;
+      if (path === '/e' || path.indexOf('/e/') === 0) return;
 
       window.dataLayer = window.dataLayer || [];
       var gtag = function () { window.dataLayer.push(arguments); };
