@@ -74,12 +74,41 @@ export type InviteResult =
   | { status: "ok"; firstName: string | null }
   | { status: "unknown_token" }
   | { status: "closed" }
-  | { status: "unavailable" };
+  | { status: "unavailable" }
+  /**
+   * Alleen voor action register: er ligt al een antwoord van de klant zelf en
+   * er is nog niet bevestigd dat het overschreven mag worden. `existing` is
+   * wat de BD-applicatie nu in de rij heeft staan, zodat de collega dat ziet
+   * voor hij doordrukt.
+   */
+  | {
+      status: "needs_confirm";
+      existing: { answer: string | null; slots: string[]; note: string | null };
+    };
 
 export type InvitePayload =
   | { action: "click"; token: string; answer: Answer; botSuspected: boolean }
   | { action: "confirm"; token: string; answer: Answer }
-  | { action: "submit"; token: string; slots: string[]; note: string | null };
+  | { action: "submit"; token: string; slots: string[]; note: string | null }
+  /**
+   * De interne aanmelding vanaf /s/intern. Afwijkend van de drie andere
+   * acties: geen token, want de collega heeft er geen, en wel een mailadres
+   * als sleutel. De BD-applicatie zoekt de rij op dat adres, maakt hem aan als
+   * hij niet bestaat, en zet answer op yes.
+   *
+   * `confirmOverwrite` hoort bij het enige geval dat niet stil mag gebeuren:
+   * er staat al een antwoord van de klant zelf. Is de vlag false, dan geeft BD
+   * dat terug in plaats van te schrijven, zodat de pagina eerst kan laten zien
+   * wat er staat.
+   */
+  | {
+      action: "register";
+      email: string;
+      slots: string[];
+      note: string | null;
+      registeredBy: string;
+      confirmOverwrite: boolean;
+    };
 
 /** Markers that mean the request is almost certainly not a person. */
 const BOT_MARKERS = [
@@ -208,6 +237,22 @@ export async function callSessionInvite(
     const reason = typeof body?.reason === "string" ? body.reason : "";
     if (reason === "unknown_token") return { status: "unknown_token" };
     if (reason === "closed") return { status: "closed" };
+    // Alleen action register kan dit terugkrijgen. Wat BD meestuurt is wat er
+    // in de rij staat; het wordt niet vertrouwd maar uitgefilterd op vorm,
+    // zodat de pagina nooit iets anders dan tekst te zien krijgt.
+    if (reason === "needs_confirm") {
+      const e = (body?.existing ?? {}) as Record<string, unknown>;
+      return {
+        status: "needs_confirm",
+        existing: {
+          answer: typeof e.answer === "string" ? e.answer : null,
+          slots: Array.isArray(e.slots)
+            ? e.slots.filter((v): v is string => typeof v === "string")
+            : [],
+          note: typeof e.note === "string" && e.note.length > 0 ? e.note : null,
+        },
+      };
+    }
 
     // Never log the token: the log would then hold a working link to someone
     // else's invitation.

@@ -41,6 +41,7 @@ import SessionThanks from "@/pages/SessionThanks";
 import SessionDone from "@/pages/SessionDone";
 import SessionInvalid from "@/pages/SessionInvalid";
 import SessionClosed from "@/pages/SessionClosed";
+import SessionIntern from "@/pages/SessionIntern";
 import { isSessionInvitePath } from "@/data/sessionInvite";
 
 function Router() {
@@ -94,6 +95,10 @@ function Router() {
           /s/invalid en /s/closed staan vóór de tokenroutes. Ze botsen nu niet,
           want die hebben een pad meer, maar komt er ooit een /s/:token bij,
           dan leest die "invalid" als token. */}
+      {/* /s/intern is de interne aanmeldpagina. Staat hier bij de vaste
+          paden, boven de tokenroutes, om dezelfde reden als /s/invalid. Geen
+          link vanaf de rest van de site en noindex via SessionShell. */}
+      <Route path="/s/intern" component={SessionIntern} />
       <Route path="/s/invalid" component={SessionInvalid} />
       <Route path="/s/closed" component={SessionClosed} />
       <Route path="/s/:token/slots" component={SessionSlots} />
