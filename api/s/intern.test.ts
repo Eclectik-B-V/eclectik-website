@@ -3,16 +3,15 @@ import handler from "./intern.js";
 import { invoke, stubConsole, crmOk } from "../_test-helpers.js";
 
 /**
- * Het zwaartepunt ligt op de poort. Deze route kan rijen aanmaken in de tabel
- * die de deelnemerslijst is, dus wie er niet door mag, mag er echt niet door
- * en er gaat dan ook geen verkeer naar de BD-applicatie.
+ * Er staat bewust geen wachtwoord op deze route, zie de toelichting in
+ * intern.ts. De enige drempel die over is, is het domein van de invuller, en
+ * dat is dus ook de test die er het meest toe doet: wie daar niet doorheen
+ * komt, mag ook geen verkeer naar de BD-applicatie veroorzaken.
  */
 
-const PASSWORD = "test-password";
 const SLOT_A = "slot-2026-10-29";
 
 const validBody = (over: Record<string, unknown> = {}) => ({
-  password: PASSWORD,
   email: "Klant@Voorbeeld.com",
   registeredBy: "collega@eclectik.co",
   slots: [SLOT_A],
@@ -34,7 +33,6 @@ beforeEach(() => {
   vi.stubGlobal("fetch", fetchMock);
   vi.stubEnv("CRM_BASE_URL", "https://crm.example.com");
   vi.stubEnv("CRM_WEBHOOK_SECRET", "s3cret");
-  vi.stubEnv("SESSION_INTERN_PASSWORD", PASSWORD);
 });
 
 afterEach(() => {
@@ -44,23 +42,10 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe("api/s/intern: de poort", () => {
+describe("api/s/intern: de drempel", () => {
   it.each(["GET", "PUT", "DELETE"])("%s returns 405", async method => {
     const res = await invoke(handler, { method, body: validBody() });
     expect(res.status).toBe(405);
-    expect(fetchMock).not.toHaveBeenCalled();
-  });
-
-  it("is dicht zolang het wachtwoord niet is ingesteld", async () => {
-    vi.stubEnv("SESSION_INTERN_PASSWORD", "");
-    const res = await post();
-    expect(res.status).toBe(503);
-    expect(fetchMock).not.toHaveBeenCalled();
-  });
-
-  it("weigert een verkeerd wachtwoord zonder de BD-applicatie te bellen", async () => {
-    const res = await post(validBody({ password: "fout" }));
-    expect(res.status).toBe(401);
     expect(fetchMock).not.toHaveBeenCalled();
   });
 

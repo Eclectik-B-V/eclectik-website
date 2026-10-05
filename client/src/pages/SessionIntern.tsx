@@ -15,33 +15,13 @@ import { SESSION_COPY, SESSION_SLOTS } from "@/data/sessionInvite";
  * heeft gezegd dat hij mee wil doen. De aanmelding komt in dezelfde tabel als
  * die via de mail, zodat de telling per datum klopt.
  *
- * Het wachtwoord staat in sessionStorage en gaat mee in elke post. De echte
- * controle gebeurt op de server in api/s/intern.ts; dit scherm houdt alleen de
- * pagina dicht voor wie het adres toevallig kent. Zelfde opzet als
- * EventAmsterdam2026Registrations.tsx.
+ * Er zit geen wachtwoord op, dat is een bewuste keuze: de link gaat naar één
+ * collega. De enige controle is dat het adres van de invuller op eclectik.co
+ * eindigt, en die staat op de server in api/s/intern.ts.
  *
  * De datums komen uit SESSION_SLOTS, dezelfde bron als de klantpagina. Wijzigt
  * een datum, dan wijzigt hij hier mee.
  */
-
-const STORAGE_KEY = "eclectik_session_intern_v1";
-
-/** Een privevenster kan op lezen en schrijven gooien, dus allebei ingepakt. */
-function loadPassword(): string {
-  try {
-    return sessionStorage.getItem(STORAGE_KEY) ?? "";
-  } catch {
-    return "";
-  }
-}
-
-function savePassword(value: string) {
-  try {
-    sessionStorage.setItem(STORAGE_KEY, value);
-  } catch {
-    // Dan houdt het wachtwoord het één tabblad lang vol in de state hieronder.
-  }
-}
 
 interface Existing {
   answer: string | null;
@@ -49,7 +29,7 @@ interface Existing {
   note: string | null;
 }
 
-type Phase = "locked" | "form" | "confirm" | "done";
+type Phase = "form" | "confirm" | "done";
 
 const C = SESSION_COPY.intern;
 
@@ -60,9 +40,7 @@ function slotLabels(ids: string[]): string {
 }
 
 export default function SessionIntern() {
-  const [password, setPassword] = useState(loadPassword);
-  const [phase, setPhase] = useState<Phase>(loadPassword() ? "form" : "locked");
-  const [lockError, setLockError] = useState(false);
+  const [phase, setPhase] = useState<Phase>("form");
 
   const [email, setEmail] = useState("");
   const [registeredBy, setRegisteredBy] = useState("");
@@ -91,7 +69,6 @@ export default function SessionIntern() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          password,
           email,
           registeredBy,
           slots: ticked,
@@ -115,13 +92,6 @@ export default function SessionIntern() {
         setPhase("confirm");
         return;
       }
-      if (body.reason === "unauthorized") {
-        savePassword("");
-        setPassword("");
-        setLockError(true);
-        setPhase("locked");
-        return;
-      }
       if (body.reason === "not_a_colleague") {
         setByError(true);
         return;
@@ -141,40 +111,6 @@ export default function SessionIntern() {
     setExisting(null);
     setFailed(false);
     setPhase("form");
-  }
-
-  if (phase === "locked") {
-    return (
-      <SessionShell>
-        <SessionHeading greeting={null} title={C.lockTitle} />
-        <SessionBody>{C.lockIntro}</SessionBody>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (!password) return;
-            savePassword(password);
-            setLockError(false);
-            setPhase("form");
-          }}
-          noValidate
-        >
-          <label className="mt-7 block">
-            <span className="block text-[15px] font-semibold">{C.lockLabel}</span>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoFocus
-              className="mt-2 w-full rounded-lg border border-ec-line-3 px-4 py-3 text-[16px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky"
-            />
-          </label>
-          {lockError && (
-            <p className="mt-3 text-[15px] text-ec-red">{C.lockError}</p>
-          )}
-          <SessionSendButton label={C.lockSubmit} sending={false} />
-        </form>
-      </SessionShell>
-    );
   }
 
   if (phase === "done") {

@@ -134,11 +134,6 @@ export const SESSION_COPY = {
    * aanvinkt en de tabel een kolom per vraag houdt.
    */
   intern: {
-    lockTitle: "Internal page",
-    lockIntro: "This page is for Eclectik colleagues. Enter the shared password to continue.",
-    lockLabel: "Password",
-    lockSubmit: "Continue",
-    lockError: "That password is not right.",
     title: "Internal: register a participant",
     intro: "Use this when a customer told you in a call or by email that they want to join. The registration lands in the same list as the ones from the invitation mail.",
     emailLabel: "Participant email address",
