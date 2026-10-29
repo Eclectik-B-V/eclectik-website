@@ -94,7 +94,7 @@ export interface Speaker {
  * Rebecca Laun stond hier eerst als dagvoorzitter. Dat was onjuist: zij
  * organiseert maar spreekt niet, gecorrigeerd door Marco op 29 oktober 2026.
  *
- * Van Kirsten en Roxanne hebben we nog geen foto en geen functietitel. Ralfs
+ * Van Kirsten en Roxanne hebben we nog geen foto, wel hun functietitel. Ralfs
  * titel komt van zijn LinkedIn-kop en niet uit een formele bron. Manish
  * schreef zijn eigen titel in zijn handtekening met een typefout in
  * "Insights"; die staat hier goed gespeld, al noemt de uitnodiging van de
@@ -127,6 +127,7 @@ export const SPEAKERS: Speaker[] = [
   },
   {
     name: "Roxanne Lorimer",
+    role: "Senior OD and HR Executive",
     org: "PwC Switzerland",
     tag: "Speaker",
   },
