@@ -103,6 +103,11 @@ export interface Speaker {
 export const SPEAKERS: Speaker[] = [
   {
     name: "Kirsten Barker",
+    // Koppelteken en geen komma, anders wordt het "Director, Leadership,
+    // eXperience, Coaching" en valt niet meer te zien waar de functie ophoudt
+    // en het vakgebied begint. De hoofdletter in eXperience staat zo in de
+    // naam van die PwC-praktijk en is dus geen typefout.
+    role: "Director - Leadership, eXperience, Coaching",
     org: "PwC Switzerland",
     tag: "Moderator",
   },
