@@ -111,6 +111,15 @@
       ]
     },
     {
+      "source": "/events/zurich-2026",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/s/(.*)",
       "headers": [
         {

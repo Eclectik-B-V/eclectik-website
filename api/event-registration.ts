@@ -4,6 +4,7 @@ import { z } from "zod";
 // Relative import with a .js extension: api/ is plain ESM without the bundler
 // aliases the client has, so neither @shared nor an extensionless path resolves.
 import { sanitizeSubject } from "./_mail-subject.js";
+import { escapeHtml } from "./_html.js";
 
 const BodySchema = z.object({
   firstName: z.string().trim().min(1).max(100),
@@ -29,15 +30,6 @@ const BodySchema = z.object({
 });
 
 type Body = z.infer<typeof BodySchema>;
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
 
 /** A hanging CRM must not hold the function open until Vercel kills it. */
 const CRM_TIMEOUT_MS = 8_000;
