@@ -336,16 +336,28 @@ export default function EventZurich2026() {
             {C.readingTitle}
           </h2>
           <p className="mt-3 text-[17px] leading-[1.6] text-ec-body">{C.readingBody}</p>
-          <ul className="mt-5 flex flex-col gap-3">
+          {/* Drie kaarten naast elkaar in plaats van een lijstje links. De
+              namen Microsoft, PwC en Wharton naast elkaar zijn op zichzelf een
+              geloofwaardigheidssignaal, en dat gaat verloren als ze achteraan
+              in een zin staan.
+
+              De hele kaart is het raakvlak, ruim boven de 44px die een duim
+              nodig heeft. */}
+          <ul className="mt-6 grid gap-4 sm:grid-cols-3">
             {READING.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[17px] text-ec-navy underline underline-offset-2 transition-colors hover:text-ec-sky-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky"
+                  className="flex h-full flex-col rounded-xl border border-ec-line-3 bg-white px-5 py-5 transition-colors hover:border-ec-sky-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky"
                 >
-                  {item.label}
+                  <span className="text-[13px] font-semibold uppercase tracking-[0.1em] text-ec-sky-ink">
+                    {item.publisher}
+                  </span>
+                  <span className="mt-2 text-[17px] font-semibold leading-[1.35] text-ec-navy">
+                    {item.title}
+                  </span>
                 </a>
               </li>
             ))}

@@ -131,15 +131,18 @@ export const TAKEAWAYS = [
  */
 export const READING = [
   {
-    label: "The New Future of Work Reader, Microsoft",
+    publisher: "Microsoft",
+    title: "The New Future of Work Reader",
     href: "https://microsoft.github.io/nfw-reader/",
   },
   {
-    label: "Global Workforce Hopes and Fears Survey 2026, PwC",
+    publisher: "PwC",
+    title: "Global Workforce Hopes and Fears Survey 2026",
     href: "https://www.pwc.ch/en/insights/transformation/global-workforce-hopes-and-fears-survey-2026-switzerland.html",
   },
   {
-    label: "2026 AI Adoption Report, Wharton",
+    publisher: "Wharton",
+    title: "2026 AI Adoption Report",
     href: "https://knowledge.wharton.upenn.edu/special-report/2026-ai-adoption-report/",
   },
 ];
@@ -176,7 +179,7 @@ export const ZURICH_COPY = {
   speakersPending: "One more speaker from PwC will be announced.",
   readingTitle: "Something to read while you wait",
   readingBody:
-    "Three pieces we keep coming back to, and the research the afternoon draws on.",
+    "The research the afternoon draws on. Worth a look before you come.",
 
   formTitle: "Confirm your place",
   formBody:
