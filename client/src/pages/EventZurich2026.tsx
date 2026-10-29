@@ -6,6 +6,7 @@ import { getAttribution, trackEventRegistration } from "@/lib/tracking";
 import {
   AGENDA,
   INVITED_BY,
+  SPEAKERS,
   READING,
   TAKEAWAYS,
   ZURICH_COPY as C,
@@ -218,29 +219,43 @@ export default function EventZurich2026() {
           <h2 className="font-brand text-[26px] font-extrabold leading-[1.2] text-ec-navy lg:text-[32px]">
             {C.speakersTitle}
           </h2>
-          <div className="mt-7 flex items-center gap-5 rounded-xl border border-ec-line-3 bg-white px-5 py-5">
-            {/* 300 bij 300 aangeleverd, en de kaart rendert op 64px, dus ook
-                op een retinascherm ruim genoeg. Bewust niet opgeschaald naar de
-                520 van de Amsterdam-fotos: dat maakt hem alleen waziger. */}
-            <img
-              src="/images/events/zurich-2026/ralf-buechsenschuss.jpg"
-              alt=""
-              width={300}
-              height={300}
-              loading="lazy"
-              className="size-16 shrink-0 rounded-full object-cover"
-            />
-            <div className="min-w-0">
-              <p className="text-[18px] font-bold text-ec-navy">Ralf Buechsenschuss</p>
-              <p className="mt-0.5 text-[15px] leading-[1.4] text-ec-body">
-                Org. Design, AI Transformation &amp; People Analytics
-              </p>
-              <p className="text-[15px] text-ec-body-faint">Microsoft</p>
-            </div>
+          {/* De fotos zijn tussen 256 en 400 pixels aangeleverd en renderen op
+              64px, dus ook op een retinascherm ruim genoeg. Bewust niet
+              opgeschaald naar de 520 van de Amsterdam-fotos: opschalen maakt
+              een kleiner bestand alleen waziger.
+
+              alt is leeg omdat de naam er als tekst naast staat. Een
+              schermlezer die hem twee keer voorleest helpt niemand. */}
+          <div className="mt-7 flex flex-col gap-4">
+            {SPEAKERS.map((speaker) => (
+              <div
+                key={speaker.name}
+                className="flex items-center gap-5 rounded-xl border border-ec-line-3 bg-white px-5 py-5"
+              >
+                <img
+                  src={speaker.photo}
+                  alt=""
+                  width={256}
+                  height={256}
+                  loading="lazy"
+                  className="size-16 shrink-0 rounded-full object-cover"
+                />
+                <div className="min-w-0">
+                  <p className="text-[18px] font-bold text-ec-navy">{speaker.name}</p>
+                  {speaker.role && (
+                    <p className="mt-0.5 text-[15px] leading-[1.4] text-ec-body">
+                      {speaker.role}
+                    </p>
+                  )}
+                  <p className="text-[15px] text-ec-body-faint">{speaker.org}</p>
+                </div>
+                <span className="ml-auto shrink-0 self-start text-[12px] font-semibold uppercase tracking-[0.08em] text-ec-sky-ink">
+                  {speaker.tag}
+                </span>
+              </div>
+            ))}
           </div>
-          <p className="mt-4 text-[15px] text-ec-body-faint">
-            Speakers from PwC and Eclectik to be announced.
-          </p>
+          <p className="mt-4 text-[15px] text-ec-body-faint">{C.speakersPending}</p>
         </div>
       </section>
 

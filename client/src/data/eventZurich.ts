@@ -71,6 +71,48 @@ export const AGENDA: AgendaItem[] = [
   { time: "17:00", title: "Apéro" },
 ];
 
+export interface Speaker {
+  name: string;
+  /** Leeg als we de functietitel nog niet bevestigd hebben. */
+  role?: string;
+  org: string;
+  /** Chair of Speaker. Zelfde idee als de tags op de Amsterdam-pagina. */
+  tag: string;
+  photo: string;
+}
+
+/**
+ * Rebecca Laun zit de middag voor, Ralf en Manish spreken. De spreker namens
+ * PwC is op 29 oktober nog niet bekend; zolang dat zo is staat er onder de
+ * kaarten een regel dat er nog een naam bij komt.
+ *
+ * Ralfs functietitel komt van zijn LinkedIn-kop, niet uit een formele bron.
+ * Manish schreef zijn eigen titel in zijn handtekening met een typefout in
+ * "Insights"; die staat hier goed gespeld.
+ */
+export const SPEAKERS: Speaker[] = [
+  {
+    name: "Rebecca Laun",
+    org: "PwC Switzerland",
+    tag: "Chair",
+    photo: "/images/events/zurich-2026/rebecca-laun.jpg",
+  },
+  {
+    name: "Ralf Buechsenschuss",
+    role: "Org. Design, AI Transformation & People Analytics",
+    org: "Microsoft",
+    tag: "Speaker",
+    photo: "/images/events/zurich-2026/ralf-buechsenschuss.jpg",
+  },
+  {
+    name: "Manish Goel",
+    role: "Senior Advisor, AI Insights & Impact",
+    org: "Eclectik",
+    tag: "Speaker",
+    photo: "/images/events/zurich-2026/manish-goel.jpg",
+  },
+];
+
 export const TAKEAWAYS = [
   "How Microsoft sees organisations preparing for agentic work, from research rather than from a product roadmap.",
   "A way to tell real impact from reported usage, and to find the groups where AI lands as a burden rather than a help.",
@@ -127,6 +169,7 @@ export const ZURICH_COPY = {
   agendaTitle: "The afternoon",
   takeawaysTitle: "What you'll leave with",
   speakersTitle: "Speakers",
+  speakersPending: "One more speaker from PwC will be announced.",
   readingTitle: "Something to read while you wait",
   readingBody:
     "Three pieces we keep coming back to, and the research the afternoon draws on.",
