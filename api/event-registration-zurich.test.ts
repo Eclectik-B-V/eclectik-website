@@ -52,6 +52,13 @@ describe("api/event-registration-zurich: de poort", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it("laat de vraag wie je uitnodigde leeg zijn", async () => {
+    const { invitedBy, ...zonder } = validBody();
+    const res = await post(zonder);
+    expect(res.status).toBe(200);
+    expect(crmBody(fetchMock.mock.calls[0]).invitedBy).toBeUndefined();
+  });
+
   it("weigert een organisator buiten de drie plus Other", async () => {
     const res = await post(validBody({ invitedBy: "Workvivo" }));
     expect(res.status).toBe(400);

@@ -38,10 +38,13 @@ const BodySchema = z.object({
   company: z.string().trim().min(1).max(200),
   jobTitle: z.string().trim().min(1).max(100),
   country: z.string().trim().min(1).max(100),
-  // Een gesloten verzameling en geen vrije tekst: de waarde gaat zo het CRM
-  // in, en het punt van het veld is dat de drie organisatoren hun eigen
-  // genodigden kunnen terugvinden. Houd in sync met INVITED_BY in de pagina.
-  invitedBy: z.enum(["Eclectik", "PwC", "Microsoft", "Other"]),
+  // Optioneel, anders dan bij Amsterdam. Het veld helpt de drie organisatoren
+  // hun eigen genodigden terug te vinden, maar een leeg antwoord is beter dan
+  // een gokje: wie het niet weet en toch moet kiezen, kiest iets.
+  //
+  // Wel een gesloten verzameling en geen vrije tekst, want de waarde gaat zo
+  // het CRM in. Houd in sync met INVITED_BY in de pagina.
+  invitedBy: z.enum(["Eclectik", "PwC", "Microsoft", "Other"]).optional(),
   phone: z.string().trim().max(50).optional(),
   // Verplicht: dekt het delen van de inschrijving met PwC en Microsoft, die de
   // gastenlijst meevoeren. Dit en niets meer; marketing staat hieronder apart.
@@ -161,7 +164,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
         <p><strong>Job title:</strong> ${escapeHtml(data.jobTitle)}</p>
         <p><strong>Country:</strong> ${escapeHtml(data.country)}</p>
-        <p><strong>Invited by:</strong> ${escapeHtml(data.invitedBy)}</p>
+${data.invitedBy ? `<p><strong>Invited by:</strong> ${escapeHtml(data.invitedBy)}</p>` : ""}
         ${data.phone ? `<p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>` : ""}
         <p><strong>Consent to share with PwC and Microsoft:</strong> yes</p>
         <p><strong>Marketing opt-in:</strong> ${data.consentMarketing ? "yes" : "no"}</p>

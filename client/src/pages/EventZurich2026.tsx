@@ -74,11 +74,6 @@ export default function EventZurich2026() {
       toast.error("Please tick the consent box to complete your registration");
       return;
     }
-    if (!form.invitedBy) {
-      toast.error("Please tell us who invited you");
-      return;
-    }
-
     setSending(true);
     try {
       const r = await fetch("/api/event-registration-zurich", {
@@ -87,6 +82,7 @@ export default function EventZurich2026() {
         body: JSON.stringify({
           ...form,
           phone: form.phone || undefined,
+          invitedBy: form.invitedBy || undefined,
           consent: true,
           consentMarketing,
           src: getAttribution() ?? undefined,
@@ -401,10 +397,10 @@ export default function EventZurich2026() {
                 </div>
 
                 <label>
-                  <span className={LABEL}>Who invited you?</span>
-                  <select required className={FIELD} value={form.invitedBy}
+                  <span className={LABEL}>Who invited you? (optional)</span>
+                  <select className={FIELD} value={form.invitedBy}
                     onChange={(e) => set("invitedBy", e.target.value)}>
-                    <option value="">Please choose</option>
+                    <option value="">Rather not say</option>
                     {INVITED_BY.map((option) => (
                       <option key={option} value={option}>{option}</option>
                     ))}
