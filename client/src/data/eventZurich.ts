@@ -33,30 +33,31 @@ export interface AgendaItem {
 }
 
 /**
- * Voorstel, niet vastgesteld. De mail geeft alleen inloop 14:00, programma
- * 14:30 tot 17:00 en daarna apéro. De verdeling binnen die 150 minuten is van
- * ons en mag door PwC bijgesteld worden.
+ * Overgenomen uit de uitnodiging van de vorige editie van deze reeks, op
+ * 25 november 2025 op dezelfde locatie: registratie om 14:00, drie blokken van
+ * een half uur met een pauze van een half uur ertussen, dan het rondetafel-
+ * gesprek en om 17:00 de borrel.
+ *
+ * Een eerdere versie hier was mijn eigen verdeling, met een opening van een
+ * kwartier en een kortere pauze. Die is vervangen: het format van de reeks
+ * weegt zwaarder dan mijn gok, en deelnemers die er eerder bij waren
+ * herkennen het.
  */
 export const AGENDA: AgendaItem[] = [
-  { time: "14:00", title: "Arrival and networking", body: "Coffee at The Circle." },
+  { time: "14:00", title: "Registration", body: "At Microsoft, The Circle, Zürich." },
   {
     time: "14:30",
-    title: "Welcome",
-    body: "Who is in the room, and what everyone wants to take away from the afternoon.",
-  },
-  {
-    time: "14:45",
     title: "What's next?",
     body: "How organisations are preparing for the era of agentic work, drawing on Microsoft's New Future of Work research.",
     by: "Microsoft",
   },
   {
-    time: "15:15",
+    time: "15:00",
     title: "What's real?",
     body: "Evidence beyond AI usage. How data and analytics reveal the real impact of AI transformation, and where change is needed most.",
     by: "Eclectik",
   },
-  { time: "15:45", title: "Break" },
+  { time: "15:30", title: "Break" },
   {
     time: "16:00",
     title: "How do people feel?",
@@ -65,7 +66,7 @@ export const AGENDA: AgendaItem[] = [
   },
   {
     time: "16:30",
-    title: "Open roundtable",
+    title: "Roundtable discussion",
     body: "The part that is not on anyone's slides. What you are running into, and what you have stopped doing.",
   },
   { time: "17:00", title: "Apéro" },
