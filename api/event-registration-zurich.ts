@@ -181,7 +181,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         html: `
         <p>Hi ${escapeHtml(data.firstName)},</p>
         <p>Thank you for registering for ${escapeHtml(EVENT_NAME)}.</p>
-        <p>Date: 1 December 2026, 14:00 to 17:00 CET, followed by an apero. Location: the Microsoft office at The Circle, Zurich Flughafen.</p>
+        <p>Date: 1 December 2026, 14:00 to 17:00 CET, followed by an apero. Location: the Microsoft office at The Circle 02, 8058 Zurich.</p>
         <p>Seats are limited, so we run a short check on role before we confirm a place. You will hear from us by email once your seat is confirmed.</p>
         <p>Eclectik, PwC and Microsoft</p>
       `,

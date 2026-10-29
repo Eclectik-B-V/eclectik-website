@@ -108,7 +108,7 @@ export const ZURICH_COPY = {
   dateLine: "Tuesday, 1 December 2026",
   timeLine: "14:00 arrival, programme 14:30 to 17:00, apéro afterwards",
   organisers: "An invitation-only roundtable by Eclectik, PwC and Microsoft",
-  venue: "Microsoft Office, The Circle, Zürich Flughafen",
+  venue: "Microsoft Office, The Circle 02, 8058 Zürich",
   rooms: "Rooms Eiger and Dufourspitze",
   seats: "Free to attend, in person, limited to around 15 seats.",
 
