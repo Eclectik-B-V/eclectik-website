@@ -103,8 +103,29 @@ export default function EventZurich2026() {
       <title>Roundtable, Zurich, 1 December 2026 | Eclectik</title>
       <meta name="robots" content="noindex, nofollow, noarchive" />
 
-      {/* HERO */}
-      <section className="bg-ec-navy px-6 py-16 text-ec-on-dark lg:px-16 lg:py-24">
+      {/* HERO. De foto ligt eronder met een donkere laag erover, zoals de
+          homepage dat met zijn video doet.
+
+          Die laag doet twee dingen. Hij houdt witte tekst leesbaar, en hij
+          verbergt dat het bestand maar 687 pixels breed is: op een breed
+          scherm wordt dat ruim twee keer opgeschaald, en bij een luchtfoto met
+          veel fijn detail zie je dat zonder laag meteen. De homepage gebruikt
+          hier een asset van 1920 voor. Komt er een groter bestand, dan kan de
+          laag lichter. */}
+      <section className="relative isolate overflow-hidden bg-ec-navy px-6 py-16 text-ec-on-dark lg:px-16 lg:py-24">
+        <img
+          src="/images/events/zurich-2026/the-circle.jpg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 size-full object-cover"
+        />
+        {/* Verloop in plaats van een vlakke dekking: onderaan het donkerst,
+            waar de datum en het adres staan, bovenaan iets opener zodat het
+            gebouw nog te zien is. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-ec-navy/80 via-ec-navy/88 to-ec-navy/95"
+        />
         <div className="mx-auto max-w-[900px]">
           <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-ec-on-dark-eyebrow">
             Invitation-only roundtable
@@ -190,27 +211,6 @@ export default function EventZurich2026() {
             </p>
           ))}
         </div>
-      </section>
-
-      {/* LOCATIEFOTO. Aangeleverd als 687 bij 311, dus bewust binnen de
-          tekstkolom gehouden en niet over de volle breedte: op een breed
-          scherm zou full bleed een verdubbeling betekenen en dan wordt hij
-          zacht. Omgezet van PNG naar JPEG, dat scheelde 499K naar 120K voor
-          dezelfde pixels. */}
-      <section className="px-6 pb-4 lg:px-16">
-        <figure className="mx-auto max-w-[720px]">
-          <img
-            src="/images/events/zurich-2026/the-circle.jpg"
-            alt={C.venueImageAlt}
-            width={687}
-            height={311}
-            loading="lazy"
-            className="w-full rounded-xl"
-          />
-          <figcaption className="mt-2 text-[14px] text-ec-body-faint">
-            {C.venueCaption}
-          </figcaption>
-        </figure>
       </section>
 
       {/* BESLOTEN SESSIE */}
