@@ -15,12 +15,13 @@ import { escapeHtml } from "./_html.js";
  * event in te passen zet dat op het spel voor een besparing die vooral op
  * papier bestaat, want inhoudelijk verschillen ze op drie punten.
  *
- * 1. Toestemming. Bij Amsterdam gaat de inschrijving naar Workvivo en is het
- *    vinkje daarvoor verplicht. Hier houdt Eclectik de gegevens zelf, dus er
- *    is geen derde partij om toestemming voor te vragen.
- * 2. Daardoor kan dit formulier wel de gesplitste opzet gebruiken die bij
- *    Amsterdam als commentaar klaarstaat: één verplicht vinkje om de
- *    inschrijving te verwerken, en marketing apart en optioneel.
+ * 1. Toestemming. Bij Amsterdam gaat de inschrijving naar Workvivo, hier naar
+ *    PwC en Microsoft. Die twee leveren het grootste deel van de genodigden en
+ *    voeren de gastenlijst mee, dus delen is een voorwaarde om een plek te
+ *    kunnen bevestigen en het vinkje daarvoor is verplicht.
+ * 2. Dit formulier gebruikt wel de gesplitste opzet die bij Amsterdam als
+ *    commentaar klaarstaat: het verplichte vinkje dekt alleen het delen voor
+ *    dit event, en marketing staat er apart en optioneel naast.
  * 3. Andere organisatoren in invitedBy, en andere teksten in beide mails.
  *
  * escapeHtml is wel gedeeld, want een tweede kopie van een functie die XSS
@@ -42,8 +43,8 @@ const BodySchema = z.object({
   // genodigden kunnen terugvinden. Houd in sync met INVITED_BY in de pagina.
   invitedBy: z.enum(["Eclectik", "PwC", "Microsoft", "Other"]),
   phone: z.string().trim().max(50).optional(),
-  // Verplicht, want zonder verwerking geen plek op de gastenlijst. Dit dekt
-  // alleen de inschrijving zelf, niets meer.
+  // Verplicht: dekt het delen van de inschrijving met PwC en Microsoft, die de
+  // gastenlijst meevoeren. Dit en niets meer; marketing staat hieronder apart.
   consent: z.literal(true),
   // Optioneel en apart, zodat wie alleen wil komen geen marketing hoeft te
   // accepteren. Toestemming moet vrij gegeven zijn, en deelname mag niet
@@ -100,6 +101,7 @@ async function sendCrmSignal(data: Body): Promise<boolean> {
         country: data.country,
         invitedBy: data.invitedBy,
         phone: data.phone,
+        consentShare: true,
         consentMarketing: data.consentMarketing,
         src: data.src,
       }),
@@ -161,6 +163,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         <p><strong>Country:</strong> ${escapeHtml(data.country)}</p>
         <p><strong>Invited by:</strong> ${escapeHtml(data.invitedBy)}</p>
         ${data.phone ? `<p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p>` : ""}
+        <p><strong>Consent to share with PwC and Microsoft:</strong> yes</p>
         <p><strong>Marketing opt-in:</strong> ${data.consentMarketing ? "yes" : "no"}</p>
         ${data.src ? `<p><strong>Source:</strong> ${escapeHtml(data.src)}</p>` : ""}
       `,

@@ -157,8 +157,17 @@ export default function EventZurich2026() {
             alt="Eclectik"
             className="h-7 w-auto"
           />
-          {/* Nog tekst: het PwC-logobestand is nog niet aangeleverd. */}
-          <span className="text-[20px] font-bold text-ec-navy">PwC</span>
+          {/* Vult zijn canvas voor 95 procent, dus niet bijgesneden. Iets
+              hoger gezet dan de andere twee: bij PwC zit een flink deel van de
+              hoogte in het accent boven het woordmerk, dus op gelijke hoogte
+              oogt de naam zelf kleiner. */}
+          <img
+            src="/images/events/zurich-2026/pwc-logo.png"
+            alt="PwC"
+            width={1525}
+            height={752}
+            className="h-9 w-auto"
+          />
           {/* Aangeleverd als 3840 bij 2160 met het logo in een lege verticale
               band. Bijgesneden tot de inhoud en teruggeschaald naar 800 bij
               170, anders zou het logo op een vaste hoogte piepklein uitvallen. */}
@@ -388,17 +397,23 @@ export default function EventZurich2026() {
                 </label>
 
                 {/* Gesplitst, anders dan op de Amsterdam-pagina. Daar dekt één
-                    verplicht vinkje zowel de verwerking als marketing af, en in
-                    die code staan twee bezwaren daarover genoteerd. Hier houdt
-                    Eclectik de gegevens zelf, dus er is geen derde partij om
-                    toestemming voor te vragen en kan het meteen goed. */}
+                    verplicht vinkje zowel het delen als marketing af, en in die
+                    code staan twee bezwaren daarover genoteerd: toestemming moet
+                    vrij gegeven zijn, en deelname mag niet afhangen van iets dat
+                    deelname niet nodig heeft. Hier staat het delen los van de
+                    marketing, zodat wie alleen wil komen alleen dat aanvinkt.
+
+                    Het delen zelf is wel verplicht: PwC en Microsoft leveren het
+                    grootste deel van de genodigden en voeren de gastenlijst mee,
+                    dus zonder dat is er geen plek te bevestigen. */}
                 <label className="flex gap-3 text-[15px] leading-[1.55] text-ec-body">
                   <input type="checkbox" name="consentEvent" required checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
                     className="mt-0.5 size-5 shrink-0 accent-ec-sky-ink" />
                   <span>
-                    I agree that Eclectik processes my registration so my place can be
-                    confirmed and I can be contacted about this roundtable.
+                    I agree that Eclectik shares my registration with PwC and Microsoft,
+                    so the three organisers can confirm my place and contact me about
+                    this roundtable.
                   </span>
                 </label>
 
@@ -413,10 +428,28 @@ export default function EventZurich2026() {
                 </label>
 
                 <p className="text-[14px] leading-[1.55] text-ec-body-faint">
-                  See the{" "}
+                  Each organiser handles your details under its own privacy statement. See{" "}
                   <Link href="/privacy-policy" className="underline underline-offset-2">
-                    Eclectik privacy policy
+                    Eclectik
                   </Link>
+                  ,{" "}
+                  <a
+                    href="https://www.pwc.ch/en/site-information/privacy-statement.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2"
+                  >
+                    PwC Switzerland
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="https://www.microsoft.com/en-us/privacy/privacystatement"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2"
+                  >
+                    Microsoft
+                  </a>
                   .
                 </p>
 

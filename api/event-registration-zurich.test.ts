@@ -89,6 +89,11 @@ describe("api/event-registration-zurich: wat er naar het CRM gaat", () => {
     expect(JSON.stringify(sent)).not.toContain("Workvivo");
   });
 
+  it("legt vast dat er met PwC en Microsoft gedeeld mag worden", async () => {
+    await post();
+    expect(crmBody(fetchMock.mock.calls[0]).consentShare).toBe(true);
+  });
+
   it("stuurt marketing apart mee, standaard uit", async () => {
     await post();
     expect(crmBody(fetchMock.mock.calls[0]).consentMarketing).toBe(false);
