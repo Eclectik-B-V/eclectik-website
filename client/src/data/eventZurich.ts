@@ -94,7 +94,9 @@ export interface Speaker {
  * Rebecca Laun stond hier eerst als dagvoorzitter. Dat was onjuist: zij
  * organiseert maar spreekt niet, gecorrigeerd door Marco op 29 oktober 2026.
  *
- * Van Kirsten en Roxanne hebben we nog geen foto, wel hun functietitel. Ralfs
+ * Van Kirsten zijn twee fotos aangeleverd; hier staat de zakelijke headshot,
+ * omdat Ralf en Manish die ook hebben en een afwijkende kaart meteen opvalt.
+ * Die was 466 bij 406, dus vierkant bijgesneden vanuit het midden. Ralfs
  * titel komt van zijn LinkedIn-kop en niet uit een formele bron. Manish
  * schreef zijn eigen titel in zijn handtekening met een typefout in
  * "Insights"; die staat hier goed gespeld, al noemt de uitnodiging van de
@@ -110,6 +112,7 @@ export const SPEAKERS: Speaker[] = [
     role: "Director - Leadership, eXperience, Coaching",
     org: "PwC Switzerland",
     tag: "Moderator",
+    photo: "/images/events/zurich-2026/kirsten-barker.jpg",
   },
   {
     name: "Ralf Buechsenschuss",
@@ -130,6 +133,7 @@ export const SPEAKERS: Speaker[] = [
     role: "Senior OD and HR Executive",
     org: "PwC Switzerland",
     tag: "Speaker",
+    photo: "/images/events/zurich-2026/roxanne-lorimer.jpg",
   },
 ];
 
