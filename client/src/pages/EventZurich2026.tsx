@@ -192,6 +192,27 @@ export default function EventZurich2026() {
         </div>
       </section>
 
+      {/* LOCATIEFOTO. Aangeleverd als 687 bij 311, dus bewust binnen de
+          tekstkolom gehouden en niet over de volle breedte: op een breed
+          scherm zou full bleed een verdubbeling betekenen en dan wordt hij
+          zacht. Omgezet van PNG naar JPEG, dat scheelde 499K naar 120K voor
+          dezelfde pixels. */}
+      <section className="px-6 pb-4 lg:px-16">
+        <figure className="mx-auto max-w-[720px]">
+          <img
+            src="/images/events/zurich-2026/the-circle.jpg"
+            alt={C.venueImageAlt}
+            width={687}
+            height={311}
+            loading="lazy"
+            className="w-full rounded-xl"
+          />
+          <figcaption className="mt-2 text-[14px] text-ec-body-faint">
+            {C.venueCaption}
+          </figcaption>
+        </figure>
+      </section>
+
       {/* BESLOTEN SESSIE */}
       <section className="bg-ec-cream px-6 py-14 lg:px-16 lg:py-16">
         <div className="mx-auto max-w-[720px]">

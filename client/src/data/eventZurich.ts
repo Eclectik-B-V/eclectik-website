@@ -168,6 +168,9 @@ export const ZURICH_COPY = {
 
   agendaTitle: "The afternoon",
   takeawaysTitle: "What you'll leave with",
+  venueImageAlt:
+    "The Circle at Zurich airport seen from above, with planted roof terraces between the glass wings",
+  venueCaption: "The Circle, Zürich Flughafen",
   speakersTitle: "Speakers",
   speakersPending: "One more speaker from PwC will be announced.",
   readingTitle: "Something to read while you wait",
