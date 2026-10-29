@@ -249,14 +249,28 @@ export default function EventZurich2026() {
                 key={speaker.name}
                 className="flex items-center gap-5 rounded-xl border border-ec-line-3 bg-white px-5 py-5"
               >
-                <img
-                  src={speaker.photo}
-                  alt=""
-                  width={256}
-                  height={256}
-                  loading="lazy"
-                  className="size-16 shrink-0 rounded-full object-cover"
-                />
+                {speaker.photo ? (
+                  <img
+                    src={speaker.photo}
+                    alt=""
+                    width={256}
+                    height={256}
+                    loading="lazy"
+                    className="size-16 shrink-0 rounded-full object-cover"
+                  />
+                ) : (
+                  /* Initialen zolang er geen foto is aangeleverd. aria-hidden,
+                     want de naam staat er als tekst naast. */
+                  <div
+                    aria-hidden="true"
+                    className="flex size-16 shrink-0 items-center justify-center rounded-full bg-ec-navy text-[18px] font-bold text-white"
+                  >
+                    {speaker.name
+                      .split(" ")
+                      .map((part) => part[0])
+                      .join("")}
+                  </div>
+                )}
                 <div className="min-w-0">
                   <p className="text-[18px] font-bold text-ec-navy">{speaker.name}</p>
                   {speaker.role && (
@@ -272,7 +286,6 @@ export default function EventZurich2026() {
               </div>
             ))}
           </div>
-          <p className="mt-4 text-[15px] text-ec-body-faint">{C.speakersPending}</p>
         </div>
       </section>
 

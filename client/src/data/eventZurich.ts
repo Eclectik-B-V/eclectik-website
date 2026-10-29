@@ -77,26 +77,34 @@ export interface Speaker {
   /** Leeg als we de functietitel nog niet bevestigd hebben. */
   role?: string;
   org: string;
-  /** Chair of Speaker. Zelfde idee als de tags op de Amsterdam-pagina. */
+  /** Moderator of Speaker. Zelfde idee als de tags op de Amsterdam-pagina. */
   tag: string;
-  photo: string;
+  /**
+   * Leeg zolang er geen foto is aangeleverd. De kaart valt dan terug op de
+   * initialen, want een img naar een pad dat niet bestaat levert een kapot
+   * icoon op en dat is erger dan geen foto.
+   */
+  photo?: string;
 }
 
 /**
- * Rebecca Laun zit de middag voor, Ralf en Manish spreken. De spreker namens
- * PwC is op 29 oktober nog niet bekend; zolang dat zo is staat er onder de
- * kaarten een regel dat er nog een naam bij komt.
+ * Kirsten Barker modereert, Ralf, Manish en Roxanne spreken. Volgorde:
+ * moderator eerst, daarna de sprekers in de volgorde van het programma.
  *
- * Ralfs functietitel komt van zijn LinkedIn-kop, niet uit een formele bron.
- * Manish schreef zijn eigen titel in zijn handtekening met een typefout in
- * "Insights"; die staat hier goed gespeld.
+ * Rebecca Laun stond hier eerst als dagvoorzitter. Dat was onjuist: zij
+ * organiseert maar spreekt niet, gecorrigeerd door Marco op 29 oktober 2026.
+ *
+ * Van Kirsten en Roxanne hebben we nog geen foto en geen functietitel. Ralfs
+ * titel komt van zijn LinkedIn-kop en niet uit een formele bron. Manish
+ * schreef zijn eigen titel in zijn handtekening met een typefout in
+ * "Insights"; die staat hier goed gespeld, al noemt de uitnodiging van de
+ * vorige editie hem zonder "AI".
  */
 export const SPEAKERS: Speaker[] = [
   {
-    name: "Rebecca Laun",
+    name: "Kirsten Barker",
     org: "PwC Switzerland",
-    tag: "Chair",
-    photo: "/images/events/zurich-2026/rebecca-laun.jpg",
+    tag: "Moderator",
   },
   {
     name: "Ralf Buechsenschuss",
@@ -111,6 +119,11 @@ export const SPEAKERS: Speaker[] = [
     org: "Eclectik",
     tag: "Speaker",
     photo: "/images/events/zurich-2026/manish-goel.jpg",
+  },
+  {
+    name: "Roxanne Lorimer",
+    org: "PwC Switzerland",
+    tag: "Speaker",
   },
 ];
 
@@ -176,7 +189,6 @@ export const ZURICH_COPY = {
     "The Circle at Zurich airport seen from above, with planted roof terraces between the glass wings",
   venueCaption: "The Circle, Zürich Flughafen",
   speakersTitle: "Speakers",
-  speakersPending: "One more speaker from PwC will be announced.",
   readingTitle: "Something to read while you wait",
   readingBody:
     "The research the afternoon draws on. Worth a look before you come.",
