@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import Layout from "@/components/Layout";
-import { trackCTAClick, trackContactFormSubmission } from "@/lib/tracking";
+import { getAttribution, trackCTAClick, trackContactFormSubmission } from "@/lib/tracking";
 
 /**
  * /bmai, de pagina over BMAI by Eclectik.
@@ -14,9 +14,8 @@ import { trackCTAClick, trackContactFormSubmission } from "@/lib/tracking";
  * verhaal, het model, wat het per rol oplevert, de app en de partners.
  *
  * Eén formulier onderaan vervangt de drie aanmeldingen uit het prototype. Het
- * gaat naar /api/contact, dat alleen een mail stuurt en niets in het CRM zet.
- * De keuze in het formulier gaat mee in het bericht, zodat te zien is waar
- * iemand voor komt.
+ * gaat naar /api/bmai-enquiry, dat de aanvraag als `bmai_enquiry` in het CRM zet
+ * zodat hij in de leads-tab verschijnt, en daarnaast een mail stuurt.
  *
  * Niet openbaar zolang Olivier dat niet zegt: het bronmateriaal is gemarkeerd
  * als "Concept, not for distribution". Daarom noindex hier en in vercel.json, en
@@ -111,10 +110,14 @@ const EXAMPLE = [
   },
 ];
 
+/**
+ * Korte ids gaan het CRM in, de labels zijn voor de bezoeker. Houd in sync met
+ * INTERESTS in api/bmai-enquiry.ts.
+ */
 const INTERESTS = [
-  "Using BMAI in my organisation",
-  "Becoming a BMAI partner",
-  "The BMAI Canvas app",
+  { id: "organisation", label: "Using BMAI in my organisation" },
+  { id: "partner", label: "Becoming a BMAI partner" },
+  { id: "app", label: "The BMAI Canvas app" },
 ] as const;
 
 const FIELD =
@@ -127,7 +130,9 @@ function ContactForm() {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
-  const [interest, setInterest] = useState<string>(INTERESTS[0]);
+  const [interest, setInterest] = useState<string>(INTERESTS[0].id);
+  const [consent, setConsent] = useState(false);
+  const [consentMarketing, setConsentMarketing] = useState(false);
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -138,20 +143,14 @@ function ContactForm() {
       toast.error("Please fill in your name and email address.");
       return;
     }
+    if (!consent) {
+      toast.error("Please tick the box so we can store your enquiry.");
+      return;
+    }
 
     setSending(true);
     try {
-      // /api/contact kent geen eigen BMAI-velden, dus de keuze en de rol gaan
-      // mee in het bericht. Zo is in de mail meteen te zien waar het over gaat.
-      const message = [
-        "BMAI enquiry",
-        `Interest: ${interest}`,
-        role.trim() ? `Role: ${role.trim()}` : null,
-      ]
-        .filter(Boolean)
-        .join("\n");
-
-      const res = await fetch("/api/contact", {
+      const res = await fetch("/api/bmai-enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -159,7 +158,11 @@ function ContactForm() {
           lastName: lastName.trim(),
           email: email.trim(),
           company: company.trim(),
-          message,
+          role: role.trim(),
+          interest,
+          consent: true,
+          consentMarketing,
+          src: getAttribution() ?? undefined,
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
@@ -186,8 +189,8 @@ function ContactForm() {
         <span className={LABEL}>What would you like to talk about?</span>
         <select className={FIELD} value={interest} onChange={(e) => setInterest(e.target.value)}>
           {INTERESTS.map((option) => (
-            <option key={option} value={option}>
-              {option}
+            <option key={option.id} value={option.id}>
+              {option.label}
             </option>
           ))}
         </select>
@@ -245,6 +248,30 @@ function ContactForm() {
           />
         </label>
       </div>
+      {/* Gesplitst, net als op de Zürich-pagina en anders dan op /contact,
+          waar één verplicht vinkje ook nieuwsbrieven afdekt. Bewaren om te
+          kunnen antwoorden is nodig; nieuws is een keuze. */}
+      <label className="flex gap-3 text-[15px] leading-[1.55] text-ec-body">
+        <input
+          type="checkbox"
+          name="consent"
+          required
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 size-5 shrink-0 accent-ec-navy"
+        />
+        <span>I agree that Eclectik stores my details to reply to this enquiry.</span>
+      </label>
+      <label className="flex gap-3 text-[15px] leading-[1.55] text-ec-body">
+        <input
+          type="checkbox"
+          name="consentMarketing"
+          checked={consentMarketing}
+          onChange={(e) => setConsentMarketing(e.target.checked)}
+          className="mt-0.5 size-5 shrink-0 accent-ec-navy"
+        />
+        <span>Eclectik may also send me occasional updates about BMAI. I can withdraw this at any time. (optional)</span>
+      </label>
       <button
         type="submit"
         disabled={sending}
