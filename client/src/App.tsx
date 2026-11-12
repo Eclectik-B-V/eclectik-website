@@ -34,6 +34,7 @@ import ProofOfValue from "@/pages/ProofOfValue";
 import ProofOfChange from "@/pages/ProofOfChange";
 import EventAmsterdam2026 from "@/pages/EventAmsterdam2026";
 import EventZurich2026 from "@/pages/EventZurich2026";
+import Bmai from "@/pages/Bmai";
 import EventAmsterdam2026Registrations from "@/pages/EventAmsterdam2026Registrations";
 import GlintValue from "@/pages/GlintValue";
 import MicrosoftSellers from "@/pages/MicrosoftSellers";
@@ -81,6 +82,10 @@ function Router() {
       {/* Besloten roundtable met PwC en Microsoft. Geen link vanaf de site,
           niet in de sitemap, en noindex via de X-Robots-Tag in vercel.json. */}
       <Route path="/events/zurich-2026" component={EventZurich2026} />
+      {/* BMAI by Eclectik. Nog niet openbaar: het bronmateriaal is gemarkeerd
+          als "Concept, not for distribution". Geen link vanaf de site, niet in
+          de sitemap, noindex via de X-Robots-Tag in vercel.json. */}
+      <Route path="/bmai" component={Bmai} />
       <Route path="/events/amsterdam-2026/registrations" component={EventAmsterdam2026Registrations} />
       {/* /glint is the landing page for the link we mail to organisations that
           already run Viva Glint, and the landing page under the LinkedIn
