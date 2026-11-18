@@ -7,7 +7,9 @@ import { sanitizeSubject } from "./_mail-subject.js";
 import { escapeHtml } from "./_html.js";
 
 /**
- * Inschrijvingen voor de roundtable in Zürich, 1 december 2026.
+ * Inschrijvingen voor de roundtable in Zürich, 28 januari 2027. Eerst gepland
+ * op 1 december 2026; EVENT_SLUG houdt "2026" zodat de inschrijvingen die al
+ * binnen zijn bij elkaar blijven in het CRM.
  *
  * Een eigen endpoint naast event-registration.ts en geen gedeelde versie met
  * een slug erin. Dat is een bewuste keuze: Amsterdam is over negentien dagen
@@ -64,7 +66,7 @@ const CRM_TIMEOUT_MS = 8_000;
 const EVENT_SLUG = "zurich-2026";
 const EVENT_NAME =
   "Roundtable: AI and agents reshaping the workplace";
-const EVENT_DATE = "2026-12-01";
+const EVENT_DATE = "2027-01-28";
 
 /**
  * Zet de inschrijving als signaal in het CRM.
@@ -158,7 +160,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           `New Zurich roundtable registration: ${fullName}, ${data.company}`
         ),
         html: `
-        <h2>New registration for Zurich, 1 December 2026</h2>
+        <h2>New registration for Zurich, 28 January 2027</h2>
         <p><strong>Name:</strong> ${escapeHtml(fullName)}</p>
         <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
         <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
@@ -180,11 +182,11 @@ ${data.invitedBy ? `<p><strong>Invited by:</strong> ${escapeHtml(data.invitedBy)
       const { error } = await resend.emails.send({
         from,
         to: data.email,
-        subject: "We received your registration for 1 December in Zurich",
+        subject: "We received your registration for 28 January in Zurich",
         html: `
         <p>Hi ${escapeHtml(data.firstName)},</p>
         <p>Thank you for registering for ${escapeHtml(EVENT_NAME)}.</p>
-        <p>Date: 1 December 2026, 14:00 to 17:00 CET, followed by an apero. Location: the Microsoft office at The Circle 02, 8058 Zurich.</p>
+        <p>Date: Thursday 28 January 2027, 14:00 to 17:00 CET, followed by an apero. Location: PwC's Experience Center, Birchstrasse 160, 8050 Zürich.</p>
         <p>Seats are limited, so we run a short check on role before we confirm a place. You will hear from us by email once your seat is confirmed.</p>
         <p>Eclectik, PwC and Microsoft</p>
       `,

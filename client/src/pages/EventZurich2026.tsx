@@ -100,32 +100,13 @@ export default function EventZurich2026() {
 
   return (
     <Layout>
-      <title>Roundtable, Zurich, 1 December 2026 | Eclectik</title>
+      <title>Roundtable, Zurich, 28 January 2027 | Eclectik</title>
       <meta name="robots" content="noindex, nofollow, noarchive" />
 
-      {/* HERO. De foto ligt eronder met een donkere laag erover, zoals de
-          homepage dat met zijn video doet.
-
-          Die laag doet twee dingen. Hij houdt witte tekst leesbaar, en hij
-          verbergt dat het bestand maar 687 pixels breed is: op een breed
-          scherm wordt dat ruim twee keer opgeschaald, en bij een luchtfoto met
-          veel fijn detail zie je dat zonder laag meteen. De homepage gebruikt
-          hier een asset van 1920 voor. Komt er een groter bestand, dan kan de
-          laag lichter. */}
-      <section className="relative isolate overflow-hidden bg-ec-navy px-6 py-16 text-ec-on-dark lg:px-16 lg:py-24">
-        <img
-          src="/images/events/zurich-2026/the-circle.jpg"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 size-full object-cover"
-        />
-        {/* Verloop in plaats van een vlakke dekking: onderaan het donkerst,
-            waar de datum en het adres staan, bovenaan iets opener zodat het
-            gebouw nog te zien is. */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-ec-navy/80 via-ec-navy/88 to-ec-navy/95"
-        />
+      {/* HERO. Hier lag tot 18 november 2026 een luchtfoto van The Circle, het
+          oude adres. Die is eruit sinds het event naar PwC's Experience Center
+          verhuisde: een foto van het verkeerde gebouw is erger dan geen foto. */}
+      <section className="bg-ec-navy px-6 py-16 text-ec-on-dark lg:px-16 lg:py-24">
         <div className="mx-auto max-w-[900px]">
           <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-ec-on-dark-eyebrow">
             Invitation-only roundtable
@@ -142,7 +123,6 @@ export default function EventZurich2026() {
             <p className="text-[19px] font-semibold text-white">{C.dateLine}</p>
             <p className="mt-1 text-[16px] text-ec-on-dark-muted">{C.timeLine}</p>
             <p className="mt-4 text-[16px] text-ec-on-dark-muted">{C.venue}</p>
-            <p className="text-[15px] text-ec-on-dark-caption">{C.rooms}</p>
             <p className="mt-4 text-[15px] text-ec-on-dark-caption">{C.organisers}</p>
           </div>
 

@@ -63,7 +63,7 @@ export default function PrivacyPolicy() {
                 registration form with that partner, so they can process your registration and
                 contact you about the event. The partner is named in the consent text on the form
                 itself. For the AI Transformation event of 17 November 2026 in Amsterdam, that partner
-                is Workvivo, part of Zoom Communications. For the roundtable of 1 December 2026 in
+                is Workvivo, part of Zoom Communications. For the roundtable of 28 January 2027 in
                 Zurich, those partners are PwC Switzerland and Microsoft, who co-host the session and
                 keep their own guest list. Each organiser then handles your details under its own
                 privacy statement.

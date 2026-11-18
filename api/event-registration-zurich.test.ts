@@ -85,7 +85,7 @@ describe("api/event-registration-zurich: wat er naar het CRM gaat", () => {
     expect(crmBody(fetchMock.mock.calls[0])).toMatchObject({
       event: "event_registered",
       eventSlug: "zurich-2026",
-      eventDate: "2026-12-01",
+      eventDate: "2027-01-28",
     });
   });
 

@@ -1,5 +1,11 @@
 /**
- * Config en teksten voor de roundtable in Zürich, 1 december 2026.
+ * Config en teksten voor de roundtable in Zürich, 28 januari 2027.
+ *
+ * Eerst gepland op 1 december 2026 bij Microsoft in The Circle, op 18 november
+ * 2026 verplaatst naar PwC's Experience Center. De slug en de URL houden
+ * "2026": de uitnodigingen met de link zijn al verstuurd, en de inschrijvingen
+ * die al binnen zijn staan onder die slug in het CRM. Een nieuwe slug zou ze
+ * over twee groepen verdelen.
  *
  * Een besloten sessie van Eclectik, PwC en Microsoft. De pagina is niet
  * openbaar: geen link vanaf de site, geen sitemap, noindex via vercel.json.
@@ -14,8 +20,8 @@
 
 export const ZURICH_EVENT_SLUG = "zurich-2026";
 
-/** 1 december 2026 14:00 CET, in UTC genoteerd voor de countdown. */
-export const ZURICH_START_ISO = "2026-12-01T13:00:00Z";
+/** 28 januari 2027 14:00 CET, in UTC genoteerd voor de countdown. */
+export const ZURICH_START_ISO = "2027-01-28T13:00:00Z";
 
 /**
  * Wie een genodigde heeft uitgenodigd. Gesloten verzameling, want de drie
@@ -44,7 +50,7 @@ export interface AgendaItem {
  * herkennen het.
  */
 export const AGENDA: AgendaItem[] = [
-  { time: "14:00", title: "Registration", body: "At Microsoft, The Circle, Zürich." },
+  { time: "14:00", title: "Registration", body: "At PwC's Experience Center." },
   {
     time: "14:30",
     title: "What's next?",
@@ -174,11 +180,10 @@ export const ZURICH_COPY = {
   title: "AI and agents are reshaping the workplace",
   deck: "What's next, what's real, and how do people actually feel?",
 
-  dateLine: "Tuesday, 1 December 2026",
+  dateLine: "Thursday, 28 January 2027",
   timeLine: "14:00 arrival, programme 14:30 to 17:00, apéro afterwards",
   organisers: "An invitation-only roundtable by Eclectik, PwC and Microsoft",
-  venue: "Microsoft Office, The Circle 02, 8058 Zürich",
-  rooms: "Rooms Eiger and Dufourspitze",
+  venue: "PwC's Experience Center, Birchstrasse 160, 8050 Zürich",
   seats: "Free to attend, in person, limited to around 15 seats.",
 
   intro: [
@@ -195,9 +200,6 @@ export const ZURICH_COPY = {
 
   agendaTitle: "The afternoon",
   takeawaysTitle: "What you'll leave with",
-  venueImageAlt:
-    "The Circle at Zurich airport seen from above, with planted roof terraces between the glass wings",
-  venueCaption: "The Circle, Zürich Flughafen",
   speakersTitle: "Speakers",
   readingTitle: "Something to read while you wait",
   readingBody:
