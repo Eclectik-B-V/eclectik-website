@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 import Layout from "@/components/Layout";
@@ -28,6 +28,72 @@ import {
  * "index, follow" uit client/index.html te staan. React dedupliceert <meta>
  * niet, en een crawler die ze allebei leest houdt de strengste aan.
  */
+
+/**
+ * De video van PwC's Experience Center als achtergrond van de kop.
+ *
+ * Zelfde gedrag als HeroVideo in Home.tsx, en om dezelfde redenen: stil, in
+ * een lus, en stil blijven staan voor wie in zijn systeem minder beweging
+ * vraagt. De interval vangt browsers op die een lus soms laten hangen of een
+ * autoplay pauzeren na een tab-wissel.
+ *
+ * Het bestand is een bewerking van de aangeleverde PwC-video: 12,5 seconden uit
+ * het begin, waar de gang met de interactieve wand zit. Het stuk met schermen
+ * vol tekst ("Thinking for Tomorrow", social-mediakaartjes) zit er bewust niet
+ * in, want dat vecht met de kop eroverheen. Geen geluid, 30 beelden per seconde,
+ * 1,5 MB in plaats van 26.
+ */
+function HeroVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduced.matches) {
+      video.pause();
+      return;
+    }
+
+    const keepPlaying = () => {
+      if (video.duration && isFinite(video.duration) && video.currentTime >= video.duration - 0.05) {
+        video.currentTime = 0;
+      }
+      if (video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+    const rewind = () => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    };
+
+    video.addEventListener("ended", rewind);
+    const timer = window.setInterval(keepPlaying, 500);
+    keepPlaying();
+
+    return () => {
+      video.removeEventListener("ended", rewind);
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src="/videos/pwc-experience-center.mp4"
+      poster="/videos/pwc-experience-center-poster.jpg"
+      autoPlay
+      loop
+      muted
+      playsInline
+      aria-hidden="true"
+      tabIndex={-1}
+      className="absolute inset-0 -z-10 size-full object-cover"
+    />
+  );
+}
 
 const FIELD =
   "mt-1.5 w-full rounded-lg border border-ec-line-3 bg-white px-4 py-3 text-[16px] text-ec-navy placeholder:text-ec-placeholder focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ec-sky";
@@ -103,10 +169,21 @@ export default function EventZurich2026() {
       <title>Roundtable, Zurich, 28 January 2027 | Eclectik</title>
       <meta name="robots" content="noindex, nofollow, noarchive" />
 
-      {/* HERO. Hier lag tot 18 november 2026 een luchtfoto van The Circle, het
-          oude adres. Die is eruit sinds het event naar PwC's Experience Center
-          verhuisde: een foto van het verkeerde gebouw is erger dan geen foto. */}
-      <section className="bg-ec-navy px-6 py-16 text-ec-on-dark lg:px-16 lg:py-24">
+      {/* HERO. Video van PwC's Experience Center, de locatie, met een donkere
+          laag erover. Tot 18 november 2026 lag hier een luchtfoto van The
+          Circle, het oude adres.
+
+          Die laag houdt de tekst leesbaar en verbergt dat de video maar 1006
+          pixels breed is. Nagerekend op het slechtste geval, een zuiver witte
+          pixel in beeld: witte tekst haalt dan 7,90:1 waar de laag het dunst is
+          en de gele ondertitel 4,58:1. AA vraagt 4,5:1. */}
+      <section className="relative isolate overflow-hidden bg-ec-navy px-6 py-16 text-ec-on-dark lg:px-16 lg:py-24">
+        <HeroVideo />
+        {/* Verloop: onderaan het donkerst, waar de datum en het adres staan. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-ec-navy/80 via-ec-navy/88 to-ec-navy/95"
+        />
         <div className="mx-auto max-w-[900px]">
           <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-ec-on-dark-eyebrow">
             Invitation-only roundtable
