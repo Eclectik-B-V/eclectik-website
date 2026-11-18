@@ -14,7 +14,7 @@ import {
 } from "@/data/eventZurich";
 
 /**
- * /events/zurich-2027, de besloten roundtable van Eclectik, PwC en Microsoft.
+ * /events/zurich-2027, de roundtable van Eclectik, PwC en Microsoft.
  * Het oude adres /events/zurich-2026 stuurt hierheen door, zie vercel.json.
  *
  * Zelfde opbouw als de Workvivo-pagina in EventAmsterdam2026.tsx: kop,
@@ -159,7 +159,7 @@ export default function EventZurich2026() {
       trackEventRegistration(ZURICH_EVENT_SLUG);
       setDone(true);
     } catch {
-      toast.error("That did not go through. Please try again, or reply to your invitation.");
+      toast.error("That did not go through. Please try again, or email us directly.");
     } finally {
       setSending(false);
     }
@@ -168,7 +168,11 @@ export default function EventZurich2026() {
   return (
     <Layout>
       <title>Roundtable, Zurich, 28 January 2027 | Eclectik</title>
-      <meta name="robots" content="noindex, nofollow, noarchive" />
+      <meta
+        name="description"
+        content="A roundtable for HR leaders on how AI and agents are changing work. Zurich, 28 January 2027, at PwC's Experience Center, by Eclectik, PwC and Microsoft."
+      />
+      <link rel="canonical" href="https://www.eclectik.co/events/zurich-2027" />
 
       {/* HERO. Video van PwC's Experience Center, de locatie, met een donkere
           laag erover. Tot 18 november 2026 lag hier een luchtfoto van The
@@ -187,7 +191,7 @@ export default function EventZurich2026() {
         />
         <div className="mx-auto max-w-[900px]">
           <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-ec-on-dark-eyebrow">
-            Invitation-only roundtable
+            Roundtable in Zurich
           </p>
 
           <h1 className="mt-5 font-brand text-[36px] font-extrabold leading-[1.08] tracking-[-0.02em] text-white lg:text-[56px]">

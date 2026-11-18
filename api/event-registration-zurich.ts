@@ -33,7 +33,7 @@ import { escapeHtml } from "./_html.js";
 const BodySchema = z.object({
   firstName: z.string().trim().min(1).max(100),
   lastName: z.string().trim().min(1).max(100),
-  // Geen zakelijk-adrescontrole, net als bij Amsterdam: dit is een besloten
+  // Geen zakelijk-adrescontrole, net als bij Amsterdam: dit is een kleine
   // roundtable waar plekken met de hand bevestigd worden, dus een persoonlijk
   // adres is geen reden om iemand bij het formulier al weg te sturen.
   email: z.string().trim().email().max(200),

@@ -10,8 +10,11 @@
  * BD-applicatie filtert erop, en een nieuwe slug zou inschrijvingen daar
  * laten verdwijnen. Omzetten kan alleen samen met de BD-kant.
  *
- * Een besloten sessie van Eclectik, PwC en Microsoft. De pagina is niet
- * openbaar: geen link vanaf de site, geen sitemap, noindex via vercel.json.
+ * Een roundtable van Eclectik, PwC en Microsoft. Begon als besloten pagina
+ * zonder link en met noindex; sinds 18 november 2026 openbaar: in de sitemap,
+ * vindbaar voor zoekmachines en gelinkt vanuit de event-knoppen op de site.
+ * "Closed session" in de copy hieronder slaat op off the record praten, niet
+ * op wie er mag komen.
  *
  * De teksten komen uit de mailwisseling tussen Rebecca Laun (PwC), Ralf
  * Buechsenschuss (Microsoft) en Manish Goel (Eclectik) van 28 en 29 oktober
@@ -185,7 +188,7 @@ export const ZURICH_COPY = {
 
   dateLine: "Thursday, 28 January 2027",
   timeLine: "14:00 arrival, programme 14:30 to 17:00, apéro afterwards",
-  organisers: "An invitation-only roundtable by Eclectik, PwC and Microsoft",
+  organisers: "A roundtable by Eclectik, PwC and Microsoft",
   venue: "PwC's Experience Center, Birchstrasse 160, 8050 Zürich",
   seats: "Free to attend, in person, limited to around 15 seats.",
 

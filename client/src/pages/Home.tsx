@@ -193,13 +193,13 @@ export default function Home() {
           {/* Desktop keeps its CTAs in the nav; mobile needs them here. */}
           <div className="flex flex-col gap-2.5 md:hidden">
             {/* Tijdelijk, zie de comment bij dezelfde knop in SiteHeader.tsx:
-                tot en met 12 november 2026 staat hier de event-CTA. */}
+                tot en met 28 januari 2027 staat hier de event-CTA. */}
             <Link
-              href="/events/amsterdam-2026"
-              onClick={() => trackCTAClick("Register for 17th Nov event", "hero")}
+              href="/events/zurich-2027"
+              onClick={() => trackCTAClick("Jan 28 Zurich event", "hero")}
               className={`${PILL} bg-ec-sky text-ec-navy text-center px-6 py-4 focus-visible:outline-ec-sky`}
             >
-              Register for 17th Nov event
+              Jan 28 Zurich event
             </Link>
             <Link
               href="/hrtechservices"
@@ -448,18 +448,18 @@ export default function Home() {
         </h2>
         {/* Tijdelijk, zie de comment bij dezelfde knop in SiteHeader.tsx. De
             regel erboven ging over de wachtlijst en is meeveranderd, anders
-            belooft hij iets anders dan waar de knop heen gaat. Na 12 november
-            allebei terug naar de benchmarktekst. */}
+            belooft hij iets anders dan waar de knop heen gaat. Na 28 januari
+            2027 allebei terug naar de benchmarktekst. */}
         <p className="text-[16px] text-ec-on-dark-caption mb-7 lg:text-[18px]">
-          Come and find out on 17 November in Amsterdam. A free half-day working session with
-          Workvivo, and places are limited.
+          Come and find out on 28 January in Zurich, at a roundtable with PwC and Microsoft.
+          Places are limited.
         </p>
         <Link
-          href="/events/amsterdam-2026"
-          onClick={() => trackCTAClick("Join the 17th Nov event", "closing-cta")}
+          href="/events/zurich-2027"
+          onClick={() => trackCTAClick("Join the Jan 28 Zurich event", "closing-cta")}
           className={`${PILL} bg-ec-sky text-ec-navy inline-block px-[34px] py-4 text-[16px] hover:bg-[#54b4cb] focus-visible:outline-ec-sky`}
         >
-          Join the 17th Nov event
+          Join the Jan 28 Zurich event
         </Link>
       </section>
 
@@ -477,11 +477,11 @@ export default function Home() {
           {/* Tijdelijk, zie de comment bij dezelfde knop in SiteHeader.tsx.
               Korte tekst: deze pil is de helft van een balk van 375px breed. */}
           <Link
-            href="/events/amsterdam-2026"
-            onClick={() => trackCTAClick("17 Nov event", "sticky-bar")}
+            href="/events/zurich-2027"
+            onClick={() => trackCTAClick("Jan 28 Zurich event", "sticky-bar")}
             className={`${PILL} bg-ec-sky text-ec-navy flex-1 text-center py-3 text-sm focus-visible:outline-ec-navy`}
           >
-            17 Nov event
+            Jan 28 Zurich event
           </Link>
           <Link
             href="/scorecard"

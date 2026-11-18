@@ -79,8 +79,8 @@ function Router() {
       <Route path="/proof-of-value" component={ProofOfValue} />
       <Route path="/proof-of-change" component={ProofOfChange} />
       <Route path="/events/amsterdam-2026" component={EventAmsterdam2026} />
-      {/* Besloten roundtable met PwC en Microsoft. Geen link vanaf de site,
-          niet in de sitemap, en noindex via de X-Robots-Tag in vercel.json. */}
+      {/* Roundtable met PwC en Microsoft, sinds 18 november 2026 openbaar en
+          gelinkt vanuit de event-knoppen in de header en op de homepage. */}
       <Route path="/events/zurich-2027" component={EventZurich2026} />
       {/* BMAI by Eclectik. Nog niet openbaar: het bronmateriaal is gemarkeerd
           als "Concept, not for distribution". Geen link vanaf de site, niet in

@@ -61,15 +61,16 @@ export default function SiteHeader({
           >
             Contact
           </Link>
-          {/* Tijdelijk: tot en met 12 november 2026 staat hier de event-CTA in
-              plaats van de benchmark-wachtlijst. Daarna terugzetten naar
-              /benchmark, samen met de redirect voor de eventpagina. */}
+          {/* Tijdelijk: tot en met 28 januari 2027 staat hier de event-CTA voor
+              de roundtable in Zürich, in plaats van de benchmark-wachtlijst.
+              Daarvoor stond hier het Amsterdam-event van 17 november 2026.
+              Daarna terugzetten naar /benchmark. */}
           <Link
-            href="/events/amsterdam-2026"
-            onClick={() => trackCTAClick("Register for 17th Nov event", "header")}
+            href="/events/zurich-2027"
+            onClick={() => trackCTAClick("Jan 28 Zurich event", "header")}
             className={`${PILL_BASE} bg-ec-sky text-ec-navy px-[18px] py-2.5 hover:bg-[#54b4cb]`}
           >
-            Register for 17th Nov event
+            Jan 28 Zurich event
           </Link>
           <Link
             href="/scorecard"
@@ -161,14 +162,14 @@ export default function SiteHeader({
             <div className="flex flex-col gap-2.5 pt-[22px] sm:flex-row sm:max-w-[560px]">
               {/* Zie de comment bij dezelfde knop in de desktopnavigatie. */}
               <Link
-                href="/events/amsterdam-2026"
+                href="/events/zurich-2027"
                 onClick={() => {
-                  trackCTAClick("Register for 17th Nov event", "mobile-menu");
+                  trackCTAClick("Jan 28 Zurich event", "mobile-menu");
                   closeMenu();
                 }}
                 className={`${PILL_BASE} bg-ec-sky text-ec-navy text-center px-5 py-3.5 sm:flex-1`}
               >
-                Register for 17th Nov event
+                Jan 28 Zurich event
               </Link>
               <Link
                 href="/scorecard"
