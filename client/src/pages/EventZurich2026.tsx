@@ -14,7 +14,8 @@ import {
 } from "@/data/eventZurich";
 
 /**
- * /events/zurich-2026, de besloten roundtable van Eclectik, PwC en Microsoft.
+ * /events/zurich-2027, de besloten roundtable van Eclectik, PwC en Microsoft.
+ * Het oude adres /events/zurich-2026 stuurt hierheen door, zie vercel.json.
  *
  * Zelfde opbouw als de Workvivo-pagina in EventAmsterdam2026.tsx: kop,
  * inleiding, sprekers, programma, wat je meeneemt, formulier. Het verschil zit

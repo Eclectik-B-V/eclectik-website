@@ -83,6 +83,11 @@
       "source": "/case-studies/microsoft-viva-transformation",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/events/zurich-2026",
+      "destination": "/events/zurich-2027",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -111,7 +116,7 @@
       ]
     },
     {
-      "source": "/events/zurich-2026",
+      "source": "/events/zurich-2027",
       "headers": [
         {
           "key": "X-Robots-Tag",

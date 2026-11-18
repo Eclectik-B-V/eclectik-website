@@ -81,7 +81,7 @@ function Router() {
       <Route path="/events/amsterdam-2026" component={EventAmsterdam2026} />
       {/* Besloten roundtable met PwC en Microsoft. Geen link vanaf de site,
           niet in de sitemap, en noindex via de X-Robots-Tag in vercel.json. */}
-      <Route path="/events/zurich-2026" component={EventZurich2026} />
+      <Route path="/events/zurich-2027" component={EventZurich2026} />
       {/* BMAI by Eclectik. Nog niet openbaar: het bronmateriaal is gemarkeerd
           als "Concept, not for distribution". Geen link vanaf de site, niet in
           de sitemap, noindex via de X-Robots-Tag in vercel.json. */}

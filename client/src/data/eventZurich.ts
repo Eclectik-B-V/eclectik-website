@@ -2,10 +2,13 @@
  * Config en teksten voor de roundtable in Zürich, 28 januari 2027.
  *
  * Eerst gepland op 1 december 2026 bij Microsoft in The Circle, op 18 november
- * 2026 verplaatst naar PwC's Experience Center. De slug en de URL houden
- * "2026": de uitnodigingen met de link zijn al verstuurd, en de inschrijvingen
- * die al binnen zijn staan onder die slug in het CRM. Een nieuwe slug zou ze
- * over twee groepen verdelen.
+ * 2026 verplaatst naar PwC's Experience Center.
+ *
+ * De URL is mee verhuisd naar /events/zurich-2027; /events/zurich-2026 stuurt
+ * daar permanent naartoe door, zodat links in uitnodigingen blijven werken.
+ * De slug hieronder houdt wel "2026": de sectie in de leads-tab van de
+ * BD-applicatie filtert erop, en een nieuwe slug zou inschrijvingen daar
+ * laten verdwijnen. Omzetten kan alleen samen met de BD-kant.
  *
  * Een besloten sessie van Eclectik, PwC en Microsoft. De pagina is niet
  * openbaar: geen link vanaf de site, geen sitemap, noindex via vercel.json.
