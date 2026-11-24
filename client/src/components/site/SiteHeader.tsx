@@ -4,6 +4,7 @@ import { trackCTAClick } from "@/lib/tracking";
 
 const NAV_LINKS = [
   { name: "Consulting", href: "/consulting" },
+  { name: "BMAI", href: "/bmai" },
 ];
 
 const PILL_BASE =
@@ -137,6 +138,13 @@ export default function SiteHeader({
               <span className="text-[11px] uppercase tracking-[0.1em] font-bold text-ec-sky">
                 Glint · Seer
               </span>
+            </Link>
+            <Link
+              href="/bmai"
+              onClick={closeMenu}
+              className="flex items-center justify-between py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
+            >
+              BMAI
             </Link>
             <a
               href="/#benchmark"

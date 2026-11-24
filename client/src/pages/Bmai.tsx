@@ -26,9 +26,10 @@ import {
  * Downloaden kan pas na naam, e-mail, bedrijf en toestemming voor marketingmail;
  * dat formulier gaat naar /api/bmai-poster, dat pas dan de link teruggeeft.
  *
- * Niet openbaar zolang Olivier dat niet zegt: het bronmateriaal is gemarkeerd
- * als "Concept, not for distribution". Daarom noindex hier en in vercel.json, en
- * geen link vanaf de rest van de site.
+ * Sinds 24 november 2026 gelinkt vanuit de header, naast Consulting en in het
+ * mobiele menu. Wel nog noindex, hier en in vercel.json: het bronmateriaal was
+ * gemarkeerd als "Concept, not for distribution", en Olivier heeft de pagina
+ * nog niet openbaar verklaard voor zoekmachines.
  */
 
 const SECTION = "px-6 py-14 lg:px-16 lg:py-[80px] scroll-mt-24";

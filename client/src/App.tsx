@@ -82,9 +82,9 @@ function Router() {
       {/* Roundtable met PwC en Microsoft, sinds 18 november 2026 openbaar en
           gelinkt vanuit de event-knoppen in de header en op de homepage. */}
       <Route path="/events/zurich-2027" component={EventZurich2026} />
-      {/* BMAI by Eclectik. Nog niet openbaar: het bronmateriaal is gemarkeerd
-          als "Concept, not for distribution". Geen link vanaf de site, niet in
-          de sitemap, noindex via de X-Robots-Tag in vercel.json. */}
+      {/* BMAI by Eclectik. Sinds 24 november 2026 gelinkt vanuit de header.
+          Nog niet in de sitemap en noindex via de X-Robots-Tag in vercel.json,
+          tot Olivier zegt dat zoekmachines hem mogen zien. */}
       <Route path="/bmai" component={Bmai} />
       <Route path="/events/amsterdam-2026/registrations" component={EventAmsterdam2026Registrations} />
       {/* /glint is the landing page for the link we mail to organisations that
