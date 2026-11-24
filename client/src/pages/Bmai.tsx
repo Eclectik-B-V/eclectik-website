@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import Layout from "@/components/Layout";
-import { getAttribution, trackCTAClick, trackContactFormSubmission } from "@/lib/tracking";
+import {
+  getAttribution,
+  trackBmaiPosterDownload,
+  trackCTAClick,
+  trackContactFormSubmission,
+} from "@/lib/tracking";
 
 /**
  * /bmai, de pagina over BMAI by Eclectik.
@@ -16,6 +21,10 @@ import { getAttribution, trackCTAClick, trackContactFormSubmission } from "@/lib
  * Eén formulier onderaan vervangt de drie aanmeldingen uit het prototype. Het
  * gaat naar /api/bmai-enquiry, dat de aanvraag als `bmai_enquiry` in het CRM zet
  * zodat hij in de leads-tab verschijnt, en daarnaast een mail stuurt.
+ *
+ * In de modelsectie staat sinds 24 november 2026 de A3-poster van het model.
+ * Downloaden kan pas na naam, e-mail, bedrijf en toestemming voor marketingmail;
+ * dat formulier gaat naar /api/bmai-poster, dat pas dan de link teruggeeft.
  *
  * Niet openbaar zolang Olivier dat niet zegt: het bronmateriaal is gemarkeerd
  * als "Concept, not for distribution". Daarom noindex hier en in vercel.json, en
@@ -283,6 +292,158 @@ function ContactForm() {
   );
 }
 
+/**
+ * De poster: het model op A3, twee pagina's. Het pad naar de PDF staat bewust
+ * niet in deze bundle; /api/bmai-poster geeft het pas terug als de gegevens
+ * zijn opgeslagen. Dit is alleen de naam waaronder het bestand bij de bezoeker
+ * binnenkomt.
+ */
+const POSTER_FILENAME = "BMAI Model A3 Poster.pdf";
+
+function startDownload(url: string) {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = POSTER_FILENAME;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+function PosterForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [posterUrl, setPosterUrl] = useState<string | null>(null);
+
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    if (sending) return;
+    if (!name.trim() || !email.trim() || !company.trim()) {
+      toast.error("Please fill in your name, work email and company.");
+      return;
+    }
+    if (!consent) {
+      toast.error("Please tick the box to get the poster.");
+      return;
+    }
+
+    setSending(true);
+    let url: string;
+    try {
+      const res = await fetch("/api/bmai-poster", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          company: company.trim(),
+          consentMarketing: true,
+          src: getAttribution() ?? undefined,
+        }),
+      });
+      const body = await res.json().catch(() => null);
+      if (!res.ok || typeof body?.url !== "string") throw new Error(String(res.status));
+      url = body.url;
+    } catch {
+      toast.error("That did not go through. Please try again, or email us directly.");
+      return;
+    } finally {
+      setSending(false);
+    }
+
+    setPosterUrl(url);
+    startDownload(url);
+    trackBmaiPosterDownload();
+  }
+
+  if (posterUrl) {
+    return (
+      <div role="status">
+        <p className="text-[17px] leading-[1.6] text-ec-navy mb-5">
+          Thank you. Your download has started. If it has not, use the button below.
+        </p>
+        <a
+          href={posterUrl}
+          download={POSTER_FILENAME}
+          className={`${PILL} bg-ec-navy text-white hover:bg-[#26365a] focus-visible:outline-ec-navy`}
+        >
+          Download the poster (PDF)
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+      <label>
+        <span className={LABEL}>Name</span>
+        <input
+          required
+          autoComplete="name"
+          className={FIELD}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <label>
+        <span className={LABEL}>Work email</span>
+        <input
+          required
+          type="email"
+          autoComplete="email"
+          className={FIELD}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </label>
+      <label>
+        <span className={LABEL}>Company</span>
+        <input
+          required
+          autoComplete="organization"
+          className={FIELD}
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+      </label>
+      {/* Verplicht, op verzoek van Olivier: de poster is er in ruil voor
+          marketingmail. De tekst erboven zegt dat ook, zodat het geen
+          verrassing is. Anders dan in ContactForm hieronder, waar nieuws een
+          keuze is. */}
+      <label className="flex gap-3 text-[15px] leading-[1.55] text-ec-body">
+        <input
+          type="checkbox"
+          name="consentMarketing"
+          required
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 size-5 shrink-0 accent-ec-navy"
+        />
+        <span>
+          I agree to receive emails from Eclectik about BMAI and related work. I can unsubscribe
+          at any time.
+        </span>
+      </label>
+      <p className="text-[14px] leading-[1.55] text-ec-body">
+        We use your details to send you the poster and these emails, as described in our{" "}
+        <a href="/privacy-policy" className="underline underline-offset-2 hover:text-ec-navy">
+          privacy policy
+        </a>
+        .
+      </p>
+      <button
+        type="submit"
+        disabled={sending}
+        className={`${PILL} self-start bg-ec-navy text-white hover:bg-[#26365a] focus-visible:outline-ec-navy disabled:cursor-not-allowed disabled:opacity-60`}
+      >
+        {sending ? "One moment" : "Download the poster"}
+      </button>
+    </form>
+  );
+}
+
 export default function Bmai() {
   return (
     <Layout>
@@ -324,6 +485,17 @@ export default function Bmai() {
                   For consultants: the app
                 </a>
               </div>
+              <p className="mt-5 text-[15px] text-ec-body">
+                Or{" "}
+                <a
+                  href="#poster"
+                  onClick={() => trackCTAClick("BMAI poster", "bmai-hero")}
+                  className="font-semibold text-ec-navy underline underline-offset-4 hover:text-ec-red"
+                >
+                  download the model as an A3 poster
+                </a>
+                .
+              </p>
             </div>
             {/* De omslag uit het BMAI-materiaal. Het origineel had onderaan de regel
                 "Private confidential, copyright reserved" en een donker kader;
@@ -384,6 +556,37 @@ export default function Bmai() {
             <p className="mt-5 text-[15px] text-ec-body">
               Context, governance and measures sit around the bands.
             </p>
+
+            {/* De poster. In deze sectie en niet in een eigen sectie: hij is
+                het model, en zo blijven de achtergrondkleuren afwisselen. */}
+            <div
+              id="poster"
+              className="mt-12 scroll-mt-24 grid gap-8 rounded-2xl bg-ec-cream p-6 sm:p-8 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-12"
+            >
+              <figure className="m-0">
+                <img
+                  src="/images/bmai/bmai-poster-preview.png"
+                  alt="The BMAI poster: the People, Process and Technology bands, framed by context, governance, responsibilities and indicators"
+                  width={1400}
+                  height={991}
+                  loading="lazy"
+                  className="w-full h-auto rounded-lg border border-ec-line-3 bg-white shadow-[0_20px_50px_-24px_rgba(25,39,61,0.45)]"
+                />
+                <figcaption className="mt-3 text-[14px] text-ec-body">
+                  Page 1 of 2. Page 2 explains how to read the model.
+                </figcaption>
+              </figure>
+              <div>
+                <h3 className="font-brand text-[24px] font-extrabold leading-[1.15] mb-3 text-pretty lg:text-[28px]">
+                  Get the model as an A3 poster
+                </h3>
+                <p className="text-[17px] leading-[1.6] text-ec-body mb-6">
+                  The canvas to print and fill in with your team, and a guide to reading it. Free,
+                  in exchange for your details and the occasional email from us.
+                </p>
+                <PosterForm />
+              </div>
+            </div>
           </div>
         </section>
 

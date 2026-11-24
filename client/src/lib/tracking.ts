@@ -154,6 +154,18 @@ export function trackWaitlistJoined() {
 }
 
 /**
+ * Track a BMAI poster download, after the details were stored. Like the
+ * contact form, it records that someone downloaded, never who.
+ */
+export function trackBmaiPosterDownload() {
+  trackEvent("bmai_poster_download", {
+    event_category: "conversion",
+    src: getAttribution(),
+  });
+  trackLinkedInConversion();
+}
+
+/**
  * Track a completed event registration.
  *
  * Carries an `event_label` because `event_registration` is one event name
