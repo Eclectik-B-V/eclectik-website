@@ -20,6 +20,7 @@ Trusted partners include Alex Lee, EFTA, IMC, Almirall, TD Industries, Warburton
 ## Services
 
 - [Consulting](https://www.eclectik.co/consulting): Advisory that stays on the measurement side. We advise on one question: is your AI transformation delivering, and what should change so it does. We do not build rollouts and we do not sell licences.
+- [BMAI by Eclectik](https://www.eclectik.co/bmai): a business model canvas for the AI impact conversation. Three bands (People, Process, Technology), one owner for each, with context, governance and measures around them. The model is free to download as an A3 poster.
 - [HR Tech Services](https://www.eclectik.co/hrtechservices): Independent Customer Success and People Science for organisations on Viva Glint or Workvivo Seer.
 - [Glint Support](https://www.eclectik.co/glint-support): Independent Customer Success and People Science for organisations running Viva Glint: cycle design, programme delivery, manager enablement and turning results into movement.
 - [Workvivo and Seer](https://www.eclectik.co/workvivo): Workvivo and Seer partner page. Adoption and activation measurement, communication impact analysis, Seer-certified survey onboarding and programme design, and a four to six week execution gap assessment that quantifies the distance between feedback given and change seen.

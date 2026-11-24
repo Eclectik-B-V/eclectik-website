@@ -129,6 +129,21 @@ export default function SiteHeader({
             >
               Proof of value &amp; change
             </a>
+            {/* Zelfde volgorde als de desktopbalk: Consulting, BMAI, HR Services. */}
+            <Link
+              href="/consulting"
+              onClick={closeMenu}
+              className="flex items-center justify-between py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
+            >
+              Consulting
+            </Link>
+            <Link
+              href="/bmai"
+              onClick={closeMenu}
+              className="flex items-center justify-between py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
+            >
+              BMAI
+            </Link>
             <Link
               href="/hrtechservices"
               onClick={closeMenu}
@@ -138,13 +153,6 @@ export default function SiteHeader({
               <span className="text-[11px] uppercase tracking-[0.1em] font-bold text-ec-sky">
                 Glint · Seer
               </span>
-            </Link>
-            <Link
-              href="/bmai"
-              onClick={closeMenu}
-              className="flex items-center justify-between py-3.5 text-[17px] text-ec-on-dark border-b border-ec-navy-line"
-            >
-              BMAI
             </Link>
             <a
               href="/#benchmark"

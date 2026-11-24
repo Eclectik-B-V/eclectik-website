@@ -26,10 +26,10 @@ import {
  * Downloaden kan pas na naam, e-mail, bedrijf en toestemming voor marketingmail;
  * dat formulier gaat naar /api/bmai-poster, dat pas dan de link teruggeeft.
  *
- * Sinds 24 november 2026 gelinkt vanuit de header, naast Consulting en in het
- * mobiele menu. Wel nog noindex, hier en in vercel.json: het bronmateriaal was
- * gemarkeerd als "Concept, not for distribution", en Olivier heeft de pagina
- * nog niet openbaar verklaard voor zoekmachines.
+ * Openbaar sinds 24 november 2026: gelinkt vanuit de header, naast Consulting
+ * en in het mobiele menu, en in de sitemap en llms.txt. Daarvoor stond hij op
+ * noindex, omdat het bronmateriaal gemarkeerd was als "Concept, not for
+ * distribution".
  */
 
 const SECTION = "px-6 py-14 lg:px-16 lg:py-[80px] scroll-mt-24";
@@ -453,8 +453,7 @@ export default function Bmai() {
         name="description"
         content="BMAI by Eclectik puts what changed in the work, who owns that change and what it is worth on one page. Three bands, one owner for each."
       />
-      {/* De echte grendel is de X-Robots-Tag in vercel.json; dit is de reserve. */}
-      <meta name="robots" content="noindex, nofollow" />
+      <link rel="canonical" href="https://www.eclectik.co/bmai" />
 
       <div className="bg-white text-ec-navy font-brand font-light">
         {/* Hero */}
